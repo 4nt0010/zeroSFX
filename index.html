@@ -236,147 +236,160 @@
   </section>
 </div>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, deleteDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+  // I tuoi dati ufficiali
+  const firebaseConfig = {
+    apiKey: "AIzaSyAsU6kgVyVBQC5VEzTv7P7orZlbRUD3q84",
+    authDomain: "zerosfx-a74aa.firebaseapp.com",
+    projectId: "zerosfx-a74aa",
+    storageBucket: "zerosfx-a74aa.firebasestorage.app",
+    messagingSenderId: "1043982800334",
+    appId: "1:1043982800334:web:11a9df6f2b23b0e3b0c79f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
   const fileInput = document.getElementById('fileInput');
   const dropzone = document.getElementById('dropzone');
   const grid = document.getElementById('libraryGrid');
   const emptyState = document.getElementById('emptyState');
   const libraryCount = document.getElementById('libraryCount');
 
-  let sounds = [];      // {id, name, blob, order, audio, playing, scrubbing}
+  let sounds = [];      
   let idCounter = 0;
-  let db = null;
 
-  /* ---------------- IndexedDB persistence ---------------- */
-  function openDB(){
-    return new Promise((resolve, reject) => {
-      const req = indexedDB.open('zerosfx-db', 1);
-      req.onupgradeneeded = () => {
-        const database = req.result;
-        if(!database.objectStoreNames.contains('sounds')){
-          database.createObjectStore('sounds', { keyPath: 'id' });
-        }
-      };
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-  }
+  async function loadFromCloud() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "sounds"));
+      const records = [];
+      
+      querySnapshot.forEach((doc) => {
+        records.push(doc.data());
+      });
 
-  function dbPut(record){
-    if(!db) return;
-    const tx = db.transaction('sounds', 'readwrite');
-    tx.objectStore('sounds').put(record);
-  }
+      records.sort((a, b) => a.order - b.order);
 
-  function dbDelete(id){
-    if(!db) return;
-    const tx = db.transaction('sounds', 'readwrite');
-    tx.objectStore('sounds').delete(id);
-  }
-
-  function dbGetAll(){
-    return new Promise((resolve, reject) => {
-      if(!db) return resolve([]);
-      const tx = db.transaction('sounds', 'readonly');
-      const req = tx.objectStore('sounds').getAll();
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  async function loadFromDB(){
-    try{
-      db = await openDB();
-      const records = await dbGetAll();
-      records.sort((a,b) => a.order - b.order);
       records.forEach(rec => {
-        const url = URL.createObjectURL(rec.blob);
-        const audio = new Audio(url);
-        const sound = { id: rec.id, name: rec.name, blob: rec.blob, order: rec.order, audio, playing:false, scrubbing:false };
+        const audio = new Audio(rec.audioUrl);
+        const sound = { 
+          id: rec.id, 
+          name: rec.name, 
+          audioUrl: rec.audioUrl, 
+          storagePath: rec.storagePath, 
+          order: rec.order, 
+          audio, 
+          playing: false, 
+          scrubbing: false 
+        };
         wireAudioEvents(sound);
         sounds.push(sound);
-        const numeric = parseInt(rec.id.replace('snd-',''), 10);
-        if(!isNaN(numeric) && numeric >= idCounter) idCounter = numeric + 1;
+
+        const numeric = parseInt(rec.id.replace('snd-', ''), 10);
+        if (!isNaN(numeric) && numeric >= idCounter) idCounter = numeric + 1;
       });
       renderGrid();
-    } catch(err){
-      console.warn('zeroSFX: la persistenza locale non è disponibile in questo ambiente.', err);
+    } catch (err) {
+      console.warn('Errore di caricamento:', err);
     }
   }
 
-  loadFromDB();
+  loadFromCloud();
 
   /* ---------------- Upload ---------------- */
   dropzone.addEventListener('click', () => fileInput.click());
-  dropzone.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+  dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
   fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
-  ['dragenter','dragover'].forEach(evt => {
+  ['dragenter', 'dragover'].forEach(evt => {
     dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag-over'); });
   });
-  ['dragleave','drop'].forEach(evt => {
+  ['dragleave', 'drop'].forEach(evt => {
     dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag-over'); });
   });
   dropzone.addEventListener('drop', e => {
-    if(e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+    if (e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
   });
 
-  function handleFiles(fileList){
+  function handleFiles(fileList) {
     const files = Array.from(fileList).filter(f => f.type.startsWith('audio/'));
     files.forEach(addSound);
     fileInput.value = '';
   }
 
-  function niceName(filename){ return filename.replace(/\.[^/.]+$/, ''); }
+  function niceName(filename) { return filename.replace(/\.[^/.]+$/, ''); }
 
-  function formatTime(sec){
-    if(!isFinite(sec) || sec < 0) return '0:00';
+  function formatTime(sec) {
+    if (!isFinite(sec) || sec < 0) return '0:00';
     const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60).toString().padStart(2,'0');
+    const s = Math.floor(sec % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
   }
 
-  function addSound(file){
+  async function addSound(file) {
     const id = 'snd-' + (idCounter++);
-    const url = URL.createObjectURL(file);
-    const audio = new Audio(url);
-    const order = sounds.length;
-    const sound = { id, name: niceName(file.name), blob: file, order, audio, playing:false, scrubbing:false };
-    wireAudioEvents(sound);
-    sounds.push(sound);
-    dbPut({ id: sound.id, name: sound.name, blob: sound.blob, order: sound.order });
-    renderGrid();
+    const storagePath = `audio/${id}_${file.name}`;
+    const storageRef = ref(storage, storagePath);
+
+    try {
+      const snapshot = await uploadBytes(storageRef, file);
+      const audioUrl = await getDownloadURL(snapshot.ref);
+
+      const audio = new Audio(audioUrl);
+      const order = sounds.length;
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, playing: false, scrubbing: false };
+      
+      wireAudioEvents(sound);
+      sounds.push(sound);
+
+      await setDoc(doc(db, "sounds", id), {
+        id: sound.id,
+        name: sound.name,
+        audioUrl: sound.audioUrl,
+        storagePath: sound.storagePath,
+        order: sound.order
+      });
+
+      renderGrid();
+    } catch (error) {
+      console.error("Errore nel caricamento su Google Cloud:", error);
+    }
   }
 
-  function wireAudioEvents(sound){
+  function wireAudioEvents(sound) {
     sound.audio.addEventListener('loadedmetadata', () => {
       const totalEl = document.querySelector(`[data-total="${sound.id}"]`);
       const seekEl = document.querySelector(`[data-seek="${sound.id}"]`);
-      if(totalEl) totalEl.textContent = formatTime(sound.audio.duration);
-      if(seekEl) seekEl.max = sound.audio.duration || 0;
+      if (totalEl) totalEl.textContent = formatTime(sound.audio.duration);
+      if (seekEl) seekEl.max = sound.audio.duration || 0;
     });
     sound.audio.addEventListener('timeupdate', () => {
-      if(sound.scrubbing) return;
+      if (sound.scrubbing) return;
       const seekEl = document.querySelector(`[data-seek="${sound.id}"]`);
       const curEl = document.querySelector(`[data-current="${sound.id}"]`);
-      if(seekEl) seekEl.value = sound.audio.currentTime;
-      if(curEl) curEl.textContent = formatTime(sound.audio.currentTime);
+      if (seekEl) seekEl.value = sound.audio.currentTime;
+      if (curEl) curEl.textContent = formatTime(sound.audio.currentTime);
     });
     sound.audio.addEventListener('ended', () => setPlaying(sound, false));
   }
 
-  function setPlaying(sound, isPlaying){
+  function setPlaying(sound, isPlaying) {
     sound.playing = isPlaying;
     const pad = document.querySelector(`[data-pad="${sound.id}"]`);
     const btn = document.querySelector(`[data-playbtn="${sound.id}"]`);
-    if(pad) pad.classList.toggle('playing', isPlaying);
-    if(btn) btn.textContent = isPlaying ? '❚❚' : '▶';
+    if (pad) pad.classList.toggle('playing', isPlaying);
+    if (btn) btn.textContent = isPlaying ? '❚❚' : '▶';
   }
 
-  function togglePlay(id){
+  function togglePlay(id) {
     const sound = sounds.find(s => s.id === id);
-    if(!sound) return;
-    if(sound.playing){
+    if (!sound) return;
+    if (sound.playing) {
       sound.audio.pause();
       setPlaying(sound, false);
     } else {
@@ -385,43 +398,59 @@
     }
   }
 
-  function deleteSound(id){
+  async function deleteSound(id) {
     const sound = sounds.find(s => s.id === id);
-    if(!sound) return;
+    if (!sound) return;
+    
     sound.audio.pause();
-    URL.revokeObjectURL(sound.audio.src);
     sounds = sounds.filter(s => s.id !== id);
-    dbDelete(id);
-    persistOrder();
-    renderGrid();
+
+    try {
+      const storageRef = ref(storage, sound.storagePath);
+      await deleteObject(storageRef);
+      await deleteDoc(doc(db, "sounds", id));
+      persistOrder();
+      renderGrid();
+    } catch (error) {
+      console.error("Errore durante l'eliminazione:", error);
+    }
   }
 
-  function renameSound(id, newName){
+  async function renameSound(id, newName) {
     const sound = sounds.find(s => s.id === id);
-    if(!sound) return;
+    if (!sound) return;
     const trimmed = newName.trim();
     sound.name = trimmed.length ? trimmed : sound.name;
-    dbPut({ id: sound.id, name: sound.name, blob: sound.blob, order: sound.order });
+
+    try {
+      await updateDoc(doc(db, "sounds", id), { name: sound.name });
+    } catch (error) {
+      console.error("Errore nella modifica del nome:", error);
+    }
   }
 
-  function persistOrder(){
-    sounds.forEach((s, i) => {
-      s.order = i;
-      dbPut({ id: s.id, name: s.name, blob: s.blob, order: s.order });
-    });
+  async function persistOrder() {
+    for (let i = 0; i < sounds.length; i++) {
+      sounds[i].order = i;
+      try {
+        await updateDoc(doc(db, "sounds", sounds[i].id), { order: i });
+      } catch (error) {
+        console.error("Errore nel salvataggio dell'ordine:", error);
+      }
+    }
   }
 
-  function makeBars(seed){
+  function makeBars(seed) {
     let html = '';
-    for(let i=0;i<20;i++){
+    for (let i = 0; i < 20; i++) {
       const h = 20 + Math.round(((Math.sin(seed + i) + 1) / 2) * 80);
-      html += `<div class="bar" style="height:${h}%; animation-delay:${(i*0.04).toFixed(2)}s"></div>`;
+      html += `<div class="bar" style="height:${h}%; animation-delay:${(i * 0.04).toFixed(2)}s"></div>`;
     }
     return html;
   }
 
   /* ---------------- Render ---------------- */
-  function renderGrid(){
+  function renderGrid() {
     grid.querySelectorAll('.pad').forEach(p => p.remove());
     emptyState.style.display = sounds.length ? 'none' : 'block';
     libraryCount.textContent = sounds.length === 1 ? '1 suono caricato' : `${sounds.length} suoni caricati`;
@@ -434,7 +463,7 @@
         <div class="pad-top">
           <div class="pad-top-left">
             <span class="grip" data-grip="${sound.id}" aria-label="Trascina per riordinare" title="Trascina per riordinare">⠿</span>
-            <span class="pad-index">${String(i+1).padStart(2,'0')}</span>
+            <span class="pad-index">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
@@ -466,15 +495,15 @@
     grid.querySelectorAll('[data-seek]').forEach(inp => {
       const id = inp.getAttribute('data-seek');
       const sound = sounds.find(s => s.id === id);
-      inp.addEventListener('pointerdown', () => { if(sound) sound.scrubbing = true; });
+      inp.addEventListener('pointerdown', () => { if (sound) sound.scrubbing = true; });
       inp.addEventListener('input', () => {
-        if(sound){
+        if (sound) {
           sound.audio.currentTime = parseFloat(inp.value);
           const curEl = document.querySelector(`[data-current="${id}"]`);
-          if(curEl) curEl.textContent = formatTime(sound.audio.currentTime);
+          if (curEl) curEl.textContent = formatTime(sound.audio.currentTime);
         }
       });
-      ['pointerup','change'].forEach(evt => inp.addEventListener(evt, () => { if(sound) sound.scrubbing = false; }));
+      ['pointerup', 'change'].forEach(evt => inp.addEventListener(evt, () => { if (sound) sound.scrubbing = false; }));
     });
     grid.querySelectorAll('[data-rename]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -491,7 +520,7 @@
         renameSound(el.getAttribute('data-nameid'), el.textContent);
         el.textContent = sounds.find(s => s.id === el.getAttribute('data-nameid')).name;
       });
-      el.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); el.blur(); } });
+      el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
     });
 
     grid.querySelectorAll('[data-grip]').forEach(grip => {
@@ -499,19 +528,19 @@
     });
   }
 
-  function escapeHtml(str){
+  function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
   }
 
-  /* ---------------- Press-and-hold drag reorder ---------------- */
+  /* ---------------- Drag & Drop Reorder ---------------- */
   let dragState = null;
 
-  function onGripPointerDown(e){
+  function onGripPointerDown(e) {
     const id = e.currentTarget.getAttribute('data-grip');
     const pad = grid.querySelector(`[data-pad="${id}"]`);
-    if(!pad) return;
+    if (!pad) return;
     e.preventDefault();
     dragState = { id, pointerId: e.pointerId };
     pad.classList.add('dragging');
@@ -520,36 +549,35 @@
     document.addEventListener('pointerup', onGripPointerUp);
   }
 
-  function onGripPointerMove(e){
-    if(!dragState) return;
+  function onGripPointerMove(e) {
+    if (!dragState) return;
     const overEl = document.elementFromPoint(e.clientX, e.clientY);
     const overPad = overEl && overEl.closest ? overEl.closest('.pad') : null;
-    if(!overPad) return;
+    if (!overPad) return;
     const overId = overPad.getAttribute('data-pad');
-    if(overId === dragState.id) return;
+    if (overId === dragState.id) return;
 
     const fromIndex = sounds.findIndex(s => s.id === dragState.id);
     const toIndex = sounds.findIndex(s => s.id === overId);
-    if(fromIndex === -1 || toIndex === -1) return;
+    if (fromIndex === -1 || toIndex === -1) return;
 
     const [moved] = sounds.splice(fromIndex, 1);
     sounds.splice(toIndex, 0, moved);
     renderGrid();
 
     const pad = grid.querySelector(`[data-pad="${dragState.id}"]`);
-    if(pad) pad.classList.add('dragging');
+    if (pad) pad.classList.add('dragging');
   }
 
-  function onGripPointerUp(){
-    if(!dragState) return;
+  function onGripPointerUp() {
+    if (!dragState) return;
     const pad = grid.querySelector(`[data-pad="${dragState.id}"]`);
-    if(pad) pad.classList.remove('dragging');
+    if (pad) pad.classList.remove('dragging');
     document.removeEventListener('pointermove', onGripPointerMove);
     document.removeEventListener('pointerup', onGripPointerUp);
     persistOrder();
     dragState = null;
   }
 </script>
-
 </body>
 </html>
