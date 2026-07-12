@@ -97,6 +97,30 @@
   .library-count{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
   .library-hint{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px; }
 
+  /* ---------- CACHE BAR (risparmio dati) ---------- */
+  .cache-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    flex-wrap: wrap; margin-bottom: 18px; padding: 10px 16px;
+    border: 1px solid var(--border); border-radius: 14px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cache-status{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .cache-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .cache-btn{
+    font-family: var(--body); font-size: 12px; font-weight:600; cursor:pointer;
+    padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border-strong);
+    background: rgba(255,30,96,0.08); color: var(--orange-bright);
+    transition: all .15s ease;
+  }
+  .cache-btn:hover{ background: rgba(255,30,96,0.16); transform: translateY(-1px); }
+  .cache-btn:disabled{ opacity:0.5; cursor:default; transform:none; }
+  .cache-btn.ghost{ background: transparent; color: var(--text-muted); border-color: var(--border); }
+  .cache-btn.ghost:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); background: rgba(255,107,107,0.08); }
+
+  .icon-btn.cached{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .icon-btn.loading svg{ animation: spin 0.9s linear infinite; }
+  @keyframes spin{ from{ transform: rotate(0deg); } to{ transform: rotate(360deg); } }
+
   #libraryGrid{
     display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
     gap: 16px;
@@ -178,6 +202,17 @@
   }
   .play-btn:hover{ transform: scale(1.05); }
   .play-btn:active{ transform: scale(0.96); }
+  .play-btn svg{ width: 18px; height: 18px; }
+
+  .play-cluster{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .pause-btn-small{
+    width: 26px; height: 26px; border-radius:50%; border: 1px solid var(--border-strong); cursor:pointer;
+    background: rgba(255,255,255,0.05); color: var(--text-muted);
+    display:flex; align-items:center; justify-content:center; font-size: 10px;
+    flex-shrink:0; transition: all .15s ease;
+  }
+  .pause-btn-small:hover{ color: var(--orange-bright); border-color: var(--orange-bright); }
+  .pause-btn-small:disabled{ opacity: 0.35; cursor:default; }
 
   .seek-col{ flex:1; min-width:0; }
   .seek-row{ display:flex; align-items:center; gap:8px; }
@@ -366,6 +401,13 @@
       <h2>Libreria suoni</h2>
       <span class="library-count" id="libraryCount">0 suoni caricati</span>
     </div>
+    <div class="cache-bar" id="cacheBar">
+      <span class="cache-status" id="cacheStatus">0/0 suoni salvati in cache</span>
+      <div class="cache-actions">
+        <button type="button" class="cache-btn" id="downloadAllBtn">Scarica tutti</button>
+        <button type="button" class="cache-btn ghost" id="clearCacheBtn">Svuota cache</button>
+      </div>
+    </div>
     <div class="search-row">
       <span class="search-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -449,11 +491,151 @@
   let pendingDeleteId = null;
   const EMPTY_HTML = emptyState.innerHTML;
 
+  const downloadAllBtn = document.getElementById('downloadAllBtn');
+  const clearCacheBtn = document.getElementById('clearCacheBtn');
+  const cacheStatus = document.getElementById('cacheStatus');
+  const cacheBar = document.getElementById('cacheBar');
+
   let sounds = [];      
   let idCounter = 0;
   let searchQuery = '';
   let playerMode = 'multi'; // 'multi' oppure 'single'
   let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
+
+  /* ---------------- Icone SVG riusate nel rendering ---------------- */
+  const DOWNLOAD_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>`;
+  const CHECK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>`;
+  const RESTART_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+    <polyline points="1 4 1 10 7 10"></polyline>
+    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+  </svg>`;
+
+  /* ================================================================
+     CACHE PERMANENTE (Cache Storage API) — risparmio dati
+     I file audio, una volta salvati in cache, restano sul dispositivo
+     tra una sessione e l'altra: non vengono riscaricati da Firebase.
+     ================================================================ */
+  const AUDIO_CACHE_NAME = 'zerosfx-audio-cache-v1';
+  const CACHE_SUPPORTED = 'caches' in window;
+
+  if (!CACHE_SUPPORTED && cacheBar) {
+    cacheBar.innerHTML = '<span class="cache-status">Cache locale non supportata da questo browser.</span>';
+  }
+
+  async function getCachedBlobUrl(url) {
+    if (!CACHE_SUPPORTED) return null;
+    try {
+      const cache = await caches.open(AUDIO_CACHE_NAME);
+      const match = await cache.match(url);
+      if (!match) return null;
+      const blob = await match.blob();
+      return URL.createObjectURL(blob);
+    } catch (err) {
+      console.warn('Errore lettura cache:', err);
+      return null;
+    }
+  }
+
+  async function cacheAudioUrl(url) {
+    const cache = await caches.open(AUDIO_CACHE_NAME);
+    const response = await fetch(url, { mode: 'cors' });
+    if (!response.ok) throw new Error('Download fallito: ' + response.status);
+    await cache.put(url, response.clone());
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+  }
+
+  async function cacheSound(sound) {
+    const blobUrl = await cacheAudioUrl(sound.audioUrl);
+    if (sound.audio.src && sound.audio.src.startsWith('blob:')) {
+      URL.revokeObjectURL(sound.audio.src);
+    }
+    const wasPlaying = sound.playing;
+    const resumeTime = sound.audio.currentTime || 0;
+    sound.audio.src = blobUrl;
+    sound.audio.currentTime = resumeTime;
+    if (wasPlaying) sound.audio.play();
+    sound.cached = true;
+  }
+
+  async function clearAudioCache() {
+    if (CACHE_SUPPORTED) await caches.delete(AUDIO_CACHE_NAME);
+    sounds.forEach(sound => {
+      if (sound.audio.src && sound.audio.src.startsWith('blob:')) {
+        URL.revokeObjectURL(sound.audio.src);
+      }
+      if (sound.playing) { sound.audio.pause(); setPlaying(sound, false); }
+      sound.audio.src = sound.audioUrl;
+      sound.audio.preload = 'metadata';
+      sound.cached = false;
+    });
+  }
+
+  function updateCacheIcon(id) {
+    const btn = grid.querySelector(`[data-cache="${id}"]`);
+    const sound = sounds.find(s => s.id === id);
+    if (!btn || !sound) return;
+    btn.classList.toggle('cached', !!sound.cached);
+    btn.classList.remove('loading');
+    btn.title = sound.cached ? 'Suono salvato in cache' : 'Scarica per uso offline';
+    btn.innerHTML = sound.cached ? CHECK_SVG : DOWNLOAD_SVG;
+  }
+
+  function updateCacheStatus() {
+    if (!cacheStatus) return;
+    const cachedCount = sounds.filter(s => s.cached).length;
+    cacheStatus.textContent = sounds.length
+      ? `${cachedCount}/${sounds.length} suoni salvati in cache`
+      : 'Nessun suono in libreria';
+    if (downloadAllBtn) downloadAllBtn.disabled = !sounds.length || cachedCount === sounds.length;
+  }
+
+  if (downloadAllBtn) {
+    downloadAllBtn.addEventListener('click', async () => {
+      const toCache = sounds.filter(s => !s.cached);
+      if (!toCache.length) return;
+      downloadAllBtn.disabled = true;
+      clearCacheBtn.disabled = true;
+      const originalLabel = downloadAllBtn.textContent;
+      let done = 0;
+      for (const sound of toCache) {
+        downloadAllBtn.textContent = `Scaricamento ${done + 1}/${toCache.length}…`;
+        try {
+          await cacheSound(sound);
+          updateCacheIcon(sound.id);
+        } catch (err) {
+          console.error('Errore nel salvataggio in cache di', sound.name, err);
+        }
+        done++;
+        updateCacheStatus();
+      }
+      downloadAllBtn.textContent = originalLabel;
+      clearCacheBtn.disabled = false;
+      updateCacheStatus();
+    });
+  }
+
+  if (clearCacheBtn) {
+    clearCacheBtn.addEventListener('click', async () => {
+      clearCacheBtn.disabled = true;
+      downloadAllBtn.disabled = true;
+      try {
+        await clearAudioCache();
+        renderGrid();
+        updateCacheStatus();
+      } catch (err) {
+        console.error('Errore nello svuotamento della cache:', err);
+      }
+      clearCacheBtn.disabled = false;
+      updateCacheStatus();
+    });
+  }
 
   async function loadFromCloud() {
     try {
@@ -467,7 +649,9 @@
       records.sort((a, b) => a.order - b.order);
 
       records.forEach(rec => {
-        const audio = new Audio(rec.audioUrl);
+        const audio = new Audio();
+        audio.preload = 'metadata'; // scarica solo i metadati, non l'intero file: risparmio dati
+        audio.src = rec.audioUrl;
         const sound = { 
           id: rec.id, 
           name: rec.name, 
@@ -476,15 +660,29 @@
           order: rec.order, 
           audio, 
           playing: false, 
-          scrubbing: false 
+          scrubbing: false,
+          cached: false,
+          caching: false
         };
         wireAudioEvents(sound);
         sounds.push(sound);
 
         const numeric = parseInt(rec.id.replace('snd-', ''), 10);
         if (!isNaN(numeric) && numeric >= idCounter) idCounter = numeric + 1;
+
+        // Se il suono è già stato salvato in cache in precedenza, lo riusiamo dal disco
+        // invece di riscaricarlo da Firebase (nessun consumo di banda).
+        getCachedBlobUrl(rec.audioUrl).then(blobUrl => {
+          if (blobUrl) {
+            audio.src = blobUrl;
+            sound.cached = true;
+            updateCacheIcon(sound.id);
+          }
+          updateCacheStatus();
+        });
       });
       renderGrid();
+      updateCacheStatus();
     } catch (err) {
       console.warn('Errore di caricamento:', err);
     }
@@ -591,9 +789,10 @@
       const snapshot = await uploadBytes(storageRef, file);
       const audioUrl = await getDownloadURL(snapshot.ref);
 
-      const audio = new Audio(audioUrl);
+      const audio = new Audio();
+      audio.preload = 'metadata';
       const order = sounds.length;
-      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, playing: false, scrubbing: false };
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, playing: false, scrubbing: false, cached: false, caching: false };
       
       wireAudioEvents(sound);
       sounds.push(sound);
@@ -606,7 +805,24 @@
         order: sound.order
       });
 
+      // Il file è già disponibile localmente (appena caricato): lo salviamo subito
+      // in cache permanente così da non doverlo riscaricare da Firebase in seguito.
+      if (CACHE_SUPPORTED) {
+        try {
+          const cache = await caches.open(AUDIO_CACHE_NAME);
+          await cache.put(audioUrl, new Response(file));
+          audio.src = URL.createObjectURL(file);
+          sound.cached = true;
+        } catch (cacheErr) {
+          console.warn('Impossibile salvare in cache locale:', cacheErr);
+          audio.src = audioUrl;
+        }
+      } else {
+        audio.src = audioUrl;
+      }
+
       renderGrid();
+      updateCacheStatus();
     } catch (error) {
       console.error("Errore nel caricamento su Google Cloud:", error);
     }
@@ -635,11 +851,18 @@
     sound.playing = isPlaying;
     const pad = document.querySelector(`[data-pad="${sound.id}"]`);
     const btn = document.querySelector(`[data-playbtn="${sound.id}"]`);
+    const pauseBtn = document.querySelector(`[data-pausebtn="${sound.id}"]`);
     if (pad) pad.classList.toggle('playing', isPlaying);
-    if (btn) btn.textContent = isPlaying ? '❚❚' : '▶';
+    if (btn) {
+      btn.innerHTML = isPlaying ? RESTART_SVG : '▶';
+      btn.title = isPlaying ? 'Riavvia da capo' : 'Riproduci';
+      btn.setAttribute('aria-label', isPlaying ? 'Riavvia da capo' : 'Riproduci');
+    }
+    if (pauseBtn) pauseBtn.disabled = !isPlaying;
     if (sound.id === activeSoundId) updateBottomBar(sound);
   }
 
+  // Vero play/pausa, usato dalla barra fissa in basso
   function togglePlay(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
@@ -661,6 +884,17 @@
     }
   }
 
+  // Pulsante grande del pad: Play quando fermo, Restart (riparte da zero) quando sta suonando
+  function padMainClick(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound) return;
+    if (sound.playing) {
+      restartSound(id);
+    } else {
+      togglePlay(id);
+    }
+  }
+
   function restartSound(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
@@ -676,6 +910,14 @@
     sound.audio.play();
     setPlaying(sound, true);
     activeSoundId = id;
+  }
+
+  // Pulsante piccolo accanto al play: mette solo in pausa, senza riavvolgere
+  function pauseSound(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound || !sound.playing) return;
+    sound.audio.pause();
+    setPlaying(sound, false);
   }
 
   /* ---------------- Barra di riproduzione fissa ---------------- */
@@ -734,14 +976,21 @@
     if (!sound) return;
     
     sound.audio.pause();
+    if (sound.audio.src && sound.audio.src.startsWith('blob:')) {
+      URL.revokeObjectURL(sound.audio.src);
+    }
     sounds = sounds.filter(s => s.id !== id);
 
     try {
       const storageRef = ref(storage, sound.storagePath);
       await deleteObject(storageRef);
       await deleteDoc(doc(db, "sounds", id));
+      if (CACHE_SUPPORTED) {
+        try { const cache = await caches.open(AUDIO_CACHE_NAME); await cache.delete(sound.audioUrl); } catch {}
+      }
       persistOrder();
       renderGrid();
+      updateCacheStatus();
     } catch (error) {
       console.error("Errore durante l'eliminazione:", error);
     }
@@ -809,11 +1058,8 @@
             <span class="pad-index">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
-            <button class="icon-btn" data-restart="${sound.id}" title="Riavvia da capo" aria-label="Riavvia da capo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-              </svg>
+            <button class="icon-btn${sound.cached ? ' cached' : ''}" data-cache="${sound.id}" title="${sound.cached ? 'Suono salvato in cache' : 'Scarica per uso offline'}" aria-label="Salva in cache locale">
+              ${sound.cached ? CHECK_SVG : DOWNLOAD_SVG}
             </button>
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
             <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">
@@ -830,7 +1076,10 @@
         <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
         <div class="waveform">${makeBars(i)}</div>
         <div class="pad-controls">
-          <button class="play-btn" data-playbtn="${sound.id}" aria-label="Riproduci">${sound.playing ? '❚❚' : '▶'}</button>
+          <div class="play-cluster">
+            <button class="play-btn" data-playbtn="${sound.id}" aria-label="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}" title="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}">${sound.playing ? RESTART_SVG : '▶'}</button>
+            <button class="pause-btn-small" data-pausebtn="${sound.id}" aria-label="Pausa" title="Pausa" ${sound.playing ? '' : 'disabled'}>❚❚</button>
+          </div>
           <div class="seek-col">
             <div class="seek-row">
               <span class="time-label current" data-current="${sound.id}">0:00</span>
@@ -844,10 +1093,27 @@
     });
 
     grid.querySelectorAll('[data-playbtn]').forEach(btn => {
-      btn.addEventListener('click', () => togglePlay(btn.getAttribute('data-playbtn')));
+      btn.addEventListener('click', () => padMainClick(btn.getAttribute('data-playbtn')));
     });
-    grid.querySelectorAll('[data-restart]').forEach(btn => {
-      btn.addEventListener('click', () => restartSound(btn.getAttribute('data-restart')));
+    grid.querySelectorAll('[data-pausebtn]').forEach(btn => {
+      btn.addEventListener('click', () => pauseSound(btn.getAttribute('data-pausebtn')));
+    });
+    grid.querySelectorAll('[data-cache]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-cache');
+        const sound = sounds.find(s => s.id === id);
+        if (!sound || sound.cached || sound.caching || !CACHE_SUPPORTED) return;
+        sound.caching = true;
+        btn.classList.add('loading');
+        try {
+          await cacheSound(sound);
+        } catch (err) {
+          console.error('Errore nel salvataggio in cache:', err);
+        }
+        sound.caching = false;
+        updateCacheIcon(id);
+        updateCacheStatus();
+      });
     });
     grid.querySelectorAll('[data-delete]').forEach(btn => {
       btn.addEventListener('click', () => openDeleteConfirm(btn.getAttribute('data-delete')));
