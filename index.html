@@ -8,20 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #0a0605;
-    --card: #1a100a;
-    --border: rgba(255,140,64,0.16);
-    --border-strong: rgba(255,140,64,0.4);
-    --orange: #ff6a1a;
-    --orange-bright: #ff9a4d;
-    --amber: #ffb347;
-    --text: #f5ece1;
-    --text-muted: #a68f7c;
-    --text-dim: #6e5a4c;
+    --bg: #08070a;
+    --card: #16131a;
+    --border: rgba(255,30,96,0.16);
+    --border-strong: rgba(255,30,96,0.4);
+    --orange: #FF1E60;
+    --orange-bright: #ff5c8a;
+    --amber: #ff8fb0;
+    --text: #f2eef4;
+    --text-muted: #9b95a3;
+    --text-dim: #6b6472;
     --display: 'Chakra Petch', sans-serif;
     --body: 'Inter', sans-serif;
     --mono: 'JetBrains Mono', monospace;
-    --radius: 14px;
+    --radius: 28px;
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
@@ -31,7 +31,7 @@
     color: var(--text);
     font-family: var(--body);
     line-height: 1.5;
-    background-image: radial-gradient(circle at 1px 1px, rgba(255,140,64,0.06) 1px, transparent 0);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
     background-size: 26px 26px;
     min-height: 100vh;
   }
@@ -44,16 +44,12 @@
   /* ---------- HEADER / WELCOME ---------- */
   header{ padding: 60px 28px 20px; text-align: center; position: relative; }
   .logo{
-    font-family: var(--display); font-weight: 700; font-size: 22px;
-    letter-spacing: 0.02em; display:inline-flex; align-items:center; gap:9px;
+    display:inline-flex; align-items:center; justify-content:center;
     margin-bottom: 18px;
   }
-  .logo .zero{
-    display:inline-flex; align-items:center; justify-content:center;
-    width: 28px; height: 28px; border-radius: 50%;
-    border: 2px solid var(--orange); color: var(--orange-bright);
-    font-family: var(--mono); font-size: 13px;
-    box-shadow: 0 0 14px rgba(255,106,26,0.55);
+  .logo img{
+    height: 56px; width: auto; display:block;
+    filter: drop-shadow(0 0 14px rgba(255,30,96,0.35));
   }
   header h1{ font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); }
   header p{ color: var(--text-muted); font-size: 14px; margin-top: 10px; }
@@ -62,26 +58,29 @@
   .glow-strip::before{
     content:''; position:absolute; left:50%; bottom:-50px; transform: translateX(-50%);
     width: 70%; max-width: 700px; height: 120px; border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(255,120,30,0.5), rgba(255,90,10,0.12) 45%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(255,30,96,0.5), rgba(220,15,80,0.12) 45%, transparent 70%);
     filter: blur(6px);
   }
 
   /* ---------- DROPZONE ---------- */
   .dropzone{
     max-width: 760px; margin: -40px auto 0; position: relative; z-index: 5;
-    border: 1.5px dashed var(--border-strong); border-radius: 20px;
-    background: linear-gradient(180deg, rgba(26,16,10,0.9), rgba(18,10,7,0.9));
+    border: 1px solid var(--border); border-radius: 30px;
+    background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.03);
     padding: 38px 24px; text-align:center; cursor:pointer;
-    transition: border-color .2s ease, background .2s ease;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
   }
   .dropzone:hover, .dropzone.drag-over{
-    border-color: var(--orange-bright);
-    background: linear-gradient(180deg, rgba(34,20,10,0.95), rgba(20,11,7,0.95));
+    border-color: var(--border-strong);
+    background: linear-gradient(180deg, rgba(36,28,38,0.9), rgba(20,16,22,0.95));
+    box-shadow: 0 24px 60px -20px rgba(255,30,96,0.22), inset 0 1px 0 rgba(255,255,255,0.05);
+    transform: translateY(-2px);
   }
   .dropzone .dz-icon{
     width: 48px; height: 48px; margin: 0 auto 14px; border-radius: 50%;
     display:flex; align-items:center; justify-content:center;
-    background: rgba(255,106,26,0.12); border: 1px solid var(--border-strong);
+    background: rgba(255,30,96,0.12); border: 1px solid var(--border-strong);
     color: var(--orange-bright); font-size: 20px;
   }
   .dropzone h3{ font-family: var(--display); font-size: 16px; font-weight:600; margin-bottom:6px; }
@@ -118,12 +117,12 @@
   }
   .pad.playing{
     border-color: var(--orange-bright);
-    box-shadow: 0 0 0 1px rgba(255,140,64,0.35), 0 0 34px -6px rgba(255,106,26,0.55);
+    box-shadow: 0 0 0 1px rgba(255,30,96,0.35), 0 0 34px -6px rgba(255,30,96,0.55);
     animation: pad-pulse 1.6s ease-in-out infinite;
   }
   @keyframes pad-pulse{
-    0%,100%{ box-shadow: 0 0 0 1px rgba(255,140,64,0.35), 0 0 24px -8px rgba(255,106,26,0.5); }
-    50%{ box-shadow: 0 0 0 1px rgba(255,160,80,0.55), 0 0 40px -4px rgba(255,120,30,0.8); }
+    0%,100%{ box-shadow: 0 0 0 1px rgba(255,30,96,0.35), 0 0 24px -8px rgba(255,30,96,0.5); }
+    50%{ box-shadow: 0 0 0 1px rgba(255,92,138,0.55), 0 0 40px -4px rgba(255,30,96,0.8); }
   }
   .pad.dragging{
     z-index: 40; cursor: grabbing;
@@ -150,7 +149,7 @@
     display:flex; align-items:center; justify-content:center; cursor:pointer; font-size: 12px;
     transition: all .15s ease;
   }
-  .icon-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,106,26,0.1); }
+  .icon-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
   .icon-btn.danger:hover{ color: #ff6b6b; }
 
   .pad-name{
@@ -171,9 +170,9 @@
   .pad-controls{ display:flex; align-items:center; gap: 14px; margin-bottom: 10px; }
   .play-btn{
     width: 54px; height:54px; border-radius:50%; border: none; cursor:pointer;
-    background: linear-gradient(135deg, var(--orange), #c94d0f); color:#180d06;
+    background: linear-gradient(135deg, var(--orange), #8f0c3a); color:#180614;
     display:flex; align-items:center; justify-content:center; font-size: 19px;
-    box-shadow: 0 8px 22px -6px rgba(255,90,10,0.9), 0 0 0 1px rgba(255,180,110,0.25);
+    box-shadow: 0 8px 22px -6px rgba(255,30,96,0.9), 0 0 0 1px rgba(255,160,190,0.25);
     flex-shrink:0;
     transition: transform .15s ease;
   }
@@ -191,13 +190,150 @@
   }
   .seek-row input[type="range"]::-webkit-slider-thumb{
     -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
-    background: var(--orange-bright); cursor:pointer; box-shadow: 0 0 6px rgba(255,106,26,0.8);
+    background: var(--orange-bright); cursor:pointer; box-shadow: 0 0 6px rgba(255,30,96,0.8);
     margin-top: -1px;
   }
   .seek-row input[type="range"]::-moz-range-thumb{
     width:13px; height:13px; border-radius:50%; border:none;
     background: var(--orange-bright); cursor:pointer;
   }
+
+  /* ---------- MODE TOGGLE (Multi / Single) ---------- */
+  .mode-toggle{
+    display:inline-flex; align-items:center; gap:10px; margin-top: 18px;
+    font-family: var(--mono); font-size: 12px; color: var(--text-dim);
+  }
+  .mode-toggle .mode-label{ transition: color .2s ease; }
+  .mode-toggle .mode-label.active{ color: var(--orange-bright); }
+  .mode-switch{
+    position: relative; width: 46px; height: 24px; border-radius: 999px;
+    border: 1px solid var(--border-strong); background: rgba(255,255,255,0.03);
+    cursor: pointer; flex-shrink: 0; padding: 0;
+  }
+  .mode-switch::after{
+    content:''; position:absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+    border-radius: 50%; background: var(--orange-bright);
+    box-shadow: 0 0 8px rgba(255,30,96,0.7);
+    transition: transform .2s ease;
+  }
+  .mode-switch[aria-checked="true"]::after{ transform: translateX(22px); }
+
+  /* ---------- SEARCH BAR ---------- */
+  .search-row{
+    position: relative; margin-bottom: 26px;
+  }
+  .search-row .search-icon{
+    position:absolute; left: 20px; top:50%; transform: translateY(-50%);
+    width: 17px; height: 17px; color: var(--text-dim); pointer-events:none;
+    transition: color .2s ease;
+  }
+  .search-row .search-icon svg{ display:block; width:100%; height:100%; }
+  .search-row:focus-within .search-icon{ color: var(--orange-bright); }
+  .search-input{
+    width:100%; padding: 15px 20px 15px 48px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.045);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 14px 34px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    color: var(--text); font-family: var(--body); font-size: 14.5px; outline:none;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .search-input::placeholder{ color: var(--text-dim); }
+  .search-input:focus{
+    border-color: rgba(255,30,96,0.45);
+    background: rgba(255,255,255,0.065);
+    box-shadow: 0 16px 40px -14px rgba(255,30,96,0.3), 0 0 0 4px rgba(255,30,96,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  /* ---------- BOTTOM FLOATING PLAYER ---------- */
+  .bottom-player{
+    position: fixed; left: 50%; bottom: 22px; z-index: 100;
+    width: calc(100% - 40px); max-width: 720px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    padding: 10px 18px 10px 14px; display:flex; align-items:center; gap:14px;
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    backdrop-filter: blur(24px) saturate(170%);
+    box-shadow: 0 20px 50px -16px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.06);
+    transform: translateX(-50%) translateY(140%);
+    opacity: 0;
+    transition: transform .38s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+  }
+  .bottom-player.visible{ transform: translateX(-50%) translateY(0); opacity: 1; }
+  .bp-info{
+    display:flex; flex-direction:column; justify-content:center; gap: 3px;
+    min-width: 110px; max-width: 200px; flex-shrink:0; padding-left: 8px;
+  }
+  .bp-name{
+    display:block; font-family: var(--display); font-weight:700; font-size: 13.5px;
+    line-height: 1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .bp-time{ font-family: var(--mono); font-size: 10.5px; color: var(--text-dim); line-height:1; }
+  .bp-controls{ flex:1; display:flex; align-items:center; gap:12px; min-width:0; }
+  .bp-btn{
+    width: 36px; height: 36px; border-radius: 50%; border:none; cursor:pointer; flex-shrink:0;
+    background: linear-gradient(135deg, var(--orange), #8f0c3a); color:#180614;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    box-shadow: 0 4px 14px -4px rgba(255,30,96,0.8);
+    transition: transform .15s ease;
+  }
+  .bp-btn:hover{ transform: scale(1.06); }
+  .bp-btn.secondary{
+    background: rgba(255,255,255,0.06); color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.08); box-shadow:none;
+  }
+  .bp-seek{
+    -webkit-appearance:none; flex:1; min-width:0; height:4px; border-radius:2px;
+    background: rgba(255,255,255,0.14); outline:none;
+  }
+  .bp-seek::-webkit-slider-thumb{
+    -webkit-appearance:none; width:12px; height:12px; border-radius:50%;
+    background: var(--orange-bright); cursor:pointer; box-shadow: 0 0 6px rgba(255,30,96,0.8);
+    margin-top:-1px;
+  }
+  .bp-seek::-moz-range-thumb{
+    width:12px; height:12px; border-radius:50%; border:none;
+    background: var(--orange-bright); cursor:pointer;
+  }
+  body{ padding-bottom: 110px; }
+
+  @media (max-width: 560px){
+    .bottom-player{ width: calc(100% - 24px); padding: 9px 14px 9px 12px; gap:10px; }
+    .bp-info{ min-width: 80px; max-width: 120px; }
+  }
+
+  /* ---------- CONFERMA ELIMINAZIONE ---------- */
+  .confirm-overlay{
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.55);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  .confirm-overlay.visible{ opacity: 1; pointer-events: auto; }
+  .confirm-card{
+    background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 22px; padding: 28px 26px;
+    max-width: 320px; width: calc(100% - 40px); text-align: center;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.7);
+    transform: translateY(10px) scale(0.97);
+    transition: transform .22s cubic-bezier(.22,1,.36,1);
+  }
+  .confirm-overlay.visible .confirm-card{ transform: translateY(0) scale(1); }
+  .confirm-card h4{ font-family: var(--display); font-size: 16px; font-weight:700; margin-bottom: 8px; }
+  .confirm-card p{ color: var(--text-muted); font-size: 13px; line-height: 1.5; margin-bottom: 22px; word-break: break-word; }
+  .confirm-actions{ display:flex; gap: 10px; }
+  .confirm-btn{
+    flex:1; padding: 11px; border-radius: 999px; border:none; cursor:pointer;
+    font-family: var(--body); font-size: 13.5px; font-weight:600;
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .confirm-btn:hover{ transform: scale(1.03); }
+  .confirm-btn.cancel{ background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); }
+  .confirm-btn.delete{ background: linear-gradient(135deg, #ff5c6b, #b8202f); color: #fff; }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
@@ -207,9 +343,13 @@
 <body>
 
 <header>
-  <div class="logo"><span class="zero">0</span>zeroSFX</div>
-  <h1>Bentornato nel tuo soundboard</h1>
+  <div class="logo"><img src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX"></div>
   <p>Carica un audio, rinominalo, falli partire quando vuoi.</p>
+  <div class="mode-toggle" role="group" aria-label="Modalità riproduzione">
+    <span class="mode-label active" id="modeLabelMulti">Multi</span>
+    <button type="button" class="mode-switch" id="modeSwitch" role="switch" aria-checked="false" aria-label="Passa a modalità Single Player"></button>
+    <span class="mode-label" id="modeLabelSingle">Single</span>
+  </div>
   <div class="glow-strip"></div>
 </header>
 
@@ -226,6 +366,15 @@
       <h2>Libreria suoni</h2>
       <span class="library-count" id="libraryCount">0 suoni caricati</span>
     </div>
+    <div class="search-row">
+      <span class="search-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </span>
+      <input type="text" id="searchInput" class="search-input" placeholder="Cerca un suono per nome…" aria-label="Cerca un suono">
+    </div>
     <div class="library-hint">tieni premuto sull'icona ⠿ e trascina per riordinare</div>
     <div id="libraryGrid">
       <div class="empty-state" id="emptyState">
@@ -236,9 +385,32 @@
   </section>
 </div>
 
+<div class="bottom-player" id="bottomPlayer">
+  <div class="bp-info">
+    <span class="bp-name" id="bpName">—</span>
+    <span class="bp-time" id="bpTime">0:00 / 0:00</span>
+  </div>
+  <div class="bp-controls">
+    <button class="bp-btn" id="bpPlayBtn" aria-label="Play/Pausa">▶</button>
+    <input type="range" id="bpSeek" class="bp-seek" min="0" max="0" step="0.05" value="0" aria-label="Posizione riproduzione">
+    <button class="bp-btn secondary" id="bpStopBtn" aria-label="Stop">⏹</button>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-card">
+    <h4>Eliminare questo suono?</h4>
+    <p id="confirmText">Questa azione non può essere annullata.</p>
+    <div class="confirm-actions">
+      <button class="confirm-btn cancel" id="confirmCancelBtn">Annulla</button>
+      <button class="confirm-btn delete" id="confirmDeleteBtn">Elimina</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, deleteDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
   // I tuoi dati ufficiali
@@ -260,9 +432,28 @@
   const grid = document.getElementById('libraryGrid');
   const emptyState = document.getElementById('emptyState');
   const libraryCount = document.getElementById('libraryCount');
+  const searchInput = document.getElementById('searchInput');
+  const modeSwitch = document.getElementById('modeSwitch');
+  const modeLabelMulti = document.getElementById('modeLabelMulti');
+  const modeLabelSingle = document.getElementById('modeLabelSingle');
+  const bottomPlayer = document.getElementById('bottomPlayer');
+  const bpName = document.getElementById('bpName');
+  const bpTime = document.getElementById('bpTime');
+  const bpPlayBtn = document.getElementById('bpPlayBtn');
+  const bpStopBtn = document.getElementById('bpStopBtn');
+  const bpSeek = document.getElementById('bpSeek');
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  const confirmText = document.getElementById('confirmText');
+  const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+  const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+  let pendingDeleteId = null;
+  const EMPTY_HTML = emptyState.innerHTML;
 
   let sounds = [];      
   let idCounter = 0;
+  let searchQuery = '';
+  let playerMode = 'multi'; // 'multi' oppure 'single'
+  let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
 
   async function loadFromCloud() {
     try {
@@ -301,6 +492,34 @@
 
   loadFromCloud();
 
+  /* ---------------- Modalità Multi / Single (persistenza) ---------------- */
+  const PLAYER_MODE_DOC = doc(db, "settings", "player");
+
+  async function loadPlayerMode() {
+    try {
+      const snap = await getDoc(PLAYER_MODE_DOC);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.mode === 'single' || data.mode === 'multi') {
+          playerMode = data.mode;
+          applyModeUI();
+        }
+      }
+    } catch (err) {
+      console.warn('Errore nel caricamento della modalità:', err);
+    }
+  }
+
+  async function savePlayerMode() {
+    try {
+      await setDoc(PLAYER_MODE_DOC, { mode: playerMode }, { merge: true });
+    } catch (err) {
+      console.error('Errore nel salvataggio della modalità:', err);
+    }
+  }
+
+  loadPlayerMode();
+
   /* ---------------- Upload ---------------- */
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
@@ -321,6 +540,38 @@
     files.forEach(addSound);
     fileInput.value = '';
   }
+
+  /* ---------------- Modalità Multi / Single ---------------- */
+  function applyModeUI() {
+    const isSingle = playerMode === 'single';
+    modeSwitch.setAttribute('aria-checked', String(isSingle));
+    modeLabelMulti.classList.toggle('active', !isSingle);
+    modeLabelSingle.classList.toggle('active', isSingle);
+  }
+
+  modeSwitch.addEventListener('click', () => {
+    playerMode = playerMode === 'multi' ? 'single' : 'multi';
+    applyModeUI();
+    savePlayerMode();
+
+    if (playerMode === 'single') {
+      // In modalità Single teniamo acceso al massimo un suono alla volta
+      let keepId = null;
+      sounds.forEach(s => { if (s.playing && keepId === null) keepId = s.id; });
+      sounds.forEach(s => {
+        if (s.playing && s.id !== keepId) {
+          s.audio.pause();
+          setPlaying(s, false);
+        }
+      });
+    }
+  });
+
+  /* ---------------- Ricerca ---------------- */
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value;
+    renderGrid();
+  });
 
   function niceName(filename) { return filename.replace(/\.[^/.]+$/, ''); }
 
@@ -367,6 +618,7 @@
       const seekEl = document.querySelector(`[data-seek="${sound.id}"]`);
       if (totalEl) totalEl.textContent = formatTime(sound.audio.duration);
       if (seekEl) seekEl.max = sound.audio.duration || 0;
+      if (sound.id === activeSoundId) updateBottomBar(sound);
     });
     sound.audio.addEventListener('timeupdate', () => {
       if (sound.scrubbing) return;
@@ -374,6 +626,7 @@
       const curEl = document.querySelector(`[data-current="${sound.id}"]`);
       if (seekEl) seekEl.value = sound.audio.currentTime;
       if (curEl) curEl.textContent = formatTime(sound.audio.currentTime);
+      if (sound.id === activeSoundId) updateBottomBar(sound);
     });
     sound.audio.addEventListener('ended', () => setPlaying(sound, false));
   }
@@ -384,6 +637,7 @@
     const btn = document.querySelector(`[data-playbtn="${sound.id}"]`);
     if (pad) pad.classList.toggle('playing', isPlaying);
     if (btn) btn.textContent = isPlaying ? '❚❚' : '▶';
+    if (sound.id === activeSoundId) updateBottomBar(sound);
   }
 
   function togglePlay(id) {
@@ -393,10 +647,70 @@
       sound.audio.pause();
       setPlaying(sound, false);
     } else {
+      if (playerMode === 'single') {
+        sounds.forEach(s => {
+          if (s.id !== id && s.playing) {
+            s.audio.pause();
+            setPlaying(s, false);
+          }
+        });
+      }
       sound.audio.play();
       setPlaying(sound, true);
+      activeSoundId = id;
     }
   }
+
+  /* ---------------- Barra di riproduzione fissa ---------------- */
+  function updateBottomBar(sound) {
+    if (!sound || sound.id !== activeSoundId) return;
+    bottomPlayer.classList.add('visible');
+    bpName.textContent = sound.name;
+    bpPlayBtn.textContent = sound.playing ? '❚❚' : '▶';
+    bpSeek.max = sound.audio.duration || 0;
+    bpSeek.value = sound.audio.currentTime || 0;
+    bpTime.textContent = `${formatTime(sound.audio.currentTime)} / ${formatTime(sound.audio.duration)}`;
+  }
+
+  bpPlayBtn.addEventListener('click', () => {
+    if (activeSoundId) togglePlay(activeSoundId);
+  });
+  bpStopBtn.addEventListener('click', () => {
+    const sound = sounds.find(s => s.id === activeSoundId);
+    if (!sound) return;
+    sound.audio.pause();
+    sound.audio.currentTime = 0;
+    setPlaying(sound, false);
+    updateBottomBar(sound);
+  });
+  bpSeek.addEventListener('input', () => {
+    const sound = sounds.find(s => s.id === activeSoundId);
+    if (!sound) return;
+    sound.audio.currentTime = parseFloat(bpSeek.value);
+    bpTime.textContent = `${formatTime(sound.audio.currentTime)} / ${formatTime(sound.audio.duration)}`;
+  });
+
+  /* ---------------- Conferma eliminazione ---------------- */
+  function openDeleteConfirm(id) {
+    const sound = sounds.find(s => s.id === id);
+    pendingDeleteId = id;
+    confirmText.textContent = sound
+      ? `"${sound.name}" verrà rimosso definitivamente.`
+      : 'Questa azione non può essere annullata.';
+    confirmOverlay.classList.add('visible');
+  }
+  function closeDeleteConfirm() {
+    confirmOverlay.classList.remove('visible');
+    pendingDeleteId = null;
+  }
+  confirmCancelBtn.addEventListener('click', closeDeleteConfirm);
+  confirmOverlay.addEventListener('click', e => {
+    if (e.target === confirmOverlay) closeDeleteConfirm();
+  });
+  confirmDeleteBtn.addEventListener('click', () => {
+    if (pendingDeleteId) deleteSound(pendingDeleteId);
+    closeDeleteConfirm();
+  });
 
   async function deleteSound(id) {
     const sound = sounds.find(s => s.id === id);
@@ -452,10 +766,22 @@
   /* ---------------- Render ---------------- */
   function renderGrid() {
     grid.querySelectorAll('.pad').forEach(p => p.remove());
-    emptyState.style.display = sounds.length ? 'none' : 'block';
     libraryCount.textContent = sounds.length === 1 ? '1 suono caricato' : `${sounds.length} suoni caricati`;
 
-    sounds.forEach((sound, i) => {
+    const query = searchQuery.trim().toLowerCase();
+    const visibleSounds = query ? sounds.filter(s => s.name.toLowerCase().includes(query)) : sounds;
+
+    if (!sounds.length) {
+      emptyState.innerHTML = EMPTY_HTML;
+      emptyState.style.display = 'block';
+    } else if (!visibleSounds.length) {
+      emptyState.innerHTML = '<span style="display:inline-flex;width:26px;height:26px;margin:0 auto 10px;color:var(--text-dim);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>Nessun suono corrisponde alla ricerca.';
+      emptyState.style.display = 'block';
+    } else {
+      emptyState.style.display = 'none';
+    }
+
+    visibleSounds.forEach((sound, i) => {
       const pad = document.createElement('div');
       pad.className = 'pad' + (sound.playing ? ' playing' : '');
       pad.setAttribute('data-pad', sound.id);
@@ -467,7 +793,15 @@
           </div>
           <div class="pad-icon-btns">
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
-            <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">✕</button>
+            <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+              </svg>
+            </button>
           </div>
         </div>
         <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
@@ -490,7 +824,7 @@
       btn.addEventListener('click', () => togglePlay(btn.getAttribute('data-playbtn')));
     });
     grid.querySelectorAll('[data-delete]').forEach(btn => {
-      btn.addEventListener('click', () => deleteSound(btn.getAttribute('data-delete')));
+      btn.addEventListener('click', () => openDeleteConfirm(btn.getAttribute('data-delete')));
     });
     grid.querySelectorAll('[data-seek]').forEach(inp => {
       const id = inp.getAttribute('data-seek');
