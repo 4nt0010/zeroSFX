@@ -608,7 +608,13 @@
     const storageRef = ref(storage, storagePath);
 
     try {
-      const snapshot = await uploadBytes(storageRef, file);
+      // Cache-Control: dice al browser di tenere il file per 30 giorni dopo averlo scaricato
+      // una prima volta, così i riascolti (anche dopo aver ricaricato la pagina) non
+      // consumano più dati — è il browser stesso a gestirlo, in modo nativo e affidabile.
+      const snapshot = await uploadBytes(storageRef, file, {
+        contentType: file.type || 'audio/mpeg',
+        cacheControl: 'public, max-age=2592000'
+      });
       const audioUrl = await getDownloadURL(snapshot.ref);
 
       const audio = new Audio();
