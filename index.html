@@ -673,7 +673,9 @@
 
         // Se il suono è già stato salvato in cache in precedenza, lo riusiamo dal disco
         // invece di riscaricarlo da Firebase (nessun consumo di banda).
-        getCachedBlobUrl(rec.audioUrl).then(blobUrl => {
+        // Salviamo la Promise su sound.cacheReady: il play la aspetterà sempre,
+        // così non può mai partire dalla rete se il file è già scaricato.
+        sound.cacheReady = getCachedBlobUrl(rec.audioUrl).then(blobUrl => {
           if (blobUrl) {
             audio.src = blobUrl;
             sound.cached = true;
@@ -872,13 +874,14 @@
   }
 
   // Vero play/pausa, usato dalla barra fissa in basso
-  function togglePlay(id) {
+  async function togglePlay(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
     if (sound.playing) {
       sound.audio.pause();
       setPlaying(sound, false);
     } else {
+      if (sound.cacheReady) await sound.cacheReady; // aspetta il controllo cache: mai rete se già scaricato
       if (playerMode === 'single') {
         sounds.forEach(s => {
           if (s.id !== id && s.playing) {
@@ -900,9 +903,10 @@
     restartSound(id);
   }
 
-  function restartSound(id) {
+  async function restartSound(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
+    if (sound.cacheReady) await sound.cacheReady; // aspetta il controllo cache: mai rete se già scaricato
     sound.audio.currentTime = 0;
     if (playerMode === 'single') {
       sounds.forEach(s => {
