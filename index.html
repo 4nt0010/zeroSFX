@@ -661,6 +661,23 @@
     }
   }
 
+  function restartSound(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound) return;
+    sound.audio.currentTime = 0;
+    if (playerMode === 'single') {
+      sounds.forEach(s => {
+        if (s.id !== id && s.playing) {
+          s.audio.pause();
+          setPlaying(s, false);
+        }
+      });
+    }
+    sound.audio.play();
+    setPlaying(sound, true);
+    activeSoundId = id;
+  }
+
   /* ---------------- Barra di riproduzione fissa ---------------- */
   function updateBottomBar(sound) {
     if (!sound || sound.id !== activeSoundId) return;
@@ -792,6 +809,12 @@
             <span class="pad-index">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
+            <button class="icon-btn" data-restart="${sound.id}" title="Riavvia da capo" aria-label="Riavvia da capo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                <polyline points="1 4 1 10 7 10"></polyline>
+                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+              </svg>
+            </button>
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
             <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
@@ -822,6 +845,9 @@
 
     grid.querySelectorAll('[data-playbtn]').forEach(btn => {
       btn.addEventListener('click', () => togglePlay(btn.getAttribute('data-playbtn')));
+    });
+    grid.querySelectorAll('[data-restart]').forEach(btn => {
+      btn.addEventListener('click', () => restartSound(btn.getAttribute('data-restart')));
     });
     grid.querySelectorAll('[data-delete]').forEach(btn => {
       btn.addEventListener('click', () => openDeleteConfirm(btn.getAttribute('data-delete')));
