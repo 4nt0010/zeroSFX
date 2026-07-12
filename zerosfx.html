@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zeroSFX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0605;
+    --card: #1a100a;
+    --border: rgba(255,140,64,0.16);
+    --border-strong: rgba(255,140,64,0.4);
+    --orange: #ff6a1a;
+    --orange-bright: #ff9a4d;
+    --amber: #ffb347;
+    --text: #f5ece1;
+    --text-muted: #a68f7c;
+    --text-dim: #6e5a4c;
+    --display: 'Chakra Petch', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --radius: 14px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.5;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,140,64,0.06) 1px, transparent 0);
+    background-size: 26px 26px;
+    min-height: 100vh;
+  }
+
+  ::selection{ background: var(--orange); color: #1a0f08; }
+  :focus-visible{ outline: 2px solid var(--orange-bright); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap{ max-width: 1000px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- HEADER / WELCOME ---------- */
+  header{ padding: 60px 28px 20px; text-align: center; position: relative; }
+  .logo{
+    font-family: var(--display); font-weight: 700; font-size: 22px;
+    letter-spacing: 0.02em; display:inline-flex; align-items:center; gap:9px;
+    margin-bottom: 18px;
+  }
+  .logo .zero{
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--orange); color: var(--orange-bright);
+    font-family: var(--mono); font-size: 13px;
+    box-shadow: 0 0 14px rgba(255,106,26,0.55);
+  }
+  header h1{ font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); }
+  header p{ color: var(--text-muted); font-size: 14px; margin-top: 10px; }
+
+  .glow-strip{ height: 90px; position: relative; overflow:hidden; }
+  .glow-strip::before{
+    content:''; position:absolute; left:50%; bottom:-50px; transform: translateX(-50%);
+    width: 70%; max-width: 700px; height: 120px; border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,120,30,0.5), rgba(255,90,10,0.12) 45%, transparent 70%);
+    filter: blur(6px);
+  }
+
+  /* ---------- DROPZONE ---------- */
+  .dropzone{
+    max-width: 760px; margin: -40px auto 0; position: relative; z-index: 5;
+    border: 1.5px dashed var(--border-strong); border-radius: 20px;
+    background: linear-gradient(180deg, rgba(26,16,10,0.9), rgba(18,10,7,0.9));
+    padding: 38px 24px; text-align:center; cursor:pointer;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .dropzone:hover, .dropzone.drag-over{
+    border-color: var(--orange-bright);
+    background: linear-gradient(180deg, rgba(34,20,10,0.95), rgba(20,11,7,0.95));
+  }
+  .dropzone .dz-icon{
+    width: 48px; height: 48px; margin: 0 auto 14px; border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,106,26,0.12); border: 1px solid var(--border-strong);
+    color: var(--orange-bright); font-size: 20px;
+  }
+  .dropzone h3{ font-family: var(--display); font-size: 16px; font-weight:600; margin-bottom:6px; }
+  .dropzone p{ color: var(--text-dim); font-size: 13px; font-family: var(--mono); }
+  #fileInput{ display:none; }
+
+  /* ---------- LIBRARY ---------- */
+  .library{ padding: 56px 0 90px; }
+  .library-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 8px;
+  }
+  .library-head h2{ font-family: var(--display); font-size: 20px; font-weight:700; }
+  .library-count{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  .library-hint{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px; }
+
+  #libraryGrid{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap: 16px;
+  }
+
+  .empty-state{
+    grid-column: 1/-1; text-align:center; padding: 50px 20px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text-dim); font-family: var(--mono); font-size: 13px;
+  }
+  .empty-state span{ display:block; font-size: 30px; margin-bottom: 10px; }
+
+  .pad{
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; position: relative;
+    transition: border-color .25s ease, box-shadow .3s ease;
+    touch-action: pan-y;
+  }
+  .pad.playing{
+    border-color: var(--orange-bright);
+    box-shadow: 0 0 0 1px rgba(255,140,64,0.35), 0 0 34px -6px rgba(255,106,26,0.55);
+    animation: pad-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pad-pulse{
+    0%,100%{ box-shadow: 0 0 0 1px rgba(255,140,64,0.35), 0 0 24px -8px rgba(255,106,26,0.5); }
+    50%{ box-shadow: 0 0 0 1px rgba(255,160,80,0.55), 0 0 40px -4px rgba(255,120,30,0.8); }
+  }
+  .pad.dragging{
+    z-index: 40; cursor: grabbing;
+    box-shadow: 0 18px 40px -12px rgba(0,0,0,0.7), 0 0 0 1px var(--orange-bright);
+    transform: scale(1.03);
+    opacity: 0.96;
+  }
+  .pad.drop-target{ border-color: var(--orange-bright); }
+
+  .pad-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+  .pad-top-left{ display:flex; align-items:center; gap:8px; }
+  .grip{
+    cursor: grab; color: var(--text-dim); font-size: 15px; line-height:1;
+    padding: 4px 2px; touch-action: none; user-select:none;
+    transition: color .15s ease;
+  }
+  .grip:hover{ color: var(--orange-bright); }
+  .pad-index{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+
+  .pad-icon-btns{ display:flex; gap:6px; }
+  .icon-btn{
+    width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02); color: var(--text-muted);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size: 12px;
+    transition: all .15s ease;
+  }
+  .icon-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,106,26,0.1); }
+  .icon-btn.danger:hover{ color: #ff6b6b; }
+
+  .pad-name{
+    font-family: var(--display); font-weight: 700; font-size: 19px;
+    letter-spacing: 0.01em;
+    margin-bottom: 4px; word-break: break-word; line-height:1.25;
+    background: transparent; border: none; color: var(--text); width: 100%;
+    border-bottom: 1px solid transparent;
+  }
+  .pad-name[contenteditable="true"]{ border-bottom: 1px dashed var(--orange-bright); outline: none; }
+  .pad-meta{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
+
+  .waveform{ display:flex; align-items:flex-end; gap: 3px; height: 24px; margin-bottom: 14px; }
+  .waveform .bar{ flex:1; background: var(--border-strong); border-radius: 2px; min-height: 4px; }
+  .pad.playing .waveform .bar{ background: var(--orange-bright); animation: bar-bounce 0.9s ease-in-out infinite; }
+  @keyframes bar-bounce{ 0%,100%{ transform: scaleY(0.4); } 50%{ transform: scaleY(1); } }
+
+  .pad-controls{ display:flex; align-items:center; gap: 14px; margin-bottom: 10px; }
+  .play-btn{
+    width: 54px; height:54px; border-radius:50%; border: none; cursor:pointer;
+    background: linear-gradient(135deg, var(--orange), #c94d0f); color:#180d06;
+    display:flex; align-items:center; justify-content:center; font-size: 19px;
+    box-shadow: 0 8px 22px -6px rgba(255,90,10,0.9), 0 0 0 1px rgba(255,180,110,0.25);
+    flex-shrink:0;
+    transition: transform .15s ease;
+  }
+  .play-btn:hover{ transform: scale(1.05); }
+  .play-btn:active{ transform: scale(0.96); }
+
+  .seek-col{ flex:1; min-width:0; }
+  .seek-row{ display:flex; align-items:center; gap:8px; }
+  .time-label{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); min-width: 34px; }
+  .time-label.current{ color: var(--amber); text-align:left; }
+  .time-label.total{ text-align:right; }
+  .seek-row input[type="range"]{
+    -webkit-appearance:none; flex:1; height:4px; border-radius:2px;
+    background: var(--border-strong); outline:none;
+  }
+  .seek-row input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+    background: var(--orange-bright); cursor:pointer; box-shadow: 0 0 6px rgba(255,106,26,0.8);
+    margin-top: -1px;
+  }
+  .seek-row input[type="range"]::-moz-range-thumb{
+    width:13px; height:13px; border-radius:50%; border:none;
+    background: var(--orange-bright); cursor:pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="zero">0</span>zeroSFX</div>
+  <h1>Bentornato nel tuo soundboard</h1>
+  <p>Carica un audio, rinominalo, falli partire quando vuoi.</p>
+  <div class="glow-strip"></div>
+</header>
+
+<div class="wrap">
+  <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Carica file audio">
+    <div class="dz-icon">↑</div>
+    <h3>Trascina qui i tuoi file audio</h3>
+    <p>oppure clicca per sfogliare — MP3, WAV, OGG, M4A</p>
+  </div>
+  <input type="file" id="fileInput" accept="audio/*" multiple>
+
+  <section class="library">
+    <div class="library-head">
+      <h2>Libreria suoni</h2>
+      <span class="library-count" id="libraryCount">0 suoni caricati</span>
+    </div>
+    <div class="library-hint">tieni premuto sull'icona ⠿ e trascina per riordinare</div>
+    <div id="libraryGrid">
+      <div class="empty-state" id="emptyState">
+        <span>♪</span>
+        Nessun effetto sonoro ancora caricato.<br>Trascina un file qui sopra per iniziare.
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const dropzone = document.getElementById('dropzone');
+  const grid = document.getElementById('libraryGrid');
+  const emptyState = document.getElementById('emptyState');
+  const libraryCount = document.getElementById('libraryCount');
+
+  let sounds = [];      // {id, name, blob, order, audio, playing, scrubbing}
+  let idCounter = 0;
+  let db = null;
+
+  /* ---------------- IndexedDB persistence ---------------- */
+  function openDB(){
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open('zerosfx-db', 1);
+      req.onupgradeneeded = () => {
+        const database = req.result;
+        if(!database.objectStoreNames.contains('sounds')){
+          database.createObjectStore('sounds', { keyPath: 'id' });
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  function dbPut(record){
+    if(!db) return;
+    const tx = db.transaction('sounds', 'readwrite');
+    tx.objectStore('sounds').put(record);
+  }
+
+  function dbDelete(id){
+    if(!db) return;
+    const tx = db.transaction('sounds', 'readwrite');
+    tx.objectStore('sounds').delete(id);
+  }
+
+  function dbGetAll(){
+    return new Promise((resolve, reject) => {
+      if(!db) return resolve([]);
+      const tx = db.transaction('sounds', 'readonly');
+      const req = tx.objectStore('sounds').getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function loadFromDB(){
+    try{
+      db = await openDB();
+      const records = await dbGetAll();
+      records.sort((a,b) => a.order - b.order);
+      records.forEach(rec => {
+        const url = URL.createObjectURL(rec.blob);
+        const audio = new Audio(url);
+        const sound = { id: rec.id, name: rec.name, blob: rec.blob, order: rec.order, audio, playing:false, scrubbing:false };
+        wireAudioEvents(sound);
+        sounds.push(sound);
+        const numeric = parseInt(rec.id.replace('snd-',''), 10);
+        if(!isNaN(numeric) && numeric >= idCounter) idCounter = numeric + 1;
+      });
+      renderGrid();
+    } catch(err){
+      console.warn('zeroSFX: la persistenza locale non è disponibile in questo ambiente.', err);
+    }
+  }
+
+  loadFromDB();
+
+  /* ---------------- Upload ---------------- */
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+  fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+  ['dragenter','dragover'].forEach(evt => {
+    dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('drag-over'); });
+  });
+  ['dragleave','drop'].forEach(evt => {
+    dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('drag-over'); });
+  });
+  dropzone.addEventListener('drop', e => {
+    if(e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+  });
+
+  function handleFiles(fileList){
+    const files = Array.from(fileList).filter(f => f.type.startsWith('audio/'));
+    files.forEach(addSound);
+    fileInput.value = '';
+  }
+
+  function niceName(filename){ return filename.replace(/\.[^/.]+$/, ''); }
+
+  function formatTime(sec){
+    if(!isFinite(sec) || sec < 0) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60).toString().padStart(2,'0');
+    return `${m}:${s}`;
+  }
+
+  function addSound(file){
+    const id = 'snd-' + (idCounter++);
+    const url = URL.createObjectURL(file);
+    const audio = new Audio(url);
+    const order = sounds.length;
+    const sound = { id, name: niceName(file.name), blob: file, order, audio, playing:false, scrubbing:false };
+    wireAudioEvents(sound);
+    sounds.push(sound);
+    dbPut({ id: sound.id, name: sound.name, blob: sound.blob, order: sound.order });
+    renderGrid();
+  }
+
+  function wireAudioEvents(sound){
+    sound.audio.addEventListener('loadedmetadata', () => {
+      const totalEl = document.querySelector(`[data-total="${sound.id}"]`);
+      const seekEl = document.querySelector(`[data-seek="${sound.id}"]`);
+      if(totalEl) totalEl.textContent = formatTime(sound.audio.duration);
+      if(seekEl) seekEl.max = sound.audio.duration || 0;
+    });
+    sound.audio.addEventListener('timeupdate', () => {
+      if(sound.scrubbing) return;
+      const seekEl = document.querySelector(`[data-seek="${sound.id}"]`);
+      const curEl = document.querySelector(`[data-current="${sound.id}"]`);
+      if(seekEl) seekEl.value = sound.audio.currentTime;
+      if(curEl) curEl.textContent = formatTime(sound.audio.currentTime);
+    });
+    sound.audio.addEventListener('ended', () => setPlaying(sound, false));
+  }
+
+  function setPlaying(sound, isPlaying){
+    sound.playing = isPlaying;
+    const pad = document.querySelector(`[data-pad="${sound.id}"]`);
+    const btn = document.querySelector(`[data-playbtn="${sound.id}"]`);
+    if(pad) pad.classList.toggle('playing', isPlaying);
+    if(btn) btn.textContent = isPlaying ? '❚❚' : '▶';
+  }
+
+  function togglePlay(id){
+    const sound = sounds.find(s => s.id === id);
+    if(!sound) return;
+    if(sound.playing){
+      sound.audio.pause();
+      setPlaying(sound, false);
+    } else {
+      sound.audio.play();
+      setPlaying(sound, true);
+    }
+  }
+
+  function deleteSound(id){
+    const sound = sounds.find(s => s.id === id);
+    if(!sound) return;
+    sound.audio.pause();
+    URL.revokeObjectURL(sound.audio.src);
+    sounds = sounds.filter(s => s.id !== id);
+    dbDelete(id);
+    persistOrder();
+    renderGrid();
+  }
+
+  function renameSound(id, newName){
+    const sound = sounds.find(s => s.id === id);
+    if(!sound) return;
+    const trimmed = newName.trim();
+    sound.name = trimmed.length ? trimmed : sound.name;
+    dbPut({ id: sound.id, name: sound.name, blob: sound.blob, order: sound.order });
+  }
+
+  function persistOrder(){
+    sounds.forEach((s, i) => {
+      s.order = i;
+      dbPut({ id: s.id, name: s.name, blob: s.blob, order: s.order });
+    });
+  }
+
+  function makeBars(seed){
+    let html = '';
+    for(let i=0;i<20;i++){
+      const h = 20 + Math.round(((Math.sin(seed + i) + 1) / 2) * 80);
+      html += `<div class="bar" style="height:${h}%; animation-delay:${(i*0.04).toFixed(2)}s"></div>`;
+    }
+    return html;
+  }
+
+  /* ---------------- Render ---------------- */
+  function renderGrid(){
+    grid.querySelectorAll('.pad').forEach(p => p.remove());
+    emptyState.style.display = sounds.length ? 'none' : 'block';
+    libraryCount.textContent = sounds.length === 1 ? '1 suono caricato' : `${sounds.length} suoni caricati`;
+
+    sounds.forEach((sound, i) => {
+      const pad = document.createElement('div');
+      pad.className = 'pad' + (sound.playing ? ' playing' : '');
+      pad.setAttribute('data-pad', sound.id);
+      pad.innerHTML = `
+        <div class="pad-top">
+          <div class="pad-top-left">
+            <span class="grip" data-grip="${sound.id}" aria-label="Trascina per riordinare" title="Trascina per riordinare">⠿</span>
+            <span class="pad-index">${String(i+1).padStart(2,'0')}</span>
+          </div>
+          <div class="pad-icon-btns">
+            <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
+            <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">✕</button>
+          </div>
+        </div>
+        <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
+        <div class="waveform">${makeBars(i)}</div>
+        <div class="pad-controls">
+          <button class="play-btn" data-playbtn="${sound.id}" aria-label="Riproduci">${sound.playing ? '❚❚' : '▶'}</button>
+          <div class="seek-col">
+            <div class="seek-row">
+              <span class="time-label current" data-current="${sound.id}">0:00</span>
+              <input type="range" min="0" max="${sound.audio.duration || 0}" step="0.05" value="${sound.audio.currentTime || 0}" data-seek="${sound.id}" aria-label="Posizione riproduzione">
+              <span class="time-label total" data-total="${sound.id}">${formatTime(sound.audio.duration)}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(pad);
+    });
+
+    grid.querySelectorAll('[data-playbtn]').forEach(btn => {
+      btn.addEventListener('click', () => togglePlay(btn.getAttribute('data-playbtn')));
+    });
+    grid.querySelectorAll('[data-delete]').forEach(btn => {
+      btn.addEventListener('click', () => deleteSound(btn.getAttribute('data-delete')));
+    });
+    grid.querySelectorAll('[data-seek]').forEach(inp => {
+      const id = inp.getAttribute('data-seek');
+      const sound = sounds.find(s => s.id === id);
+      inp.addEventListener('pointerdown', () => { if(sound) sound.scrubbing = true; });
+      inp.addEventListener('input', () => {
+        if(sound){
+          sound.audio.currentTime = parseFloat(inp.value);
+          const curEl = document.querySelector(`[data-current="${id}"]`);
+          if(curEl) curEl.textContent = formatTime(sound.audio.currentTime);
+        }
+      });
+      ['pointerup','change'].forEach(evt => inp.addEventListener(evt, () => { if(sound) sound.scrubbing = false; }));
+    });
+    grid.querySelectorAll('[data-rename]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-rename');
+        const nameEl = grid.querySelector(`[data-nameid="${id}"]`);
+        nameEl.setAttribute('contenteditable', 'true');
+        nameEl.focus();
+        document.execCommand('selectAll', false, null);
+      });
+    });
+    grid.querySelectorAll('.pad-name').forEach(el => {
+      el.addEventListener('blur', () => {
+        el.removeAttribute('contenteditable');
+        renameSound(el.getAttribute('data-nameid'), el.textContent);
+        el.textContent = sounds.find(s => s.id === el.getAttribute('data-nameid')).name;
+      });
+      el.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); el.blur(); } });
+    });
+
+    grid.querySelectorAll('[data-grip]').forEach(grip => {
+      grip.addEventListener('pointerdown', onGripPointerDown);
+    });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ---------------- Press-and-hold drag reorder ---------------- */
+  let dragState = null;
+
+  function onGripPointerDown(e){
+    const id = e.currentTarget.getAttribute('data-grip');
+    const pad = grid.querySelector(`[data-pad="${id}"]`);
+    if(!pad) return;
+    e.preventDefault();
+    dragState = { id, pointerId: e.pointerId };
+    pad.classList.add('dragging');
+    e.currentTarget.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onGripPointerMove);
+    document.addEventListener('pointerup', onGripPointerUp);
+  }
+
+  function onGripPointerMove(e){
+    if(!dragState) return;
+    const overEl = document.elementFromPoint(e.clientX, e.clientY);
+    const overPad = overEl && overEl.closest ? overEl.closest('.pad') : null;
+    if(!overPad) return;
+    const overId = overPad.getAttribute('data-pad');
+    if(overId === dragState.id) return;
+
+    const fromIndex = sounds.findIndex(s => s.id === dragState.id);
+    const toIndex = sounds.findIndex(s => s.id === overId);
+    if(fromIndex === -1 || toIndex === -1) return;
+
+    const [moved] = sounds.splice(fromIndex, 1);
+    sounds.splice(toIndex, 0, moved);
+    renderGrid();
+
+    const pad = grid.querySelector(`[data-pad="${dragState.id}"]`);
+    if(pad) pad.classList.add('dragging');
+  }
+
+  function onGripPointerUp(){
+    if(!dragState) return;
+    const pad = grid.querySelector(`[data-pad="${dragState.id}"]`);
+    if(pad) pad.classList.remove('dragging');
+    document.removeEventListener('pointermove', onGripPointerMove);
+    document.removeEventListener('pointerup', onGripPointerUp);
+    persistOrder();
+    dragState = null;
+  }
+</script>
+
+</body>
+</html>
