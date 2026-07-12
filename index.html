@@ -135,7 +135,7 @@
 
   .pad{
     background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 16px; position: relative;
+    padding: 16px; position: relative; min-width: 0;
     transition: border-color .25s ease, box-shadow .3s ease;
     touch-action: pan-y;
   }
@@ -191,7 +191,7 @@
   .pad.playing .waveform .bar{ background: var(--orange-bright); animation: bar-bounce 0.9s ease-in-out infinite; }
   @keyframes bar-bounce{ 0%,100%{ transform: scaleY(0.4); } 50%{ transform: scaleY(1); } }
 
-  .pad-controls{ display:flex; align-items:center; gap: 14px; margin-bottom: 10px; }
+  .pad-controls{ display:flex; align-items:center; gap: 14px; margin-bottom: 10px; min-width: 0; }
   .play-btn{
     width: 54px; height:54px; border-radius:50%; border: none; cursor:pointer;
     background: linear-gradient(135deg, var(--orange), #8f0c3a); color:#180614;
@@ -215,12 +215,12 @@
   .pause-btn-small:disabled{ opacity: 0.35; cursor:default; }
 
   .seek-col{ flex:1; min-width:0; }
-  .seek-row{ display:flex; align-items:center; gap:8px; }
-  .time-label{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); min-width: 34px; }
+  .seek-row{ display:flex; align-items:center; gap:8px; min-width:0; }
+  .time-label{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); min-width: 34px; flex-shrink:0; }
   .time-label.current{ color: var(--amber); text-align:left; }
   .time-label.total{ text-align:right; }
   .seek-row input[type="range"]{
-    -webkit-appearance:none; flex:1; height:4px; border-radius:2px;
+    -webkit-appearance:none; flex:1; min-width:0; width:0; height:4px; border-radius:2px;
     background: var(--border-strong); outline:none;
   }
   .seek-row input[type="range"]::-webkit-slider-thumb{
@@ -572,7 +572,7 @@
       }
       if (sound.playing) { sound.audio.pause(); setPlaying(sound, false); }
       sound.audio.src = sound.audioUrl;
-      sound.audio.preload = 'metadata';
+      sound.audio.preload = 'none';
       sound.cached = false;
     });
   }
@@ -650,7 +650,7 @@
 
       records.forEach(rec => {
         const audio = new Audio();
-        audio.preload = 'metadata'; // scarica solo i metadati, non l'intero file: risparmio dati
+        audio.preload = 'none'; // nessun download automatico: la durata arriva da Firestore, non dalla rete
         audio.src = rec.audioUrl;
         const sound = { 
           id: rec.id, 
@@ -659,6 +659,7 @@
           storagePath: rec.storagePath, 
           order: rec.order, 
           audio, 
+          duration: typeof rec.duration === 'number' ? rec.duration : 0,
           playing: false, 
           scrubbing: false,
           cached: false,
@@ -790,9 +791,9 @@
       const audioUrl = await getDownloadURL(snapshot.ref);
 
       const audio = new Audio();
-      audio.preload = 'metadata';
+      audio.preload = 'metadata'; // qui va bene: il file è già locale/in cache, non consuma banda
       const order = sounds.length;
-      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, playing: false, scrubbing: false, cached: false, caching: false };
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, playing: false, scrubbing: false, cached: false, caching: false };
       
       wireAudioEvents(sound);
       sounds.push(sound);
@@ -802,7 +803,8 @@
         name: sound.name,
         audioUrl: sound.audioUrl,
         storagePath: sound.storagePath,
-        order: sound.order
+        order: sound.order,
+        duration: 0
       });
 
       // Il file è già disponibile localmente (appena caricato): lo salviamo subito
@@ -835,6 +837,13 @@
       if (totalEl) totalEl.textContent = formatTime(sound.audio.duration);
       if (seekEl) seekEl.max = sound.audio.duration || 0;
       if (sound.id === activeSoundId) updateBottomBar(sound);
+      // Se la durata non era ancora salvata su Firestore, la salviamo una volta sola:
+      // così alle prossime visite non serve più scaricare nulla per conoscerla.
+      const realDuration = sound.audio.duration;
+      if (isFinite(realDuration) && realDuration > 0 && sound.duration !== realDuration) {
+        sound.duration = realDuration;
+        updateDoc(doc(db, "sounds", sound.id), { duration: realDuration }).catch(() => {});
+      }
     });
     sound.audio.addEventListener('timeupdate', () => {
       if (sound.scrubbing) return;
@@ -884,15 +893,11 @@
     }
   }
 
-  // Pulsante grande del pad: Play quando fermo, Restart (riparte da zero) quando sta suonando
+  // Pulsante grande del pad: riparte SEMPRE da zero (mai resume), sia da fermo che da pausa
   function padMainClick(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
-    if (sound.playing) {
-      restartSound(id);
-    } else {
-      togglePlay(id);
-    }
+    restartSound(id);
   }
 
   function restartSound(id) {
@@ -1083,8 +1088,8 @@
           <div class="seek-col">
             <div class="seek-row">
               <span class="time-label current" data-current="${sound.id}">0:00</span>
-              <input type="range" min="0" max="${sound.audio.duration || 0}" step="0.05" value="${sound.audio.currentTime || 0}" data-seek="${sound.id}" aria-label="Posizione riproduzione">
-              <span class="time-label total" data-total="${sound.id}">${formatTime(sound.audio.duration)}</span>
+              <input type="range" min="0" max="${sound.audio.duration || sound.duration || 0}" step="0.05" value="${sound.audio.currentTime || 0}" data-seek="${sound.id}" aria-label="Posizione riproduzione">
+              <span class="time-label total" data-total="${sound.id}">${formatTime(sound.audio.duration || sound.duration)}</span>
             </div>
           </div>
         </div>
