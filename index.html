@@ -97,6 +97,46 @@
   .library-count{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
   .library-hint{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px; }
 
+  .view-switch{ display:flex; gap:4px; border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+  .view-btn{
+    width: 28px; height: 24px; border-radius: 7px; border:none; cursor:pointer;
+    background: transparent; color: var(--text-dim); display:flex; align-items:center; justify-content:center;
+    transition: all .15s ease;
+  }
+  .view-btn:hover{ color: var(--text); }
+  .view-btn.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); }
+  .view-btn svg{ width:14px; height:14px; }
+
+  #libraryGrid.view-compact{ grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 10px; }
+  #libraryGrid.view-compact .pad{ padding: 11px; }
+  #libraryGrid.view-compact .waveform{ display:none; }
+  #libraryGrid.view-compact .category-tags-row{ font-size: 9.5px; margin-bottom: 6px; }
+  #libraryGrid.view-compact .category-chip, #libraryGrid.view-compact .category-chip-add{ font-size: 9.5px; padding: 1px 7px; }
+  #libraryGrid.view-compact .pad-name{ font-size: 14.5px; margin-bottom: 2px; }
+  #libraryGrid.view-compact .pad-top{ margin-bottom: 8px; }
+  #libraryGrid.view-compact .pad-icon-btns{ gap: 4px; }
+  #libraryGrid.view-compact .icon-btn{ width: 22px; height: 22px; font-size: 10.5px; }
+  #libraryGrid.view-compact .icon-btn svg{ width: 12px; height: 12px; }
+  #libraryGrid.view-compact .pad-controls{ flex-wrap: wrap; gap: 8px 10px; margin-bottom: 6px; }
+  #libraryGrid.view-compact .play-cluster{ gap: 6px; }
+  #libraryGrid.view-compact .play-btn{ width: 38px; height: 38px; font-size: 14px; box-shadow: none; }
+  #libraryGrid.view-compact .play-btn svg{ width: 14px; height: 14px; }
+  #libraryGrid.view-compact .pause-btn-small{ width: 22px; height: 22px; font-size: 8px; }
+  #libraryGrid.view-compact .seek-col{ flex: 1 1 100%; min-width: 0; }
+  #libraryGrid.view-compact .time-label{ font-size: 9.5px; min-width: 24px; }
+
+  #libraryGrid.view-list{ grid-template-columns: 1fr; gap: 8px; }
+  #libraryGrid.view-list .pad{ display:flex; align-items:center; gap:14px; padding: 10px 16px; flex-wrap: wrap; }
+  #libraryGrid.view-list .pad-top{ display:contents; }
+  #libraryGrid.view-list .pad-controls{ display:contents; }
+  #libraryGrid.view-list .waveform{ display:none; }
+  #libraryGrid.view-list .category-tags-row{ display:none; }
+  #libraryGrid.view-list .pad-top-left{ order:1; flex-shrink:0; }
+  #libraryGrid.view-list .pad-name{ order:2; flex:1 1 140px; min-width: 100px; margin-bottom:0; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #libraryGrid.view-list .play-cluster{ order:3; }
+  #libraryGrid.view-list .seek-col{ order:4; flex: 1 1 180px; min-width: 140px; }
+  #libraryGrid.view-list .pad-icon-btns{ order:5; }
+
   #libraryGrid{
     display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
     gap: 16px;
@@ -140,7 +180,14 @@
     transition: color .15s ease;
   }
   .grip:hover{ color: var(--orange-bright); }
-  .pad-index{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .pad-index{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); cursor:pointer; padding:2px 4px; border-radius:5px; transition: color .15s ease, background .15s ease; }
+  .pad-index:hover{ color: var(--orange-bright); background: rgba(255,30,96,0.1); }
+  .pad-index-input{
+    font-family: var(--mono); font-size: 11px; color: var(--orange-bright); width: 34px;
+    background: rgba(255,30,96,0.1); border: 1px solid var(--border-strong); border-radius: 5px;
+    padding: 1px 4px; -moz-appearance: textfield;
+  }
+  .pad-index-input::-webkit-outer-spin-button, .pad-index-input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
 
   .pad-icon-btns{ display:flex; gap:6px; }
   .icon-btn{
@@ -151,6 +198,133 @@
   }
   .icon-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
   .icon-btn.danger:hover{ color: #ff6b6b; }
+  .icon-btn.fav-btn.active{ color: var(--amber); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .icon-btn.loop-btn.active{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.14); }
+
+  .cat-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; box-shadow: 0 0 5px currentColor; vertical-align:middle; flex-shrink:0; }
+
+  /* ---------- CATEGORY BUBBLE PANEL ---------- */
+  .cat-toggle-btn{
+    position:absolute; right: 8px; top:50%; transform: translateY(-50%);
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition: all .18s ease;
+  }
+  .cat-toggle-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .cat-toggle-btn.active{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.16); transform: translateY(-50%) rotate(180deg); }
+  .cat-toggle-btn svg{ width:15px; height:15px; transition: transform .18s ease; }
+  .cat-toggle-btn.active svg{ transform: rotate(-180deg); }
+
+  .cat-bubble-panel{
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height .45s cubic-bezier(.22,1,.36,1), opacity .3s ease, margin-bottom .35s ease;
+    margin-bottom: 0;
+  }
+  .cat-bubble-panel.open{ max-height: 420px; opacity: 1; margin-bottom: 18px; }
+  .cat-bubble-inner{
+    display:flex; flex-wrap:wrap; gap: 10px; padding: 16px;
+    border: 1px solid var(--border); border-radius: 22px;
+    background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
+    -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%);
+  }
+  .cat-bubble{
+    position: relative; display:inline-flex; align-items:center; gap:7px;
+    padding: 7px 14px; border-radius: 999px; cursor:pointer;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    font-family: var(--body); font-size: 12.5px; font-weight:600; color: var(--text-muted);
+    transform: scale(0.4); opacity: 0;
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .3s ease, border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .cat-bubble-panel.open .cat-bubble{ transform: scale(1); opacity: 1; }
+  .cat-bubble:hover{ border-color: var(--border-strong); color: var(--text); }
+  .cat-bubble.active{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.14); }
+  .cat-bubble .color-swatch{
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.45); padding: 0; background: none;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .cat-bubble .color-swatch:hover{ transform: scale(1.2); border-color: #fff; }
+  .cat-bubble .color-swatch::-webkit-color-swatch-wrapper{ padding: 0; border-radius: 50%; }
+  .cat-bubble .color-swatch::-webkit-color-swatch{ border: none; border-radius: 50%; }
+  .cat-bubble .color-swatch::-moz-color-swatch{ border: none; border-radius: 50%; }
+  .cat-bubble-hint{
+    width: 100%; font-family: var(--mono); font-size: 10.5px; color: var(--text-dim);
+    margin-top: 2px; opacity: .8;
+  }
+
+  .header-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin: 14px auto 0; }
+  .stop-all-btn{
+    font-family: var(--body); font-size: 12.5px; font-weight:700; cursor:pointer;
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border-strong);
+    background: rgba(255,30,96,0.12); color: var(--orange-bright); transition: all .15s ease;
+    display:flex; align-items:center; justify-content:center; gap:7px; line-height:1;
+  }
+  .stop-all-btn svg{ display:block; flex-shrink:0; }
+  .stop-all-btn:hover{ background: rgba(255,30,96,0.22); transform: translateY(-1px); }
+
+  .regia-btn{
+    font-family: var(--body); font-size: 12.5px; font-weight:700; cursor:pointer;
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); color: var(--text-muted); transition: all .15s ease;
+    display:flex; align-items:center; justify-content:center; gap:7px; line-height:1;
+  }
+  .regia-btn svg{ display:block; flex-shrink:0; }
+  .regia-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); transform: translateY(-1px); }
+
+  /* ---------- MODALITÀ REGIA ---------- */
+  .regia-overlay{
+    position: fixed; inset: 0; background: #0a0605; z-index: 200;
+    display:none; flex-direction: column; padding: 22px;
+  }
+  .regia-overlay.visible{ display:flex; }
+  .regia-head{ display:flex; align-items:center; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+  .regia-head h2{ font-family: var(--display); font-size: 20px; font-weight:700; margin-right: auto; }
+  .regia-select{
+    font-family: var(--body); font-size: 13px; color: var(--text); background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-strong); border-radius: 999px; padding: 8px 14px; outline:none; cursor:pointer;
+  }
+  .regia-close{
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-strong); cursor:pointer;
+    background: rgba(255,255,255,0.05); color: var(--text); font-size: 16px;
+    display:flex; align-items:center; justify-content:center; transition: all .15s ease;
+  }
+  .regia-close:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); background: rgba(255,107,107,0.1); }
+  .regia-cat-row{
+    display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 18px; flex-shrink:0;
+  }
+  .regia-cat-chip{
+    font-family: var(--body); font-size: 12.5px; font-weight:700; cursor:pointer;
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); color: var(--text-muted); transition: all .15s ease;
+    display:inline-flex; align-items:center; gap:7px;
+  }
+  .regia-cat-chip:hover{ border-color: var(--border-strong); color: var(--text); transform: translateY(-1px); }
+  .regia-cat-chip.active{ background: rgba(255,30,96,0.16); border-color: var(--orange-bright); color: var(--orange-bright); }
+  .regia-cat-chip .dot{ width:9px; height:9px; border-radius:50%; box-shadow: 0 0 6px currentColor; flex-shrink:0; }
+  .regia-grid{
+    flex:1; overflow-y:auto; display:grid; gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); align-content:start;
+    padding: 12px 6px 28px; margin: -12px -6px 0;
+  }
+  .regia-pad{
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 18px 14px; text-align:center; cursor:pointer; transition: all .2s ease;
+    display:flex; flex-direction:column; align-items:center; gap: 10px;
+  }
+  .regia-pad:hover{ border-color: var(--border-strong); transform: translateY(-2px); }
+  .regia-pad.playing{
+    border-color: var(--orange-bright);
+    box-shadow: 0 0 0 1px rgba(255,30,96,0.35), 0 0 30px -8px rgba(255,30,96,0.6);
+    animation: pad-pulse 1.6s ease-in-out infinite;
+  }
+  .regia-pad-name{ font-family: var(--display); font-weight:700; font-size: 15px; word-break: break-word; }
+  .regia-pad-icon{
+    width: 52px; height: 52px; border-radius:50%;
+    background: linear-gradient(135deg, var(--orange), #8f0c3a); color:#180614;
+    display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
+  }
+  .regia-empty{ grid-column: 1/-1; text-align:center; color: var(--text-dim); font-family: var(--mono); font-size: 13px; padding: 60px 20px; }
 
   .pad-name{
     font-family: var(--display); font-weight: 700; font-size: 19px;
@@ -241,7 +415,7 @@
   .search-row .search-icon svg{ display:block; width:100%; height:100%; }
   .search-row:focus-within .search-icon{ color: var(--orange-bright); }
   .search-input{
-    width:100%; padding: 15px 20px 15px 48px; border-radius: 999px;
+    width:100%; padding: 15px 52px 15px 48px; border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.07);
     background: rgba(255,255,255,0.045);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
@@ -315,6 +489,24 @@
     .bp-info{ min-width: 80px; max-width: 120px; }
   }
 
+  /* ---------- TORNA IN CIMA ---------- */
+  .top-btn{
+    position: fixed; right: 22px; bottom: 96px; z-index: 99;
+    width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.06); color: var(--text); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    box-shadow: 0 14px 30px -10px rgba(0,0,0,0.6);
+    opacity: 0; pointer-events: none; transform: translateY(10px) scale(0.9);
+    transition: opacity .25s ease, transform .25s ease, border-color .15s ease, color .15s ease;
+  }
+  .top-btn.visible{ opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+  .top-btn:hover{ color: var(--orange-bright); border-color: var(--orange-bright); }
+  .top-btn svg{ width: 18px; height: 18px; }
+  @media (max-width: 560px){
+    .top-btn{ right: 14px; bottom: 86px; width: 42px; height: 42px; }
+  }
+
   /* ---------- CONFERMA ELIMINAZIONE ---------- */
   .confirm-overlay{
     position: fixed; inset: 0; z-index: 200;
@@ -345,6 +537,134 @@
   .confirm-btn:hover{ transform: scale(1.03); }
   .confirm-btn.cancel{ background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); }
   .confirm-btn.delete{ background: linear-gradient(135deg, #ff5c6b, #b8202f); color: #fff; }
+  #catDeleteConfirmOverlay{ z-index: 220; }
+
+  /* ---------- CATEGORY CHIPS (assegnazione multipla) ---------- */
+  .category-tags-row{ display:flex; flex-wrap:wrap; gap: 6px; margin-bottom: 10px; position: relative; }
+  .category-chip{
+    display:inline-flex; align-items:center; gap:5px; font-family: var(--mono); font-size: 10.5px;
+    color: var(--cat-color, var(--amber)); border: 1px solid var(--cat-color, var(--border-strong)); border-radius: 999px;
+    padding: 2px 9px; max-width: 100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .category-chip .cat-dot{ margin-right:0; }
+  .category-chip-add{
+    display:inline-flex; align-items:center; gap:4px; font-family: var(--mono); font-size: 10.5px;
+    color: var(--text-dim); border: 1px dashed var(--border-strong); border-radius: 999px;
+    padding: 2px 9px; cursor:pointer; transition: all .15s ease; background: none;
+  }
+  .category-chip-add:hover{ color: var(--orange-bright); border-color: var(--orange-bright); }
+
+  .cat-assign-popover{
+    position:absolute; z-index: 60; top: calc(100% + 6px); left: 0;
+    min-width: 210px; max-width: 260px;
+    background: linear-gradient(180deg, rgba(28,24,32,0.97), rgba(16,13,18,0.99));
+    border: 1px solid var(--border-strong); border-radius: 16px; padding: 10px;
+    box-shadow: 0 24px 50px -16px rgba(0,0,0,0.7);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  }
+  .cat-assign-empty{ font-family: var(--mono); font-size: 11.5px; color: var(--text-dim); padding: 6px 4px 10px; }
+  .cat-assign-item{
+    display:flex; align-items:center; gap:8px; padding: 7px 6px; border-radius: 9px; cursor:pointer;
+    font-family: var(--body); font-size: 13px; color: var(--text-muted); transition: background .12s ease;
+  }
+  .cat-assign-item:hover{ background: rgba(255,255,255,0.05); }
+  .cat-assign-item .dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; box-shadow: 0 0 5px currentColor; }
+  .cat-assign-item .name{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cat-assign-item .check{ width:14px; height:14px; flex-shrink:0; opacity:0; color: var(--orange-bright); }
+  .cat-assign-item.selected{ color: var(--text); }
+  .cat-assign-item.selected .check{ opacity:1; }
+  .cat-assign-manage{
+    display:flex; align-items:center; justify-content:center; gap:6px; margin-top: 6px; padding-top: 8px;
+    border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+    cursor:pointer; transition: color .15s ease;
+  }
+  .cat-assign-manage:hover{ color: var(--orange-bright); }
+
+  /* ---------- GESTIONE CATEGORIE (modale) ---------- */
+  .cat-manage-btn{
+    position:absolute; right: 46px; top:50%; transform: translateY(-50%);
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition: all .18s ease;
+  }
+  .cat-manage-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .cat-manage-btn svg{ width:15px; height:15px; }
+
+  .catmanage-overlay{
+    position: fixed; inset: 0; z-index: 210;
+    background: rgba(0,0,0,0.55);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s ease;
+    padding: 20px;
+  }
+  .catmanage-overlay.visible{ opacity: 1; pointer-events: auto; }
+  .catmanage-card{
+    background: var(--card); border: 1px solid var(--border-strong);
+    border-radius: 22px; padding: 24px; width: 100%; max-width: 420px;
+    max-height: 82vh; display:flex; flex-direction:column;
+    box-shadow: 0 30px 70px -20px rgba(0,0,0,0.7);
+    transform: translateY(10px) scale(0.97);
+    transition: transform .22s cubic-bezier(.22,1,.36,1);
+  }
+  .catmanage-overlay.visible .catmanage-card{ transform: translateY(0) scale(1); }
+  .catmanage-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
+  .catmanage-head h4{ font-family: var(--display); font-size: 17px; font-weight:700; }
+  .catmanage-close{
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border);
+    background: none; color: var(--text-dim); cursor:pointer; font-size: 14px;
+    display:flex; align-items:center; justify-content:center; transition: all .15s ease;
+  }
+  .catmanage-close:hover{ color: var(--orange-bright); border-color: var(--border-strong); }
+  .catmanage-list{ overflow-y:auto; display:flex; flex-direction:column; gap: 8px; margin-bottom: 16px; }
+  .catmanage-empty{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); text-align:center; padding: 14px 0; }
+  .catmanage-item{
+    display:flex; align-items:center; gap:8px; padding: 8px; border-radius: 12px;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+  }
+  .catmanage-item input[type="color"]{
+    -webkit-appearance:none; -moz-appearance:none; appearance:none;
+    width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.4);
+    cursor:pointer; padding:0; background:none; flex-shrink:0;
+  }
+  .catmanage-item input[type="color"]::-webkit-color-swatch-wrapper{ padding:0; border-radius:50%; }
+  .catmanage-item input[type="color"]::-webkit-color-swatch{ border:none; border-radius:50%; }
+  .catmanage-name{
+    flex:1; min-width:0; font-family: var(--body); font-size: 13.5px; color: var(--text);
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 9px;
+    padding: 6px 9px; outline:none;
+  }
+  .catmanage-name:focus{ border-color: var(--border-strong); }
+  .catmanage-count{ font-family: var(--mono); font-size: 10.5px; color: var(--text-dim); flex-shrink:0; }
+  .catmanage-move{
+    width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--border);
+    background: none; color: var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: all .15s ease; flex-shrink:0;
+  }
+  .catmanage-move:hover{ color: var(--orange-bright); border-color: var(--border-strong); }
+  .catmanage-move:disabled{ opacity:0.25; cursor:default; }
+  .catmanage-move:disabled:hover{ color: var(--text-dim); border-color: var(--border); }
+  .catmanage-del{
+    width: 24px; height: 24px; border-radius: 7px; border: 1px solid var(--border);
+    background: none; color: var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: all .15s ease; flex-shrink:0;
+  }
+  .catmanage-del:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); }
+  .catmanage-add-row{ display:flex; gap:8px; }
+  .catmanage-add-row input[type="text"]{
+    flex:1; min-width:0; font-family: var(--body); font-size: 13.5px; color: var(--text);
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 999px;
+    padding: 9px 14px; outline:none;
+  }
+  .catmanage-add-row input[type="text"]:focus{ border-color: var(--border-strong); }
+  .catmanage-add-btn{
+    padding: 9px 16px; border-radius: 999px; border:none; cursor:pointer;
+    font-family: var(--body); font-size: 13px; font-weight:600; color:#fff;
+    background: linear-gradient(135deg, var(--orange-bright), var(--orange));
+    transition: transform .15s ease;
+  }
+  .catmanage-add-btn:hover{ transform: scale(1.03); }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
@@ -361,6 +681,21 @@
     <button type="button" class="mode-switch" id="modeSwitch" role="switch" aria-checked="false" aria-label="Passa a modalità Single Player"></button>
     <span class="mode-label" id="modeLabelSingle">Single</span>
   </div>
+  <div class="header-actions">
+  <button type="button" class="stop-all-btn" id="stopAllBtn" title="Ferma tutti i suoni in riproduzione">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+      Stop tutti
+    </button>
+    <button type="button" class="regia-btn" id="regiaOpenBtn" title="Apri la modalità regia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+        <rect x="2" y="4" width="20" height="14" rx="2"></rect>
+        <path d="M2 8h20"></path>
+        <circle cx="6" cy="6" r="0.6" fill="currentColor"></circle>
+        <circle cx="9" cy="6" r="0.6" fill="currentColor"></circle>
+      </svg>
+      Regia
+    </button>
+  </div>
   <div class="glow-strip"></div>
 </header>
 
@@ -375,6 +710,17 @@
   <section class="library">
     <div class="library-head">
       <h2>Libreria suoni</h2>
+      <div class="view-switch" role="group" aria-label="Vista libreria">
+        <button type="button" class="view-btn active" data-view="grid" title="Vista griglia" aria-label="Vista griglia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+        </button>
+        <button type="button" class="view-btn" data-view="compact" title="Vista compatta" aria-label="Vista compatta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="5" height="5" rx="1"></rect><rect x="9.5" y="3" width="5" height="5" rx="1"></rect><rect x="17" y="3" width="5" height="5" rx="1"></rect><rect x="2" y="10.5" width="5" height="5" rx="1"></rect><rect x="9.5" y="10.5" width="5" height="5" rx="1"></rect><rect x="17" y="10.5" width="5" height="5" rx="1"></rect><rect x="2" y="18" width="5" height="5" rx="1"></rect><rect x="9.5" y="18" width="5" height="5" rx="1"></rect><rect x="17" y="18" width="5" height="5" rx="1"></rect></svg>
+        </button>
+        <button type="button" class="view-btn" data-view="list" title="Vista lista" aria-label="Vista lista">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
       <span class="library-count" id="libraryCount">0 suoni caricati</span>
     </div>
     <div class="search-row">
@@ -384,9 +730,18 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
       </span>
-      <input type="text" id="searchInput" class="search-input" placeholder="Cerca un suono per nome…" aria-label="Cerca un suono">
+      <input type="text" id="searchInput" class="search-input" placeholder="Cerca per nome o categoria…" aria-label="Cerca un suono">
+      <button type="button" class="cat-manage-btn" id="catManageBtn" title="Gestisci categorie" aria-label="Gestisci categorie">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+      <button type="button" class="cat-toggle-btn" id="catToggleBtn" title="Mostra categorie" aria-label="Mostra categorie">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
     </div>
-    <div class="library-hint">tieni premuto sull'icona ⠿ e trascina per riordinare</div>
+    <div class="cat-bubble-panel" id="catBubblePanel">
+      <div class="cat-bubble-inner" id="catBubbleInner"></div>
+    </div>
+    <div class="library-hint">tieni premuto sull'icona ⠿ e trascina per riordinare, oppure clicca sul numerino</div>
     <div id="libraryGrid">
       <div class="empty-state" id="emptyState">
         <span>♪</span>
@@ -408,6 +763,10 @@
   </div>
 </div>
 
+<button type="button" class="top-btn" id="topBtn" aria-label="Torna in cima" title="Torna in cima">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</button>
+
 <div class="confirm-overlay" id="confirmOverlay">
   <div class="confirm-card">
     <h4>Eliminare questo suono?</h4>
@@ -417,6 +776,44 @@
       <button class="confirm-btn delete" id="confirmDeleteBtn">Elimina</button>
     </div>
   </div>
+</div>
+
+<div class="confirm-overlay" id="catDeleteConfirmOverlay">
+  <div class="confirm-card">
+    <h4>Eliminare questa categoria?</h4>
+    <p id="catDeleteConfirmText">Questa azione non può essere annullata.</p>
+    <div class="confirm-actions">
+      <button class="confirm-btn cancel" id="catDeleteConfirmCancelBtn">Annulla</button>
+      <button class="confirm-btn delete" id="catDeleteConfirmBtn">Elimina</button>
+    </div>
+  </div>
+</div>
+
+<div class="catmanage-overlay" id="catManageOverlay">
+  <div class="catmanage-card">
+    <div class="catmanage-head">
+      <h4>Gestisci categorie</h4>
+      <button type="button" class="catmanage-close" id="catManageCloseBtn" aria-label="Chiudi">✕</button>
+    </div>
+    <div class="catmanage-list" id="catManageList"></div>
+    <div class="catmanage-add-row">
+      <input type="text" id="catManageNewName" placeholder="Nuova categoria…" aria-label="Nome nuova categoria">
+      <button type="button" class="catmanage-add-btn" id="catManageAddBtn">Aggiungi</button>
+    </div>
+  </div>
+</div>
+
+<div class="regia-overlay" id="regiaOverlay">
+  <div class="regia-head">
+    <h2>Modalità regia</h2>
+    <button type="button" class="stop-all-btn" id="regiaStopAllBtn" title="Ferma tutti i suoni in riproduzione">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+      Stop tutti
+    </button>
+    <button type="button" class="regia-close" id="regiaCloseBtn" aria-label="Chiudi modalità regia">✕</button>
+  </div>
+  <div class="regia-cat-row" id="regiaCatRow"></div>
+  <div class="regia-grid" id="regiaGrid"></div>
 </div>
 
 <script type="module">
@@ -447,6 +844,29 @@
   const modeSwitch = document.getElementById('modeSwitch');
   const modeLabelMulti = document.getElementById('modeLabelMulti');
   const modeLabelSingle = document.getElementById('modeLabelSingle');
+  const stopAllBtn = document.getElementById('stopAllBtn');
+  const catToggleBtn = document.getElementById('catToggleBtn');
+  const catBubblePanel = document.getElementById('catBubblePanel');
+  const catBubbleInner = document.getElementById('catBubbleInner');
+  const catManageBtn = document.getElementById('catManageBtn');
+  const catManageOverlay = document.getElementById('catManageOverlay');
+  const catManageCloseBtn = document.getElementById('catManageCloseBtn');
+  const catManageList = document.getElementById('catManageList');
+  const catManageNewName = document.getElementById('catManageNewName');
+  const catManageAddBtn = document.getElementById('catManageAddBtn');
+  const catDeleteConfirmOverlay = document.getElementById('catDeleteConfirmOverlay');
+  const catDeleteConfirmText = document.getElementById('catDeleteConfirmText');
+  const catDeleteConfirmCancelBtn = document.getElementById('catDeleteConfirmCancelBtn');
+  const catDeleteConfirmBtn = document.getElementById('catDeleteConfirmBtn');
+  let pendingDeleteCategoryId = null;
+  const topBtn = document.getElementById('topBtn');
+  const viewButtons = document.querySelectorAll('.view-btn');
+  const regiaOpenBtn = document.getElementById('regiaOpenBtn');
+  const regiaOverlay = document.getElementById('regiaOverlay');
+  const regiaCloseBtn = document.getElementById('regiaCloseBtn');
+  const regiaGrid = document.getElementById('regiaGrid');
+  const regiaCatRow = document.getElementById('regiaCatRow');
+  const regiaStopAllBtn = document.getElementById('regiaStopAllBtn');
   const bottomPlayer = document.getElementById('bottomPlayer');
   const bpName = document.getElementById('bpName');
   const bpTime = document.getElementById('bpTime');
@@ -463,13 +883,163 @@
   let sounds = [];      
   let idCounter = 0;
   let searchQuery = '';
+  let categoryFilter = null;   // null = tutte le categorie
+  let viewMode = 'grid';       // 'grid' | 'compact' | 'list'
+  let favoritesOnly = false;
   let playerMode = 'multi'; // 'multi' oppure 'single'
   let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
+  let regiaCategoryFilter = 'all'; // 'all' | 'fav' | nome categoria, usato in modalità regia
+
+  /* ---------------- Categorie (sistema dedicato, sincronizzato su Firebase) ---------------- */
+  const CAT_PALETTE = ['#FF1E60','#FF8A3D','#FFD23D','#3DFFA0','#3DDBFF','#5C8CFF','#B23DFF','#FF3DBE','#8CFF3D','#FF6B6B'];
+  let categories = [];   // [{ id, name, color, order }]
+  let catIdCounter = 0;
+  let openAssignPopoverFor = null; // id del suono con il popover di assegnazione aperto
+
+  function hashStr(str) {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) { h = (h << 5) - h + str.charCodeAt(i); h |= 0; }
+    return Math.abs(h);
+  }
+  function nextPaletteColor() {
+    return CAT_PALETTE[categories.length % CAT_PALETTE.length];
+  }
+  function getCategoryById(id) {
+    return categories.find(c => c.id === id);
+  }
+  function getCategoryColor(id) {
+    const cat = getCategoryById(id);
+    if (cat && cat.color) return cat.color;
+    return CAT_PALETTE[hashStr(id || '') % CAT_PALETTE.length];
+  }
+  function hexToRgba(hex, alpha) {
+    const h = hex.replace('#', '');
+    const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
+    const bigint = parseInt(full, 16);
+    const r = (bigint >> 16) & 255, g = (bigint >> 8) & 255, b = bigint & 255;
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  async function loadCategories() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "categories"));
+      const records = [];
+      querySnapshot.forEach(d => records.push(d.data()));
+      records.sort((a, b) => (a.order || 0) - (b.order || 0));
+      categories = records.map(r => ({ id: r.id, name: r.name || '', color: r.color || CAT_PALETTE[0], order: r.order || 0 }));
+      categories.forEach(c => {
+        const numeric = parseInt(String(c.id).replace('cat-', ''), 10);
+        if (!isNaN(numeric) && numeric >= catIdCounter) catIdCounter = numeric + 1;
+      });
+    } catch (err) {
+      console.warn('Errore nel caricamento delle categorie:', err);
+    }
+  }
+
+  async function createCategory(name, color) {
+    const trimmed = name.trim();
+    if (!trimmed) return null;
+    const existing = categories.find(c => c.name.toLowerCase() === trimmed.toLowerCase());
+    if (existing) return existing;
+    const id = 'cat-' + (catIdCounter++);
+    const cat = { id, name: trimmed, color: color || nextPaletteColor(), order: categories.length };
+    categories.push(cat);
+    try {
+      await setDoc(doc(db, "categories", id), cat);
+    } catch (error) {
+      console.error('Errore nel salvataggio della categoria:', error);
+    }
+    return cat;
+  }
+
+  async function renameCategory(id, newName) {
+    const cat = getCategoryById(id);
+    if (!cat) return;
+    const trimmed = newName.trim();
+    if (!trimmed || trimmed === cat.name) return;
+    cat.name = trimmed;
+    try {
+      await updateDoc(doc(db, "categories", id), { name: trimmed });
+    } catch (error) {
+      console.error('Errore nel rinominare la categoria:', error);
+    }
+  }
+
+  async function setCategoryColor(id, color) {
+    const cat = getCategoryById(id);
+    if (!cat) return;
+    cat.color = color;
+    renderFilterRow();
+    renderGrid();
+    renderCatManageModal();
+    if (regiaOverlay.classList.contains('visible')) { renderRegiaCatRow(); renderRegiaGrid(); }
+    try {
+      await updateDoc(doc(db, "categories", id), { color });
+    } catch (error) {
+      console.error('Errore nel salvataggio del colore:', error);
+    }
+  }
+
+  async function deleteCategory(id) {
+    categories = categories.filter(c => c.id !== id);
+    if (categoryFilter === id) categoryFilter = null;
+    if (regiaCategoryFilter === id) regiaCategoryFilter = 'all';
+    const affected = sounds.filter(s => Array.isArray(s.categories) && s.categories.includes(id));
+    affected.forEach(s => { s.categories = s.categories.filter(cid => cid !== id); });
+    renderCatManageModal();
+    renderFilterRow();
+    renderGrid();
+    if (regiaOverlay.classList.contains('visible')) { renderRegiaCatRow(); renderRegiaGrid(); }
+    try {
+      await deleteDoc(doc(db, "categories", id));
+      await Promise.all(affected.map(s => updateDoc(doc(db, "sounds", s.id), { categories: s.categories })));
+    } catch (error) {
+      console.error("Errore nell'eliminazione della categoria:", error);
+    }
+  }
+
+  async function moveCategory(id, direction) {
+    const idx = categories.findIndex(c => c.id === id);
+    const swapWith = idx + direction;
+    if (idx === -1 || swapWith < 0 || swapWith >= categories.length) return;
+    [categories[idx], categories[swapWith]] = [categories[swapWith], categories[idx]];
+    categories.forEach((c, i) => { c.order = i; });
+    renderCatManageModal();
+    renderFilterRow();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaCatRow();
+    try {
+      await Promise.all(categories.map(c => updateDoc(doc(db, "categories", c.id), { order: c.order })));
+    } catch (error) {
+      console.error("Errore nel riordinare le categorie:", error);
+    }
+  }
+
+  async function toggleSoundCategory(soundId, catId) {
+    const sound = sounds.find(s => s.id === soundId);
+    if (!sound) return;
+    if (!Array.isArray(sound.categories)) sound.categories = [];
+    const has = sound.categories.includes(catId);
+    sound.categories = has ? sound.categories.filter(id => id !== catId) : [...sound.categories, catId];
+    renderGrid();
+    renderFilterRow();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaGrid();
+    try {
+      await updateDoc(doc(db, "sounds", soundId), { categories: sound.categories });
+    } catch (error) {
+      console.error('Errore nel salvataggio delle categorie del suono:', error);
+    }
+  }
 
   /* ---------------- Icone SVG riusate nel rendering ---------------- */
   const RESTART_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
     <polyline points="1 4 1 10 7 10"></polyline>
     <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+  </svg>`;
+  const LOOP_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+    <polyline points="17 1 21 5 17 9"></polyline>
+    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+    <polyline points="7 23 3 19 7 15"></polyline>
+    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
   </svg>`;
 
   async function loadFromCloud() {
@@ -483,10 +1053,23 @@
 
       records.sort((a, b) => a.order - b.order);
 
-      records.forEach(rec => {
+      for (const rec of records) {
         const audio = new Audio();
         audio.preload = 'none'; // nessun download automatico: il file parte solo quando premi play
         audio.src = rec.audioUrl;
+
+        // Migrazione dal vecchio campo singolo "category" (stringa) al nuovo
+        // sistema di categorie multiple sincronizzate su Firebase ("categories": [id,...])
+        let soundCategories;
+        if (Array.isArray(rec.categories)) {
+          soundCategories = rec.categories;
+        } else if (rec.category) {
+          const migrated = await createCategory(rec.category);
+          soundCategories = migrated ? [migrated.id] : [];
+        } else {
+          soundCategories = [];
+        }
+
         const sound = { 
           id: rec.id, 
           name: rec.name, 
@@ -495,22 +1078,30 @@
           order: rec.order, 
           audio, 
           duration: typeof rec.duration === 'number' ? rec.duration : 0,
+          categories: soundCategories,
+          favorite: !!rec.favorite,
+          loop: false,
           playing: false, 
           scrubbing: false
         };
         wireAudioEvents(sound);
         sounds.push(sound);
 
+        if (!Array.isArray(rec.categories) && soundCategories.length) {
+          updateDoc(doc(db, "sounds", sound.id), { categories: soundCategories }).catch(() => {});
+        }
+
         const numeric = parseInt(rec.id.replace('snd-', ''), 10);
         if (!isNaN(numeric) && numeric >= idCounter) idCounter = numeric + 1;
-      });
+      }
       renderGrid();
+      renderFilterRow();
     } catch (err) {
       console.warn('Errore di caricamento:', err);
     }
   }
 
-  loadFromCloud();
+  loadCategories().then(loadFromCloud);
 
   /* ---------------- Modalità Multi / Single (persistenza) ---------------- */
   const PLAYER_MODE_DOC = doc(db, "settings", "player");
@@ -567,7 +1158,18 @@
     modeSwitch.setAttribute('aria-checked', String(isSingle));
     modeLabelMulti.classList.toggle('active', !isSingle);
     modeLabelSingle.classList.toggle('active', isSingle);
+    stopAllBtn.style.display = isSingle ? 'none' : 'flex';
   }
+
+  function stopAllSounds() {
+    sounds.forEach(s => {
+      if (s.playing) {
+        s.audio.pause();
+        setPlaying(s, false);
+      }
+    });
+  }
+  stopAllBtn.addEventListener('click', stopAllSounds);
 
   modeSwitch.addEventListener('click', () => {
     playerMode = playerMode === 'multi' ? 'single' : 'multi';
@@ -591,6 +1193,15 @@
   searchInput.addEventListener('input', () => {
     searchQuery = searchInput.value;
     renderGrid();
+  });
+
+  /* ---------------- Selettore vista (griglia / compatta / lista) ---------------- */
+  viewButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      viewMode = btn.getAttribute('data-view');
+      viewButtons.forEach(b => b.classList.toggle('active', b === btn));
+      renderGrid();
+    });
   });
 
   function niceName(filename) { return filename.replace(/\.[^/.]+$/, ''); }
@@ -621,7 +1232,7 @@
       audio.preload = 'metadata'; // il file è già locale (appena caricato): nessun consumo di banda
       audio.src = URL.createObjectURL(file); // riusa subito il file locale, senza riscaricarlo da Firebase
       const order = sounds.length;
-      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, playing: false, scrubbing: false };
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [], favorite: false, loop: false, playing: false, scrubbing: false };
       
       wireAudioEvents(sound);
       sounds.push(sound);
@@ -632,7 +1243,9 @@
         audioUrl: sound.audioUrl,
         storagePath: sound.storagePath,
         order: sound.order,
-        duration: 0
+        duration: 0,
+        categories: [],
+        favorite: false
       });
 
       renderGrid();
@@ -664,7 +1277,14 @@
       if (curEl) curEl.textContent = formatTime(sound.audio.currentTime);
       if (sound.id === activeSoundId) updateBottomBar(sound);
     });
-    sound.audio.addEventListener('ended', () => setPlaying(sound, false));
+    sound.audio.addEventListener('ended', () => {
+      if (sound.loop) {
+        sound.audio.currentTime = 0;
+        sound.audio.play();
+      } else {
+        setPlaying(sound, false);
+      }
+    });
   }
 
   function setPlaying(sound, isPlaying) {
@@ -680,6 +1300,14 @@
     }
     if (pauseBtn) pauseBtn.disabled = !isPlaying;
     if (sound.id === activeSoundId) updateBottomBar(sound);
+    if (regiaOverlay.classList.contains('visible')) {
+      const regiaPad = regiaGrid.querySelector(`[data-regiapad="${sound.id}"]`);
+      if (regiaPad) {
+        regiaPad.classList.toggle('playing', isPlaying);
+        const icon = regiaPad.querySelector('.regia-pad-icon');
+        if (icon) icon.innerHTML = isPlaying ? RESTART_SVG : '▶';
+      }
+    }
   }
 
   // Vero play/pausa, usato dalla barra fissa in basso
@@ -803,6 +1431,7 @@
       await deleteDoc(doc(db, "sounds", id));
       persistOrder();
       renderGrid();
+      renderFilterRow();
     } catch (error) {
       console.error("Errore durante l'eliminazione:", error);
     }
@@ -819,6 +1448,247 @@
     } catch (error) {
       console.error("Errore nella modifica del nome:", error);
     }
+  }
+
+  async function toggleFavorite(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound) return;
+    sound.favorite = !sound.favorite;
+    const btn = grid.querySelector(`[data-fav="${id}"]`);
+    if (btn) {
+      btn.classList.toggle('active', sound.favorite);
+      btn.innerHTML = sound.favorite ? '★' : '☆';
+      btn.title = sound.favorite ? 'Togli dai preferiti' : 'Aggiungi ai preferiti';
+    }
+    renderFilterRow();
+    try {
+      await updateDoc(doc(db, "sounds", id), { favorite: sound.favorite });
+    } catch (error) {
+      console.error('Errore nel salvataggio del preferito:', error);
+    }
+  }
+
+  function toggleLoop(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound) return;
+    sound.loop = !sound.loop; // solo in memoria: si resetta ad ogni refresh, per scelta
+    const btn = grid.querySelector(`[data-loop="${id}"]`);
+    if (btn) {
+      btn.classList.toggle('active', sound.loop);
+      btn.title = sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)';
+    }
+  }
+
+  function moveSoundToPosition(id, newPosition1Based) {
+    const fromIndex = sounds.findIndex(s => s.id === id);
+    if (fromIndex === -1) return;
+    let toIndex = Math.round(newPosition1Based) - 1;
+    toIndex = Math.max(0, Math.min(sounds.length - 1, toIndex));
+    if (toIndex === fromIndex) { renderGrid(); return; }
+    const [moved] = sounds.splice(fromIndex, 1);
+    sounds.splice(toIndex, 0, moved);
+    persistOrder();
+    renderGrid();
+  }
+
+  function allCategories() {
+    return [...categories].sort((a, b) => a.order - b.order);
+  }
+
+  function renderFilterRow() {
+    const cats = allCategories();
+
+    if (!cats.length && !sounds.some(s => s.favorite)) {
+      catBubbleInner.innerHTML = '';
+      catToggleBtn.style.display = 'none';
+      catBubblePanel.classList.remove('open');
+      catToggleBtn.classList.remove('active');
+      catManageBtn.style.right = '8px';
+      return;
+    }
+    catToggleBtn.style.display = 'flex';
+    catManageBtn.style.right = '46px';
+
+    let html = `<div class="cat-bubble${!categoryFilter && !favoritesOnly ? ' active' : ''}" data-bubble-all>Tutte</div>`;
+    html += `<div class="cat-bubble${favoritesOnly ? ' active' : ''}" data-bubble-fav>★ Preferiti</div>`;
+    cats.forEach((cat, idx) => {
+      const color = cat.color;
+      const active = categoryFilter === cat.id;
+      const activeStyle = active ? `border-color:${color};color:${color};background:${hexToRgba(color, 0.16)};` : '';
+      html += `
+        <div class="cat-bubble${active ? ' active' : ''}" data-bubble-cat="${cat.id}" style="transition-delay:${idx * 28}ms;${activeStyle}">
+          <input type="color" class="color-swatch" data-colorinput="${cat.id}" value="${color}" title="Cambia colore categoria" aria-label="Colore per ${escapeHtml(cat.name)}">
+          <span class="label-text">${escapeHtml(cat.name)}</span>
+        </div>`;
+    });
+    html += `<div class="cat-bubble-hint">tocca il pallino colorato per cambiare il colore di una categoria — gestisci le categorie con l'icona ⚙</div>`;
+    catBubbleInner.innerHTML = html;
+
+    const allBubble = catBubbleInner.querySelector('[data-bubble-all]');
+    if (allBubble) allBubble.addEventListener('click', () => { categoryFilter = null; favoritesOnly = false; renderFilterRow(); renderGrid(); });
+    const favBubble = catBubbleInner.querySelector('[data-bubble-fav]');
+    if (favBubble) favBubble.addEventListener('click', () => { favoritesOnly = !favoritesOnly; if (favoritesOnly) categoryFilter = null; renderFilterRow(); renderGrid(); });
+
+    catBubbleInner.querySelectorAll('[data-bubble-cat]').forEach(bubble => {
+      const catId = bubble.getAttribute('data-bubble-cat');
+      bubble.addEventListener('click', (e) => {
+        if (e.target.closest('[data-colorinput]')) return;
+        categoryFilter = categoryFilter === catId ? null : catId;
+        favoritesOnly = false;
+        renderFilterRow();
+        renderGrid();
+      });
+    });
+    catBubbleInner.querySelectorAll('[data-colorinput]').forEach(input => {
+      input.addEventListener('click', e => e.stopPropagation());
+      input.addEventListener('input', e => setCategoryColor(input.getAttribute('data-colorinput'), e.target.value));
+    });
+  }
+
+  catToggleBtn.addEventListener('click', () => {
+    const open = catBubblePanel.classList.toggle('open');
+    catToggleBtn.classList.toggle('active', open);
+  });
+
+  /* ---------------- Modale gestione categorie ---------------- */
+  function openCatManage() {
+    renderCatManageModal();
+    catManageOverlay.classList.add('visible');
+    catManageNewName.value = '';
+  }
+  function closeCatManage() {
+    catManageOverlay.classList.remove('visible');
+  }
+  catManageBtn.addEventListener('click', openCatManage);
+  catManageCloseBtn.addEventListener('click', closeCatManage);
+  catManageOverlay.addEventListener('click', e => { if (e.target === catManageOverlay) closeCatManage(); });
+
+  function renderCatManageModal() {
+    const cats = allCategories();
+    if (!cats.length) {
+      catManageList.innerHTML = '<div class="catmanage-empty">Nessuna categoria creata. Aggiungine una qui sotto.</div>';
+      return;
+    }
+    catManageList.innerHTML = cats.map((cat, idx) => {
+      const count = sounds.filter(s => Array.isArray(s.categories) && s.categories.includes(cat.id)).length;
+      return `
+        <div class="catmanage-item" data-catitem="${cat.id}">
+          <input type="color" data-catcolor="${cat.id}" value="${cat.color}" title="Cambia colore" aria-label="Colore per ${escapeHtml(cat.name)}">
+          <input type="text" class="catmanage-name" data-catname="${cat.id}" value="${escapeHtml(cat.name)}" aria-label="Nome categoria">
+          <span class="catmanage-count">${count}</span>
+          <button type="button" class="catmanage-move" data-catmove="${cat.id}" data-dir="-1" title="Sposta su" ${idx === 0 ? 'disabled' : ''}>↑</button>
+          <button type="button" class="catmanage-move" data-catmove="${cat.id}" data-dir="1" title="Sposta giù" ${idx === cats.length - 1 ? 'disabled' : ''}>↓</button>
+          <button type="button" class="catmanage-del" data-catdel="${cat.id}" title="Elimina categoria" aria-label="Elimina categoria">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+              <path d="M10 11v6"></path><path d="M14 11v6"></path>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+            </svg>
+          </button>
+        </div>`;
+    }).join('');
+
+    catManageList.querySelectorAll('[data-catcolor]').forEach(input => {
+      input.addEventListener('input', e => setCategoryColor(input.getAttribute('data-catcolor'), e.target.value));
+    });
+    catManageList.querySelectorAll('[data-catname]').forEach(input => {
+      const commit = () => renameCategory(input.getAttribute('data-catname'), input.value);
+      input.addEventListener('blur', commit);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); input.blur(); } });
+    });
+    catManageList.querySelectorAll('[data-catmove]').forEach(btn => {
+      btn.addEventListener('click', () => moveCategory(btn.getAttribute('data-catmove'), parseInt(btn.getAttribute('data-dir'), 10)));
+    });
+    catManageList.querySelectorAll('[data-catdel]').forEach(btn => {
+      btn.addEventListener('click', () => openCategoryDeleteConfirm(btn.getAttribute('data-catdel')));
+    });
+  }
+
+  function openCategoryDeleteConfirm(id) {
+    const cat = getCategoryById(id);
+    pendingDeleteCategoryId = id;
+    catDeleteConfirmText.textContent = cat
+      ? `"${cat.name}" verrà rimossa da tutti i suoni. Questa azione non può essere annullata.`
+      : 'Questa azione non può essere annullata.';
+    catDeleteConfirmOverlay.classList.add('visible');
+  }
+  function closeCategoryDeleteConfirm() {
+    catDeleteConfirmOverlay.classList.remove('visible');
+    pendingDeleteCategoryId = null;
+  }
+  catDeleteConfirmCancelBtn.addEventListener('click', closeCategoryDeleteConfirm);
+  catDeleteConfirmOverlay.addEventListener('click', e => {
+    if (e.target === catDeleteConfirmOverlay) closeCategoryDeleteConfirm();
+  });
+  catDeleteConfirmBtn.addEventListener('click', () => {
+    if (pendingDeleteCategoryId) deleteCategory(pendingDeleteCategoryId);
+    closeCategoryDeleteConfirm();
+  });
+
+  async function commitNewCategory() {
+    const name = catManageNewName.value;
+    if (!name.trim()) return;
+    await createCategory(name);
+    catManageNewName.value = '';
+    renderCatManageModal();
+    renderFilterRow();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaCatRow();
+  }
+  catManageAddBtn.addEventListener('click', commitNewCategory);
+  catManageNewName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commitNewCategory(); } });
+
+  /* ---------------- Modalità regia ---------------- */
+  function openRegia() {
+    if (regiaCategoryFilter !== 'all' && regiaCategoryFilter !== 'fav' && !getCategoryById(regiaCategoryFilter)) regiaCategoryFilter = 'all';
+    renderRegiaCatRow();
+    renderRegiaGrid();
+    regiaOverlay.classList.add('visible');
+  }
+  function closeRegia() {
+    regiaOverlay.classList.remove('visible');
+  }
+  regiaOpenBtn.addEventListener('click', openRegia);
+  regiaCloseBtn.addEventListener('click', closeRegia);
+  regiaStopAllBtn.addEventListener('click', stopAllSounds);
+
+  function renderRegiaCatRow() {
+    const cats = allCategories();
+    let html = `<button type="button" class="regia-cat-chip${regiaCategoryFilter === 'all' ? ' active' : ''}" data-regiacat="all">Tutti i suoni</button>`;
+    html += `<button type="button" class="regia-cat-chip${regiaCategoryFilter === 'fav' ? ' active' : ''}" data-regiacat="fav">★ Preferiti</button>`;
+    cats.forEach(cat => {
+      const color = cat.color;
+      const active = regiaCategoryFilter === cat.id;
+      const activeStyle = active ? `border-color:${color};color:${color};background:${hexToRgba(color, 0.16)};` : '';
+      html += `<button type="button" class="regia-cat-chip${active ? ' active' : ''}" data-regiacat="${cat.id}" style="${activeStyle}"><span class="dot" style="background:${color};color:${color};"></span>${escapeHtml(cat.name)}</button>`;
+    });
+    regiaCatRow.innerHTML = html;
+    regiaCatRow.querySelectorAll('[data-regiacat]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        regiaCategoryFilter = btn.getAttribute('data-regiacat');
+        renderRegiaCatRow();
+        renderRegiaGrid();
+      });
+    });
+  }
+
+  function renderRegiaGrid() {
+    let list = sounds;
+    if (regiaCategoryFilter === 'fav') list = list.filter(s => s.favorite);
+    else if (regiaCategoryFilter !== 'all') list = list.filter(s => Array.isArray(s.categories) && s.categories.includes(regiaCategoryFilter));
+    if (!list.length) {
+      regiaGrid.innerHTML = '<div class="regia-empty">Nessun suono in questa selezione.</div>';
+      return;
+    }
+    regiaGrid.innerHTML = list.map(s => `
+      <div class="regia-pad${s.playing ? ' playing' : ''}" data-regiapad="${s.id}">
+        <div class="regia-pad-icon">${s.playing ? RESTART_SVG : '▶'}</div>
+        <div class="regia-pad-name">${escapeHtml(s.name)}</div>
+      </div>
+    `).join('');
+    regiaGrid.querySelectorAll('[data-regiapad]').forEach(el => {
+      el.addEventListener('click', () => padMainClick(el.getAttribute('data-regiapad')));
+    });
   }
 
   async function persistOrder() {
@@ -843,17 +1713,28 @@
 
   /* ---------------- Render ---------------- */
   function renderGrid() {
+    grid.className = 'view-' + viewMode;
     grid.querySelectorAll('.pad').forEach(p => p.remove());
     libraryCount.textContent = sounds.length === 1 ? '1 suono caricato' : `${sounds.length} suoni caricati`;
 
     const query = searchQuery.trim().toLowerCase();
-    const visibleSounds = query ? sounds.filter(s => s.name.toLowerCase().includes(query)) : sounds;
+    let visibleSounds = sounds;
+    if (query) visibleSounds = visibleSounds.filter(s => {
+      if (s.name.toLowerCase().includes(query)) return true;
+      return Array.isArray(s.categories) && s.categories.some(cid => {
+        const cat = getCategoryById(cid);
+        return cat && cat.name.toLowerCase().includes(query);
+      });
+    });
+    if (favoritesOnly) visibleSounds = visibleSounds.filter(s => s.favorite);
+    if (categoryFilter) visibleSounds = visibleSounds.filter(s => Array.isArray(s.categories) && s.categories.includes(categoryFilter));
+    const filtersActive = !!(query || favoritesOnly || categoryFilter);
 
     if (!sounds.length) {
       emptyState.innerHTML = EMPTY_HTML;
       emptyState.style.display = 'block';
     } else if (!visibleSounds.length) {
-      emptyState.innerHTML = '<span style="display:inline-flex;width:26px;height:26px;margin:0 auto 10px;color:var(--text-dim);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>Nessun suono corrisponde alla ricerca.';
+      emptyState.innerHTML = '<span style="display:inline-flex;width:26px;height:26px;margin:0 auto 10px;color:var(--text-dim);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:100%;height:100%;"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>Nessun suono corrisponde ai filtri.';
       emptyState.style.display = 'block';
     } else {
       emptyState.style.display = 'none';
@@ -867,9 +1748,11 @@
         <div class="pad-top">
           <div class="pad-top-left">
             <span class="grip" data-grip="${sound.id}" aria-label="Trascina per riordinare" title="Trascina per riordinare">⠿</span>
-            <span class="pad-index">${String(i + 1).padStart(2, '0')}</span>
+            <span class="pad-index" data-index="${sound.id}" title="${filtersActive ? 'Rimuovi i filtri per riordinare manualmente' : 'Clicca per spostare in una posizione precisa'}">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
+            <button class="icon-btn fav-btn${sound.favorite ? ' active' : ''}" data-fav="${sound.id}" title="${sound.favorite ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}" aria-label="Preferito">${sound.favorite ? '★' : '☆'}</button>
+            <button class="icon-btn loop-btn${sound.loop ? ' active' : ''}" data-loop="${sound.id}" title="${sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)'}" aria-label="Loop">${LOOP_SVG}</button>
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">✎</button>
             <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
@@ -883,6 +1766,14 @@
           </div>
         </div>
         <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
+        <div class="category-tags-row" data-catrow="${sound.id}">
+          ${(Array.isArray(sound.categories) ? sound.categories : []).map(cid => {
+            const cat = getCategoryById(cid);
+            if (!cat) return '';
+            return `<span class="category-chip" style="--cat-color:${cat.color};background:${hexToRgba(cat.color, 0.14)}"><span class="cat-dot" style="background:${cat.color}"></span>${escapeHtml(cat.name)}</span>`;
+          }).join('')}
+          <button type="button" class="category-chip-add" data-catadd="${sound.id}">+ categoria</button>
+        </div>
         <div class="waveform">${makeBars(i)}</div>
         <div class="pad-controls">
           <div class="play-cluster">
@@ -922,6 +1813,74 @@
         }
       });
       ['pointerup', 'change'].forEach(evt => inp.addEventListener(evt, () => { if (sound) sound.scrubbing = false; }));
+    });
+    grid.querySelectorAll('[data-fav]').forEach(btn => {
+      btn.addEventListener('click', () => toggleFavorite(btn.getAttribute('data-fav')));
+    });
+    grid.querySelectorAll('[data-loop]').forEach(btn => {
+      btn.addEventListener('click', () => toggleLoop(btn.getAttribute('data-loop')));
+    });
+    grid.querySelectorAll('[data-catadd]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-catadd');
+        openAssignPopoverFor = openAssignPopoverFor === id ? null : id;
+        renderGrid();
+      });
+    });
+    if (openAssignPopoverFor) {
+      const row = grid.querySelector(`[data-catrow="${openAssignPopoverFor}"]`);
+      const sound = sounds.find(s => s.id === openAssignPopoverFor);
+      if (row && sound) {
+        const pop = document.createElement('div');
+        pop.className = 'cat-assign-popover';
+        const cats = allCategories();
+        let popHtml = cats.length
+          ? cats.map(cat => {
+              const selected = Array.isArray(sound.categories) && sound.categories.includes(cat.id);
+              return `
+                <div class="cat-assign-item${selected ? ' selected' : ''}" data-assigncat="${cat.id}">
+                  <span class="dot" style="background:${cat.color};color:${cat.color}"></span>
+                  <span class="name">${escapeHtml(cat.name)}</span>
+                  <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>`;
+            }).join('')
+          : `<div class="cat-assign-empty">Nessuna categoria ancora. Creane una dalla gestione categorie.</div>`;
+        popHtml += `<div class="cat-assign-manage" data-openmanage>⚙ Gestisci categorie</div>`;
+        pop.innerHTML = popHtml;
+        row.appendChild(pop);
+        pop.querySelectorAll('[data-assigncat]').forEach(item => {
+          item.addEventListener('click', () => toggleSoundCategory(sound.id, item.getAttribute('data-assigncat')));
+        });
+        const manageLink = pop.querySelector('[data-openmanage]');
+        if (manageLink) manageLink.addEventListener('click', () => { openAssignPopoverFor = null; renderGrid(); openCatManage(); });
+      }
+    }
+    grid.querySelectorAll('[data-index]').forEach(span => {
+      const id = span.getAttribute('data-index');
+      if (filtersActive) { span.style.cursor = 'default'; return; } // niente riordino manuale a lista filtrata: la numerazione non coinciderebbe
+      span.addEventListener('click', () => {
+        const currentPos = sounds.findIndex(s => s.id === id) + 1;
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = '1';
+        input.max = String(sounds.length);
+        input.value = String(currentPos);
+        input.className = 'pad-index-input';
+        span.replaceWith(input);
+        input.focus();
+        input.select();
+        const commit = () => {
+          const val = parseInt(input.value, 10);
+          if (!isNaN(val)) moveSoundToPosition(id, val);
+          else renderGrid();
+        };
+        input.addEventListener('blur', commit);
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+          if (e.key === 'Escape') { renderGrid(); }
+        });
+      });
     });
     grid.querySelectorAll('[data-rename]').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -996,6 +1955,19 @@
     persistOrder();
     dragState = null;
   }
+
+  document.addEventListener('click', (e) => {
+    if (!openAssignPopoverFor) return;
+    if (e.target.closest('.cat-assign-popover') || e.target.closest('[data-catadd]')) return;
+    openAssignPopoverFor = null;
+    renderGrid();
+  });
+
+  /* ---------------- Torna in cima ---------------- */
+  window.addEventListener('scroll', () => {
+    topBtn.classList.toggle('visible', window.scrollY > 420);
+  });
+  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 </body>
 </html>
