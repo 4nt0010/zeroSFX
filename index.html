@@ -48,11 +48,27 @@
     margin-bottom: 18px;
   }
   .logo img{
-    height: 56px; width: auto; display:block;
+    height: 56px; width: auto; display:none;
     filter: drop-shadow(0 0 14px rgba(255,30,96,0.35));
+  }
+  .logo-text{
+    font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 34px);
+    display: block;
   }
   header h1{ font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); }
   header p{ color: var(--text-muted); font-size: 14px; margin-top: 10px; }
+
+  /* ---------- SWITCH LOGO (in fondo alla pagina) ---------- */
+  .page-bottom{
+    display:flex; justify-content:flex-start; padding: 30px 28px 34px;
+  }
+  .logo-switch{
+    width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--border-strong);
+    background: rgba(255,255,255,0.03); cursor:pointer; padding:0;
+    transition: all .18s ease;
+  }
+  .logo-switch:hover{ border-color: var(--orange-bright); box-shadow: 0 0 8px rgba(255,30,96,0.3); }
+  .logo-switch.active{ background: var(--orange-bright); border-color: var(--orange-bright); box-shadow: 0 0 10px rgba(255,30,96,0.55); }
 
   .glow-strip{ height: 90px; position: relative; overflow:hidden; }
   .glow-strip::before{
@@ -674,7 +690,10 @@
 <body>
 
 <header>
-  <div class="logo"><img src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX"></div>
+  <div class="logo" id="logoWrap">
+    <img id="logoImg" src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX">
+    <h1 class="logo-text" id="logoText">Bentornato</h1>
+  </div>
   <p>Carica un audio, rinominalo, falli partire quando vuoi.</p>
   <div class="mode-toggle" role="group" aria-label="Modalità riproduzione">
     <span class="mode-label active" id="modeLabelMulti">Multi</span>
@@ -749,6 +768,10 @@
       </div>
     </div>
   </section>
+</div>
+
+<div class="page-bottom">
+  <button type="button" class="logo-switch" id="logoSwitchBtn" role="switch" aria-checked="false" title="Mostra il logo al posto della scritta" aria-label="Mostra il logo al posto della scritta"></button>
 </div>
 
 <div class="bottom-player" id="bottomPlayer">
@@ -834,6 +857,25 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const storage = getStorage(app);
+
+  /* ---------------- Switch logo/scritta in basso alla pagina ---------------- */
+  const logoImg = document.getElementById('logoImg');
+  const logoText = document.getElementById('logoText');
+  const logoSwitchBtn = document.getElementById('logoSwitchBtn');
+  let showLogo = false;
+
+  function applyLogoVisibility() {
+    logoImg.style.display = showLogo ? 'block' : 'none';
+    logoText.style.display = showLogo ? 'none' : 'block';
+    logoSwitchBtn.classList.toggle('active', showLogo);
+    logoSwitchBtn.setAttribute('aria-checked', showLogo ? 'true' : 'false');
+  }
+  applyLogoVisibility();
+
+  logoSwitchBtn.addEventListener('click', () => {
+    showLogo = !showLogo;
+    applyLogoVisibility();
+  });
 
   const fileInput = document.getElementById('fileInput');
   const dropzone = document.getElementById('dropzone');
