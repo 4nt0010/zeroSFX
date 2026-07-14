@@ -290,7 +290,9 @@
 
   /* ---------- MODALITÀ REGIA ---------- */
   .regia-overlay{
-    position: fixed; inset: 0; background: #0a0605; z-index: 200;
+    position: fixed; inset: 0; background: var(--bg); z-index: 200;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
+    background-size: 26px 26px;
     display:none; flex-direction: column; padding: 22px;
   }
   .regia-overlay.visible{ display:flex; }
@@ -306,6 +308,7 @@
     display:flex; align-items:center; justify-content:center; transition: all .15s ease;
   }
   .regia-close:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); background: rgba(255,107,107,0.1); }
+  .regia-search-row{ margin-bottom: 18px; }
   .regia-cat-row{
     display:flex; flex-wrap:wrap; gap:8px; margin: 0 0 18px; flex-shrink:0;
   }
@@ -836,6 +839,15 @@
     </button>
     <button type="button" class="regia-close" id="regiaCloseBtn" aria-label="Chiudi modalità regia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="14" height="14"><line x1="4" y1="4" x2="20" y2="20"></line><line x1="20" y1="4" x2="4" y2="20"></line></svg></button>
   </div>
+  <div class="search-row regia-search-row">
+    <span class="search-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </span>
+    <input type="text" id="regiaSearchInput" class="search-input" placeholder="Cerca per nome o categoria…" aria-label="Cerca un suono">
+  </div>
   <div class="regia-cat-row" id="regiaCatRow"></div>
   <div class="regia-grid" id="regiaGrid"></div>
 </div>
@@ -910,6 +922,7 @@
   const regiaGrid = document.getElementById('regiaGrid');
   const regiaCatRow = document.getElementById('regiaCatRow');
   const regiaStopAllBtn = document.getElementById('regiaStopAllBtn');
+  const regiaSearchInput = document.getElementById('regiaSearchInput');
   const bottomPlayer = document.getElementById('bottomPlayer');
   const bpName = document.getElementById('bpName');
   const bpTime = document.getElementById('bpTime');
@@ -932,6 +945,7 @@
   let playerMode = 'multi'; // 'multi' oppure 'single'
   let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
   let regiaCategoryFilter = 'all'; // 'all' | 'fav' | nome categoria, usato in modalità regia
+  let regiaSearchQuery = '';
 
   /* ---------------- Categorie (sistema dedicato, sincronizzato su Firebase) ---------------- */
   const CAT_PALETTE = ['#FF1E60','#FF8A3D','#FFD23D','#3DFFA0','#3DDBFF','#5C8CFF','#B23DFF','#FF3DBE','#8CFF3D','#FF6B6B'];
@@ -1702,6 +1716,10 @@
   regiaOpenBtn.addEventListener('click', openRegia);
   regiaCloseBtn.addEventListener('click', closeRegia);
   regiaStopAllBtn.addEventListener('click', stopAllSounds);
+  regiaSearchInput.addEventListener('input', () => {
+    regiaSearchQuery = regiaSearchInput.value;
+    renderRegiaGrid();
+  });
 
   function renderRegiaCatRow() {
     const cats = allCategories();
@@ -1727,8 +1745,16 @@
     let list = sounds;
     if (regiaCategoryFilter === 'fav') list = list.filter(s => s.favorite);
     else if (regiaCategoryFilter !== 'all') list = list.filter(s => Array.isArray(s.categories) && s.categories.includes(regiaCategoryFilter));
+    const query = regiaSearchQuery.trim().toLowerCase();
+    if (query) list = list.filter(s => {
+      if (s.name.toLowerCase().includes(query)) return true;
+      return Array.isArray(s.categories) && s.categories.some(cid => {
+        const cat = getCategoryById(cid);
+        return cat && cat.name.toLowerCase().includes(query);
+      });
+    });
     if (!list.length) {
-      regiaGrid.innerHTML = '<div class="regia-empty">Nessun suono in questa selezione.</div>';
+      regiaGrid.innerHTML = `<div class="regia-empty">${query || regiaCategoryFilter !== 'all' ? 'Nessun suono corrisponde ai filtri.' : 'Nessun suono in questa selezione.'}</div>`;
       return;
     }
     regiaGrid.innerHTML = list.map(s => `
