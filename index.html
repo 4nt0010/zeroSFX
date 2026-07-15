@@ -450,6 +450,18 @@
     background: rgba(255,255,255,0.065);
     box-shadow: 0 16px 40px -14px rgba(255,30,96,0.3), 0 0 0 4px rgba(255,30,96,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
   }
+  .search-clear-btn{
+    position:absolute; top:50%; transform: translateY(-50%);
+    width: 34px; height: 34px; border-radius: 50%; border: none; padding:0;
+    background: rgba(255,255,255,0.08); color: var(--text-dim); cursor:pointer;
+    display:none; align-items:center; justify-content:center; transition: all .18s ease;
+  }
+  .search-clear-btn:hover{ color: var(--text); background: rgba(255,30,96,0.2); }
+  .search-clear-btn svg{ width:15px; height:15px; display:block; }
+  .search-clear-btn.visible{ display:flex; }
+  #searchClearBtn{ right: 84px; }
+  #searchInput{ padding-right: 132px; }
+  #regiaClearBtn{ right: 10px; }
 
   /* ---------- BOTTOM FLOATING PLAYER ---------- */
   .bottom-player{
@@ -754,6 +766,9 @@
         </svg>
       </span>
       <input type="text" id="searchInput" class="search-input" placeholder="Cerca per nome o categoria…" aria-label="Cerca un suono">
+      <button type="button" class="search-clear-btn" id="searchClearBtn" title="Cancella ricerca" aria-label="Cancella ricerca">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"></line><line x1="16" y1="4" x2="4" y2="16"></line></svg>
+      </button>
       <button type="button" class="cat-manage-btn" id="catManageBtn" title="Gestisci categorie" aria-label="Gestisci categorie">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
@@ -847,6 +862,9 @@
       </svg>
     </span>
     <input type="text" id="regiaSearchInput" class="search-input" placeholder="Cerca per nome o categoria…" aria-label="Cerca un suono">
+    <button type="button" class="search-clear-btn" id="regiaClearBtn" title="Cancella ricerca" aria-label="Cancella ricerca">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"></line><line x1="16" y1="4" x2="4" y2="16"></line></svg>
+    </button>
   </div>
   <div class="regia-cat-row" id="regiaCatRow"></div>
   <div class="regia-grid" id="regiaGrid"></div>
@@ -896,6 +914,7 @@
   const emptyState = document.getElementById('emptyState');
   const libraryCount = document.getElementById('libraryCount');
   const searchInput = document.getElementById('searchInput');
+  const searchClearBtn = document.getElementById('searchClearBtn');
   const modeSwitch = document.getElementById('modeSwitch');
   const modeLabelMulti = document.getElementById('modeLabelMulti');
   const modeLabelSingle = document.getElementById('modeLabelSingle');
@@ -923,6 +942,7 @@
   const regiaCatRow = document.getElementById('regiaCatRow');
   const regiaStopAllBtn = document.getElementById('regiaStopAllBtn');
   const regiaSearchInput = document.getElementById('regiaSearchInput');
+  const regiaClearBtn = document.getElementById('regiaClearBtn');
   const bottomPlayer = document.getElementById('bottomPlayer');
   const bpName = document.getElementById('bpName');
   const bpTime = document.getElementById('bpTime');
@@ -1257,7 +1277,15 @@
   /* ---------------- Ricerca ---------------- */
   searchInput.addEventListener('input', () => {
     searchQuery = searchInput.value;
+    searchClearBtn.classList.toggle('visible', searchQuery.length > 0);
     renderGrid();
+  });
+  searchClearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    searchQuery = '';
+    searchClearBtn.classList.remove('visible');
+    renderGrid();
+    searchInput.focus();
   });
 
   /* ---------------- Selettore vista (griglia / compatta / lista) ---------------- */
@@ -1718,7 +1746,15 @@
   regiaStopAllBtn.addEventListener('click', stopAllSounds);
   regiaSearchInput.addEventListener('input', () => {
     regiaSearchQuery = regiaSearchInput.value;
+    regiaClearBtn.classList.toggle('visible', regiaSearchQuery.length > 0);
     renderRegiaGrid();
+  });
+  regiaClearBtn.addEventListener('click', () => {
+    regiaSearchInput.value = '';
+    regiaSearchQuery = '';
+    regiaClearBtn.classList.remove('visible');
+    renderRegiaGrid();
+    regiaSearchInput.focus();
   });
 
   function renderRegiaCatRow() {
