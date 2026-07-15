@@ -389,7 +389,6 @@
     flex-shrink:0; transition: all .15s ease;
   }
   .pause-btn-small:hover{ color: var(--orange-bright); border-color: var(--orange-bright); }
-  .pause-btn-small:disabled{ opacity: 0.35; cursor:default; }
 
   .seek-col{ flex:1; min-width:0; }
   .seek-row{ display:flex; align-items:center; gap:8px; min-width:0; }
@@ -1747,14 +1746,12 @@
     sound.playing = isPlaying;
     const pad = document.querySelector(`[data-pad="${sound.id}"]`);
     const btn = document.querySelector(`[data-playbtn="${sound.id}"]`);
-    const pauseBtn = document.querySelector(`[data-pausebtn="${sound.id}"]`);
     if (pad) pad.classList.toggle('playing', isPlaying);
     if (btn) {
       btn.innerHTML = isPlaying ? RESTART_SVG : PLAY_SVG;
       btn.title = isPlaying ? 'Riavvia da capo' : 'Riproduci';
       btn.setAttribute('aria-label', isPlaying ? 'Riavvia da capo' : 'Riproduci');
     }
-    if (pauseBtn) pauseBtn.disabled = !isPlaying;
     if (sound.id === activeSoundId) updateBottomBar(sound);
     if (regiaOverlay.classList.contains('visible')) {
       const regiaPad = regiaGrid.querySelector(`[data-regiapad="${sound.id}"]`);
@@ -1812,12 +1809,30 @@
     activeSoundId = id;
   }
 
-  // Pulsante piccolo accanto al play: mette solo in pausa, senza riavvolgere
+  // Pulsante piccolo accanto al play: se sta suonando lo mette in pausa (senza
+  // riavvolgere); se è fermo lo fa ripartire da dove si trovava (resume), MAI
+  // da zero — a differenza del pulsante grande, che riparte sempre da capo.
+  // Resta sempre cliccabile (mai "spento"/disabled): è così che i due pulsanti
+  // si differenziano.
   function pauseSound(id) {
     const sound = sounds.find(s => s.id === id);
-    if (!sound || !sound.playing) return;
-    sound.audio.pause();
-    setPlaying(sound, false);
+    if (!sound) return;
+    if (sound.playing) {
+      sound.audio.pause();
+      setPlaying(sound, false);
+    } else {
+      if (playerMode === 'single') {
+        sounds.forEach(s => {
+          if (s.id !== id && s.playing) {
+            s.audio.pause();
+            setPlaying(s, false);
+          }
+        });
+      }
+      sound.audio.play();
+      setPlaying(sound, true);
+      activeSoundId = id;
+    }
   }
 
   /* ---------------- Barra di riproduzione fissa ---------------- */
@@ -2256,7 +2271,7 @@
             <div class="pad-controls">
               <div class="play-cluster">
                 <button class="play-btn" data-playbtn="${sound.id}" aria-label="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}" title="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}">${sound.playing ? RESTART_SVG : PLAY_SVG}</button>
-                <button class="pause-btn-small" data-pausebtn="${sound.id}" aria-label="Pausa" title="Pausa" ${sound.playing ? '' : 'disabled'}>${PAUSE_SVG}</button>
+                <button class="pause-btn-small" data-pausebtn="${sound.id}" aria-label="Pausa / riprendi" title="Pausa / riprendi da qui">${PAUSE_SVG}</button>
               </div>
               <div class="seek-col">
                 <div class="seek-row">
