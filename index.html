@@ -124,7 +124,7 @@
   .view-btn svg{ width:14px; height:14px; }
 
   #libraryGrid.view-compact{ grid-template-columns: repeat(auto-fill, minmax(175px,1fr)); gap: 10px; }
-  #libraryGrid.view-compact .pad{ padding: 11px; }
+  #libraryGrid.view-compact .pad{ padding: 11px; display:flex; flex-direction:column; }
   #libraryGrid.view-compact .waveform{ display:none; }
   #libraryGrid.view-compact .category-tags-row{ font-size: 9.5px; margin-bottom: 6px; }
   #libraryGrid.view-compact .category-chip, #libraryGrid.view-compact .category-chip-add{ font-size: 9.5px; padding: 1px 7px; }
@@ -133,25 +133,29 @@
   #libraryGrid.view-compact .pad-icon-btns{ gap: 4px; }
   #libraryGrid.view-compact .icon-btn{ width: 22px; height: 22px; font-size: 10.5px; }
   #libraryGrid.view-compact .icon-btn svg{ width: 12px; height: 12px; }
-  #libraryGrid.view-compact .pad-controls{ flex-wrap: wrap; gap: 8px 10px; margin-bottom: 6px; }
+  #libraryGrid.view-compact .pad-controls{ flex-wrap: wrap; gap: 8px 10px; margin-bottom: 6px; margin-top: auto; }
   #libraryGrid.view-compact .play-cluster{ gap: 6px; }
   #libraryGrid.view-compact .play-btn{ width: 38px; height: 38px; font-size: 14px; box-shadow: none; }
   #libraryGrid.view-compact .play-btn svg{ width: 14px; height: 14px; }
   #libraryGrid.view-compact .pause-btn-small{ width: 22px; height: 22px; font-size: 8px; }
   #libraryGrid.view-compact .seek-col{ flex: 1 1 100%; min-width: 0; }
   #libraryGrid.view-compact .time-label{ font-size: 9.5px; min-width: 24px; }
+  #libraryGrid.view-compact .pad-body{ flex: 1; }
+  #libraryGrid.view-compact .pad-main{ flex: 1; }
 
   #libraryGrid.view-list{ grid-template-columns: 1fr; gap: 8px; }
-  #libraryGrid.view-list .pad{ display:flex; align-items:center; gap:14px; padding: 10px 16px; flex-wrap: wrap; }
+  #libraryGrid.view-list .pad{ display:flex; align-items:center; gap:14px; padding: 10px 16px; flex-wrap: nowrap; overflow-x: auto; }
   #libraryGrid.view-list .pad-top{ display:contents; }
   #libraryGrid.view-list .pad-controls{ display:contents; }
+  #libraryGrid.view-list .pad-body{ display:contents; }
+  #libraryGrid.view-list .pad-main{ display:contents; }
   #libraryGrid.view-list .waveform{ display:none; }
   #libraryGrid.view-list .category-tags-row{ display:none; }
   #libraryGrid.view-list .pad-top-left{ order:1; flex-shrink:0; }
-  #libraryGrid.view-list .pad-name{ order:2; flex:1 1 140px; min-width: 100px; margin-bottom:0; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #libraryGrid.view-list .pad-name{ order:2; flex: 1 1 auto; min-width: 70px; margin-bottom:0; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; min-height:0; -webkit-line-clamp: unset; -webkit-box-orient: unset; }
   #libraryGrid.view-list .play-cluster{ order:3; }
-  #libraryGrid.view-list .seek-col{ order:4; flex: 1 1 180px; min-width: 140px; }
-  #libraryGrid.view-list .pad-icon-btns{ order:5; }
+  #libraryGrid.view-list .seek-col{ order:4; flex: 0 0 170px; min-width: 170px; }
+  #libraryGrid.view-list .pad-icon-btns{ order:5; flex: 0 0 auto; }
 
   #libraryGrid{
     display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
@@ -352,6 +356,8 @@
     margin-bottom: 4px; word-break: break-word; line-height:1.25;
     background: transparent; border: none; color: var(--text); width: 100%;
     border-bottom: 1px solid transparent;
+    min-height: calc(1.25em * 2);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
   .pad-name[contenteditable="true"]{ border-bottom: 1px dashed var(--orange-bright); outline: none; }
   .pad-meta{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 14px; }
@@ -422,6 +428,160 @@
     transition: transform .2s ease;
   }
   .mode-switch[aria-checked="true"]::after{ transform: translateX(22px); }
+
+  /* ---------- VOLUME FADERS (generale + per singolo suono) ---------- */
+  .mv-icon{ display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .mv-icon svg{ width:100%; height:100%; display:block; }
+  .mv-value{ font-family: var(--mono); flex-shrink:0; }
+
+  /* pad-body: affianca la colonna principale (onda + controlli) al fader del
+     singolo suono, così nella vista grande il fader può essere più alto
+     "rubando" un po' di larghezza alla visualizzazione dell'onda sonora. */
+  .pad-body{ display:flex; align-items:stretch; gap: 12px; }
+  .pad-main{ flex:1; min-width:0; display:flex; flex-direction:column; }
+
+  .pad-volume-row{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    flex-shrink:0; padding-left: 12px; margin-left: 2px;
+    border-left: 1px solid var(--border);
+  }
+  .pad-volume-row .mv-icon{ width:12px; height:12px; color: var(--text-dim); }
+  .pad-volume-row .mv-value{ font-size: 9.5px; color: var(--text-dim); }
+  .pv-track-wrap{ position:relative; width: 24px; height: 150px; display:flex; align-items:center; justify-content:center; }
+  .pv-slider{
+    -webkit-appearance:none; appearance:none;
+    width: 150px; height: 24px;
+    transform: rotate(-90deg);
+    background: transparent; outline:none; cursor:pointer; margin:0; padding:0;
+  }
+  .pv-slider::-webkit-slider-runnable-track{
+    height: 3px; border-radius: 2px;
+    background: linear-gradient(to right, var(--orange-bright) var(--fill, 100%), rgba(255,255,255,0.07) var(--fill, 100%));
+  }
+  .pv-slider::-moz-range-track{ height: 3px; border-radius: 2px; background: rgba(255,255,255,0.07); }
+  .pv-slider::-moz-range-progress{ height: 3px; border-radius: 2px; background: var(--orange-bright); }
+  .pv-slider::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width: 24px; height: 11px; border-radius: 2px; margin-top: -4px;
+    background-image:
+      linear-gradient(to right, transparent 0, transparent calc(50% - 1px), rgba(0,0,0,0.55) calc(50% - 1px), rgba(0,0,0,0.55) calc(50% + 1px), transparent calc(50% + 1px), transparent 100%),
+      linear-gradient(to right, #7a0a2c 0%, #ff1e60 25%, #ff8fa8 50%, #ff1e60 75%, #7a0a2c 100%);
+    border: 1px solid rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(255,30,96,0.5);
+    cursor:pointer;
+  }
+  .pv-slider::-moz-range-thumb{
+    width: 24px; height: 11px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.5);
+    background-image:
+      linear-gradient(to right, transparent 0, transparent calc(50% - 1px), rgba(0,0,0,0.55) calc(50% - 1px), rgba(0,0,0,0.55) calc(50% + 1px), transparent calc(50% + 1px), transparent 100%),
+      linear-gradient(to right, #7a0a2c 0%, #ff1e60 25%, #ff8fa8 50%, #ff1e60 75%, #7a0a2c 100%);
+    box-shadow: 0 0 5px rgba(255,30,96,0.5);
+    cursor:pointer;
+  }
+
+  /* Viste compatta e lista ("box piccoli"): il fader torna orizzontale,
+     niente più rotazione, si allunga fino in fondo e niente percentuale. */
+  #libraryGrid.view-compact .pad-body{ flex-direction: column; }
+  #libraryGrid.view-compact .pad-volume-row,
+  #libraryGrid.view-list .pad-volume-row{
+    flex-direction: row; align-items:center; justify-content:flex-start; gap:8px;
+    border-left: none; padding-left: 0; margin-left: 0;
+  }
+  #libraryGrid.view-compact .pad-volume-row{ border-top: 1px solid var(--border); padding-top: 8px; margin-top: 2px; width: 100%; }
+  #libraryGrid.view-list .pad-volume-row{ order:6; flex: 0 0 150px; min-width: 150px; }
+  #libraryGrid.view-compact .pad-volume-row .mv-value,
+  #libraryGrid.view-list .pad-volume-row .mv-value{ display:none; }
+  #libraryGrid.view-compact .pv-track-wrap,
+  #libraryGrid.view-list .pv-track-wrap{ width: auto; flex:1; min-width:0; height: 24px; }
+  #libraryGrid.view-compact .pv-slider,
+  #libraryGrid.view-list .pv-slider{ transform: none; width: 100%; height: 24px; }
+
+  /* ---------- MASTER FADER (dock fisso, stile mixer) ----------
+     Fisso a schermo così resta a portata di mano mentre sistemi i suoni,
+     e resta visibile (z-index alto) anche sopra la modalità regia. */
+  .master-fader-dock{
+    position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 260;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    padding: 16px 15px 14px; border-radius: 20px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(28,24,32,0.88), rgba(16,13,18,0.92));
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 14px 34px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+    transition: box-shadow .25s ease, border-color .25s ease;
+  }
+  .master-fader-dock:hover, .master-fader-dock:focus-within{
+    border-color: var(--border-strong);
+    box-shadow: 0 14px 34px -14px rgba(255,30,96,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .master-fader-dock .mv-icon{ width:15px; height:15px; color: var(--text-dim); transition: color .2s ease; }
+  .master-fader-dock:hover .mv-icon, .master-fader-dock:focus-within .mv-icon{ color: var(--orange-bright); }
+  .mf-drag-handle{
+    cursor: grab; color: var(--text-dim); font-size: 14px; line-height:1;
+    user-select:none; -webkit-user-select:none; touch-action:none;
+    transition: color .15s ease;
+  }
+  .mf-drag-handle:hover{ color: var(--text-muted); }
+  .mf-drag-handle:active{ cursor: grabbing; color: var(--orange-bright); }
+  .mf-friction-btn{
+    width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer; padding:0;
+    display:flex; align-items:center; justify-content:center; transition: all .18s ease;
+  }
+  .mf-friction-btn svg{ width:13px; height:13px; }
+  .mf-friction-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .mf-friction-btn.active{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.16); box-shadow: 0 0 8px rgba(255,30,96,0.35); }
+  .mf-track-wrap{ position:relative; width: 28px; height: 118px; display:flex; align-items:center; justify-content:center; }
+  .mf-slider{
+    -webkit-appearance:none; appearance:none;
+    width: 118px; height: 28px;
+    transform: rotate(-90deg);
+    background: transparent; outline:none; cursor:pointer; margin:0; padding:0;
+  }
+  .mf-slider::-webkit-slider-runnable-track{
+    height: 4px; border-radius: 2px;
+    background: linear-gradient(to right, var(--orange-bright) var(--fill, 100%), rgba(255,255,255,0.07) var(--fill, 100%));
+    transition: background .16s ease;
+  }
+  .mf-slider::-moz-range-track{
+    height: 4px; border-radius: 2px; background: rgba(255,255,255,0.07);
+  }
+  .mf-slider::-moz-range-progress{
+    height: 4px; border-radius: 2px; background: var(--orange-bright);
+    transition: width .16s ease;
+  }
+  .mf-slider::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width: 34px; height: 16px; border-radius: 3px; margin-top: -6px;
+    background-image:
+      linear-gradient(to right, transparent 0, transparent calc(50% - 1.6px), rgba(0,0,0,0.6) calc(50% - 1.6px), rgba(0,0,0,0.6) calc(50% + 1.6px), transparent calc(50% + 1.6px), transparent 100%),
+      linear-gradient(to right, #7a0a2c 0%, #ff1e60 18%, #ff8fa8 50%, #ff1e60 82%, #7a0a2c 100%);
+    border: 1px solid rgba(0,0,0,0.55);
+    box-shadow: 0 0 8px rgba(255,30,96,0.55), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.3);
+    cursor:pointer;
+    transition: box-shadow .18s ease, transform .12s ease;
+  }
+  .mf-slider:active::-webkit-slider-thumb{
+    box-shadow: 0 0 16px rgba(255,30,96,0.9), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.3);
+    transform: scaleX(1.06);
+  }
+  .mf-slider::-moz-range-thumb{
+    width: 34px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.55);
+    background-image:
+      linear-gradient(to right, transparent 0, transparent calc(50% - 1.6px), rgba(0,0,0,0.6) calc(50% - 1.6px), rgba(0,0,0,0.6) calc(50% + 1.6px), transparent calc(50% + 1.6px), transparent 100%),
+      linear-gradient(to right, #7a0a2c 0%, #ff1e60 18%, #ff8fa8 50%, #ff1e60 82%, #7a0a2c 100%);
+    box-shadow: 0 0 8px rgba(255,30,96,0.55);
+    cursor:pointer; transition: box-shadow .18s ease, transform .12s ease;
+  }
+  .mf-slider:active::-moz-range-thumb{ box-shadow: 0 0 16px rgba(255,30,96,0.9); transform: scaleX(1.06); }
+  .master-fader-dock .mv-value{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); min-width: 36px; text-align:center; transition: color .16s ease; }
+  .mf-label{ font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: var(--text-dim); }
+
+  @media (max-width: 640px){
+    .master-fader-dock{ right: 10px; padding: 12px 11px 10px; gap:8px; }
+    .mf-track-wrap{ height: 90px; }
+    .mf-slider{ width: 90px; }
+  }
 
   /* ---------- SEARCH BAR ---------- */
   .search-row{
@@ -733,6 +893,21 @@
   </div>
   <div class="glow-strip"></div>
 </header>
+
+<div class="master-fader-dock" id="masterFaderDock" title="Volume generale — torna al 100% ad ogni ricarica della pagina">
+  <span class="mf-drag-handle" id="masterDragHandle" title="Trascina per spostare" aria-label="Trascina per spostare">⠿</span>
+  <span class="mv-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+  </span>
+  <div class="mf-track-wrap">
+    <input type="range" class="mf-slider" id="masterVolumeSlider" min="0" max="100" step="1" value="100" aria-label="Volume generale">
+  </div>
+  <span class="mv-value" id="masterVolumeValue">100%</span>
+  <button type="button" class="mf-friction-btn active" id="masterFrictionBtn" title="Frizione attiva (movimento ammorbidito, ignora gli scatti del mouse)" aria-label="Attiva/disattiva la frizione del fader" aria-pressed="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2 0 2-6 4-6s2 6 4 6 2-4 4-4 2 3 4 3 2-1 4-1"></path></svg>
+  </button>
+  <span class="mf-label">MASTER</span>
+</div>
 
 <div class="wrap">
   <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Carica file audio">
@@ -1126,6 +1301,175 @@
   const PENCIL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>`;
   const ARROW_UP_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>`;
   const ARROW_DOWN_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="5 12 12 19 19 12"></polyline></svg>`;
+  const VOLUME_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path></svg>`;
+
+  /* ---------------- Volume generale (fader master) ----------------
+     Non viene mai salvato da nessuna parte: è solo una variabile in memoria,
+     quindi ad ogni refresh della pagina riparte sempre al 100%.
+     Con la "frizione" attiva il valore reale applicato all'audio insegue
+     con un piccolo smorzamento il valore impostato con lo slider, così i
+     micro-scatti del mouse non si sentono come scatti nel volume. */
+  let masterVolume = 1;        // valore realmente applicato all'audio (smorzato)
+  let masterVolumeTarget = 1;  // valore "grezzo" impostato con lo slider
+  let frictionEnabled = true;
+  let frictionRAF = null;
+  let frictionLastTime = null;
+  const FRICTION_TIME_CONSTANT = 90; // ms — più alto = frizione più "pesante" e percepibile
+  const masterVolumeSlider = document.getElementById('masterVolumeSlider');
+  const masterVolumeValue = document.getElementById('masterVolumeValue');
+  const masterFrictionBtn = document.getElementById('masterFrictionBtn');
+
+  function applyVolume(sound) {
+    const own = typeof sound.volume === 'number' ? sound.volume : 1;
+    sound.audio.volume = Math.max(0, Math.min(1, own * masterVolume));
+  }
+
+  // Aggiorna il numero e il riempimento del binario in base al valore REALMENTE
+  // applicato (masterVolume), non a quello grezzo dello slider: così, quando la
+  // frizione è attiva, si VEDE il valore inseguire con un piccolo ritardo il
+  // punto dove hai spostato il cursore, non solo sentirlo nell'audio.
+  function renderMasterVisual() {
+    const pct = Math.round(masterVolume * 100);
+    masterVolumeValue.textContent = `${pct}%`;
+    masterVolumeSlider.style.setProperty('--fill', `${pct}%`);
+  }
+
+  function startFrictionLoop() {
+    if (frictionRAF) return;
+    frictionLastTime = null;
+    const step = (now) => {
+      if (frictionLastTime == null) frictionLastTime = now;
+      const dt = now - frictionLastTime;
+      frictionLastTime = now;
+      const diff = masterVolumeTarget - masterVolume;
+      if (Math.abs(diff) < 0.0006) {
+        masterVolume = masterVolumeTarget;
+        sounds.forEach(applyVolume);
+        renderMasterVisual();
+        frictionRAF = null;
+        return;
+      }
+      // smorzamento esponenziale legato al tempo reale trascorso: la sensazione
+      // di "frizione" resta identica indipendentemente dal frame-rate dello schermo
+      const alpha = 1 - Math.exp(-dt / FRICTION_TIME_CONSTANT);
+      masterVolume += diff * alpha;
+      sounds.forEach(applyVolume);
+      renderMasterVisual();
+      frictionRAF = requestAnimationFrame(step);
+    };
+    frictionRAF = requestAnimationFrame(step);
+  }
+
+  masterVolumeSlider.addEventListener('input', () => {
+    masterVolumeTarget = parseInt(masterVolumeSlider.value, 10) / 100;
+    if (frictionEnabled) {
+      startFrictionLoop();
+    } else {
+      masterVolume = masterVolumeTarget;
+      sounds.forEach(applyVolume);
+      renderMasterVisual();
+    }
+  });
+  renderMasterVisual();
+
+  masterFrictionBtn.addEventListener('click', () => {
+    frictionEnabled = !frictionEnabled;
+    applyFrictionUI();
+    if (!frictionEnabled) {
+      // niente più inseguimento residuo: applica e mostra subito il valore corrente
+      if (frictionRAF) { cancelAnimationFrame(frictionRAF); frictionRAF = null; }
+      masterVolume = masterVolumeTarget;
+      sounds.forEach(applyVolume);
+      renderMasterVisual();
+    }
+    saveFrictionSetting();
+  });
+
+  function applyFrictionUI() {
+    masterFrictionBtn.classList.toggle('active', frictionEnabled);
+    masterFrictionBtn.setAttribute('aria-pressed', String(frictionEnabled));
+    masterFrictionBtn.title = frictionEnabled
+      ? 'Frizione attiva (movimento ammorbidito, ignora gli scatti del mouse)'
+      : 'Frizione disattivata (risposta diretta e immediata)';
+  }
+
+  /* ---------------- Frizione del fader master (persistenza) ---------------- */
+  const FRICTION_SETTING_DOC = doc(db, "settings", "masterFader");
+
+  async function loadFrictionSetting() {
+    try {
+      const snap = await getDoc(FRICTION_SETTING_DOC);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (typeof data.frictionEnabled === 'boolean') {
+          frictionEnabled = data.frictionEnabled;
+          applyFrictionUI();
+        }
+      }
+    } catch (err) {
+      console.warn('Errore nel caricamento della frizione:', err);
+    }
+  }
+
+  async function saveFrictionSetting() {
+    try {
+      await setDoc(FRICTION_SETTING_DOC, { frictionEnabled }, { merge: true });
+    } catch (err) {
+      console.error('Errore nel salvataggio della frizione:', err);
+    }
+  }
+
+  loadFrictionSetting();
+
+  /* ---------------- Dock del fader master: trascinabile ovunque sullo schermo ---------------- */
+  const masterFaderDock = document.getElementById('masterFaderDock');
+  const masterDragHandle = document.getElementById('masterDragHandle');
+  let dockDrag = null;
+
+  function onDockPointerDown(e) {
+    e.preventDefault();
+    const rect = masterFaderDock.getBoundingClientRect();
+    masterFaderDock.style.left = rect.left + 'px';
+    masterFaderDock.style.top = rect.top + 'px';
+    masterFaderDock.style.right = 'auto';
+    masterFaderDock.style.transform = 'none';
+    dockDrag = { startX: e.clientX, startY: e.clientY, origLeft: rect.left, origTop: rect.top };
+    masterDragHandle.setPointerCapture(e.pointerId);
+    document.addEventListener('pointermove', onDockPointerMove);
+    document.addEventListener('pointerup', onDockPointerUp);
+  }
+
+  function onDockPointerMove(e) {
+    if (!dockDrag) return;
+    const dx = e.clientX - dockDrag.startX;
+    const dy = e.clientY - dockDrag.startY;
+    const maxLeft = window.innerWidth - masterFaderDock.offsetWidth - 4;
+    const maxTop = window.innerHeight - masterFaderDock.offsetHeight - 4;
+    const newLeft = Math.max(4, Math.min(maxLeft, dockDrag.origLeft + dx));
+    const newTop = Math.max(4, Math.min(maxTop, dockDrag.origTop + dy));
+    masterFaderDock.style.left = newLeft + 'px';
+    masterFaderDock.style.top = newTop + 'px';
+  }
+
+  function onDockPointerUp() {
+    dockDrag = null;
+    document.removeEventListener('pointermove', onDockPointerMove);
+    document.removeEventListener('pointerup', onDockPointerUp);
+  }
+
+  masterDragHandle.addEventListener('pointerdown', onDockPointerDown);
+  window.addEventListener('resize', () => {
+    // se la finestra si rimpicciolisce, tiene il dock dentro lo schermo
+    const rect = masterFaderDock.getBoundingClientRect();
+    if (rect.right > window.innerWidth || rect.bottom > window.innerHeight) {
+      const newLeft = Math.max(4, Math.min(window.innerWidth - rect.width - 4, rect.left));
+      const newTop = Math.max(4, Math.min(window.innerHeight - rect.height - 4, rect.top));
+      if (masterFaderDock.style.left) {
+        masterFaderDock.style.left = newLeft + 'px';
+        masterFaderDock.style.top = newTop + 'px';
+      }
+    }
+  });
 
   async function loadFromCloud() {
     try {
@@ -1165,11 +1509,13 @@
           duration: typeof rec.duration === 'number' ? rec.duration : 0,
           categories: soundCategories,
           favorite: !!rec.favorite,
+          volume: typeof rec.volume === 'number' ? rec.volume : 1,
           loop: false,
           playing: false, 
           scrubbing: false
         };
         wireAudioEvents(sound);
+        applyVolume(sound);
         sounds.push(sound);
 
         if (!Array.isArray(rec.categories) && soundCategories.length) {
@@ -1325,9 +1671,10 @@
       audio.preload = 'metadata'; // il file è già locale (appena caricato): nessun consumo di banda
       audio.src = URL.createObjectURL(file); // riusa subito il file locale, senza riscaricarlo da Firebase
       const order = sounds.length;
-      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [], favorite: false, loop: false, playing: false, scrubbing: false };
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [], favorite: false, volume: 1, loop: false, playing: false, scrubbing: false };
       
       wireAudioEvents(sound);
+      applyVolume(sound);
       sounds.push(sound);
 
       await setDoc(doc(db, "sounds", id), {
@@ -1338,7 +1685,8 @@
         order: sound.order,
         duration: 0,
         categories: [],
-        favorite: false
+        favorite: false,
+        volume: 1
       });
 
       renderGrid();
@@ -1878,27 +2226,38 @@
             </button>
           </div>
         </div>
-        <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
-        <div class="category-tags-row" data-catrow="${sound.id}">
-          ${(Array.isArray(sound.categories) ? sound.categories : []).map(cid => {
-            const cat = getCategoryById(cid);
-            if (!cat) return '';
-            return `<span class="category-chip" style="--cat-color:${cat.color};background:${hexToRgba(cat.color, 0.14)}"><span class="cat-dot" style="background:${cat.color}"></span>${escapeHtml(cat.name)}</span>`;
-          }).join('')}
-          <button type="button" class="category-chip-add" data-catadd="${sound.id}">+ categoria</button>
-        </div>
-        <div class="waveform">${makeBars(i)}</div>
-        <div class="pad-controls">
-          <div class="play-cluster">
-            <button class="play-btn" data-playbtn="${sound.id}" aria-label="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}" title="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}">${sound.playing ? RESTART_SVG : PLAY_SVG}</button>
-            <button class="pause-btn-small" data-pausebtn="${sound.id}" aria-label="Pausa" title="Pausa" ${sound.playing ? '' : 'disabled'}>${PAUSE_SVG}</button>
-          </div>
-          <div class="seek-col">
-            <div class="seek-row">
-              <span class="time-label current" data-current="${sound.id}">0:00</span>
-              <input type="range" min="0" max="${sound.audio.duration || sound.duration || 0}" step="0.05" value="${sound.audio.currentTime || 0}" data-seek="${sound.id}" aria-label="Posizione riproduzione">
-              <span class="time-label total" data-total="${sound.id}">${formatTime(sound.audio.duration || sound.duration)}</span>
+        <div class="pad-body">
+          <div class="pad-main">
+            <div class="pad-name" data-nameid="${sound.id}">${escapeHtml(sound.name)}</div>
+            <div class="category-tags-row" data-catrow="${sound.id}">
+              ${(Array.isArray(sound.categories) ? sound.categories : []).map(cid => {
+                const cat = getCategoryById(cid);
+                if (!cat) return '';
+                return `<span class="category-chip" style="--cat-color:${cat.color};background:${hexToRgba(cat.color, 0.14)}"><span class="cat-dot" style="background:${cat.color}"></span>${escapeHtml(cat.name)}</span>`;
+              }).join('')}
+              <button type="button" class="category-chip-add" data-catadd="${sound.id}">+ categoria</button>
             </div>
+            <div class="waveform">${makeBars(i)}</div>
+            <div class="pad-controls">
+              <div class="play-cluster">
+                <button class="play-btn" data-playbtn="${sound.id}" aria-label="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}" title="${sound.playing ? 'Riavvia da capo' : 'Riproduci'}">${sound.playing ? RESTART_SVG : PLAY_SVG}</button>
+                <button class="pause-btn-small" data-pausebtn="${sound.id}" aria-label="Pausa" title="Pausa" ${sound.playing ? '' : 'disabled'}>${PAUSE_SVG}</button>
+              </div>
+              <div class="seek-col">
+                <div class="seek-row">
+                  <span class="time-label current" data-current="${sound.id}">0:00</span>
+                  <input type="range" min="0" max="${sound.audio.duration || sound.duration || 0}" step="0.05" value="${sound.audio.currentTime || 0}" data-seek="${sound.id}" aria-label="Posizione riproduzione">
+                  <span class="time-label total" data-total="${sound.id}">${formatTime(sound.audio.duration || sound.duration)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pad-volume-row" title="Volume di questo suono">
+            <span class="mv-icon">${VOLUME_SVG}</span>
+            <div class="pv-track-wrap">
+              <input type="range" class="pv-slider" min="0" max="100" step="1" value="${Math.round((typeof sound.volume === 'number' ? sound.volume : 1) * 100)}" data-volume="${sound.id}" aria-label="Volume di questo suono">
+            </div>
+            <span class="mv-value" data-volumeval="${sound.id}">${Math.round((typeof sound.volume === 'number' ? sound.volume : 1) * 100)}%</span>
           </div>
         </div>
       `;
@@ -1926,6 +2285,23 @@
         }
       });
       ['pointerup', 'change'].forEach(evt => inp.addEventListener(evt, () => { if (sound) sound.scrubbing = false; }));
+    });
+    grid.querySelectorAll('[data-volume]').forEach(inp => {
+      const id = inp.getAttribute('data-volume');
+      const sound = sounds.find(s => s.id === id);
+      inp.style.setProperty('--fill', `${inp.value}%`);
+      inp.addEventListener('input', () => {
+        if (!sound) return;
+        sound.volume = parseInt(inp.value, 10) / 100;
+        applyVolume(sound);
+        inp.style.setProperty('--fill', `${inp.value}%`);
+        const valEl = document.querySelector(`[data-volumeval="${id}"]`);
+        if (valEl) valEl.textContent = `${inp.value}%`;
+      });
+      inp.addEventListener('change', () => {
+        if (!sound) return;
+        updateDoc(doc(db, "sounds", id), { volume: sound.volume }).catch(() => {});
+      });
     });
     grid.querySelectorAll('[data-fav]').forEach(btn => {
       btn.addEventListener('click', () => toggleFavorite(btn.getAttribute('data-fav')));
