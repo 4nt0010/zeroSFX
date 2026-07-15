@@ -144,7 +144,8 @@
   #libraryGrid.view-compact .pad-main{ flex: 1; }
 
   #libraryGrid.view-list{ grid-template-columns: 1fr; gap: 8px; }
-  #libraryGrid.view-list .pad{ display:flex; align-items:center; gap:14px; padding: 10px 16px; flex-wrap: nowrap; overflow-x: auto; }
+  #libraryGrid.view-list .pad{ display:flex; align-items:center; gap:14px; padding: 10px 16px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  #libraryGrid.view-list .pad::-webkit-scrollbar{ display:none; }
   #libraryGrid.view-list .pad-top{ display:contents; }
   #libraryGrid.view-list .pad-controls{ display:contents; }
   #libraryGrid.view-list .pad-body{ display:contents; }
@@ -581,6 +582,22 @@
     .master-fader-dock{ right: 10px; padding: 12px 11px 10px; gap:8px; }
     .mf-track-wrap{ height: 90px; }
     .mf-slider{ width: 90px; }
+  }
+
+  @media (max-width: 640px){
+    #libraryGrid.view-list .pad{ gap: 8px; padding: 8px 10px; }
+    #libraryGrid.view-list .pad-name{ min-width: 56px; font-size: 14px; }
+    #libraryGrid.view-list .play-cluster{ gap: 4px; }
+    #libraryGrid.view-list .play-btn{ width: 38px; height: 38px; }
+    #libraryGrid.view-list .play-btn svg{ width: 14px; height: 14px; }
+    #libraryGrid.view-list .pause-btn-small{ width: 22px; height: 22px; }
+    #libraryGrid.view-list .seek-col{ flex: 0 0 110px; min-width: 110px; }
+    #libraryGrid.view-list .time-label{ font-size: 9.5px; min-width: 22px; }
+    #libraryGrid.view-list .pad-icon-btns{ gap: 3px; }
+    #libraryGrid.view-list .icon-btn{ width: 24px; height: 24px; }
+    #libraryGrid.view-list .icon-btn svg{ width: 12px; height: 12px; }
+    #libraryGrid.view-list .pad-volume-row{ flex: 0 0 84px; min-width: 84px; gap: 5px; }
+    #libraryGrid.view-list .pad-volume-row .mv-icon{ width: 10px; height: 10px; }
   }
 
   /* ---------- SEARCH BAR ---------- */
