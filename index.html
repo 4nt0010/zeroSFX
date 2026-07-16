@@ -106,12 +106,33 @@
   /* ---------- LIBRARY ---------- */
   .library{ padding: 56px 0 90px; }
   .library-head{
-    display:flex; align-items:baseline; justify-content:space-between;
-    margin-bottom: 24px; flex-wrap: wrap; gap: 8px;
+    display:grid; grid-template-columns: 1fr auto 1fr;
+    align-items:center; margin-bottom: 24px; gap: 12px;
   }
+  .library-head-left{ display:flex; flex-direction:column; gap:3px; justify-self:start; }
   .library-head h2{ font-family: var(--display); font-size: 20px; font-weight:700; }
   .library-count{ font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
   .library-hint{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-top: -14px; margin-bottom: 22px; }
+
+  .reorder-toggle-btn{
+    display:flex; align-items:center; gap:6px; border: 1px solid var(--border); border-radius: 10px;
+    padding: 6px 12px; background: transparent; color: var(--text-dim); cursor:pointer;
+    font-family: var(--mono); font-size: 12px; transition: all .18s ease;
+    justify-self:end;
+  }
+  .reorder-toggle-btn svg{ width:13px; height:13px; }
+  .reorder-toggle-btn:hover{ color: var(--text); border-color: var(--border-strong); }
+  .reorder-toggle-btn.active{
+    color: var(--orange-bright); border-color: var(--orange-bright);
+    background: rgba(255,30,96,0.14); box-shadow: 0 0 10px rgba(255,30,96,0.3);
+  }
+
+  @media (max-width: 700px){
+    .library-head{ grid-template-columns: 1fr; justify-items:center; text-align:center; gap:14px; }
+    .library-head-left{ align-items:center; justify-self:center; }
+    .view-switch{ justify-self:center; }
+    .reorder-toggle-btn{ justify-self:center; }
+  }
 
   .view-switch{ display:flex; gap:4px; border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
   .view-btn{
@@ -196,11 +217,17 @@
   .pad-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
   .pad-top-left{ display:flex; align-items:center; gap:8px; }
   .grip{
-    cursor: grab; color: var(--text-dim); font-size: 15px; line-height:1;
-    padding: 4px 2px; touch-action: none; user-select:none;
-    transition: color .15s ease;
+    cursor: default; color: var(--text-dim); font-size: 15px; line-height:1;
+    padding: 4px 2px; touch-action: pan-y; user-select:none;
+    opacity: 0.45; pointer-events: none;
+    transition: color .15s ease, opacity .15s ease;
   }
   .grip:hover{ color: var(--orange-bright); }
+  #libraryGrid.reorder-active .grip{
+    cursor: grab; touch-action: none; opacity: 1; pointer-events: auto; color: var(--orange-bright);
+  }
+  #libraryGrid.reorder-active .grip:active{ cursor: grabbing; }
+  #libraryGrid.reorder-active .pad{ border-style: dashed; }
   .pad-index{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); cursor:pointer; padding:2px 4px; border-radius:5px; transition: color .15s ease, background .15s ease; }
   .pad-index:hover{ color: var(--orange-bright); background: rgba(255,30,96,0.1); }
   .pad-index-input{
@@ -933,7 +960,10 @@
 
   <section class="library">
     <div class="library-head">
-      <h2>Libreria suoni</h2>
+      <div class="library-head-left">
+        <h2>Libreria suoni</h2>
+        <span class="library-count" id="libraryCount">0 suoni caricati</span>
+      </div>
       <div class="view-switch" role="group" aria-label="Vista libreria">
         <button type="button" class="view-btn active" data-view="grid" title="Vista griglia" aria-label="Vista griglia">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
@@ -945,7 +975,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
-      <span class="library-count" id="libraryCount">0 suoni caricati</span>
+      <button type="button" class="reorder-toggle-btn" id="reorderToggleBtn" title="Attiva la modalità Riordina per poter trascinare i suoni" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l4-4 4 4"></path><path d="M8 17l4 4 4-4"></path><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+        <span>Riordina</span>
+      </button>
     </div>
     <div class="search-row">
       <span class="search-icon" aria-hidden="true">
@@ -1150,6 +1183,7 @@
   let searchQuery = '';
   let categoryFilter = null;   // null = tutte le categorie
   let viewMode = 'grid';       // 'grid' | 'compact' | 'list'
+  let reorderMode = false;     // se falso, la maniglia è inerte e non intercetta lo scroll
   let favoritesOnly = false;
   let playerMode = 'multi'; // 'multi' oppure 'single'
   let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
@@ -1615,6 +1649,18 @@
     });
   }
   stopAllBtn.addEventListener('click', stopAllSounds);
+
+  const reorderToggleBtn = document.getElementById('reorderToggleBtn');
+  reorderToggleBtn.addEventListener('click', () => {
+    reorderMode = !reorderMode;
+    reorderToggleBtn.classList.toggle('active', reorderMode);
+    reorderToggleBtn.setAttribute('aria-pressed', String(reorderMode));
+    reorderToggleBtn.title = reorderMode
+      ? 'Disattiva la modalità Riordina'
+      : 'Attiva la modalità Riordina per poter trascinare i suoni';
+    grid.classList.toggle('reorder-active', reorderMode);
+    renderGrid();
+  });
 
   modeSwitch.addEventListener('click', () => {
     playerMode = playerMode === 'multi' ? 'single' : 'multi';
@@ -2204,7 +2250,7 @@
 
   /* ---------------- Render ---------------- */
   function renderGrid() {
-    grid.className = 'view-' + viewMode;
+    grid.className = 'view-' + viewMode + (reorderMode ? ' reorder-active' : '');
     grid.querySelectorAll('.pad').forEach(p => p.remove());
     libraryCount.textContent = sounds.length === 1 ? '1 suono caricato' : `${sounds.length} suoni caricati`;
 
@@ -2238,7 +2284,7 @@
       pad.innerHTML = `
         <div class="pad-top">
           <div class="pad-top-left">
-            <span class="grip" data-grip="${sound.id}" aria-label="Trascina per riordinare" title="Trascina per riordinare">⠿</span>
+            <span class="grip" data-grip="${sound.id}" aria-label="${reorderMode ? 'Trascina per riordinare' : 'Attiva la modalità Riordina per spostare'}" title="${reorderMode ? 'Trascina per riordinare' : 'Attiva la modalità Riordina per spostare'}">⠿</span>
             <span class="pad-index" data-index="${sound.id}" title="${filtersActive ? 'Rimuovi i filtri per riordinare manualmente' : 'Clicca per spostare in una posizione precisa'}">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
@@ -2434,6 +2480,7 @@
   let dragState = null;
 
   function onGripPointerDown(e) {
+    if (!reorderMode) return;
     const id = e.currentTarget.getAttribute('data-grip');
     const pad = grid.querySelector(`[data-pad="${id}"]`);
     if (!pad) return;
