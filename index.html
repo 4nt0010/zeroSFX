@@ -604,6 +604,19 @@
   .master-fader-dock .mv-value{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); min-width: 36px; text-align:center; transition: color .16s ease; }
   .mf-label{ font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; color: var(--text-dim); }
 
+  .master-fader-dock.mf-hidden{ display:none; }
+  .mf-reopen-btn{
+    display:none; position:fixed; right:14px; top:50%; transform:translateY(-50%); z-index:260;
+    width:38px; height:38px; border-radius:50%; padding:0;
+    border:1px solid var(--border-strong); color: var(--orange-bright);
+    background: linear-gradient(180deg, rgba(28,24,32,0.92), rgba(16,13,18,0.95));
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    align-items:center; justify-content:center; cursor:pointer;
+    box-shadow: 0 10px 24px -12px rgba(0,0,0,0.6);
+  }
+  .mf-reopen-btn svg{ width:16px; height:16px; }
+  .mf-reopen-btn.visible{ display:flex; }
+
   @media (max-width: 640px){
     .master-fader-dock{ right: 10px; padding: 12px 11px 10px; gap:8px; }
     .mf-track-wrap{ height: 90px; }
@@ -936,7 +949,7 @@
 </header>
 
 <div class="master-fader-dock" id="masterFaderDock" title="Volume generale — torna al 100% ad ogni ricarica della pagina">
-  <span class="mf-drag-handle" id="masterDragHandle" title="Trascina per spostare" aria-label="Trascina per spostare">⠿</span>
+  <span class="mf-drag-handle" id="masterDragHandle" title="Trascina per spostare · Tieni premuto per contrarre" aria-label="Trascina per spostare, tieni premuto per contrarre">⠿</span>
   <span class="mv-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
   </span>
@@ -949,6 +962,9 @@
   </button>
   <span class="mf-label">MASTER</span>
 </div>
+<button type="button" class="mf-reopen-btn" id="masterReopenBtn" title="Mostra il volume generale" aria-label="Mostra il volume generale">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
+</button>
 
 <div class="wrap">
   <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Carica file audio">
@@ -1469,22 +1485,68 @@
 
   loadFrictionSetting();
 
-  /* ---------------- Dock del fader master: trascinabile ovunque sullo schermo ---------------- */
+  /* ---------------- Dock del fader master: trascinabile, e si contrae con una pressione prolungata sulla maniglia ---------------- */
   const masterFaderDock = document.getElementById('masterFaderDock');
   const masterDragHandle = document.getElementById('masterDragHandle');
+  const masterReopenBtn = document.getElementById('masterReopenBtn');
   let dockDrag = null;
+  let dockPressStart = null;
+  let dockLongPressTimer = null;
+  const DOCK_LONG_PRESS_MS = 480;
+  const DOCK_MOVE_THRESHOLD = 6;
+
+  masterReopenBtn.addEventListener('click', () => {
+    masterFaderDock.classList.remove('mf-hidden');
+    masterReopenBtn.classList.remove('visible');
+  });
 
   function onDockPointerDown(e) {
     e.preventDefault();
+    dockPressStart = { x: e.clientX, y: e.clientY, pointerId: e.pointerId };
+    dockLongPressTimer = setTimeout(() => {
+      dockLongPressTimer = null;
+      dockPressStart = null;
+      document.removeEventListener('pointermove', onDockPressMoveCheck);
+      document.removeEventListener('pointerup', onDockPressUpCheck);
+      // pressione prolungata confermata: contrae il dock invece di trascinarlo
+      masterFaderDock.classList.add('mf-hidden');
+      masterReopenBtn.classList.add('visible');
+    }, DOCK_LONG_PRESS_MS);
+    document.addEventListener('pointermove', onDockPressMoveCheck);
+    document.addEventListener('pointerup', onDockPressUpCheck);
+  }
+
+  function onDockPressMoveCheck(e) {
+    if (!dockPressStart) return;
+    const dx = e.clientX - dockPressStart.x;
+    const dy = e.clientY - dockPressStart.y;
+    if (Math.hypot(dx, dy) > DOCK_MOVE_THRESHOLD) {
+      // ti sei mosso abbastanza: è un trascinamento, non una pressione prolungata
+      clearTimeout(dockLongPressTimer);
+      dockLongPressTimer = null;
+      document.removeEventListener('pointermove', onDockPressMoveCheck);
+      document.removeEventListener('pointerup', onDockPressUpCheck);
+      startDockDrag(dockPressStart, e);
+    }
+  }
+
+  function onDockPressUpCheck() {
+    if (dockLongPressTimer) { clearTimeout(dockLongPressTimer); dockLongPressTimer = null; }
+    dockPressStart = null;
+    document.removeEventListener('pointermove', onDockPressMoveCheck);
+    document.removeEventListener('pointerup', onDockPressUpCheck);
+  }
+
+  function startDockDrag(start, e) {
     const rect = masterFaderDock.getBoundingClientRect();
     masterFaderDock.style.left = rect.left + 'px';
     masterFaderDock.style.top = rect.top + 'px';
     masterFaderDock.style.right = 'auto';
     masterFaderDock.style.transform = 'none';
-    dockDrag = { startX: e.clientX, startY: e.clientY, origLeft: rect.left, origTop: rect.top };
-    masterDragHandle.setPointerCapture(e.pointerId);
+    dockDrag = { startX: start.x, startY: start.y, origLeft: rect.left, origTop: rect.top };
     document.addEventListener('pointermove', onDockPointerMove);
     document.addEventListener('pointerup', onDockPointerUp);
+    onDockPointerMove(e);
   }
 
   function onDockPointerMove(e) {
@@ -1745,8 +1807,7 @@
         order: sound.order,
         duration: 0,
         categories: [],
-        favorite: false,
-        volume: 1
+        favorite: false
       });
 
       renderGrid();
@@ -2373,10 +2434,6 @@
         inp.style.setProperty('--fill', `${inp.value}%`);
         const valEl = document.querySelector(`[data-volumeval="${id}"]`);
         if (valEl) valEl.textContent = `${inp.value}%`;
-      });
-      inp.addEventListener('change', () => {
-        if (!sound) return;
-        updateDoc(doc(db, "sounds", id), { volume: sound.volume }).catch(() => {});
       });
     });
     grid.querySelectorAll('[data-fav]').forEach(btn => {
