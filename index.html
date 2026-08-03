@@ -152,6 +152,8 @@
   #libraryGrid.view-compact .pad-name{ font-size: 14.5px; margin-bottom: 2px; }
   #libraryGrid.view-compact .pad-top{ margin-bottom: 8px; }
   #libraryGrid.view-compact .pad-icon-btns{ gap: 4px; }
+  #libraryGrid.view-compact .download-btn,
+  #libraryGrid.view-list .download-btn{ display:none; }
   #libraryGrid.view-compact .icon-btn{ width: 22px; height: 22px; font-size: 10.5px; }
   #libraryGrid.view-compact .icon-btn svg{ width: 12px; height: 12px; }
   #libraryGrid.view-compact .pad-controls{ flex-wrap: wrap; gap: 8px 10px; margin-bottom: 6px; margin-top: auto; }
@@ -1458,6 +1460,7 @@
   const STAR_OUTLINE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" width="13" height="13"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"></polygon></svg>`;
   const GEAR_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`;
   const PENCIL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>`;
+  const DOWNLOAD_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
   const ARROW_UP_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>`;
   const ARROW_DOWN_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="5 12 12 19 19 12"></polyline></svg>`;
   const VOLUME_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path></svg>`;
@@ -2122,6 +2125,28 @@
     }
   }
 
+  async function downloadSound(id) {
+    const sound = sounds.find(s => s.id === id);
+    if (!sound || !sound.audioUrl) return;
+    const extMatch = sound.storagePath && sound.storagePath.match(/\.([a-zA-Z0-9]+)$/);
+    const ext = extMatch ? extMatch[1] : 'mp3';
+    try {
+      const res = await fetch(sound.audioUrl);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = `${sound.name}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+    } catch (err) {
+      console.error('Download del suono fallito:', err);
+      window.open(sound.audioUrl, '_blank');
+    }
+  }
+
   function moveSoundToPosition(id, newPosition1Based) {
     const fromIndex = sounds.findIndex(s => s.id === id);
     if (fromIndex === -1) return;
@@ -2416,6 +2441,7 @@
           <div class="pad-icon-btns">
             <button class="icon-btn fav-btn${sound.favorite ? ' active' : ''}" data-fav="${sound.id}" title="${sound.favorite ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}" aria-label="Preferito">${sound.favorite ? STAR_FILLED_SVG : STAR_OUTLINE_SVG}</button>
             <button class="icon-btn loop-btn${sound.loop ? ' active' : ''}" data-loop="${sound.id}" title="${sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)'}" aria-label="Loop">${LOOP_SVG}</button>
+            <button class="icon-btn download-btn" data-download="${sound.id}" title="Scarica" aria-label="Scarica">${DOWNLOAD_SVG}</button>
             <button class="icon-btn" data-rename="${sound.id}" title="Rinomina" aria-label="Rinomina">${PENCIL_SVG}</button>
             <button class="icon-btn danger" data-delete="${sound.id}" title="Elimina" aria-label="Elimina">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
@@ -2506,6 +2532,9 @@
     });
     grid.querySelectorAll('[data-loop]').forEach(btn => {
       btn.addEventListener('click', () => toggleLoop(btn.getAttribute('data-loop')));
+    });
+    grid.querySelectorAll('[data-download]').forEach(btn => {
+      btn.addEventListener('click', () => downloadSound(btn.getAttribute('data-download')));
     });
     grid.querySelectorAll('[data-catadd]').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -2662,7 +2691,6 @@
   (function() {
     const VALID_USER = "angelo.ancona";
     const VALID_PASS = "Angelo.prod2025";
-    const AUTH_KEY = "zerosfx_auth_ok";
 
     const overlay = document.getElementById('loginOverlay');
     const form = document.getElementById('loginForm');
@@ -2676,7 +2704,6 @@
     }
 
     function lock() {
-      localStorage.removeItem(AUTH_KEY);
       if (userInput) userInput.value = '';
       if (passInput) passInput.value = '';
       if (errorEl) errorEl.classList.remove('visible');
@@ -2685,12 +2712,9 @@
       setTimeout(() => userInput && userInput.focus(), 50);
     }
 
-    if (localStorage.getItem(AUTH_KEY) === 'yes') {
-      unlock();
-    } else {
-      document.body.classList.add('login-locked');
-      setTimeout(() => userInput && userInput.focus(), 50);
-    }
+    // L'accesso non viene più salvato: il login viene richiesto ad ogni apertura della pagina.
+    document.body.classList.add('login-locked');
+    setTimeout(() => userInput && userInput.focus(), 50);
 
     if (form) {
       form.addEventListener('submit', (e) => {
@@ -2698,7 +2722,6 @@
         const u = (userInput.value || '').trim();
         const p = passInput.value || '';
         if (u === VALID_USER && p === VALID_PASS) {
-          localStorage.setItem(AUTH_KEY, 'yes');
           errorEl.classList.remove('visible');
           unlock();
         } else {
