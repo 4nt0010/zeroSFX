@@ -320,6 +320,15 @@
   .regia-btn svg{ display:block; flex-shrink:0; }
   .regia-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); transform: translateY(-1px); }
 
+  .logout-btn{
+    font-family: var(--body); font-size: 12.5px; font-weight:700; cursor:pointer;
+    padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); color: var(--text-muted); transition: all .15s ease;
+    display:flex; align-items:center; justify-content:center; gap:7px; line-height:1;
+  }
+  .logout-btn svg{ display:block; flex-shrink:0; }
+  .logout-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); transform: translateY(-1px); }
+
   /* ---------- MODALITÀ REGIA ---------- */
   .regia-overlay{
     position: fixed; inset: 0; background: var(--bg); z-index: 200;
@@ -558,6 +567,13 @@
   .mf-friction-btn svg{ width:13px; height:13px; }
   .mf-friction-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
   .mf-friction-btn.active{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.16); box-shadow: 0 0 8px rgba(255,30,96,0.35); }
+  .mf-collapse-btn{
+    width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer; padding:0;
+    display:flex; align-items:center; justify-content:center; transition: all .18s ease;
+  }
+  .mf-collapse-btn svg{ width:13px; height:13px; }
+  .mf-collapse-btn:hover{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.1); }
   .mf-track-wrap{ position:relative; width: 28px; height: 118px; display:flex; align-items:center; justify-content:center; }
   .mf-slider{
     -webkit-appearance:none; appearance:none;
@@ -915,9 +931,77 @@
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
   }
+
+  /* ---------- LOGIN OVERLAY ---------- */
+  body.login-locked{ overflow: hidden; }
+  .login-overlay{
+    position: fixed; inset: 0; z-index: 10000;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
+    background-size: 26px 26px;
+    padding: 24px;
+  }
+  .login-overlay.hidden{ display:none; }
+  .login-card{
+    width: 100%; max-width: 380px;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(28,24,32,0.9), rgba(16,13,18,0.95));
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.03);
+    padding: 36px 30px;
+  }
+  .login-card h1{
+    font-family: var(--display); font-weight:700; font-size: 22px; text-align:center; margin-bottom: 6px;
+  }
+  .login-card p{ color: var(--text-muted); font-size: 13px; text-align:center; margin-bottom: 24px; }
+  .login-field{ margin-bottom: 16px; }
+  .login-field label{
+    display:block; font-family: var(--mono); font-size: 11px; color: var(--text-dim);
+    margin-bottom: 6px; letter-spacing: .02em;
+  }
+  .login-field input{
+    width:100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03); color: var(--text); font-family: var(--body); font-size: 14px;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .login-field input:focus{ outline:none; border-color: var(--border-strong); background: rgba(255,255,255,0.05); }
+  .login-error{
+    display:none; color: var(--orange-bright); font-family: var(--mono); font-size: 12px;
+    text-align:center; margin-bottom: 14px;
+  }
+  .login-error.visible{ display:block; }
+  .login-submit{
+    width:100%; padding: 13px; border-radius: 999px; border:none; cursor:pointer;
+    font-family: var(--body); font-size: 14px; font-weight:700; color:#fff;
+    background: linear-gradient(135deg, var(--orange-bright), var(--orange));
+    box-shadow: 0 8px 22px -6px rgba(255,30,96,0.7);
+    transition: transform .15s ease;
+  }
+  .login-submit:hover{ transform: translateY(-1px); }
+  .login-submit:active{ transform: scale(0.98); }
 </style>
 </head>
 <body>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h1>zeroSFX</h1>
+    <p>Accedi per continuare</p>
+    <form id="loginForm" autocomplete="off">
+      <div class="login-field">
+        <label for="loginUser">Utente</label>
+        <input type="text" id="loginUser" name="username" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" name="password" autocomplete="current-password" required>
+      </div>
+      <div class="login-error" id="loginError">Credenziali non valide.</div>
+      <button type="submit" class="login-submit">Accedi</button>
+    </form>
+  </div>
+</div>
+
 
 <header>
   <div class="logo" id="logoWrap">
@@ -944,12 +1028,20 @@
       </svg>
       Regia
     </button>
+    <button type="button" class="logout-btn" id="logoutBtn" title="Esci dall'app">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+        <polyline points="16 17 21 12 16 7"></polyline>
+        <line x1="21" y1="12" x2="9" y2="12"></line>
+      </svg>
+      Esci
+    </button>
   </div>
   <div class="glow-strip"></div>
 </header>
 
-<div class="master-fader-dock" id="masterFaderDock" title="Volume generale — torna al 100% ad ogni ricarica della pagina">
-  <span class="mf-drag-handle" id="masterDragHandle" title="Trascina per spostare · Tieni premuto per contrarre" aria-label="Trascina per spostare, tieni premuto per contrarre">⠿</span>
+<div class="master-fader-dock mf-hidden" id="masterFaderDock" title="Volume generale — torna al 100% ad ogni ricarica della pagina">
+  <span class="mf-drag-handle" id="masterDragHandle" title="Trascina per spostare" aria-label="Trascina per spostare">⠿</span>
   <span class="mv-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
   </span>
@@ -960,9 +1052,12 @@
   <button type="button" class="mf-friction-btn active" id="masterFrictionBtn" title="Frizione attiva (movimento ammorbidito, ignora gli scatti del mouse)" aria-label="Attiva/disattiva la frizione del fader" aria-pressed="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2 0 2-6 4-6s2 6 4 6 2-4 4-4 2 3 4 3 2-1 4-1"></path></svg>
   </button>
+  <button type="button" class="mf-collapse-btn" id="masterCollapseBtn" title="Contrai il volume generale" aria-label="Contrai il volume generale">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  </button>
   <span class="mf-label">MASTER</span>
 </div>
-<button type="button" class="mf-reopen-btn" id="masterReopenBtn" title="Mostra il volume generale" aria-label="Mostra il volume generale">
+<button type="button" class="mf-reopen-btn visible" id="masterReopenBtn" title="Mostra il volume generale" aria-label="Mostra il volume generale">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M18.5 5.5a9 9 0 0 1 0 13"></path></svg>
 </button>
 
@@ -1485,56 +1580,26 @@
 
   loadFrictionSetting();
 
-  /* ---------------- Dock del fader master: trascinabile, e si contrae con una pressione prolungata sulla maniglia ---------------- */
+  /* ---------------- Dock del fader master: trascinabile, si contrae con un tasto dedicato ---------------- */
   const masterFaderDock = document.getElementById('masterFaderDock');
   const masterDragHandle = document.getElementById('masterDragHandle');
   const masterReopenBtn = document.getElementById('masterReopenBtn');
+  const masterCollapseBtn = document.getElementById('masterCollapseBtn');
   let dockDrag = null;
-  let dockPressStart = null;
-  let dockLongPressTimer = null;
-  const DOCK_LONG_PRESS_MS = 480;
-  const DOCK_MOVE_THRESHOLD = 6;
 
   masterReopenBtn.addEventListener('click', () => {
     masterFaderDock.classList.remove('mf-hidden');
     masterReopenBtn.classList.remove('visible');
   });
 
+  masterCollapseBtn.addEventListener('click', () => {
+    masterFaderDock.classList.add('mf-hidden');
+    masterReopenBtn.classList.add('visible');
+  });
+
   function onDockPointerDown(e) {
     e.preventDefault();
-    dockPressStart = { x: e.clientX, y: e.clientY, pointerId: e.pointerId };
-    dockLongPressTimer = setTimeout(() => {
-      dockLongPressTimer = null;
-      dockPressStart = null;
-      document.removeEventListener('pointermove', onDockPressMoveCheck);
-      document.removeEventListener('pointerup', onDockPressUpCheck);
-      // pressione prolungata confermata: contrae il dock invece di trascinarlo
-      masterFaderDock.classList.add('mf-hidden');
-      masterReopenBtn.classList.add('visible');
-    }, DOCK_LONG_PRESS_MS);
-    document.addEventListener('pointermove', onDockPressMoveCheck);
-    document.addEventListener('pointerup', onDockPressUpCheck);
-  }
-
-  function onDockPressMoveCheck(e) {
-    if (!dockPressStart) return;
-    const dx = e.clientX - dockPressStart.x;
-    const dy = e.clientY - dockPressStart.y;
-    if (Math.hypot(dx, dy) > DOCK_MOVE_THRESHOLD) {
-      // ti sei mosso abbastanza: è un trascinamento, non una pressione prolungata
-      clearTimeout(dockLongPressTimer);
-      dockLongPressTimer = null;
-      document.removeEventListener('pointermove', onDockPressMoveCheck);
-      document.removeEventListener('pointerup', onDockPressUpCheck);
-      startDockDrag(dockPressStart, e);
-    }
-  }
-
-  function onDockPressUpCheck() {
-    if (dockLongPressTimer) { clearTimeout(dockLongPressTimer); dockLongPressTimer = null; }
-    dockPressStart = null;
-    document.removeEventListener('pointermove', onDockPressMoveCheck);
-    document.removeEventListener('pointerup', onDockPressUpCheck);
+    startDockDrag({ x: e.clientX, y: e.clientY }, e);
   }
 
   function startDockDrag(start, e) {
@@ -2591,6 +2656,63 @@
     topBtn.classList.toggle('visible', window.scrollY > 420);
   });
   topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+
+<script>
+  (function() {
+    const VALID_USER = "angelo.ancona";
+    const VALID_PASS = "Angelo.prod2025";
+    const AUTH_KEY = "zerosfx_auth_ok";
+
+    const overlay = document.getElementById('loginOverlay');
+    const form = document.getElementById('loginForm');
+    const userInput = document.getElementById('loginUser');
+    const passInput = document.getElementById('loginPass');
+    const errorEl = document.getElementById('loginError');
+
+    function unlock() {
+      overlay.classList.add('hidden');
+      document.body.classList.remove('login-locked');
+    }
+
+    function lock() {
+      localStorage.removeItem(AUTH_KEY);
+      if (userInput) userInput.value = '';
+      if (passInput) passInput.value = '';
+      if (errorEl) errorEl.classList.remove('visible');
+      overlay.classList.remove('hidden');
+      document.body.classList.add('login-locked');
+      setTimeout(() => userInput && userInput.focus(), 50);
+    }
+
+    if (localStorage.getItem(AUTH_KEY) === 'yes') {
+      unlock();
+    } else {
+      document.body.classList.add('login-locked');
+      setTimeout(() => userInput && userInput.focus(), 50);
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const u = (userInput.value || '').trim();
+        const p = passInput.value || '';
+        if (u === VALID_USER && p === VALID_PASS) {
+          localStorage.setItem(AUTH_KEY, 'yes');
+          errorEl.classList.remove('visible');
+          unlock();
+        } else {
+          errorEl.textContent = 'Credenziali non valide.';
+          errorEl.classList.add('visible');
+          passInput.value = '';
+          passInput.focus();
+        }
+      });
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.addEventListener('click', lock);
+  })();
 </script>
 </body>
 </html>
