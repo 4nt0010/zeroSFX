@@ -930,6 +930,267 @@
   }
   .catmanage-add-btn:hover{ transform: scale(1.03); }
 
+  /* ---------- SCARICA TUTTO ---------- */
+  .regia-btn:disabled{ opacity: .45; cursor: default; transform: none; }
+  .zip-progress{
+    height: 4px; border-radius: 2px; background: rgba(255,255,255,0.07); overflow: hidden;
+    margin: -8px 0 20px; display: none;
+  }
+  .zip-progress.visible{ display: block; }
+  .zip-progress span{ display:block; height:100%; width:0; background: var(--orange-bright); box-shadow: 0 0 8px rgba(255,30,96,0.7); transition: width .2s ease; }
+  .confirm-btn:disabled{ opacity: .5; cursor: default; transform: none; }
+
+  /* ---------- TASTI RAPIDI: pulsante sul pad ---------- */
+  .icon-btn.hotkey-btn.assigned{
+    width:auto; min-width: 26px; padding: 0 7px;
+    font-family: var(--mono); font-size: 10.5px; font-weight:500; line-height:1; white-space:nowrap;
+    color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.14);
+  }
+  /* nella vista compatta, con il pulsante dei tasti in più, le icone vanno a capo invece di uscire dal box */
+  #libraryGrid.view-compact .pad-top{ flex-wrap: wrap; row-gap: 6px; }
+  #libraryGrid.view-compact .pad-icon-btns{ margin-left: auto; }
+  #libraryGrid.view-compact .icon-btn.hotkey-btn.assigned{ width:auto; min-width:22px; padding: 0 5px; font-size: 9.5px; }
+
+  .regia-pad-key{
+    font-family: var(--mono); font-size: 10.5px; color: var(--orange-bright);
+    border: 1px solid var(--border-strong); background: rgba(255,30,96,0.1);
+    border-radius: 6px; padding: 2px 7px; line-height: 1.3;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.35);
+  }
+
+  /* ---------- TASTI RAPIDI: modale di associazione ---------- */
+  #hotkeyOverlay{ z-index: 230; }
+  .hotkey-card{ max-width: 360px; }
+  .hotkey-card:focus{ outline: none; }
+  .hk-sound{ font-family: var(--display); font-weight:600; color: var(--text) !important; font-size: 14px !important; margin-bottom: 18px !important; }
+  .hk-cap{
+    margin: 0 auto 14px; min-width: 96px; height: 78px; padding: 0 18px; width: max-content; max-width: 100%;
+    display:flex; align-items:center; justify-content:center;
+    border-radius: 16px; border: 1px dashed var(--border-strong);
+    background: rgba(255,255,255,0.02);
+    font-family: var(--mono); font-size: 13px; color: var(--text-dim);
+    animation: hk-listen 1.4s ease-in-out infinite;
+  }
+  .hk-cap.assigned{
+    border-style: solid; border-color: var(--orange-bright); animation: none;
+    background: linear-gradient(160deg, rgba(255,30,96,0.3), rgba(143,12,58,0.3));
+    color: var(--text); font-size: 26px; font-weight: 500;
+    box-shadow: inset 0 -4px 0 rgba(0,0,0,0.35), 0 0 24px -8px rgba(255,30,96,0.7);
+  }
+  .hk-cap.flash{ transform: scale(1.06); transition: transform .12s ease; }
+  @keyframes hk-listen{ 0%,100%{ border-color: var(--border); } 50%{ border-color: var(--orange-bright); } }
+  .hk-msg{ min-height: 2.6em; margin-bottom: 14px !important; }
+  .hk-msg strong{ color: var(--text); font-weight: 600; }
+  .hotkey-card .kb-ed-select{ margin-bottom: 18px; }
+  .confirm-btn.hk-done{ background: linear-gradient(135deg, var(--orange-bright), var(--orange)); color:#fff; }
+  .confirm-btn[hidden]{ display:none; }
+
+  /* ---------- TASTI RAPIDI: vista tastiera ---------- */
+  .kb-overlay{
+    position: fixed; inset: 0; z-index: 200; background: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
+    background-size: 26px 26px;
+    display:none; flex-direction: column; padding: 22px 22px 0;
+  }
+  .kb-overlay.visible{ display:flex; }
+  .kb-head{ display:flex; align-items:center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .kb-head h2{ font-family: var(--display); font-size: 20px; font-weight:700; margin-right: auto; }
+  .kb-sub{ font-size: 13px; color: var(--text-muted); max-width: 70ch; text-align: center; }
+  .kb-head{ margin-bottom: 14px !important; }
+
+  .kb-controls{ display:flex; flex-direction:column; align-items:center; gap: 16px; width: 100%; max-width: 420px; }
+  .kb-control{
+    width: 100%; border: 1px solid var(--border); border-radius: 18px; background: var(--card);
+    padding: 12px 14px;
+  }
+  .kb-control-head{ display:flex; align-items:center; justify-content:space-between; gap: 10px; margin-bottom: 6px; }
+  .kb-control-head:last-child{ margin-bottom: 0; }
+  .kb-control-title{ font-family: var(--display); font-weight: 700; font-size: 14px; }
+  .kb-control p{ font-size: 12.5px; color: var(--text-dim); line-height: 1.45; }
+  .kb-control p b{ color: var(--text-muted); font-weight: 600; }
+  .kb-mode-toggle{ margin-top: 2px; }
+
+  /* Over: il tasto sotto al mouse si ingrandisce dopo un attimo */
+  .kb-peek{
+    position: fixed; z-index: 240; pointer-events: none;
+    min-width: 170px; max-width: 280px; padding: 12px 14px;
+    border-radius: 16px; border: 1px solid var(--orange-bright);
+    background: linear-gradient(170deg, rgba(48,16,32,0.98), rgba(22,17,26,0.98));
+    box-shadow: 0 22px 50px -14px rgba(0,0,0,0.85), 0 0 26px -6px rgba(255,30,96,0.6), inset 0 -4px 0 rgba(0,0,0,0.35);
+    opacity: 0; transform: scale(0.6); transform-origin: center;
+    transition: opacity .14s ease, transform .2s cubic-bezier(.34,1.56,.64,1);
+  }
+  .kb-peek.visible{ opacity: 1; transform: scale(1); }
+  .kb-peek-top{ display:flex; align-items:baseline; justify-content:space-between; gap: 10px; margin-bottom: 8px; }
+  .kb-peek-key{ font-family: var(--mono); font-size: 22px; color: var(--text); line-height: 1; }
+  .kb-peek-count{ font-family: var(--mono); font-size: 11px; color: var(--amber); white-space: nowrap; }
+  .kb-peek-list{ display:flex; flex-direction:column; gap: 4px; }
+  .kb-peek-name{ font-family: var(--display); font-weight: 600; font-size: 14.5px; line-height: 1.25; color: var(--text); word-break: break-word; }
+  .kb-peek-name.playing{ color: var(--orange-bright); }
+  .kb-peek-empty{ font-size: 12.5px; color: var(--text-dim); }
+  .kb-sub b{ color: var(--text); font-weight: 600; }
+  .kb-stage{
+    flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; gap: 18px;
+    padding: 4px 4px 40px; margin: 0 -4px;
+  }
+
+  .kb-board{
+    --u: clamp(34px, calc((100vw - 130px) / 18.5), 60px);
+    display:grid;
+    grid-template-columns: repeat(74, calc(var(--u) / 4));
+    grid-template-rows: var(--u) calc(var(--u) * 0.32) repeat(5, var(--u));
+    padding: calc(var(--u) * 0.28);
+    border: 1px solid var(--border); border-radius: calc(var(--u) * 0.45);
+    background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);
+    flex-shrink: 0;
+  }
+  .kb-key{
+    margin: 2.5px; min-width:0; position: relative; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start;
+    padding: calc(var(--u) * 0.09) calc(var(--u) * 0.11);
+    border-radius: calc(var(--u) * 0.15); border: 1px solid rgba(255,255,255,0.06);
+    background: #1a1620; color: var(--text-dim); cursor:pointer; text-align:left;
+    font-family: var(--body);
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.38);
+    transition: border-color .15s ease, background .15s ease, transform .08s ease, box-shadow .2s ease;
+  }
+  .kb-key:hover{ border-color: var(--border-strong); color: var(--text-muted); }
+  .kb-key-cmd{
+    font-size: calc(var(--u) * 0.18); font-weight: 600; line-height: 1.15; color: var(--text);
+    width: 100%; overflow-wrap: normal; word-break: normal;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  /* sui tasti stretti il nome sta su una riga sola, troncato coi puntini (come nell'esempio di Premiere) */
+  .kb-key.narrow{ padding-left: calc(var(--u) * 0.08); padding-right: calc(var(--u) * 0.06); }
+  .kb-key.narrow .kb-key-cmd{ display:block; white-space:nowrap; text-overflow:ellipsis; font-size: calc(var(--u) * 0.17); letter-spacing: -0.01em; }
+  .kb-key-label{ font-family: var(--mono); font-size: calc(var(--u) * 0.2); line-height: 1; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .kb-key-count{
+    position:absolute; bottom: calc(var(--u) * 0.08); right: calc(var(--u) * 0.08);
+    font-family: var(--mono); font-size: calc(var(--u) * 0.16); line-height:1;
+    padding: 2px 4px; border-radius: 5px; background: rgba(0,0,0,0.35); color: var(--amber);
+  }
+  .kb-key.assigned{
+    background: linear-gradient(160deg, rgba(255,30,96,0.34), rgba(120,10,50,0.34));
+    border-color: var(--border-strong); color: var(--amber);
+  }
+  .kb-key.assigned:hover{ border-color: var(--orange-bright); }
+  .kb-key.selected{
+    border-color: var(--orange-bright);
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.38), 0 0 0 1.5px var(--orange-bright), 0 0 22px -4px rgba(255,30,96,0.75);
+    z-index: 1;
+  }
+  .kb-key.playing{ animation: pad-pulse 1.6s ease-in-out infinite; border-color: var(--orange-bright); }
+  .kb-key.pressed{ transform: translateY(2px) scale(0.97); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.38), 0 0 0 1.5px var(--orange-bright); }
+  .kb-key.reserved{
+    cursor: not-allowed; opacity: 0.38; color: var(--text-dim);
+    background-image: repeating-linear-gradient(135deg, transparent 0 5px, rgba(255,255,255,0.05) 5px 6px);
+  }
+  .kb-key.reserved:hover{ border-color: rgba(255,255,255,0.06); }
+
+  .kb-legend{ display:flex; gap: 18px; flex-wrap:wrap; justify-content:center; font-size: 12px; color: var(--text-dim); }
+  .kb-legend span{ display:inline-flex; align-items:center; gap:7px; }
+  .kb-legend i{ width: 14px; height: 14px; border-radius: 4px; display:inline-block; border: 1px solid rgba(255,255,255,0.08); background:#1a1620; }
+  .kb-legend i.l-assigned{ background: linear-gradient(160deg, rgba(255,30,96,0.5), rgba(120,10,50,0.5)); border-color: var(--border-strong); }
+  .kb-legend i.l-reserved{ opacity:.5; background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(255,255,255,0.12) 3px 4px); }
+
+  /* pannello di modifica del tasto selezionato */
+  .kb-editor{
+    width: min(620px, 100%); border: 1px solid var(--border); border-radius: 22px;
+    background: var(--card); padding: 18px;
+  }
+  .kb-editor-empty{ text-align:center; color: var(--text-dim); font-size: 13px; padding: 10px 6px; }
+  .kb-ed-head{ display:flex; align-items:center; gap: 14px; margin-bottom: 14px; }
+  .kb-ed-cap{
+    min-width: 54px; height: 54px; padding: 0 12px; border-radius: 12px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--mono); font-size: 17px; color: var(--text);
+    background: linear-gradient(160deg, rgba(255,30,96,0.3), rgba(120,10,50,0.3));
+    border: 1px solid var(--orange-bright);
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.38);
+  }
+  .kb-ed-title{ flex:1; min-width:0; }
+  .kb-ed-title h3{ font-family: var(--display); font-size: 16px; font-weight:700; line-height:1.2; }
+  .kb-ed-title p{ font-size: 12.5px; color: var(--text-dim); margin-top: 2px; }
+  .kb-ed-clear{
+    font-family: var(--body); font-size: 12px; font-weight:600; cursor:pointer; flex-shrink:0;
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-muted); transition: all .15s ease;
+  }
+  .kb-ed-clear:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); }
+  .kb-ed-list{ display:flex; flex-direction:column; gap: 6px; margin-bottom: 12px; }
+  .kb-ed-item{
+    display:flex; align-items:center; gap: 10px; padding: 7px 8px 7px 7px;
+    border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.02);
+  }
+  .kb-ed-item.playing{ border-color: var(--orange-bright); }
+  .kb-ed-play{
+    width: 32px; height: 32px; border-radius: 50%; border:none; cursor:pointer; flex-shrink:0;
+    background: linear-gradient(135deg, var(--orange), #8f0c3a); color:#180614;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .kb-ed-play svg{ width: 12px; height: 12px; }
+  .kb-ed-name{ flex:1; min-width:0; font-family: var(--display); font-weight:600; font-size: 14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .kb-ed-dots{ display:flex; gap:4px; flex-shrink:0; }
+  .kb-ed-dots .cat-dot{ margin:0; }
+  .kb-ed-remove{
+    width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); flex-shrink:0;
+    background: none; color: var(--text-dim); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: all .15s ease;
+  }
+  .kb-ed-remove:hover{ color: #ff6b6b; border-color: rgba(255,107,107,0.5); }
+  .kb-ed-note{ font-size: 12px; color: var(--text-dim); margin: -4px 0 12px; }
+  .kb-ed-select{
+    width: 100%; font-family: var(--body); font-size: 13.5px; color: var(--text);
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border-strong); border-radius: 12px;
+    padding: 10px 12px; outline: none; cursor: pointer;
+  }
+  .kb-ed-select:focus{ border-color: var(--orange-bright); }
+  .kb-ed-select option{ background: #16131a; color: var(--text); }
+
+  /* vista telefono: tasti uno sotto l'altro, suoni a destra */
+  .kb-list{ display:none; flex-direction:column; gap: 6px; width: 100%; max-width: 620px; }
+  .kb-filter{ display:none; gap: 4px; border: 1px solid var(--border); border-radius: 12px; padding: 3px; align-self:flex-start; }
+  .kb-filter button{
+    font-family: var(--body); font-size: 12.5px; font-weight:600; cursor:pointer;
+    padding: 6px 12px; border-radius: 9px; border:none; background: transparent; color: var(--text-dim);
+  }
+  .kb-filter button.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); }
+  .kb-group{ font-family: var(--display); font-size: 13px; font-weight:600; color: var(--text-muted); margin: 14px 2px 2px; }
+  .kb-group:first-child{ margin-top: 0; }
+  .kb-row{
+    display:grid; grid-template-columns: 76px 1fr; align-items:center; gap: 12px;
+    padding: 8px 10px; border: 1px solid var(--border); border-radius: 16px; background: var(--card);
+    cursor: pointer; text-align:left; width:100%; color: inherit; font: inherit;
+  }
+  .kb-row.selected{ border-color: var(--orange-bright); }
+  .kb-row-cap{
+    min-width: 46px; max-width: 100%; width: fit-content; height: 40px; padding: 0 10px; border-radius: 10px;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--mono); font-size: 13px; color: var(--text-muted); white-space: nowrap;
+    background: #1a1620; border: 1px solid rgba(255,255,255,0.07); box-shadow: inset 0 -3px 0 rgba(0,0,0,0.38);
+  }
+  .kb-row.assigned .kb-row-cap{ color: var(--text); border-color: var(--border-strong); background: linear-gradient(160deg, rgba(255,30,96,0.32), rgba(120,10,50,0.32)); }
+  .kb-row.playing .kb-row-cap{ animation: pad-pulse 1.6s ease-in-out infinite; }
+  .kb-row-sounds{ display:flex; flex-wrap:wrap; gap: 5px; min-width:0; }
+  .kb-row-chip{
+    font-family: var(--display); font-weight: 600; font-size: 13px; color: var(--text);
+    max-width: 100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .kb-row-chip + .kb-row-chip::before{ content: '+ '; color: var(--text-dim); }
+  .kb-row-free{ font-size: 12.5px; color: var(--text-dim); }
+  .kb-row-editor{ grid-column: 1 / -1; cursor: default; }
+  .kb-row-editor .kb-editor{ padding: 12px; border-radius: 14px; background: rgba(0,0,0,0.18); }
+  .kb-list-empty{ text-align:center; color: var(--text-dim); font-size: 13px; padding: 30px 10px; }
+
+  @media (max-width: 820px){
+    .kb-overlay{ padding: 16px 14px 0; }
+    .kb-board, .kb-legend, .kb-stage > .kb-editor{ display:none; }
+    .kb-list, .kb-filter{ display:flex; }
+    .kb-control-over, .kb-peek{ display:none; }
+    .kb-sub{ text-align: left; align-self: flex-start; }
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
   }
@@ -1029,6 +1290,17 @@
         <circle cx="9" cy="6" r="0.6" fill="currentColor"></circle>
       </svg>
       Regia
+    </button>
+    <button type="button" class="regia-btn" id="kbOpenBtn" title="Associa i suoni ai tasti della tastiera">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+        <path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M10 13h4M7 16h10"></path>
+      </svg>
+      Tastiera
+    </button>
+    <button type="button" class="regia-btn" id="zipOpenBtn" title="Scarica tutti i suoni in un unico file zip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Scarica tutto
     </button>
     <button type="button" class="logout-btn" id="logoutBtn" title="Esci dall'app">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
@@ -1203,6 +1475,73 @@
   </div>
   <div class="regia-cat-row" id="regiaCatRow"></div>
   <div class="regia-grid" id="regiaGrid"></div>
+</div>
+
+<div class="kb-overlay" id="kbOverlay" aria-label="Tastiera">
+  <div class="kb-head">
+    <h2>Tastiera</h2>
+    <button type="button" class="stop-all-btn" id="kbStopAllBtn" title="Ferma tutti i suoni in riproduzione">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+      Stop tutti
+    </button>
+    <button type="button" class="regia-close" id="kbCloseBtn" aria-label="Chiudi la tastiera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="14" height="14"><line x1="4" y1="4" x2="20" y2="20"></line><line x1="20" y1="4" x2="4" y2="20"></line></svg></button>
+  </div>
+  <div class="kb-stage" id="kbStage">
+    <p class="kb-sub" id="kbSub"></p>
+    <div class="kb-controls">
+      <div class="mode-toggle kb-mode-toggle" role="group" aria-label="Modalità riproduzione">
+        <span class="mode-label" id="kbModeLabelMulti">Multi</span>
+        <button type="button" class="mode-switch" id="kbModeSwitch" role="switch" aria-checked="false" aria-label="Passa da Multi a Single"></button>
+        <span class="mode-label" id="kbModeLabelSingle">Single</span>
+      </div>
+      <div class="kb-control kb-control-over">
+        <div class="kb-control-head">
+          <span class="kb-control-title">Over</span>
+          <button type="button" class="mode-switch" id="kbOverSwitch" role="switch" aria-checked="true" aria-label="Attiva o disattiva Over"></button>
+        </div>
+        <p>Tieni il mouse fermo un attimo su un tasto: si ingrandisce e leggi subito quali brani fa partire.</p>
+      </div>
+    </div>
+    <div class="kb-board" id="kbBoard" role="group" aria-label="Tastiera"></div>
+    <div class="kb-legend" aria-hidden="true">
+      <span><i class="l-assigned"></i>Con suoni associati</span>
+      <span><i></i>Libero</span>
+      <span><i class="l-reserved"></i>Riservato da Windows o dal browser</span>
+    </div>
+    <div class="kb-editor" id="kbEditor"></div>
+    <div class="kb-filter" role="group" aria-label="Filtra tasti">
+      <button type="button" class="active" data-kbfilter="all">Tutti i tasti</button>
+      <button type="button" data-kbfilter="assigned">Solo associati</button>
+    </div>
+    <div class="kb-list" id="kbList"></div>
+  </div>
+  <div class="kb-peek" id="kbPeek" aria-hidden="true"></div>
+</div>
+
+<div class="confirm-overlay" id="zipOverlay">
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="zipTitle">
+    <h4 id="zipTitle">Scaricare tutti i suoni?</h4>
+    <p id="zipText"></p>
+    <div class="zip-progress" id="zipProgress"><span id="zipProgressBar"></span></div>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-btn cancel" id="zipCancelBtn">Annulla</button>
+      <button type="button" class="confirm-btn hk-done" id="zipConfirmBtn">Scarica zip</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="hotkeyOverlay">
+  <div class="confirm-card hotkey-card" id="hotkeyCard" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="hkTitle">
+    <h4 id="hkTitle">Associa un tasto</h4>
+    <p class="hk-sound" id="hkSoundName"></p>
+    <div class="hk-cap" id="hkCap" aria-live="polite"></div>
+    <p class="hk-msg" id="hkMsg"></p>
+    <select class="kb-ed-select" id="hkSelect" aria-label="Scegli il tasto dalla lista"></select>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-btn cancel" id="hkRemoveBtn">Rimuovi tasto</button>
+      <button type="button" class="confirm-btn hk-done" id="hkDoneBtn">Fatto</button>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -1463,6 +1802,8 @@
   const DOWNLOAD_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
   const ARROW_UP_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>`;
   const ARROW_DOWN_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="5 12 12 19 19 12"></polyline></svg>`;
+  const KEYBOARD_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M10 13h4M7 16h10"></path></svg>`;
+  const CLOSE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>`;
   const VOLUME_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path></svg>`;
 
   /* ---------------- Volume generale (fader master) ----------------
@@ -1688,6 +2029,7 @@
           categories: soundCategories,
           favorite: !!rec.favorite,
           volume: typeof rec.volume === 'number' ? rec.volume : 1,
+          hotkey: (typeof rec.hotkey === 'string' && !KB_RESERVED.has(rec.hotkey)) ? rec.hotkey : null,
           loop: false,
           playing: false, 
           scrubbing: false
@@ -1768,6 +2110,13 @@
     modeLabelMulti.classList.toggle('active', !isSingle);
     modeLabelSingle.classList.toggle('active', isSingle);
     stopAllBtn.style.display = isSingle ? 'none' : 'flex';
+    // stesso interruttore anche dentro la schermata Tastiera
+    const kbSw = document.getElementById('kbModeSwitch');
+    if (kbSw) {
+      kbSw.setAttribute('aria-checked', String(isSingle));
+      document.getElementById('kbModeLabelMulti').classList.toggle('active', !isSingle);
+      document.getElementById('kbModeLabelSingle').classList.toggle('active', isSingle);
+    }
   }
 
   function stopAllSounds() {
@@ -1792,10 +2141,14 @@
     renderGrid();
   });
 
-  modeSwitch.addEventListener('click', () => {
+  modeSwitch.addEventListener('click', togglePlayerMode);
+  document.getElementById('kbModeSwitch').addEventListener('click', togglePlayerMode);
+
+  function togglePlayerMode() {
     playerMode = playerMode === 'multi' ? 'single' : 'multi';
     applyModeUI();
     savePlayerMode();
+    if (typeof kbOverlay !== 'undefined' && kbOverlay.classList.contains('visible')) renderKeyboard(); // aggiorna le note "parte solo il primo"
 
     if (playerMode === 'single') {
       // In modalità Single teniamo acceso al massimo un suono alla volta
@@ -1808,7 +2161,8 @@
         }
       });
     }
-  });
+  }
+  applyModeUI();
 
   /* ---------------- Ricerca ---------------- */
   searchInput.addEventListener('input', () => {
@@ -1861,7 +2215,7 @@
       audio.preload = 'metadata'; // il file è già locale (appena caricato): nessun consumo di banda
       audio.src = URL.createObjectURL(file); // riusa subito il file locale, senza riscaricarlo da Firebase
       const order = sounds.length;
-      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [], favorite: false, volume: 1, loop: false, playing: false, scrubbing: false };
+      const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [], favorite: false, volume: 1, hotkey: null, loop: false, playing: false, scrubbing: false };
       
       wireAudioEvents(sound);
       applyVolume(sound);
@@ -1875,7 +2229,8 @@
         order: sound.order,
         duration: 0,
         categories: [],
-        favorite: false
+        favorite: false,
+        hotkey: null
       });
 
       renderGrid();
@@ -1936,6 +2291,7 @@
         if (icon) icon.innerHTML = isPlaying ? RESTART_SVG : PLAY_SVG;
       }
     }
+    if (sound.hotkey) refreshKeyPlaying(sound.hotkey);
   }
 
   // Vero play/pausa, usato dalla barra fissa in basso
@@ -2122,6 +2478,162 @@
     if (btn) {
       btn.classList.toggle('active', sound.loop);
       btn.title = sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)';
+    }
+  }
+
+  /* ---------------- Scarica tutto (zip) ----------------
+     JSZip viene caricato solo quando serve, così la pagina non diventa più pesante. */
+  const zipOpenBtn = document.getElementById('zipOpenBtn');
+  const zipOverlay = document.getElementById('zipOverlay');
+  const zipText = document.getElementById('zipText');
+  const zipProgress = document.getElementById('zipProgress');
+  const zipProgressBar = document.getElementById('zipProgressBar');
+  const zipCancelBtn = document.getElementById('zipCancelBtn');
+  const zipConfirmBtn = document.getElementById('zipConfirmBtn');
+  let zipBusy = false;
+  let zipAborted = false;
+  let jszipPromise = null;
+
+  function loadJSZip() {
+    if (window.JSZip) return Promise.resolve(window.JSZip);
+    if (!jszipPromise) {
+      jszipPromise = new Promise((resolve, reject) => {
+        const sc = document.createElement('script');
+        sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        sc.onload = () => resolve(window.JSZip);
+        sc.onerror = () => { jszipPromise = null; reject(new Error('JSZip non caricato')); };
+        document.head.appendChild(sc);
+      });
+    }
+    return jszipPromise;
+  }
+
+  function openZipConfirm() {
+    if (zipBusy) return;
+    const n = sounds.length;
+    zipText.textContent = n
+      ? `${n === 1 ? 'Il suono verrà raccolto' : `I ${n} suoni verranno raccolti`} in un unico file zip e il download partirà da solo. Con molti file può volerci qualche secondo.`
+      : 'Non ci sono ancora suoni da scaricare.';
+    zipConfirmBtn.hidden = !n;
+    zipConfirmBtn.disabled = false;
+    zipConfirmBtn.textContent = 'Scarica zip';
+    zipCancelBtn.textContent = n ? 'Annulla' : 'Chiudi';
+    zipProgress.classList.remove('visible');
+    zipProgressBar.style.width = '0';
+    zipOverlay.classList.add('visible');
+  }
+  function closeZipConfirm() {
+    if (zipBusy) zipAborted = true;   // "Annulla" durante la preparazione interrompe tutto
+    zipOverlay.classList.remove('visible');
+  }
+  zipOpenBtn.addEventListener('click', openZipConfirm);
+  zipCancelBtn.addEventListener('click', closeZipConfirm);
+  zipOverlay.addEventListener('click', e => { if (e.target === zipOverlay && !zipBusy) closeZipConfirm(); });
+  zipConfirmBtn.addEventListener('click', downloadAllZip);
+
+  // nome file valido su Windows/Mac, senza doppioni dentro lo zip
+  function zipFileName(sound, used) {
+    const extMatch = sound.storagePath && sound.storagePath.match(/\.([a-zA-Z0-9]+)$/);
+    const ext = extMatch ? extMatch[1].toLowerCase() : 'mp3';
+    const base = (sound.name || 'suono').replace(/[\\/:*?"<>|\x00-\x1f]/g, '_').replace(/[. ]+$/, '').trim() || 'suono';
+    let name = `${base}.${ext}`;
+    let i = 2;
+    while (used.has(name.toLowerCase())) name = `${base} (${i++}).${ext}`;
+    used.add(name.toLowerCase());
+    return name;
+  }
+
+  async function downloadAllZip() {
+    if (zipBusy || !sounds.length) return;
+    zipBusy = true;
+    zipAborted = false;
+    zipConfirmBtn.disabled = true;
+    zipOpenBtn.disabled = true;
+    zipProgress.classList.add('visible');
+    zipText.textContent = 'Preparo lo zip…';
+
+    const list = [...sounds];
+    const failed = [];
+    try {
+      const JSZip = await loadJSZip();
+
+      // Prova sul primo file: se Firebase Storage non permette il download diretto
+      // (CORS non configurato) ci fermiamo subito con un messaggio chiaro,
+      // invece di generare un errore per ogni singolo suono.
+      try {
+        const probe = await fetch(list[0].audioUrl, { method: 'GET', cache: 'no-cache' });
+        if (!probe.ok) throw Object.assign(new Error('http ' + probe.status), { http: true });
+        probe.body && probe.body.cancel && probe.body.cancel();
+      } catch (err) {
+        if (!err.http) throw Object.assign(new Error('cors'), { cors: true });
+      }
+
+      const zip = new JSZip();
+      const used = new Set();
+      let done = 0;
+      // 4 download in parallelo: abbastanza veloce senza intasare la connessione
+      const queue = list.map((s, idx) => ({ s, idx }));
+      const names = list.map(s => zipFileName(s, used));
+      async function worker() {
+        while (queue.length && !zipAborted) {
+          const { s, idx } = queue.shift();
+          try {
+            const res = await fetch(s.audioUrl, { cache: 'no-cache' });
+            if (!res.ok) throw new Error(res.status);
+            zip.file(names[idx], await res.blob());
+          } catch (err) {
+            console.error('Download fallito per', s.name, err);
+            failed.push(s.name);
+          }
+          done++;
+          zipProgressBar.style.width = `${Math.round((done / list.length) * 90)}%`;
+          zipText.textContent = `Scaricati ${done} di ${list.length} suoni…`;
+        }
+      }
+      await Promise.all(Array.from({ length: Math.min(4, list.length) }, worker));
+      if (zipAborted) return;
+      if (failed.length === list.length) throw new Error('nessun file scaricato');
+
+      zipText.textContent = 'Creo il file zip…';
+      // gli audio sono già compressi (mp3, m4a, ogg): "STORE" li impacchetta senza perdere tempo a ricomprimerli
+      const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' }, meta => {
+        zipProgressBar.style.width = `${90 + Math.round(meta.percent / 10)}%`;
+      });
+      if (zipAborted) return;
+
+      const d = new Date();
+      const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `zeroSFX-${stamp}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+      zipProgressBar.style.width = '100%';
+      if (failed.length) {
+        zipText.textContent = `Download partito, ma ${failed.length === 1 ? 'un suono non è stato incluso' : `${failed.length} suoni non sono stati inclusi`}: ${failed.join(', ')}.`;
+        zipCancelBtn.textContent = 'Chiudi';
+        zipConfirmBtn.hidden = true;
+      } else {
+        zipText.textContent = 'Download partito.';
+        setTimeout(() => { if (!zipBusy) closeZipConfirm(); }, 900);
+      }
+    } catch (err) {
+      console.error('Creazione zip fallita:', err);
+      zipText.textContent = err.cors
+        ? 'Firebase Storage blocca il download diretto dei file (manca la configurazione CORS del bucket). Va attivata una volta dalla console Google Cloud.'
+        : /JSZip/.test(err.message)
+          ? 'Non riesco a caricare lo strumento per creare lo zip. Controlla la connessione e riprova.'
+          : 'Non sono riuscito a scaricare i suoni. Controlla la connessione e riprova.';
+      zipConfirmBtn.disabled = false;
+      zipConfirmBtn.textContent = 'Riprova';
+      zipProgress.classList.remove('visible');
+    } finally {
+      zipBusy = false;
+      zipOpenBtn.disabled = false;
     }
   }
 
@@ -2372,6 +2884,7 @@
       <div class="regia-pad${s.playing ? ' playing' : ''}" data-regiapad="${s.id}">
         <div class="regia-pad-icon">${s.playing ? RESTART_SVG : PLAY_SVG}</div>
         <div class="regia-pad-name">${escapeHtml(s.name)}</div>
+        ${s.hotkey ? `<span class="regia-pad-key" title="Tasto associato">${escapeHtml(keyShort(s.hotkey))}</span>` : ''}
       </div>
     `).join('');
     regiaGrid.querySelectorAll('[data-regiapad]').forEach(el => {
@@ -2439,6 +2952,7 @@
             <span class="pad-index" data-index="${sound.id}" title="${filtersActive ? 'Rimuovi i filtri per riordinare manualmente' : 'Clicca per spostare in una posizione precisa'}">${String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="pad-icon-btns">
+            <button class="icon-btn hotkey-btn${sound.hotkey ? ' assigned' : ''}" data-hotkey="${sound.id}" title="${sound.hotkey ? `Tasto ${escapeHtml(keyName(sound.hotkey))} — clicca per cambiarlo` : 'Associa a un tasto'}" aria-label="${sound.hotkey ? `Tasto associato: ${escapeHtml(keyName(sound.hotkey))}` : 'Associa a un tasto'}">${sound.hotkey ? escapeHtml(keyShort(sound.hotkey)) : KEYBOARD_SVG}</button>
             <button class="icon-btn fav-btn${sound.favorite ? ' active' : ''}" data-fav="${sound.id}" title="${sound.favorite ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}" aria-label="Preferito">${sound.favorite ? STAR_FILLED_SVG : STAR_OUTLINE_SVG}</button>
             <button class="icon-btn loop-btn${sound.loop ? ' active' : ''}" data-loop="${sound.id}" title="${sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)'}" aria-label="Loop">${LOOP_SVG}</button>
             <button class="icon-btn download-btn" data-download="${sound.id}" title="Scarica" aria-label="Scarica">${DOWNLOAD_SVG}</button>
@@ -2526,6 +3040,9 @@
         const valEl = document.querySelector(`[data-volumeval="${id}"]`);
         if (valEl) valEl.textContent = `${inp.value}%`;
       });
+    });
+    grid.querySelectorAll('[data-hotkey]').forEach(btn => {
+      btn.addEventListener('click', () => openHotkeyModal(btn.getAttribute('data-hotkey')));
     });
     grid.querySelectorAll('[data-fav]').forEach(btn => {
       btn.addEventListener('click', () => toggleFavorite(btn.getAttribute('data-fav')));
@@ -2679,6 +3196,630 @@
     openAssignPopoverFor = null;
     renderGrid();
   });
+
+  /* ================================================================
+     TASTI RAPIDI — associazione dei suoni ai tasti della tastiera
+     ----------------------------------------------------------------
+     Ogni suono può avere UN tasto (campo "hotkey" su Firestore, salvato
+     come KeyboardEvent.code, es. "KeyQ", "Space", "F5": identifica il
+     tasto fisico, quindi funziona con qualsiasi layout).
+     Uno stesso tasto può far partire PIÙ suoni insieme.
+     Tastierino numerico escluso per scelta.
+     ================================================================ */
+
+  // l = etichetta sul tasto · s = versione corta (pulsanti) · n = nome completo (liste/titoli)
+  // w = larghezza in unità-tasto · rs = righe occupate · gap = spazio vuoto
+  const KB_ROWS = [
+    { group: 'Tasti funzione', keys: [
+      { c:'Escape', l:'Esc' }, { gap:1 },
+      { c:'F1' }, { c:'F2' }, { c:'F3' }, { c:'F4' }, { gap:.5 },
+      { c:'F5' }, { c:'F6' }, { c:'F7' }, { c:'F8' }, { gap:.5 },
+      { c:'F9' }, { c:'F10' }, { c:'F11' }, { c:'F12' }
+    ]},
+    { group: 'Riga dei numeri', keys: [
+      { c:'Backquote', l:'\\' },
+      { c:'Digit1', l:'1' }, { c:'Digit2', l:'2' }, { c:'Digit3', l:'3' }, { c:'Digit4', l:'4' }, { c:'Digit5', l:'5' },
+      { c:'Digit6', l:'6' }, { c:'Digit7', l:'7' }, { c:'Digit8', l:'8' }, { c:'Digit9', l:'9' }, { c:'Digit0', l:'0' },
+      { c:'Minus', l:"'" }, { c:'Equal', l:'ì' },
+      { c:'Backspace', l:'Backspace', s:'⌫', w:2 }
+    ]},
+    { group: 'Riga Q', keys: [
+      { c:'Tab', l:'Tab', w:1.75 },
+      ...'QWERTYUIOP'.split('').map(k => ({ c:'Key' + k, l:k })),
+      { c:'BracketLeft', l:'è' }, { c:'BracketRight', l:'+' },
+      { c:'Enter', l:'Invio', w:1.25, rs:2 }
+    ]},
+    { group: 'Riga A', keys: [
+      { c:'CapsLock', l:'Bloc Maiusc', s:'Caps', w:1.75 },
+      ...'ASDFGHJKL'.split('').map(k => ({ c:'Key' + k, l:k })),
+      { c:'Semicolon', l:'ò' }, { c:'Quote', l:'à' }, { c:'Backslash', l:'ù' },
+      { gap:1.25 }
+    ]},
+    { group: 'Riga Z', keys: [
+      { c:'ShiftLeft', l:'Shift', s:'Shift sx', n:'Shift sinistro', w:1.25 },
+      { c:'IntlBackslash', l:'<' },
+      ...'ZXCVBNM'.split('').map(k => ({ c:'Key' + k, l:k })),
+      { c:'Comma', l:',' }, { c:'Period', l:'.' }, { c:'Slash', l:'-' },
+      { c:'ShiftRight', l:'Shift', s:'Shift dx', n:'Shift destro', w:2.75 }
+    ]},
+    { group: 'Barra spaziatrice e modificatori', keys: [
+      { c:'ControlLeft', l:'Ctrl', s:'Ctrl sx', n:'Ctrl sinistro', w:1.25 },
+      { c:'MetaLeft', l:'Win', n:'Windows sinistro', w:1.25 },
+      { c:'AltLeft', l:'Alt', w:1.25 },
+      { c:'Space', l:'Spazio', w:6.25 },
+      { c:'AltRight', l:'Alt Gr', w:1.25 },
+      { c:'MetaRight', l:'Win', n:'Windows destro', w:1.25 },
+      { c:'ContextMenu', l:'Menu', w:1.25 },
+      { c:'ControlRight', l:'Ctrl', s:'Ctrl dx', n:'Ctrl destro', w:1.25 }
+    ]}
+  ];
+  // blocco di navigazione a destra, allineato alle stesse righe
+  const KB_NAV = [
+    [ { c:'PrintScreen', l:'Stamp' }, { c:'ScrollLock', l:'Bloc Scorr', s:'BlocScorr' }, { c:'Pause', l:'Pausa' } ],
+    [ { c:'Insert', l:'Ins' }, { c:'Home', l:'Home' }, { c:'PageUp', l:'Pag ↑', n:'Pagina su' } ],
+    [ { c:'Delete', l:'Canc' }, { c:'End', l:'Fine' }, { c:'PageDown', l:'Pag ↓', n:'Pagina giù' } ],
+    [],
+    [ { gap:1 }, { c:'ArrowUp', l:'↑', n:'Freccia su' } ],
+    [ { c:'ArrowLeft', l:'←', n:'Freccia sinistra' }, { c:'ArrowDown', l:'↓', n:'Freccia giù' }, { c:'ArrowRight', l:'→', n:'Freccia destra' } ]
+  ];
+  // tasti che Windows o il browser si tengono per sé: visibili ma non associabili
+  // Esc è riservato: chiude finestre e schermo intero, non deve far partire suoni.
+  // Bloc Maiusc è riservato: cambia lo stato delle maiuscole del sistema.
+  const KB_RESERVED = new Set(['Escape', 'CapsLock', 'MetaLeft', 'MetaRight', 'PrintScreen', 'F11', 'F12']);
+  const KB_MODIFIERS = new Set(['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']);
+
+  const KB_KEYS = [];          // ordine "di lettura": righe principali, poi navigazione
+  const KEY_BY_CODE = {};
+  KB_ROWS.forEach((row, ri) => {
+    let x = 0;
+    row.keys.forEach(k => {
+      const w = k.w || 1;
+      if (k.gap) { x += k.gap; return; }
+      const def = { code: k.c, label: k.l || k.c, short: k.s || null, name: k.n || null, w, rs: k.rs || 1, row: ri, x, group: row.group, reserved: KB_RESERVED.has(k.c) };
+      KB_KEYS.push(def); KEY_BY_CODE[k.c] = def;
+      x += w;
+    });
+  });
+  KB_NAV.forEach((row, ri) => {
+    let x = 15.5;
+    row.forEach(k => {
+      if (k.gap) { x += k.gap; return; }
+      const def = { code: k.c, label: k.l || k.c, short: k.s || null, name: k.n || null, w: 1, rs: 1, row: ri, x, group: 'Navigazione e frecce', reserved: KB_RESERVED.has(k.c) };
+      KB_KEYS.push(def); KEY_BY_CODE[k.c] = def;
+      x += 1;
+    });
+  });
+
+  function keyLabel(code) { const d = KEY_BY_CODE[code]; return d ? d.label : code; }
+  function keyShort(code) { const d = KEY_BY_CODE[code]; return d ? (d.short || d.label) : code; }
+  function keyName(code)  { const d = KEY_BY_CODE[code]; return d ? (d.name || d.label) : code; }
+  function soundsOnKey(code) { return sounds.filter(s => s.hotkey === code); }
+
+  // Su Chrome/Edge leggiamo il layout reale della tastiera dell'utente,
+  // così i simboli (ò, à, ù, ', ì…) corrispondono a quelli stampati sui tasti.
+  // Sugli altri browser restano le etichette del layout italiano.
+  (async function applyLayoutMap() {
+    try {
+      if (!navigator.keyboard || !navigator.keyboard.getLayoutMap) return;
+      const map = await navigator.keyboard.getLayoutMap();
+      let changed = false;
+      KB_KEYS.forEach(def => {
+        if (!/^(Key|Digit)|^(Backquote|Minus|Equal|BracketLeft|BracketRight|Semicolon|Quote|Backslash|IntlBackslash|Comma|Period|Slash)$/.test(def.code)) return;
+        const ch = map.get(def.code);
+        if (ch && ch.trim()) { def.label = ch.length === 1 ? ch.toUpperCase() : ch; changed = true; }
+      });
+      if (changed) {
+        if (sounds.length) renderGrid();
+        if (kbOverlay.classList.contains('visible')) renderKeyboard();
+      }
+    } catch (err) { /* layout non disponibile: restano le etichette italiane */ }
+  })();
+
+  /* ---------- salvataggio ---------- */
+  async function setHotkey(soundId, code) {
+    const sound = sounds.find(s => s.id === soundId);
+    if (!sound) return;
+    sound.hotkey = code || null;
+    refreshHotkeyViews();
+    try {
+      await updateDoc(doc(db, "sounds", soundId), { hotkey: sound.hotkey });
+    } catch (error) {
+      console.error('Errore nel salvataggio del tasto:', error);
+    }
+  }
+
+  function refreshHotkeyViews() {
+    renderGrid();
+    if (kbOverlay.classList.contains('visible')) renderKeyboard();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaGrid();
+    if (hotkeyOverlay.classList.contains('visible')) renderHotkeyModal();
+  }
+
+  /* ---------- riproduzione da tastiera ---------- */
+  function triggerHotkey(code) {
+    const list = soundsOnKey(code);
+    if (!list.length) return false;
+    if (playerMode === 'single') restartSound(list[0].id);   // in Single parte solo il primo
+    else list.forEach(s => restartSound(s.id));
+    return true;
+  }
+
+  function isTypingTarget(el) {
+    if (!el) return false;
+    if (el.isContentEditable) return true;
+    const tag = el.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT') return true;
+    if (tag === 'INPUT') {
+      const t = (el.type || 'text').toLowerCase();
+      return !['range', 'checkbox', 'radio', 'button', 'submit', 'color'].includes(t);
+    }
+    return false;
+  }
+
+  let lastContextMenuHotkey = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('login-locked')) return;
+
+    // modale di associazione aperta: il tasto premuto viene catturato, non suonato
+    if (hotkeyCaptureFor) { handleHotkeyCapture(e); return; }
+
+    if (isTypingTarget(e.target)) return;
+    const code = e.code;
+    const def = KEY_BY_CODE[code];
+    if (!def || def.reserved) return;
+    // le combinazioni (Ctrl+C, Shift+A…) restano al sistema; i modificatori da soli invece sono associabili
+    if (!KB_MODIFIERS.has(code) && (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey)) return;
+
+    const hasSounds = soundsOnKey(code).length > 0;
+    if (hasSounds) e.preventDefault();   // niente scroll con Spazio, niente ricarica con F5, ecc.
+    if (code === 'ContextMenu' && hasSounds) lastContextMenuHotkey = Date.now();
+
+    if (kbOverlay.classList.contains('visible')) {
+      flashKey(code);
+      if (!e.repeat && kbSelected !== code) { kbSelected = code; renderKeyboard(); }
+    }
+    if (e.repeat) return;
+    triggerHotkey(code);
+  });
+
+  // Alt e F10 attivano il menu del browser al rilascio: lo blocchiamo solo se il tasto ha suoni
+  document.addEventListener('keyup', (e) => {
+    if (document.body.classList.contains('login-locked') || hotkeyCaptureFor) return;
+    if (isTypingTarget(e.target)) return;
+    if (soundsOnKey(e.code).length) e.preventDefault();
+  });
+  document.addEventListener('contextmenu', (e) => {
+    if (Date.now() - lastContextMenuHotkey < 800) e.preventDefault();
+  });
+
+  /* ---------- modale "Associa un tasto" (dal pulsante sul pad) ---------- */
+  const hotkeyOverlay = document.getElementById('hotkeyOverlay');
+  const hotkeyCard = document.getElementById('hotkeyCard');
+  const hkSoundName = document.getElementById('hkSoundName');
+  const hkCap = document.getElementById('hkCap');
+  const hkMsg = document.getElementById('hkMsg');
+  const hkSelect = document.getElementById('hkSelect');
+  const hkRemoveBtn = document.getElementById('hkRemoveBtn');
+  const hkDoneBtn = document.getElementById('hkDoneBtn');
+  let hotkeyCaptureFor = null;
+  let hkMessage = null;   // messaggio temporaneo (errore o conferma)
+
+  function keyOptionsHTML(selectedCode, placeholder) {
+    let html = `<option value="">${placeholder}</option>`;
+    let currentGroup = null;
+    KB_KEYS.forEach(def => {
+      if (def.reserved) return;
+      if (def.group !== currentGroup) {
+        if (currentGroup) html += '</optgroup>';
+        html += `<optgroup label="${escapeHtml(def.group)}">`;
+        currentGroup = def.group;
+      }
+      const others = soundsOnKey(def.code).filter(s => s.id !== hotkeyCaptureFor).length;
+      html += `<option value="${def.code}"${def.code === selectedCode ? ' selected' : ''}>${escapeHtml(keyName(def.code))}${others ? ` · già ${others === 1 ? '1 suono' : others + ' suoni'}` : ''}</option>`;
+    });
+    if (currentGroup) html += '</optgroup>';
+    return html;
+  }
+
+  function openHotkeyModal(soundId) {
+    const sound = sounds.find(s => s.id === soundId);
+    if (!sound) return;
+    hotkeyCaptureFor = soundId;
+    hkMessage = null;
+    renderHotkeyModal();
+    hotkeyOverlay.classList.add('visible');
+    setTimeout(() => hotkeyCard.focus(), 30);
+  }
+  function closeHotkeyModal() {
+    hotkeyOverlay.classList.remove('visible');
+    hotkeyCaptureFor = null;
+    hkMessage = null;
+  }
+
+  function renderHotkeyModal() {
+    const sound = sounds.find(s => s.id === hotkeyCaptureFor);
+    if (!sound) { closeHotkeyModal(); return; }
+    hkSoundName.textContent = sound.name;
+    if (sound.hotkey) {
+      hkCap.className = 'hk-cap assigned';
+      hkCap.textContent = keyLabel(sound.hotkey);
+    } else {
+      hkCap.className = 'hk-cap';
+      hkCap.textContent = 'Premi un tasto';
+    }
+    let msg = hkMessage;
+    if (!msg) {
+      if (sound.hotkey) {
+        const others = soundsOnKey(sound.hotkey).filter(s => s.id !== sound.id);
+        msg = `Associato a <strong>${escapeHtml(keyName(sound.hotkey))}</strong>. Premi un altro tasto per cambiarlo.`;
+        if (others.length) {
+          msg += ` Sullo stesso tasto: ${others.map(o => `<strong>${escapeHtml(o.name)}</strong>`).join(', ')}`;
+          msg += playerMode === 'single' ? ' (in modalità Single parte solo il primo).' : ' — partiranno insieme.';
+        }
+      } else {
+        msg = 'Premi il tasto sulla tastiera, oppure sceglilo dalla lista. Esc chiude senza cambiare nulla.';
+      }
+    }
+    hkMsg.innerHTML = msg;
+    hkSelect.innerHTML = keyOptionsHTML(sound.hotkey, sound.hotkey ? 'Scegli un altro tasto…' : 'Scegli il tasto dalla lista…');
+    hkRemoveBtn.hidden = !sound.hotkey;
+  }
+
+  function handleHotkeyCapture(e) {
+    if (e.target === hkSelect) return;   // la lista usa la tastiera per conto suo
+    // sui pulsanti della modale Invio/Spazio/Tab funzionano normalmente (clic e navigazione)
+    if (e.target !== hotkeyCard && e.target.closest && e.target.closest('button') && ['Enter', 'Space', 'Tab', 'NumpadEnter'].includes(e.code)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.repeat) return;
+    if (e.code === 'Escape') { closeHotkeyModal(); return; }
+    const def = KEY_BY_CODE[e.code];
+    if (!def) {
+      hkMessage = /^Numpad|^NumLock/.test(e.code)
+        ? 'Il tastierino numerico non è supportato: scegli un altro tasto.'
+        : 'Questo tasto non è supportato: scegline un altro.';
+      renderHotkeyModal(); return;
+    }
+    if (def.reserved) {
+      hkMessage = `<strong>${escapeHtml(keyName(def.code))}</strong> è riservato da Windows o dal browser: scegline un altro.`;
+      renderHotkeyModal(); return;
+    }
+    hkMessage = null;
+    setHotkey(hotkeyCaptureFor, def.code);
+    hkCap.classList.add('flash');
+    setTimeout(() => hkCap.classList.remove('flash'), 140);
+  }
+
+  hkSelect.addEventListener('change', () => {
+    if (!hotkeyCaptureFor || !hkSelect.value) return;
+    hkMessage = null;
+    setHotkey(hotkeyCaptureFor, hkSelect.value);
+    hotkeyCard.focus();
+  });
+  hkRemoveBtn.addEventListener('click', () => {
+    if (!hotkeyCaptureFor) return;
+    hkMessage = null;
+    setHotkey(hotkeyCaptureFor, null);
+    hotkeyCard.focus();
+  });
+  hkDoneBtn.addEventListener('click', closeHotkeyModal);
+  hotkeyOverlay.addEventListener('click', e => { if (e.target === hotkeyOverlay) closeHotkeyModal(); });
+
+  /* ---------- vista "Tasti rapidi" ---------- */
+  const kbOverlay = document.getElementById('kbOverlay');
+  const kbOpenBtn = document.getElementById('kbOpenBtn');
+  const kbCloseBtn = document.getElementById('kbCloseBtn');
+  const kbStopAllBtn = document.getElementById('kbStopAllBtn');
+  const kbBoard = document.getElementById('kbBoard');
+  const kbStage = document.getElementById('kbStage');
+  const kbEditor = document.getElementById('kbEditor');
+  const kbList = document.getElementById('kbList');
+  const kbSub = document.getElementById('kbSub');
+  const kbMobileMQ = window.matchMedia('(max-width: 820px)');
+  let kbSelected = null;
+  let kbListFilter = 'all';   // 'all' | 'assigned' (solo vista telefono)
+
+  function openKeyboard() {
+    renderKeyboard();
+    kbOverlay.classList.add('visible');
+  }
+  function closeKeyboard() { hidePeek(); kbOverlay.classList.remove('visible'); }
+  kbOpenBtn.addEventListener('click', openKeyboard);
+  kbCloseBtn.addEventListener('click', closeKeyboard);
+  kbStopAllBtn.addEventListener('click', stopAllSounds);
+  kbMobileMQ.addEventListener('change', () => { if (kbOverlay.classList.contains('visible')) renderKeyboard(); });
+
+  kbOverlay.querySelectorAll('[data-kbfilter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      kbListFilter = btn.getAttribute('data-kbfilter');
+      kbOverlay.querySelectorAll('[data-kbfilter]').forEach(b => b.classList.toggle('active', b === btn));
+      renderKeyboard();
+    });
+  });
+
+  /* ---------- Over: ingrandimento del tasto al passaggio del mouse ----------
+     La scelta (attivo/disattivo) si salva su Firebase in settings/keyboard. */
+  const KEYBOARD_SETTING_DOC = doc(db, "settings", "keyboard");
+  const OVER_DELAY = 350;   // ms di mouse fermo sul tasto prima di ingrandirlo
+  const kbOverSwitch = document.getElementById('kbOverSwitch');
+  const kbPeek = document.getElementById('kbPeek');
+  let overEnabled = true;
+  let overTimer = null;
+  let overCode = null;
+
+  function applyOverUI() {
+    kbOverSwitch.setAttribute('aria-checked', String(overEnabled));
+    kbOverSwitch.title = overEnabled ? 'Over attivo' : 'Over disattivato';
+  }
+  applyOverUI();
+
+  async function loadKeyboardSettings() {
+    try {
+      const snap = await getDoc(KEYBOARD_SETTING_DOC);
+      if (snap.exists() && typeof snap.data().over === 'boolean') {
+        overEnabled = snap.data().over;
+        applyOverUI();
+        if (kbOverlay.classList.contains('visible')) renderKeyboard();
+      }
+    } catch (err) {
+      console.warn('Errore nel caricamento delle impostazioni tastiera:', err);
+    }
+  }
+  loadKeyboardSettings();
+
+  kbOverSwitch.addEventListener('click', async () => {
+    overEnabled = !overEnabled;
+    applyOverUI();
+    hidePeek();
+    renderKeyboard();   // con Over spento tornano i tooltip normali del browser
+    try {
+      await setDoc(KEYBOARD_SETTING_DOC, { over: overEnabled }, { merge: true });
+    } catch (err) {
+      console.error('Errore nel salvataggio di Over:', err);
+    }
+  });
+
+  function hidePeek() {
+    clearTimeout(overTimer);
+    overTimer = null;
+    overCode = null;
+    kbPeek.classList.remove('visible');
+  }
+
+  function showPeek(keyEl) {
+    const code = keyEl.getAttribute('data-kbkey');
+    const def = KEY_BY_CODE[code];
+    if (!def) return;
+    const list = soundsOnKey(code);
+    let body;
+    if (def.reserved) body = '<div class="kb-peek-empty">Riservato da Windows o dal browser</div>';
+    else if (!list.length) body = '<div class="kb-peek-empty">Libero — clicca per associare un brano</div>';
+    else body = `<div class="kb-peek-list">${list.map(s => `<div class="kb-peek-name${s.playing ? ' playing' : ''}">${escapeHtml(s.name)}</div>`).join('')}</div>`;
+    kbPeek.innerHTML = `
+      <div class="kb-peek-top">
+        <span class="kb-peek-key">${escapeHtml(def.label)}</span>
+        ${list.length ? `<span class="kb-peek-count">${list.length === 1 ? '1 brano' : list.length + ' brani'}</span>` : ''}
+      </div>${body}`;
+
+    // centrato sul tasto, sempre dentro lo schermo
+    const r = keyEl.getBoundingClientRect();
+    kbPeek.style.left = '0px'; kbPeek.style.top = '0px';
+    kbPeek.style.minWidth = Math.max(170, r.width + 24) + 'px';
+    const pw = kbPeek.offsetWidth, ph = kbPeek.offsetHeight;
+    let left = r.left + r.width / 2 - pw / 2;
+    let top = r.top + r.height / 2 - ph / 2;
+    left = Math.max(8, Math.min(window.innerWidth - pw - 8, left));
+    top = Math.max(8, Math.min(window.innerHeight - ph - 8, top));
+    kbPeek.style.left = left + 'px';
+    kbPeek.style.top = top + 'px';
+    kbPeek.classList.add('visible');
+  }
+
+  // delega: funziona anche dopo che la tastiera viene ridisegnata
+  kbBoard.addEventListener('pointerover', (e) => {
+    if (!overEnabled || e.pointerType === 'touch') return;
+    const keyEl = e.target.closest('[data-kbkey]');
+    if (!keyEl) { hidePeek(); return; }
+    const code = keyEl.getAttribute('data-kbkey');
+    if (code === overCode) return;
+    hidePeek();
+    overCode = code;
+    overTimer = setTimeout(() => {
+      const el = kbBoard.querySelector(`[data-kbkey="${code}"]`);
+      if (el && el.matches(':hover')) showPeek(el);
+    }, OVER_DELAY);
+  });
+  kbBoard.addEventListener('pointerleave', hidePeek);
+  kbBoard.addEventListener('pointerdown', hidePeek);   // al clic si chiude, così vedi il pannello sotto
+  kbStage.addEventListener('scroll', hidePeek, { passive: true });
+
+  function renderKeyboard() {
+    const assignedCodes = new Set(sounds.filter(s => s.hotkey).map(s => s.hotkey));
+    const nKeys = assignedCodes.size;
+    const countTxt = `<b>${nKeys === 1 ? '1 tasto associato' : nKeys + ' tasti associati'}</b>`;
+    kbSub.innerHTML = kbMobileMQ.matches
+      ? `Tocca un tasto per vedere e cambiare i suoi brani. ${countTxt}.`
+      : `Clicca un tasto, o premilo sulla tua tastiera, per vedere e cambiare i suoi brani. ${countTxt}.`;
+
+    if (kbMobileMQ.matches) {
+      kbBoard.innerHTML = '';
+      kbEditor.innerHTML = '';
+      renderKeyList();
+    } else {
+      kbList.innerHTML = '';
+      renderKeyBoard();
+      kbEditor.innerHTML = kbSelected
+        ? editorHTML(kbSelected, true)
+        : '<div class="kb-editor-empty">Seleziona un tasto per vedere e cambiare i suoni associati.</div>';
+      wireEditor(kbEditor);
+    }
+  }
+
+  function renderKeyBoard() {
+    kbBoard.innerHTML = KB_KEYS.map(def => {
+      const list = soundsOnKey(def.code);
+      const gridRow = def.row === 0 ? '1' : `${def.row + 2} / span ${def.rs}`;
+      const gridCol = `${Math.round(def.x * 4) + 1} / span ${Math.round(def.w * 4)}`;
+      const cls = ['kb-key'];
+      if (def.w < 1.5) cls.push('narrow');
+      if (list.length) cls.push('assigned');
+      if (def.reserved) cls.push('reserved');
+      if (kbSelected === def.code) cls.push('selected');
+      if (list.some(s => s.playing)) cls.push('playing');
+      const title = def.reserved
+        ? `${keyName(def.code)} — riservato da Windows o dal browser`
+        : list.length ? `${keyName(def.code)}: ${list.map(s => s.name).join(', ')}` : `${keyName(def.code)} — libero`;
+      return `
+        <button type="button" class="${cls.join(' ')}" data-kbkey="${def.code}" style="grid-row:${gridRow};grid-column:${gridCol}" aria-label="${escapeHtml(title)}"${overEnabled ? '' : ` title="${escapeHtml(title)}"`}${def.reserved ? ' aria-disabled="true"' : ''}>
+          <span class="kb-key-cmd">${list.length ? escapeHtml(list[0].name) : ''}</span>
+          ${list.length > 1 ? `<span class="kb-key-count">+${list.length - 1}</span>` : ''}
+          <span class="kb-key-label">${escapeHtml(def.label)}</span>
+        </button>`;
+    }).join('');
+    kbBoard.querySelectorAll('[data-kbkey]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.getAttribute('data-kbkey');
+        if (KEY_BY_CODE[code].reserved) return;
+        kbSelected = code;
+        renderKeyboard();
+      });
+    });
+  }
+
+  function renderKeyList() {
+    let defs = KB_KEYS.filter(d => !d.reserved);
+    if (kbListFilter === 'assigned') defs = defs.filter(d => soundsOnKey(d.code).length);
+    if (!defs.length) {
+      kbList.innerHTML = '<div class="kb-list-empty">Nessun tasto associato. Tocca l\'icona della tastiera su un suono per assegnarlo.</div>';
+      return;
+    }
+    let html = '';
+    let currentGroup = null;
+    defs.forEach(def => {
+      if (def.group !== currentGroup) {
+        html += `<div class="kb-group">${escapeHtml(def.group)}</div>`;
+        currentGroup = def.group;
+      }
+      const list = soundsOnKey(def.code);
+      const open = kbSelected === def.code;
+      const cls = ['kb-row'];
+      if (list.length) cls.push('assigned');
+      if (open) cls.push('selected');
+      if (list.some(s => s.playing)) cls.push('playing');
+      html += `
+        <div class="${cls.join(' ')}" data-kbrow="${def.code}" role="button" tabindex="0" aria-expanded="${open}">
+          <span class="kb-row-cap" title="${escapeHtml(keyName(def.code))}">${escapeHtml(keyShort(def.code))}</span>
+          <span class="kb-row-sounds">${list.length
+            ? list.map(s => `<span class="kb-row-chip">${escapeHtml(s.name)}</span>`).join('')
+            : '<span class="kb-row-free">Libero</span>'}</span>
+          ${open ? `<div class="kb-row-editor"><div class="kb-editor">${editorHTML(def.code, false)}</div></div>` : ''}
+        </div>`;
+    });
+    kbList.innerHTML = html;
+    kbList.querySelectorAll('[data-kbrow]').forEach(row => {
+      const toggle = (e) => {
+        if (e.target.closest('.kb-row-editor')) return;
+        const code = row.getAttribute('data-kbrow');
+        kbSelected = kbSelected === code ? null : code;
+        renderKeyboard();
+      };
+      row.addEventListener('click', toggle);
+      row.addEventListener('keydown', e => {
+        if (e.target !== row) return;
+        if (e.key === 'Enter') { e.preventDefault(); toggle(e); }
+      });
+    });
+    const ed = kbList.querySelector('.kb-row-editor');
+    if (ed) wireEditor(ed);
+  }
+
+  function editorHTML(code, withHeader) {
+    const def = KEY_BY_CODE[code];
+    if (!def) return '';
+    const list = soundsOnKey(code);
+    let html = '';
+    if (withHeader) {
+      html += `
+        <div class="kb-ed-head">
+          <div class="kb-ed-cap">${escapeHtml(def.label)}</div>
+          <div class="kb-ed-title">
+            <h3>${escapeHtml(keyName(code))}</h3>
+            <p>${list.length ? (list.length === 1 ? 'Fa partire 1 suono' : `Fa partire ${list.length} suoni insieme`) : 'Nessun suono associato'}</p>
+          </div>
+          ${list.length ? `<button type="button" class="kb-ed-clear" data-kbclear="${code}">Libera tasto</button>` : ''}
+        </div>`;
+    }
+    if (list.length) {
+      html += '<div class="kb-ed-list">' + list.map(s => `
+        <div class="kb-ed-item${s.playing ? ' playing' : ''}">
+          <button type="button" class="kb-ed-play" data-kbplay="${s.id}" title="Riproduci" aria-label="Riproduci ${escapeHtml(s.name)}">${PLAY_SVG}</button>
+          <span class="kb-ed-name">${escapeHtml(s.name)}</span>
+          <span class="kb-ed-dots">${(s.categories || []).map(cid => { const c = getCategoryById(cid); return c ? `<span class="cat-dot" style="background:${c.color};color:${c.color}" title="${escapeHtml(c.name)}"></span>` : ''; }).join('')}</span>
+          <button type="button" class="kb-ed-remove" data-kbremove="${s.id}" title="Togli da questo tasto" aria-label="Togli ${escapeHtml(s.name)} da questo tasto">${CLOSE_SVG}</button>
+        </div>`).join('') + '</div>';
+      if (list.length > 1 && playerMode === 'single') {
+        html += '<p class="kb-ed-note">In modalità Single parte solo il primo suono della lista.</p>';
+      }
+    }
+    const candidates = sounds.filter(s => s.hotkey !== code);
+    if (!sounds.length) {
+      html += '<p class="kb-ed-note">Carica un suono per poterlo associare a questo tasto.</p>';
+    } else if (candidates.length) {
+      html += `<select class="kb-ed-select" data-kbadd="${code}" aria-label="Aggiungi un suono a questo tasto">
+        <option value="">${list.length ? 'Aggiungi un altro suono…' : 'Associa un suono a questo tasto…'}</option>
+        ${candidates.map(s => `<option value="${s.id}">${escapeHtml(s.name)}${s.hotkey ? ` (ora su ${escapeHtml(keyShort(s.hotkey))})` : ''}</option>`).join('')}
+      </select>`;
+    }
+    if (!withHeader && list.length > 1) {
+      html += `<button type="button" class="kb-ed-clear" data-kbclear="${code}" style="margin-top:10px">Libera tasto</button>`;
+    }
+    return html;
+  }
+
+  function wireEditor(root) {
+    root.querySelectorAll('[data-kbplay]').forEach(btn => btn.addEventListener('click', () => restartSound(btn.getAttribute('data-kbplay'))));
+    root.querySelectorAll('[data-kbremove]').forEach(btn => btn.addEventListener('click', () => setHotkey(btn.getAttribute('data-kbremove'), null)));
+    root.querySelectorAll('[data-kbclear]').forEach(btn => btn.addEventListener('click', () => clearKey(btn.getAttribute('data-kbclear'))));
+    root.querySelectorAll('[data-kbadd]').forEach(sel => sel.addEventListener('change', () => {
+      if (sel.value) setHotkey(sel.value, sel.getAttribute('data-kbadd'));
+    }));
+  }
+
+  async function clearKey(code) {
+    const list = soundsOnKey(code);
+    list.forEach(s => { s.hotkey = null; });
+    refreshHotkeyViews();
+    try {
+      await Promise.all(list.map(s => updateDoc(doc(db, "sounds", s.id), { hotkey: null })));
+    } catch (error) {
+      console.error('Errore nel liberare il tasto:', error);
+    }
+  }
+
+  function flashKey(code) {
+    const el = kbBoard.querySelector(`[data-kbkey="${code}"]`);
+    if (!el) return;
+    el.classList.add('pressed');
+    setTimeout(() => el.classList.remove('pressed'), 140);
+  }
+
+  // aggiorna solo l'alone "in riproduzione" sui tasti, senza ridisegnare tutto
+  function refreshKeyPlaying(code) {
+    if (!kbOverlay.classList.contains('visible')) return;
+    const playing = soundsOnKey(code).some(s => s.playing);
+    const key = kbBoard.querySelector(`[data-kbkey="${code}"]`);
+    if (key) key.classList.toggle('playing', playing);
+    const row = kbList.querySelector(`[data-kbrow="${code}"]`);
+    if (row) row.classList.toggle('playing', playing);
+    if (kbSelected === code) {
+      document.querySelectorAll('.kb-ed-item').forEach(item => {
+        const id = item.querySelector('[data-kbplay]')?.getAttribute('data-kbplay');
+        const s = sounds.find(x => x.id === id);
+        item.classList.toggle('playing', !!(s && s.playing));
+      });
+    }
+  }
 
   /* ---------------- Torna in cima ---------------- */
   window.addEventListener('scroll', () => {
