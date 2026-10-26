@@ -1369,6 +1369,7 @@
   .ved-sel-off{ font-size: 12.5px; color: var(--text-dim); }
   .ved-sel-on{ display:none; align-items:center; gap: 6px; flex-wrap: wrap; }
   .ved-selbar.has-sel .ved-sel-off{ display:none; }
+  .ved-selbar[hidden]{ display:none; }
   .ved-selbar.has-sel .ved-sel-on{ display:flex; }
   .ved-selbar-range{ font-size: 12.5px; color: var(--text-muted); margin-right: 8px; }
   .ved-selbar-range span{ font-family: var(--mono); color: var(--orange-bright); margin-left: 4px; }
@@ -1539,7 +1540,6 @@
   .ved-meter i.hot{ color: #ffb347; }
 
   .ved-sel-off{ display:flex; align-items:center; gap: 12px; flex-wrap: wrap; width: 100%; }
-  .ved-sel-off p{ flex: 1; min-width: 200px; font-size: 12.5px; color: var(--text-dim); }
   .ved-sel-off .ved-btn[hidden]{ display:none; }
   .ved-sep{ width: 1px; height: 22px; background: var(--border); margin: 0 4px; }
 
@@ -2066,7 +2066,6 @@
 
       <div class="ved-selbar" id="vedSelBar">
         <div class="ved-sel-off">
-          <p>Trascina sull'onda per selezionare. Clic per spostarti, doppio clic per prendere una frase tra due marcatori.</p>
           <button type="button" class="ved-btn" data-vedop="paste" data-needs="clip" title="Incolla il tratto copiato nel punto d'ascolto (Ctrl+V)">Incolla qui</button>
         </div>
         <div class="ved-sel-on">
@@ -2423,7 +2422,8 @@
         <span><kbd>Spazio</kbd> ascolta</span>
         <span><kbd>L</kbd> riproduzione ciclica</span>
         <span><kbd>M</kbd> marcatore</span>
-        <span><kbd>+</kbd> <kbd>−</kbd> zoom</span>
+        <span><kbd>+</kbd> <kbd>−</kbd> o rotella sull'onda: zoom</span>
+        <span><kbd>Shift</kbd> + rotella scorri</span>
         <span><kbd>O</kbd> originale</span>
         <span><kbd>Ctrl</kbd> <kbd>C</kbd> <kbd>X</kbd> <kbd>V</kbd> copia, taglia, incolla</span>
         <span><kbd>Ctrl</kbd> <kbd>Z</kbd> annulla</span>
@@ -3816,7 +3816,22 @@
   }
 
   /* ---------------- Render ---------------- */
+  // Ricostruire la griglia svuota per un istante la pagina: Chrome allora
+  // riporta lo scroll in cima (es. cliccando "+ categoria" in fondo alla lista).
+  // Si blocca l'altezza durante il ridisegno e si ripristina la posizione.
   function renderGrid() {
+    const scrollX = window.scrollX, scrollY = window.scrollY;
+    const prevMinHeight = grid.style.minHeight;
+    grid.style.minHeight = grid.offsetHeight + 'px';
+    try {
+      renderGridInner();
+    } finally {
+      grid.style.minHeight = prevMinHeight;
+      if (window.scrollY !== scrollY || window.scrollX !== scrollX) window.scrollTo(scrollX, scrollY);
+    }
+  }
+
+  function renderGridInner() {
     renderCatLogoSection();
     updateTopBtn();
     grid.className = 'view-' + viewMode + (reorderMode ? ' reorder-active' : '');
@@ -5848,20 +5863,59 @@
   vedOverview.addEventListener('pointerup', () => { ovDrag = null; });
   vedOverview.addEventListener('pointercancel', () => { ovDrag = null; });
 
-  // Ctrl/⌘ + rotella (o pizzico sul trackpad) = zoom; rotella orizzontale o Shift + rotella = scorri
+  /* Rotella / trackpad sulla forma d'onda:
+     - rotella verticale (o due dita su/giù) = zoom attorno al puntatore
+     - Ctrl/⌘ + rotella o pizzico sul trackpad = zoom (come prima)
+     - rotella orizzontale, due dita destra/sinistra o Shift + rotella = scorri
+     Per non rubare lo scroll dell'editor: ogni gesto decide la sua modalità
+     al primo evento e la tiene finché gli eventi continuano (inerzia compresa).
+     Se l'editor stava già scorrendo quando il puntatore passa sopra l'onda,
+     lo scroll continua normale; a vocale tutto visibile, la rotella in giù
+     scorre la pagina invece di provare a ridurre uno zoom già al minimo. */
+  const WHEEL_GESTURE_GAP = 200;   // ms senza eventi = gesto finito
+  let wheelGesture = null;         // { mode: 'zoom' | 'pan' | 'scroll', t }
+  let lastOverlayScroll = 0;
+  vedOverlay.addEventListener('scroll', () => { lastOverlayScroll = performance.now(); }, { passive: true });
+
+  function wheelPx(e, v) {
+    if (e.deltaMode === 1) return v * 16;                         // righe (Firefox con mouse)
+    if (e.deltaMode === 2) return v * vedCanvas.clientHeight;     // pagine
+    return v;
+  }
+
   vedCanvas.addEventListener('wheel', e => {
     if (!ved.buffer) return;
-    const r = vedCanvas.getBoundingClientRect();
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      zoomTo(viewLen() * (e.deltaY < 0 ? 0.8 : 1.25), timeAtClientX(e.clientX));
-    } else if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+    const now = performance.now();
+    const dx = wheelPx(e, e.deltaX), dy = wheelPx(e, e.deltaY);
+    const pinch = e.ctrlKey || e.metaKey;   // il pizzico del trackpad arriva come Ctrl + rotella
+    const horizontal = e.shiftKey || Math.abs(dx) > Math.abs(dy);
+
+    let mode = wheelGesture && now - wheelGesture.t < WHEEL_GESTURE_GAP ? wheelGesture.mode : null;
+    if (pinch) mode = 'zoom';
+    if (!mode) {
+      if (horizontal) mode = 'pan';
+      else if (now - lastOverlayScroll < WHEEL_GESTURE_GAP) mode = 'scroll';
+      else if (dy > 0 && viewLen() >= vedDurSec() - 1e-6) mode = 'scroll';
+      else mode = 'zoom';
+    }
+    wheelGesture = { mode, t: now };
+
+    if (mode === 'scroll') return;   // lascia scorrere l'editor
+    if (mode === 'pan') {
       if (viewLen() >= vedDurSec()) return;
       e.preventDefault();
-      const d = (e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX) / r.width * viewLen();
+      const r = vedCanvas.getBoundingClientRect();
+      const d = (e.shiftKey && !dx ? dy : dx) / r.width * viewLen();
       ved.view = { start: ved.view.start + d, end: ved.view.end + d };
       clampView(); drawVed(); updateVedUI();
+      return;
     }
+    // zoom proporzionale all'intensità: uno scatto di rotella ≈ ×1,25,
+    // il trackpad (tanti eventi piccoli) resta fluido e controllabile
+    e.preventDefault();
+    const step = clamp(pinch ? dy * 0.01 : dy * 0.0022, -0.5, 0.5);
+    if (!step) return;
+    zoomTo(viewLen() * Math.exp(step), timeAtClientX(e.clientX));
   }, { passive: false });
 
   function computeColumns(buf, start, end, W) {
@@ -6059,6 +6113,7 @@
     }
 
     vedSelBar.classList.toggle('has-sel', !!ved.sel);
+    vedSelBar.hidden = !ved.sel && !vedClipboard;   // la barra compare solo con una selezione o un tratto da incollare
     if (ved.sel) vedSelRange.textContent = `${formatPrecise(ved.sel.start)} – ${formatPrecise(ved.sel.end)}  (${formatSecs(ved.sel.end - ved.sel.start)})`;
     vedScope.classList.toggle('sel', !!ved.sel);
     vedScopeText.innerHTML = ved.sel
