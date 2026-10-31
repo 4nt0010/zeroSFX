@@ -1622,6 +1622,302 @@
   }
   .login-submit:hover{ transform: translateY(-1px); }
   .login-submit:active{ transform: scale(0.98); }
+
+  /* ---------- EFFETTI MODIFICATI NELLA SESSIONE ---------- */
+  .pad-top{ flex-wrap: wrap; row-gap: 6px; }
+  .pad-icon-btns{ margin-left: auto; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+  .icon-btn.edit-btn.active{ color: #3ee6c4; border-color: rgba(62,230,196,0.45); background: rgba(62,230,196,0.12); }
+  .pad.edited{ border-color: rgba(62,230,196,0.35); }
+  .pad.edited.playing{ border-color: var(--orange-bright); }
+  .pad-mod-badge{
+    font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: .06em; line-height: 1;
+    color: #3ee6c4; background: rgba(62,230,196,0.12); border: 1px solid rgba(62,230,196,0.4);
+    border-radius: 6px; padding: 4px 6px; cursor: pointer; white-space: nowrap;
+    transition: background .15s ease, color .15s ease;
+  }
+  .pad-mod-badge:hover{ background: rgba(62,230,196,0.24); color: #fff; }
+  .regia-pad-mod{
+    font-family: var(--mono); font-size: 9.5px; font-weight:600; color:#3ee6c4;
+    border: 1px solid rgba(62,230,196,0.4); background: rgba(62,230,196,0.1);
+    border-radius: 6px; padding: 2px 6px; line-height: 1.3;
+  }
+  .ved-overlay.ved-sfx .vc-timer{ color: #3ee6c4; }
+  .ved-sfx-only{ display:none !important; }
+  .ved-overlay.ved-sfx .ved-sfx-only{ display:inline-flex !important; }
+  .st-fxbar{
+    display:flex; align-items:center; flex-wrap: wrap; gap: 8px 12px; padding: 10px 14px;
+    border-radius: 16px; border: 1px solid rgba(62,230,196,0.45); background: rgba(62,230,196,0.08);
+  }
+  .st-fxbar-info{ display:flex; flex-direction:column; gap: 2px; margin-right:auto; min-width: 220px; flex: 1 1 300px; }
+  .st-fxbar-info b{ font-family: var(--display); font-size: 14px; color: #3ee6c4; }
+  .st-fxbar-info > span{ font-size: 12px; color: var(--text-muted); }
+  .st-fxbar .ved-select{ max-width: 260px; }
+  .ved-overlay.ved-sfx .ved-name[readonly]{ cursor: default; }
+  .kb-clear-all:hover{ color: #ff6b6b !important; border-color: rgba(255,107,107,0.5) !important; background: rgba(255,107,107,0.1) !important; }
+
+  /* ---------- STUDIO ---------- */
+  .studio{ --st-teal: #3ee6c4; --st-line: rgba(255,255,255,0.07); --st-panel: #111015; --st-head-w: 214px; padding: 0 16px; }
+  .st-shell{ max-width: 1560px; margin: 0 auto; display:flex; flex-direction:column; gap: 12px; }
+  .st-shell button{ font-family: var(--body); }
+  @media (min-width: 900px){ .st-shell{ padding-right: 52px; } }
+
+  .st-topbar{
+    display:flex; align-items:center; flex-wrap: wrap; gap: 10px 14px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 10px 12px;
+  }
+  .st-seg{ display:inline-flex; padding:3px; gap:2px; border:1px solid var(--border); border-radius: 999px; background: rgba(0,0,0,0.25); }
+  .st-seg button{
+    display:inline-flex; align-items:center; gap: 7px; border:none; background:transparent; color: var(--text-muted);
+    font-size: 12.5px; font-weight: 600; padding: 7px 14px; border-radius: 999px; cursor:pointer; transition: all .15s ease;
+  }
+  .st-seg button svg{ width: 14px; height: 14px; }
+  .st-seg button:hover{ color: var(--text); }
+  .st-seg button.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); box-shadow: inset 0 0 0 1px var(--border-strong); }
+
+  .st-transport{ display:inline-flex; align-items:center; gap: 5px; }
+  .st-tbtn{
+    width: 34px; height: 34px; border-radius: 10px; border:1px solid var(--border); background: rgba(255,255,255,0.03);
+    color: var(--text-muted); display:inline-flex; align-items:center; justify-content:center; cursor:pointer; padding:0;
+    transition: all .15s ease;
+  }
+  .st-tbtn svg{ width: 15px; height: 15px; }
+  .st-tbtn:hover:not(:disabled){ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .st-tbtn:disabled{ opacity:.35; cursor: default; }
+  .st-tbtn.st-play{ width: 42px; height: 42px; border-radius: 50%; color:#fff; border-color: transparent; background: linear-gradient(135deg, var(--orange-bright), var(--orange)); box-shadow: 0 6px 18px -6px rgba(255,30,96,0.7); }
+  .st-tbtn.st-play:hover:not(:disabled){ color:#fff; background: linear-gradient(135deg, var(--orange-bright), var(--orange)); filter: brightness(1.1); }
+  .st-tbtn.st-play svg{ width: 16px; height: 16px; }
+  .st-tbtn.st-rec{ color: #ff4d5e; }
+  .st-tbtn.st-rec.on{ color:#fff; background:#e5243b; border-color:#ff4d5e; animation: st-rec-blink 1s steps(2) infinite; }
+  @keyframes st-rec-blink{ 50%{ background: #8e1222; } }
+  .st-tbtn.st-toggle[aria-pressed="true"]{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.14); }
+
+  .st-clock{
+    display:flex; flex-direction:column; align-items:flex-start; line-height: 1.05;
+    background: #050407; border: 1px solid var(--border); border-radius: 12px; padding: 6px 12px; min-width: 132px;
+  }
+  .st-clock span{ font-family: var(--mono); font-size: 21px; font-weight: 500; color: var(--orange-bright); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+  .st-clock small{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); margin-top: 3px; white-space: nowrap; }
+  .st-clock.rec span{ color: #ff4d5e; }
+  .st-meter{ width: 220px; height: 30px; border-radius: 8px; background: #050407; border: 1px solid var(--border); display:block; }
+  .st-top-right{ display:flex; align-items:center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+
+  .st-body{ display:grid; grid-template-columns: 290px minmax(0,1fr); gap: 12px; align-items:start; }
+  .st-side{ display:flex; flex-direction:column; gap: 12px; min-width: 0; }
+  .st-box{ background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 12px; min-width: 0; }
+  .st-box-head{ display:flex; align-items:center; gap: 8px; margin-bottom: 10px; }
+  .st-box-head h4{ font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text); margin-right:auto; }
+  .st-count{ font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .st-scope{ font-size: 11px; color: var(--text-dim); }
+  .st-scope b{ color: var(--orange-bright); font-weight: 600; }
+  .st-hint{ font-size: 11px; color: var(--text-dim); line-height: 1.45; margin-top: 8px; }
+
+  .st-file-actions{ display:grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .st-file-actions .ved-btn{ justify-content:center; }
+  .st-file-actions .ved-select{ grid-column: 1 / -1; width: 100%; min-width: 0; }
+  .st-files.drag-over{ border-color: var(--orange-bright); box-shadow: 0 0 0 3px rgba(255,30,96,0.15); }
+  .st-file-list{ list-style:none; margin-top: 10px; display:flex; flex-direction:column; gap: 4px; max-height: 260px; overflow-y:auto; }
+  .st-file{
+    display:flex; align-items:center; gap: 8px; padding: 7px 8px; border-radius: 10px; border: 1px solid transparent;
+    background: rgba(255,255,255,0.02); cursor: pointer; transition: background .12s ease, border-color .12s ease;
+  }
+  .st-file:hover{ background: rgba(255,255,255,0.05); }
+  .st-file.active{ border-color: var(--border-strong); background: rgba(255,30,96,0.1); }
+  .st-file-dot{ width: 8px; height: 8px; border-radius: 50%; flex-shrink:0; background: var(--text-dim); }
+  .st-file-main{ flex:1; min-width:0; display:flex; flex-direction:column; }
+  .st-file-name{ font-size: 12.5px; font-weight: 600; color: var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .st-file-name input{ width:100%; font: inherit; color: var(--text); background: rgba(0,0,0,0.3); border:1px solid var(--border-strong); border-radius: 6px; padding: 1px 5px; outline:none; }
+  .st-file-meta{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow: ellipsis; }
+  .st-file-btn{
+    width: 24px; height: 24px; border-radius: 7px; border:1px solid var(--border); background: transparent; color: var(--text-dim);
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0;
+  }
+  .st-file-btn svg{ width: 12px; height: 12px; }
+  .st-file-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); }
+  .st-file-btn.danger:hover{ color:#ff6b6b; }
+  .st-file-empty{ font-size: 12px; color: var(--text-dim); padding: 10px 4px; text-align:center; }
+
+  .st-fx-group{ border-top: 1px solid var(--st-line); }
+  .st-fx-group:first-child{ border-top: none; }
+  .st-fx-group summary{
+    list-style:none; cursor:pointer; padding: 9px 2px; font-size: 12px; font-weight: 700; color: var(--text-muted);
+    display:flex; align-items:center; gap: 8px; letter-spacing: .02em;
+  }
+  .st-fx-group summary::-webkit-details-marker{ display:none; }
+  .st-fx-group summary::after{ content:'›'; margin-left:auto; font-size: 15px; color: var(--text-dim); transition: transform .15s ease; }
+  .st-fx-group[open] summary::after{ transform: rotate(90deg); }
+  .st-fx-group[open] summary{ color: var(--text); }
+  .st-fx{ padding: 8px 8px 9px; margin: 0 0 6px; border-radius: 12px; background: rgba(255,255,255,0.025); border: 1px solid var(--st-line); }
+  .st-fx-top{ display:flex; align-items:center; gap: 8px; }
+  .st-fx-top b{ font-size: 12.5px; color: var(--text); font-weight: 600; flex:1; min-width: 0; }
+  .st-fx-top .ved-btn{ padding: 5px 11px; font-size: 11.5px; }
+  .st-fx p{ font-size: 11px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; }
+  .st-fx-params{ display:flex; flex-wrap:wrap; gap: 6px 10px; margin-top: 7px; }
+  .st-fx-params .ved-field{ font-size: 11px; gap: 5px; }
+  .st-fx-params .ved-num{ width: 64px; padding: 4px 7px; font-size: 12px; border-radius: 8px; }
+  .st-fx-params select.ved-select{ font-size: 11.5px; }
+  .st-locked{ opacity: .45; pointer-events: none; }
+  .st-fx-off{ font-size: 12px; color: var(--text-dim); padding: 4px 2px 2px; }
+
+  .studio [hidden]{ display:none !important; }
+  .st-hist-list{ position: relative; list-style:none; max-height: 200px; overflow-y:auto; display:flex; flex-direction:column; gap: 2px; counter-reset: sth -1; }
+  .st-hist-list button{
+    width: 100%; text-align:left; border:none; background:transparent; color: var(--text-muted); cursor:pointer;
+    font-size: 12px; padding: 5px 8px; border-radius: 8px; display:flex; gap: 8px; align-items: baseline;
+  }
+  .st-hist-list button .n{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 16px; }
+  .st-hist-list button:hover{ background: rgba(255,255,255,0.05); color: var(--text); }
+  .st-hist-list li.current button{ background: rgba(255,30,96,0.12); color: var(--orange-bright); }
+  .st-hist-list li.future button{ opacity: .45; }
+
+  .st-main{ min-width: 0; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 12px; }
+  .st-file-bar{ display:flex; align-items:center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .st-file-title{ font-family: var(--display); font-size: 15px; font-weight: 700; margin-right:auto; min-width: 0; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .st-file-title small{ font-family: var(--mono); font-size: 11px; font-weight: 400; color: var(--text-dim); margin-left: 10px; }
+  .st-file-bar-actions{ display:flex; gap: 6px; flex-wrap: wrap; }
+
+  .st-wave-wrap{
+    position: relative; height: clamp(260px, 46vh, 520px); border-radius: 12px; overflow:hidden;
+    background: #060509; border: 1px solid var(--st-line); touch-action: none;
+  }
+  .st-wave-wrap.orig{ box-shadow: inset 0 0 0 1px rgba(255,210,61,0.55); }
+  .st-wave-wrap.orig::after{
+    content: 'Stai ascoltando l\'originale'; position:absolute; top: 28px; right: 12px; z-index: 2; pointer-events:none;
+    font-family: var(--mono); font-size: 11px; color: #ffd23d; background: rgba(8,7,10,0.75); padding: 4px 9px; border-radius: 6px;
+  }
+  .st-file-bar-actions{ align-items:center; }
+  .st-wave-wrap canvas{ position:absolute; inset: 0; width:100%; height:100%; display:block; }
+  #stWaveOver{ cursor: text; }
+  .st-empty{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 6px;
+    color: var(--text-dim); text-align:center; padding: 20px; pointer-events:none;
+  }
+  .st-empty svg{ width: 34px; height: 34px; color: var(--border-strong); margin-bottom: 4px; }
+  .st-empty b{ color: var(--text-muted); font-family: var(--display); font-size: 15px; }
+  .st-empty span{ font-size: 12px; max-width: 380px; }
+  .st-overview{ display:block; width: 100%; height: 34px; margin-top: 8px; border-radius: 8px; background: #060509; border: 1px solid var(--st-line); cursor: grab; touch-action: none; }
+  .st-selbar{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .st-selbar .ved-btn{ padding: 6px 11px; font-size: 12px; }
+  .st-selinfo{ font-family: var(--mono); font-size: 11.5px; color: var(--text-muted); margin-right: 6px; min-width: 210px; }
+  .st-selinfo b{ color: var(--orange-bright); font-weight: 500; }
+  .st-sep{ width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+
+  /* multitraccia */
+  .st-mt-toolbar{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px 8px; margin-bottom: 10px; }
+  .st-mt-toolbar .ved-btn{ padding: 6px 11px; font-size: 12px; }
+  .st-clip-inspector{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px 10px; padding: 4px 10px; border-radius: 12px; border:1px solid var(--st-line); background: rgba(255,255,255,0.025); }
+  .st-clip-inspector .ved-num{ width: 64px; padding: 4px 7px; font-size: 12px; border-radius: 8px; }
+  .st-insp-name{ font-size: 12px; font-weight: 600; color: var(--text); max-width: 160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .st-master{ display:flex; align-items:center; gap: 8px; margin-left:auto; font-size: 11.5px; color: var(--text-dim); }
+  .st-master input{ width: 120px; accent-color: var(--orange-bright); }
+  .st-master em{ font-style: normal; font-family: var(--mono); color: var(--text-muted); min-width: 56px; }
+
+  .st-mt-scroll{
+    position: relative; overflow: auto; max-height: min(64vh, 720px); min-height: 260px;
+    border-radius: 12px; border: 1px solid var(--st-line); background: #060509;
+    overscroll-behavior: contain;
+  }
+  .st-mt-inner{ position: relative; min-width: 100%; }
+  .st-mt-rulerrow{ position: sticky; top: 0; z-index: 6; display:flex; height: 28px; background: #0c0b10; border-bottom: 1px solid var(--st-line); }
+  .st-mt-corner{
+    position: sticky; left: 0; z-index: 7; flex: 0 0 var(--st-head-w); width: var(--st-head-w);
+    background: #0c0b10; border-right: 1px solid var(--st-line); display:flex; align-items:center; padding: 0 10px;
+    font-size: 11px; color: var(--text-dim); font-family: var(--mono);
+  }
+  .st-mt-ruler{ position: relative; flex: 0 0 auto; height: 100%; cursor: pointer; touch-action: none; }
+  .st-mt-ruler .tk{ position:absolute; top: 0; bottom: 0; border-left: 1px solid rgba(255,255,255,0.18); pointer-events:none; }
+  .st-mt-ruler .tk span{ position:absolute; left: 4px; top: 3px; font-family: var(--mono); font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+  .st-mt-ruler .mk{ position:absolute; bottom: 0; height: 6px; border-left: 1px solid rgba(255,255,255,0.12); pointer-events:none; }
+  .st-mt-ruler .loopband{ position:absolute; top: 0; height: 8px; background: rgba(62,230,196,0.55); border-radius: 0 0 4px 4px; pointer-events:none; }
+  .st-mt-ruler .loopband.off{ background: rgba(255,255,255,0.22); }
+  .st-mt-ruler .rhead{ position:absolute; bottom: 0; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid #ffd23d; transform: translateX(-6px); pointer-events:none; }
+
+  .st-mt-row{ display:flex; border-bottom: 1px solid var(--st-line); }
+  .st-mt-head{
+    position: sticky; left: 0; z-index: 5; flex: 0 0 var(--st-head-w); width: var(--st-head-w);
+    background: var(--st-panel); border-right: 1px solid var(--st-line); padding: 7px 8px 7px 10px;
+    display:flex; flex-direction:column; gap: 5px; box-shadow: inset 3px 0 0 var(--tc);
+  }
+  .st-mt-row.armed .st-mt-head{ box-shadow: inset 3px 0 0 #ff4d5e; }
+  .st-th-top{ display:flex; align-items:center; gap: 4px; }
+  .st-th-name{
+    flex:1; min-width:0; font: 600 12px var(--body); color: var(--text); background: transparent; border: 1px solid transparent;
+    border-radius: 6px; padding: 2px 4px; outline:none;
+  }
+  .st-th-name:hover{ border-color: var(--st-line); }
+  .st-th-name:focus{ border-color: var(--border-strong); background: rgba(0,0,0,0.3); }
+  .st-th-btn{
+    width: 22px; height: 20px; border-radius: 5px; border:1px solid var(--border); background: rgba(255,255,255,0.03);
+    color: var(--text-dim); font: 700 10px var(--mono); cursor:pointer; padding:0; flex-shrink:0;
+  }
+  .st-th-btn:hover{ color: var(--text); }
+  .st-th-btn.m.on{ background: #4a7dff; border-color:#4a7dff; color:#fff; }
+  .st-th-btn.s.on{ background: #ffd23d; border-color:#ffd23d; color:#1a1400; }
+  .st-th-btn.r.on{ background: #e5243b; border-color:#ff4d5e; color:#fff; }
+  .st-th-btn.x:hover{ color:#ff6b6b; border-color: rgba(255,107,107,0.5); }
+  .st-th-row{ display:flex; align-items:center; gap: 6px; font-size: 10px; color: var(--text-dim); font-family: var(--mono); }
+  .st-th-row input[type=range]{ flex:1; min-width: 0; height: 14px; accent-color: var(--tc); }
+  .st-th-row em{ font-style: normal; min-width: 46px; text-align:right; color: var(--text-muted); }
+  .st-th-row i{ font-style: normal; width: 22px; }
+  .st-th-meter{ height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); overflow:hidden; }
+  .st-th-meter span{ display:block; height: 100%; width: 0; background: linear-gradient(90deg, #3ee6c4 0%, #3ee6c4 70%, #ffd23d 85%, #ff4d5e 100%); background-size: var(--mw, 180px) 100%; }
+
+  .st-mt-lane{ position: relative; flex: 0 0 auto; height: 96px; background-image: linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px); background-size: var(--grid, 60px) 100%; }
+  .st-mt-lane.drop{ background-color: rgba(255,30,96,0.07); }
+  .st-mt-row.selected-track .st-mt-lane{ background-color: rgba(255,255,255,0.015); }
+
+  .st-clip{
+    position:absolute; top: 4px; bottom: 4px; border-radius: 7px; overflow: hidden; cursor: grab; touch-action: none;
+    background: color-mix(in srgb, var(--tc) 18%, #0b0a0e); border: 1px solid color-mix(in srgb, var(--tc) 60%, transparent);
+    box-shadow: inset 0 18px 0 -1px color-mix(in srgb, var(--tc) 30%, transparent);
+  }
+  .st-clip.sel{ border-color: #fff; box-shadow: inset 0 18px 0 -1px color-mix(in srgb, var(--tc) 45%, transparent), 0 0 0 1px #fff, 0 0 18px -4px var(--tc); z-index: 2; }
+  .st-clip.dragging{ cursor: grabbing; opacity: .9; z-index: 3; }
+  .st-clip canvas{ position:absolute; left:0; right:0; top: 17px; bottom: 0; width: 100%; height: calc(100% - 17px); display:block; pointer-events:none; }
+  .st-clip svg.fades{ position:absolute; left:0; top: 17px; width:100%; height: calc(100% - 17px); pointer-events:none; }
+  .st-clip-name{ position:absolute; left: 7px; top: 1px; right: 7px; font-size: 10.5px; font-weight: 600; color: #fff; white-space: nowrap; overflow:hidden; text-overflow: ellipsis; pointer-events:none; text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
+  .st-clip-name small{ font-family: var(--mono); font-weight: 400; opacity: .75; margin-left: 5px; }
+  .st-clip .h{ position:absolute; top: 0; bottom: 0; width: 7px; cursor: ew-resize; z-index: 2; }
+  .st-clip .h.l{ left: 0; } .st-clip .h.r{ right: 0; }
+  .st-clip .h:hover{ background: rgba(255,255,255,0.18); }
+  .st-clip .f{
+    position:absolute; top: 3px; width: 10px; height: 10px; margin-left: -5px; z-index: 3; cursor: ew-resize;
+    background: #fff; border-radius: 2px; opacity: .0; transition: opacity .12s ease; box-shadow: 0 0 0 1px rgba(0,0,0,0.5);
+  }
+  .st-clip:hover .f, .st-clip.sel .f{ opacity: .9; }
+
+  .st-mt-cursor{ position:absolute; top: 0; bottom: 0; width: 0; border-left: 1px solid #ffd23d; z-index: 4; pointer-events:none; }
+  .st-mt-playhead{ position:absolute; top: 0; bottom: 0; width: 0; border-left: 2px solid #fff; z-index: 4; pointer-events:none; box-shadow: 0 0 8px rgba(255,255,255,0.5); }
+  .st-mt-loopshade{ position:absolute; top: 28px; bottom: 0; background: rgba(62,230,196,0.06); border-left: 1px dashed rgba(62,230,196,0.5); border-right: 1px dashed rgba(62,230,196,0.5); z-index: 1; pointer-events:none; }
+  .st-mt-empty{ padding: 30px 20px; text-align:center; color: var(--text-dim); font-size: 12.5px; }
+
+  .st-foot{ display:flex; align-items:center; gap: 12px; flex-wrap: wrap; padding: 0 4px 10px; }
+  .st-status{ flex:1; min-width: 200px; font-size: 12.5px; color: var(--text-muted); }
+  .st-status.error{ color:#ffb347; }
+
+  .st-export-card{ max-width: 460px; text-align: left; }
+  .st-export-card h4, .st-export-card p{ text-align:left; }
+  .st-export-rows{ display:flex; flex-direction:column; gap: 10px; margin-bottom: 16px; }
+  .st-export-row{ display:flex; align-items:center; gap: 12px; font-size: 12.5px; color: var(--text-muted); }
+  .st-export-row > span{ min-width: 64px; }
+  .st-export-name{ flex:1; }
+  .st-export-actions{ flex-wrap: wrap; }
+  .st-export-actions .confirm-btn{ flex: 1 1 40%; }
+  #stExportOverlay{ z-index: 280; }
+
+  @media (max-width: 1100px){
+    .st-body{ grid-template-columns: 1fr; }
+    .st-side{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items:start; }
+    .st-file-list{ max-height: 200px; }
+  }
+  @media (max-width: 640px){
+    .studio{ padding: 0 10px; --st-head-w: 150px; }
+    .st-meter{ width: 140px; }
+    .st-top-right{ margin-left: 0; }
+    .st-selinfo{ min-width: 0; width: 100%; }
+    .st-th-row em{ min-width: 36px; }
+    .st-th-top{ flex-wrap: wrap; }
+    .st-th-name{ flex: 1 1 100%; }
+  }
 </style>
 </head>
 <body>
@@ -1700,6 +1996,10 @@
       <button type="button" class="main-tab" data-tab="voices" role="tab" aria-selected="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" y1="17" x2="12" y2="22"></line></svg>
         Vocali <span class="tab-badge" id="voiceTabBadge" hidden>0</span>
+      </button>
+      <button type="button" class="main-tab" data-tab="studio" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        Studio
       </button>
     </div>
   </div>
@@ -1816,11 +2116,246 @@
       </div>
       <div class="voices-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>
-        Ogni vocale si cancella da solo 2 ore dopo l'importazione. Per tenerlo, usa "Salva negli SFX".
+        Ogni vocale si cancella da solo 2 ore dopo l'importazione. Per tenerlo, usa "Salva negli Effetti".
       </div>
       <label class="vc-auto"><span>Preset all'import</span><select class="ved-select" id="voiceAutoPreset" aria-label="Preset da applicare in automatico ai nuovi vocali"></select></label>
       <div class="voice-grid" id="voiceGrid"></div>
     </section>
+  </div>
+</div>
+
+<!-- ================================================================
+     STUDIO — editor stile Audition: forma d'onda + multitraccia
+     Tutto resta in memoria per la sessione.
+     ================================================================ -->
+<div class="tab-panel studio" id="tabStudio" role="tabpanel" aria-label="Studio" hidden>
+  <div class="st-shell" id="stShell">
+
+    <div class="st-topbar">
+      <div class="st-seg" role="tablist" aria-label="Vista">
+        <button type="button" role="tab" class="active" data-stview="wave" aria-selected="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2l2-6 3 12 3-9 2 5 2-2h6"></path></svg>Forma d'onda
+        </button>
+        <button type="button" role="tab" data-stview="multi" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="10" height="4" rx="1"></rect><rect x="8" y="10" width="13" height="4" rx="1"></rect><rect x="5" y="16" width="8" height="4" rx="1"></rect></svg>Multitraccia
+        </button>
+      </div>
+
+      <div class="st-transport" role="group" aria-label="Trasporto">
+        <button type="button" class="st-tbtn" id="stHome" title="Vai all'inizio (Home)" aria-label="Vai all'inizio"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5" width="2.5" height="14" rx="1"></rect><polygon points="20,5 8,12 20,19"></polygon></svg></button>
+        <button type="button" class="st-tbtn st-play" id="stPlay" title="Riproduci / ferma (Spazio)" aria-label="Riproduci"></button>
+        <button type="button" class="st-tbtn" id="stPause" title="Pausa: si ferma dove sei" aria-label="Pausa"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></button>
+        <button type="button" class="st-tbtn" id="stEnd" title="Vai alla fine (Fine)" aria-label="Vai alla fine"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="4,5 16,12 4,19"></polygon><rect x="17.5" y="5" width="2.5" height="14" rx="1"></rect></svg></button>
+        <button type="button" class="st-tbtn st-rec" id="stRec" title="Registra dal microfono" aria-label="Registra"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="currentColor"></circle></svg></button>
+        <button type="button" class="st-tbtn st-toggle" id="stLoop" aria-pressed="false" title="Riproduzione ciclica della selezione / regione (L)" aria-label="Riproduzione ciclica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></button>
+      </div>
+
+      <div class="st-clock" id="stClockWrap"><span id="stClock">0:00.000</span><small id="stClockSub">—</small></div>
+
+      <canvas class="st-meter" id="stMeter" width="220" height="30" aria-label="Livelli in uscita"></canvas>
+
+      <div class="st-top-right">
+        <button type="button" class="ved-btn" id="stUndo" title="Annulla (Ctrl+Z)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>Annulla
+        </button>
+        <button type="button" class="ved-btn" id="stRedo" title="Ripeti (Ctrl+Shift+Z)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path></svg>Ripeti
+        </button>
+        <div class="ved-zoom" role="group" aria-label="Zoom">
+          <button type="button" class="ved-btn ved-icon" id="stZoomOut" title="Riduci lo zoom (−)" aria-label="Riduci lo zoom">−</button>
+          <button type="button" class="ved-btn ved-icon" id="stZoomIn" title="Aumenta lo zoom (+)" aria-label="Aumenta lo zoom">+</button>
+          <button type="button" class="ved-btn" id="stZoomFit" title="Mostra tutto (0)">Tutto</button>
+        </div>
+        <label class="ved-sink" id="stSinkRow" title="Uscita di ascolto: scegli le cuffie per non andare in onda (vale anche per l'editor dei vocali)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3z"></path><path d="M3 19a2 2 0 0 0 2 2h1v-6H3z"></path></svg>
+          <select class="ved-select" id="stSink" aria-label="Uscita di ascolto"></select>
+        </label>
+        <button type="button" class="ved-btn primary-soft" id="stExportBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Esporta
+        </button>
+      </div>
+    </div>
+
+    <div class="st-fxbar" id="stFxBar" hidden>
+      <div class="st-fxbar-info">
+        <b>Stai modificando l'effetto «<span id="stFxName"></span>» in multitraccia</b>
+        <span>L'effetto è sulla traccia 1: aggiungi altri suoni sulle tracce libere, regola volumi e dissolvenze, poi premi "Usa come versione dell'effetto". Vale fino al ricaricamento della pagina, come nell'editor.</span>
+      </div>
+      <select class="ved-select" id="stFxAddSfx" aria-label="Aggiungi un effetto su una traccia libera, al cursore"></select>
+      <button type="button" class="ved-btn ved-ghost" id="stFxCancel">Annulla</button>
+      <button type="button" class="ved-btn primary" id="stFxApply">Usa come versione dell'effetto</button>
+    </div>
+
+    <div class="st-body">
+      <aside class="st-side">
+        <section class="st-box st-files" id="stFilesBox">
+          <div class="st-box-head">
+            <h4>File</h4>
+            <span class="st-count" id="stFileCount">0</span>
+          </div>
+          <div class="st-file-actions">
+            <button type="button" class="ved-btn" id="stImportBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Importa
+            </button>
+            <button type="button" class="ved-btn" id="stRecNewBtn" title="Registra un nuovo file dal microfono">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10a7 7 0 0 0 14 0"></path><line x1="12" y1="17" x2="12" y2="22"></line></svg>Registra
+            </button>
+            <select class="ved-select" id="stFromSfx" aria-label="Apri un effetto della libreria"></select>
+            <select class="ved-select" id="stFromVoice" aria-label="Apri un vocale"></select>
+          </div>
+          <input type="file" id="stFileInput" accept="audio/*,.opus,.ogg,.oga,.m4a,.aac,.mp3,.wav,.webm,.flac" multiple hidden>
+          <ul class="st-file-list" id="stFileList"></ul>
+          <p class="st-hint">Trascina qui file dal computer. Trascina un file sulla multitraccia per creare una clip.</p>
+        </section>
+
+        <section class="st-box st-fx" id="stFxBox">
+          <div class="st-box-head">
+            <h4>Effetti</h4>
+            <span class="st-scope" id="stScope">tutto il file</span>
+          </div>
+          <div id="stFxList"></div>
+        </section>
+
+        <section class="st-box st-hist">
+          <div class="st-box-head"><h4>Cronologia</h4></div>
+          <ol class="st-hist-list" id="stHistory"></ol>
+        </section>
+      </aside>
+
+      <main class="st-main">
+        <!-- FORMA D'ONDA -->
+        <div class="st-view" id="stWaveView">
+          <div class="st-file-bar">
+            <div class="st-file-title" id="stWaveTitle">Nessun file aperto</div>
+            <div class="st-file-bar-actions">
+              <span class="ved-meter" id="stLoud" title="Volume percepito e picco più forte"></span>
+              <div class="ved-seg" role="group" aria-label="Cosa ascoltare" title="Confronta con il file originale (O)">
+                <button type="button" class="active" id="stAbEdit" data-stneeds="view">Modificato</button>
+                <button type="button" id="stAbOrig" data-stneeds="abable">Originale</button>
+              </div>
+              <button type="button" class="ved-btn" id="stToMultiBtn" data-stneeds="file" title="Mette il file come clip nella multitraccia, al cursore">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="10" height="4" rx="1"></rect><rect x="8" y="10" width="13" height="4" rx="1"></rect><line x1="12" y1="17" x2="12" y2="23"></line><line x1="9" y1="20" x2="15" y2="20"></line></svg>In multitraccia
+              </button>
+            </div>
+          </div>
+          <div class="st-wave-wrap" id="stWaveWrap">
+            <canvas id="stWaveBase"></canvas>
+            <canvas id="stWaveOver" aria-label="Forma d'onda: trascina per selezionare, clic per spostare il cursore"></canvas>
+            <div class="st-empty" id="stWaveEmpty">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2l2-6 3 12 3-9 2 5 2-2h6"></path></svg>
+              <b>Apri un file per iniziare</b>
+              <span>Importa dal computer, scegli un effetto o un vocale, oppure registra dal microfono.</span>
+            </div>
+          </div>
+          <canvas class="st-overview" id="stOverview" aria-label="Panoramica: trascina per spostarti"></canvas>
+          <div class="st-selbar" id="stSelBar">
+            <span class="st-selinfo" id="stSelInfo">—</span>
+            <button type="button" class="ved-btn" data-stop="playsel" data-stneeds="selview">Ascolta selezione</button>
+            <button type="button" class="ved-btn" data-stop="copy" data-stneeds="sel" title="Ctrl+C">Copia</button>
+            <button type="button" class="ved-btn" data-stop="cut" data-stneeds="sel" title="Ctrl+X">Taglia</button>
+            <button type="button" class="ved-btn" data-stop="paste" data-stneeds="clip" title="Ctrl+V: incolla al cursore o al posto della selezione">Incolla</button>
+            <button type="button" class="ved-btn" data-stop="mixpaste" data-stneeds="clip" title="Somma il tratto copiato all'audio, dal cursore">Incolla sopra</button>
+            <button type="button" class="ved-btn" data-stop="delete" data-stneeds="sel" title="Canc">Elimina</button>
+            <button type="button" class="ved-btn" data-stop="crop" data-stneeds="sel" title="Tiene solo la selezione">Ritaglia</button>
+            <button type="button" class="ved-btn" data-stop="silence" data-stneeds="sel">Silenzio</button>
+            <button type="button" class="ved-btn" data-stop="beep" data-stneeds="sel" title="Bip di censura sulla selezione (B)">Bip</button>
+            <button type="button" class="ved-btn" data-stop="selfadein" data-stneeds="sel" title="Il volume sale lungo tutta la selezione">Dissolvenza in entrata</button>
+            <button type="button" class="ved-btn" data-stop="selfadeout" data-stneeds="sel" title="Il volume scende lungo tutta la selezione">Dissolvenza in uscita</button>
+            <button type="button" class="ved-btn" data-stop="tonew" data-stneeds="sel" title="Crea un nuovo file con la selezione">Copia in nuovo file</button>
+            <button type="button" class="ved-btn" data-stop="selsfx" data-stneeds="sel" title="Salva il tratto negli Effetti: non scade (stesso formato dell'editor vocale)">Salva negli Effetti</button>
+            <span class="st-sep"></span>
+            <button type="button" class="ved-btn ved-ghost" data-stop="selall" data-stneeds="view" title="Ctrl+A">Seleziona tutto</button>
+            <button type="button" class="ved-btn ved-ghost" data-stop="selnone" data-stneeds="selview">Deseleziona</button>
+          </div>
+        </div>
+
+        <!-- MULTITRACCIA -->
+        <div class="st-view" id="stMultiView" hidden>
+          <div class="st-mt-toolbar">
+            <button type="button" class="ved-btn" id="stAddTrack">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Traccia
+            </button>
+            <button type="button" class="ved-btn" id="stSplit" title="Divide la clip al cursore (S)">Dividi</button>
+            <button type="button" class="ved-btn" id="stDupClip" data-stneeds="clipsel" title="Duplica la clip (Ctrl+D)">Duplica</button>
+            <button type="button" class="ved-btn" id="stDelClip" data-stneeds="clipsel" title="Canc">Elimina clip</button>
+            <button type="button" class="ved-btn ved-toggle" id="stSnap" aria-pressed="true" title="Aggancia le clip tra loro, al cursore e all'inizio">Aggancio</button>
+            <span class="st-sep"></span>
+            <div class="st-clip-inspector" id="stClipInsp" hidden>
+              <span class="st-insp-name" id="stInspName"></span>
+              <label class="ved-field"><span>Guadagno</span><input type="text" inputmode="decimal" class="ved-num" id="stInspGain" data-step="0.5" data-min="-48" data-max="24" aria-label="Guadagno della clip"><em>dB</em></label>
+              <label class="ved-field"><span>Entrata</span><input type="text" inputmode="decimal" class="ved-num" id="stInspFin" data-step="0.05" data-min="0" aria-label="Dissolvenza in entrata"><em>s</em></label>
+              <label class="ved-field"><span>Uscita</span><input type="text" inputmode="decimal" class="ved-num" id="stInspFout" data-step="0.05" data-min="0" aria-label="Dissolvenza in uscita"><em>s</em></label>
+              <button type="button" class="ved-btn ved-ghost" id="stInspOpen" title="Apre il file della clip nella forma d'onda">Apri file</button>
+            </div>
+            <label class="st-master" title="Volume generale dello Studio">
+              <span>Master</span>
+              <input type="range" id="stMasterVol" min="-48" max="6" step="0.5" value="0" aria-label="Volume master dello Studio">
+              <em id="stMasterVal">0,0 dB</em>
+            </label>
+          </div>
+          <div class="st-mt-scroll" id="stMtScroll">
+            <div class="st-mt-inner" id="stMtInner">
+              <div class="st-mt-rulerrow">
+                <div class="st-mt-corner"><span id="stMtInfo">Tracce</span></div>
+                <div class="st-mt-ruler" id="stMtRuler" title="Clic: sposta il cursore · Trascina: regione ciclica"></div>
+              </div>
+              <div id="stMtRows"></div>
+              <div class="st-mt-loopshade" id="stMtLoopShade" hidden></div>
+              <div class="st-mt-cursor" id="stMtCursor"></div>
+              <div class="st-mt-playhead" id="stMtPlayhead" hidden></div>
+            </div>
+          </div>
+          <p class="st-hint st-mt-hint">Trascina le clip per spostarle (anche su un'altra traccia). Bordi: accorcia · quadratini in alto: dissolvenze · doppio clic: apri il file. Righello: clic sposta il cursore, trascina per la regione ciclica.</p>
+        </div>
+      </main>
+    </div>
+
+    <div class="st-foot">
+      <span class="st-status" id="stStatus" aria-live="polite"></span>
+      <span class="ved-keys">
+        <span><kbd>Spazio</kbd> riproduci/ferma</span>
+        <span><kbd>Home</kbd> <kbd>Fine</kbd></span>
+        <span><kbd>L</kbd> ciclo</span>
+        <span><kbd>S</kbd> dividi clip</span>
+        <span><kbd>B</kbd> bip sulla selezione</span>
+        <span><kbd>O</kbd> originale</span>
+        <span><kbd>+</kbd> <kbd>−</kbd> <kbd>0</kbd> zoom</span>
+        <span><kbd>Ctrl</kbd> <kbd>Z</kbd> / <kbd>Shift</kbd> annulla, ripeti</span>
+        <span><kbd>Ctrl</kbd> <kbd>C</kbd> <kbd>X</kbd> <kbd>V</kbd> <kbd>D</kbd></span>
+      </span>
+    </div>
+  </div>
+
+  <!-- esportazione -->
+  <div class="confirm-overlay" id="stExportOverlay">
+    <div class="confirm-card st-export-card" role="dialog" aria-modal="true" aria-labelledby="stExportTitle">
+      <h4 id="stExportTitle">Esporta</h4>
+      <p id="stExportText"></p>
+      <div class="st-export-rows">
+        <div class="st-export-row">
+          <span>Formato</span>
+          <div class="ved-seg" role="group" aria-label="Formato">
+            <button type="button" class="active" data-stfmt="wav">WAV</button>
+            <button type="button" data-stfmt="mp3">MP3</button>
+          </div>
+        </div>
+        <div class="st-export-row" id="stExportRangeRow">
+          <span>Cosa</span>
+          <div class="ved-seg" role="group" aria-label="Parte da esportare">
+            <button type="button" class="active" data-strange="all">Tutto</button>
+            <button type="button" data-strange="part" id="stExportPartBtn">Selezione</button>
+          </div>
+        </div>
+        <label class="st-export-row"><span>Nome</span><input type="text" class="ved-num ved-text st-export-name" id="stExportName" maxlength="80"></label>
+      </div>
+      <div class="zip-progress" id="stExportProgress"><span id="stExportBar"></span></div>
+      <div class="confirm-actions st-export-actions">
+        <button type="button" class="confirm-btn cancel" id="stExportCancel">Annulla</button>
+        <button type="button" class="confirm-btn cancel" id="stExportToWave">Apri in forma d'onda</button>
+        <button type="button" class="confirm-btn cancel" id="stExportToLib">Salva negli Effetti</button>
+        <button type="button" class="confirm-btn hk-done" id="stExportDl">Scarica</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1908,6 +2443,10 @@
 <div class="kb-overlay" id="kbOverlay" aria-label="Tastiera">
   <div class="kb-head">
     <h2>Tastiera</h2>
+    <button type="button" class="regia-btn kb-clear-all" id="kbClearAllBtn" title="Togli i suoni da tutti i tasti (i suoni restano nella libreria)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 20H7L3 16l10-10 7 7-3.5 3.5"></path><path d="M6.5 12.5l5 5"></path></svg>
+      Pulisci tastiera
+    </button>
     <button type="button" class="stop-all-btn" id="kbStopAllBtn" title="Ferma tutti i suoni in riproduzione">
       <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
       Stop tutti
@@ -1934,7 +2473,7 @@
     <div class="kb-legend" aria-hidden="true">
       <span><i class="l-assigned"></i>Con suoni associati</span>
       <span><i></i>Libero</span>
-      <span><i class="l-reserved"></i>Riservato da Windows o dal browser</span>
+      <span><i class="l-reserved"></i>Riservato (Windows, browser o Spazio degli editor)</span>
     </div>
     <div class="kb-editor" id="kbEditor"></div>
     <div class="kb-filter" role="group" aria-label="Filtra tasti">
@@ -2008,6 +2547,10 @@
       <input type="text" class="ved-name" id="vedName" maxlength="120" aria-label="Nome del vocale">
       <span class="vc-timer" id="vedExpiry" title="Tempo prima della cancellazione automatica"></span>
       <div class="ved-head-actions">
+        <button type="button" class="ved-btn ved-sfx-only" id="vedMultiBtn" title="Apri l'effetto in multitraccia: aggiungi altri suoni su altre tracce e mixa tutto insieme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="10" height="4" rx="1"></rect><rect x="8" y="10" width="13" height="4" rx="1"></rect><rect x="5" y="16" width="8" height="4" rx="1"></rect></svg>
+          Multitraccia
+        </button>
         <button type="button" class="ved-btn" id="vedUndoBtn" title="Annulla l'ultima modifica (Ctrl+Z)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
           Annulla
@@ -2074,14 +2617,14 @@
           <button type="button" class="ved-btn" data-vedop="keep" data-needs="sel" title="Elimina tutto il resto">Ritaglia</button>
           <button type="button" class="ved-btn" data-vedop="cut" data-needs="sel" title="Canc">Elimina</button>
           <button type="button" class="ved-btn" data-vedop="mute" data-needs="sel" title="Azzera il tratto senza cambiare la durata">Silenzio</button>
-          <button type="button" class="ved-btn" data-vedop="beep" data-needs="sel" title="Bip di censura sul tratto">Bip</button>
+          <button type="button" class="ved-btn" data-vedop="beep" data-needs="sel" title="Bip di censura sul tratto (B)">Bip</button>
           <button type="button" class="ved-btn" data-vedop="selfadein" data-needs="sel" title="Il volume sale lungo tutta la selezione">Dissolvenza in entrata</button>
           <button type="button" class="ved-btn" data-vedop="selfadeout" data-needs="sel" title="Il volume scende lungo tutta la selezione">Dissolvenza in uscita</button>
           <span class="ved-sep" aria-hidden="true"></span>
           <button type="button" class="ved-btn" data-vedop="copy" data-needs="sel" title="Ctrl+C">Copia</button>
           <button type="button" class="ved-btn" data-vedop="cutclip" data-needs="sel" title="Ctrl+X">Taglia</button>
           <button type="button" class="ved-btn" data-vedop="paste" data-needs="selclip" title="Sostituisce la selezione con il tratto copiato (Ctrl+V)">Incolla</button>
-          <button type="button" class="ved-btn" data-vedop="selsfx" data-needs="sel" title="Salva il tratto tra gli SFX: non scade">Salva negli SFX</button>
+          <button type="button" class="ved-btn" data-vedop="selsfx" data-needs="sel" title="Salva il tratto negli Effetti: non scade">Salva negli Effetti</button>
           <button type="button" class="ved-btn ved-ghost" data-vedop="selnone" data-needs="sel">Deseleziona</button>
         </div>
       </div>
@@ -2425,6 +2968,7 @@
         <span><kbd>+</kbd> <kbd>−</kbd> o rotella sull'onda: zoom</span>
         <span><kbd>Shift</kbd> + rotella scorri</span>
         <span><kbd>O</kbd> originale</span>
+        <span><kbd>B</kbd> bip sulla selezione</span>
         <span><kbd>Ctrl</kbd> <kbd>C</kbd> <kbd>X</kbd> <kbd>V</kbd> copia, taglia, incolla</span>
         <span><kbd>Ctrl</kbd> <kbd>Z</kbd> annulla</span>
       </span>
@@ -2688,6 +3232,7 @@
   const STAR_FILLED_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"></polygon></svg>`;
   const STAR_OUTLINE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" width="13" height="13"><polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"></polygon></svg>`;
   const GEAR_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`;
+  const WAVE_EDIT_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M2 12h2l2-6 3 12 3-9 2 5 1.5-2H16"></path><path d="M19 15l2 2-4 4h-2v-2z"></path></svg>`;
   const PENCIL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>`;
   const DOWNLOAD_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
   const ARROW_UP_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>`;
@@ -3145,7 +3690,7 @@
       // Se la durata non era ancora salvata su Firestore, la salviamo una volta sola:
       // così alle prossime visite non serve più scaricare nulla per conoscerla.
       const realDuration = sound.audio.duration;
-      if (isFinite(realDuration) && realDuration > 0 && sound.duration !== realDuration) {
+      if (!sound.sessionEdit && isFinite(realDuration) && realDuration > 0 && sound.duration !== realDuration) {
         sound.duration = realDuration;
         updateDoc(doc(db, "sounds", sound.id), { duration: realDuration }).catch(() => {});
       }
@@ -3538,6 +4083,10 @@
 
   async function downloadSound(id) {
     const sound = sounds.find(s => s.id === id);
+    if (sound && sound.sessionEdit) {   // modificato in questa sessione: scarica la versione che si sente
+      triggerDownload(encodeWav(sound.sessionEdit.buffer), `${sound.name} (modificato).wav`);
+      return;
+    }
     if (!sound || !sound.audioUrl) return;
     const extMatch = sound.storagePath && sound.storagePath.match(/\.([a-zA-Z0-9]+)$/);
     const ext = extMatch ? extMatch[1] : 'mp3';
@@ -3787,6 +4336,7 @@
       <div class="regia-pad${s.playing ? ' playing' : ''}" data-regiapad="${s.id}">
         <div class="regia-pad-icon">${s.playing ? RESTART_SVG : PLAY_SVG}</div>
         <div class="regia-pad-name">${escapeHtml(s.name)}</div>
+        ${s.sessionEdit ? '<span class="regia-pad-mod" title="Versione modificata in questa sessione">MOD</span>' : ''}
         ${s.hotkey ? `<span class="regia-pad-key" title="Tasto associato">${escapeHtml(keyShort(s.hotkey))}</span>` : ''}
       </div>
     `).join('');
@@ -3863,15 +4413,17 @@
 
     visibleSounds.forEach((sound, i) => {
       const pad = document.createElement('div');
-      pad.className = 'pad' + (sound.playing ? ' playing' : '');
+      pad.className = 'pad' + (sound.playing ? ' playing' : '') + (sound.sessionEdit ? ' edited' : '');
       pad.setAttribute('data-pad', sound.id);
       pad.innerHTML = `
         <div class="pad-top">
           <div class="pad-top-left">
             <span class="grip" data-grip="${sound.id}" aria-label="${reorderMode ? 'Trascina per riordinare' : 'Attiva la modalità Riordina per spostare'}" title="${reorderMode ? 'Trascina per riordinare' : 'Attiva la modalità Riordina per spostare'}">⠿</span>
             <span class="pad-index" data-index="${sound.id}" title="${filtersActive ? 'Rimuovi i filtri per riordinare manualmente' : 'Clicca per spostare in una posizione precisa'}">${String(i + 1).padStart(2, '0')}</span>
+            ${sound.sessionEdit ? `<button type="button" class="pad-mod-badge" data-editreset="${sound.id}" title="Modificato in questa sessione (${escapeHtml(sound.sessionEdit.steps.map(x => x.label).join(', ') || 'modifiche')}). Clicca per tornare all'originale.">MOD <span aria-hidden="true">↺</span></button>` : ''}
           </div>
           <div class="pad-icon-btns">
+            <button class="icon-btn edit-btn${sound.sessionEdit ? ' active' : ''}" data-edit="${sound.id}" title="Modifica l'audio (anche doppio clic sul pad) — vale fino al ricaricamento della pagina" aria-label="Modifica l'audio">${WAVE_EDIT_SVG}</button>
             <button class="icon-btn hotkey-btn${sound.hotkey ? ' assigned' : ''}" data-hotkey="${sound.id}" title="${sound.hotkey ? `Tasto ${escapeHtml(keyName(sound.hotkey))} — clicca per cambiarlo` : 'Associa a un tasto'}" aria-label="${sound.hotkey ? `Tasto associato: ${escapeHtml(keyName(sound.hotkey))}` : 'Associa a un tasto'}">${sound.hotkey ? escapeHtml(keyShort(sound.hotkey)) : KEYBOARD_SVG}</button>
             <button class="icon-btn fav-btn${sound.favorite ? ' active' : ''}" data-fav="${sound.id}" title="${sound.favorite ? 'Togli dai preferiti' : 'Aggiungi ai preferiti'}" aria-label="Preferito">${sound.favorite ? STAR_FILLED_SVG : STAR_OUTLINE_SVG}</button>
             <button class="icon-btn loop-btn${sound.loop ? ' active' : ''}" data-loop="${sound.id}" title="${sound.loop ? 'Loop attivo (solo su questo dispositivo)' : 'Attiva loop (solo su questo dispositivo)'}" aria-label="Loop">${LOOP_SVG}</button>
@@ -3928,6 +4480,22 @@
 
     grid.querySelectorAll('[data-playbtn]').forEach(btn => {
       btn.addEventListener('click', () => padMainClick(btn.getAttribute('data-playbtn')));
+    });
+    grid.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', () => openSfxEditor(btn.getAttribute('data-edit')));
+    });
+    grid.querySelectorAll('[data-editreset]').forEach(btn => {
+      btn.addEventListener('click', () => resetSfxEdit(btn.getAttribute('data-editreset')));
+    });
+    // doppio clic su una parte "vuota" del pad: apre l'editor
+    grid.querySelectorAll('.pad').forEach(pad => {
+      pad.addEventListener('dblclick', (e) => {
+        if (reorderMode) return;
+        if (e.target.closest('button, input, select, a, [contenteditable="true"], .category-tags-row, .pad-volume-row, .grip, .pad-index, .pad-index-input')) return;
+        const sel = window.getSelection && window.getSelection();
+        if (sel && sel.removeAllRanges) sel.removeAllRanges();
+        openSfxEditor(pad.getAttribute('data-pad'));
+      });
     });
     grid.querySelectorAll('[data-pausebtn]').forEach(btn => {
       btn.addEventListener('click', () => pauseSound(btn.getAttribute('data-pausebtn')));
@@ -4185,7 +4753,10 @@
   // tasti che Windows o il browser si tengono per sé: visibili ma non associabili
   // Esc è riservato: chiude finestre e schermo intero, non deve far partire suoni.
   // Bloc Maiusc è riservato: cambia lo stato delle maiuscole del sistema.
-  const KB_RESERVED = new Set(['Escape', 'CapsLock', 'MetaLeft', 'MetaRight', 'PrintScreen', 'F11', 'F12']);
+  // Spazio: riservato perché negli editor (vocali e Studio) fa partire e fermare l'ascolto
+  const KB_RESERVED = new Set(['Escape', 'CapsLock', 'MetaLeft', 'MetaRight', 'PrintScreen', 'F11', 'F12', 'Space']);
+  const KB_RESERVED_BY_APP = new Set(['Space']);
+  function reservedWhy(code) { return KB_RESERVED_BY_APP.has(code) ? 'riservato agli editor (riproduci / ferma)' : 'riservato da Windows o dal browser'; }
   const KB_MODIFIERS = new Set(['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']);
 
   const KB_KEYS = [];          // ordine "di lettura": righe principali, poi navigazione
@@ -4403,7 +4974,7 @@
       renderHotkeyModal(); return;
     }
     if (def.reserved) {
-      hkMessage = `<strong>${escapeHtml(keyName(def.code))}</strong> è riservato da Windows o dal browser: scegline un altro.`;
+      hkMessage = `<strong>${escapeHtml(keyName(def.code))}</strong> è ${reservedWhy(def.code)}: scegline un altro.`;
       renderHotkeyModal(); return;
     }
     hkMessage = null;
@@ -4514,7 +5085,7 @@
     if (!def) return;
     const list = soundsOnKey(code);
     let body;
-    if (def.reserved) body = '<div class="kb-peek-empty">Riservato da Windows o dal browser</div>';
+    if (def.reserved) body = `<div class="kb-peek-empty">${reservedWhy(def.code).replace(/^r/, 'R')}</div>`;
     else if (!list.length) body = '<div class="kb-peek-empty">Libero — clicca per associare un brano</div>';
     else body = `<div class="kb-peek-list">${list.map(s => `<div class="kb-peek-name${s.playing ? ' playing' : ''}">${escapeHtml(s.name)}</div>`).join('')}</div>`;
     kbPeek.innerHTML = `
@@ -4589,7 +5160,7 @@
       if (kbSelected === def.code) cls.push('selected');
       if (list.some(s => s.playing)) cls.push('playing');
       const title = def.reserved
-        ? `${keyName(def.code)} — riservato da Windows o dal browser`
+        ? `${keyName(def.code)} — ${reservedWhy(def.code)}`
         : list.length ? `${keyName(def.code)}: ${list.map(s => s.name).join(', ')}` : `${keyName(def.code)} — libero`;
       return `
         <button type="button" class="${cls.join(' ')}" data-kbkey="${def.code}" style="grid-row:${gridRow};grid-column:${gridCol}" aria-label="${escapeHtml(title)}"${overEnabled ? '' : ` title="${escapeHtml(title)}"`}${def.reserved ? ' aria-disabled="true"' : ''}>
@@ -4706,6 +5277,28 @@
       if (sel.value) setHotkey(sel.value, sel.getAttribute('data-kbadd'));
     }));
   }
+
+  // "Pulisci tastiera": toglie tutte le associazioni in un colpo solo (dopo conferma)
+  const kbClearAllBtn = document.getElementById('kbClearAllBtn');
+  kbClearAllBtn.addEventListener('click', async () => {
+    const list = sounds.filter(s => s.hotkey);
+    if (!list.length) { toast('La tastiera è già libera.'); return; }
+    const nKeys = new Set(list.map(s => s.hotkey)).size;
+    const ok = await askConfirm({
+      title: 'Pulire tutta la tastiera?',
+      text: `Libero ${nKeys === 1 ? '1 tasto' : nKeys + ' tasti'} (${list.length === 1 ? '1 suono associato' : list.length + ' suoni associati'}). I suoni restano nella libreria.`,
+      ok: 'Pulisci tastiera', danger: true
+    });
+    if (!ok) return;
+    list.forEach(s => { s.hotkey = null; });
+    kbSelected = null;
+    hidePeek();
+    refreshHotkeyViews();
+    const results = await Promise.allSettled(list.map(s => updateDoc(doc(db, "sounds", s.id), { hotkey: null })));
+    const failed = results.filter(r => r.status === 'rejected').length;
+    if (failed) { console.error('Pulisci tastiera: alcuni salvataggi non riusciti', results); toast(`Tastiera pulita, ma ${failed} salvataggi non sono riusciti: controlla la connessione.`); }
+    else toast('Tastiera pulita.');
+  });
 
   async function clearKey(code) {
     const list = soundsOnKey(code);
@@ -4947,8 +5540,14 @@
   const voiceTabBadge = document.getElementById('voiceTabBadge');
 
   function setTab(tab) {
+    const studioPanel = document.getElementById('tabStudio');
+    const wasStudio = !studioPanel.hidden;
     tabSfx.hidden = tab !== 'sfx';
     tabVoices.hidden = tab !== 'voices';
+    studioPanel.hidden = tab !== 'studio';
+    document.body.classList.toggle('studio-open', tab === 'studio');
+    if (tab === 'studio') stOnShow();
+    else if (wasStudio) stOnHide();
     tabButtons.forEach(b => {
       const on = b.getAttribute('data-tab') === tab;
       b.classList.toggle('active', on);
@@ -5339,9 +5938,9 @@
     if (cats === null) return;
     const ext = fileExt(v.storagePath, 'ogg');
     const file = new File([blob], `${v.name}.${ext}`, { type: blob.type || guessAudioType('x.' + ext) });
-    toast(`Salvo "${v.name}" negli SFX…`);
+    toast(`Salvo "${v.name}" negli Effetti…`);
     await addSound(file, cats);
-    toast(`"${v.name}" è ora tra gli SFX e non verrà cancellato.`);
+    toast(`"${v.name}" è ora negli Effetti e non verrà cancellato.`);
   }
 
   /* ---------- riordino ---------- */
@@ -5442,7 +6041,7 @@
             <span class="vc-timer" title="Si cancella da solo tra…">${CLOCK_SVG}<span data-vctimer="${v.id}">${formatRemaining(left)}</span></span>
             <div class="pad-icon-btns">
               <button type="button" class="icon-btn" data-vcedit="${v.id}" title="Apri nell'editor" aria-label="Apri nell'editor"${v.uploading ? ' disabled' : ''}>${SCISSORS_SVG}</button>
-              <button type="button" class="icon-btn" data-vckeep="${v.id}" title="Salva negli SFX (così non scade)" aria-label="Salva negli SFX"${v.uploading ? ' disabled' : ''}>${KEEP_SVG}</button>
+              <button type="button" class="icon-btn" data-vckeep="${v.id}" title="Salva negli Effetti (così non scade)" aria-label="Salva negli Effetti"${v.uploading ? ' disabled' : ''}>${KEEP_SVG}</button>
               <button type="button" class="icon-btn" data-vcdownload="${v.id}" title="Scarica" aria-label="Scarica">${DOWNLOAD_SVG}</button>
               <button type="button" class="icon-btn danger" data-vcdelete="${v.id}" title="Elimina subito" aria-label="Elimina">${TRASH_SVG}</button>
             </div>
@@ -5610,6 +6209,9 @@
   const vedPresetList = $('vedPresetList');
 
   const ved = {
+    kind: 'voice',      // 'voice' = vocale (si salva su Firebase) · 'sfx' = effetto (modifica valida solo fino al ricaricamento)
+    soundId: null,      // effetto aperto quando kind === 'sfx'
+    savedBuffer: null,  // versione già "in uso" per l'effetto (riaperto dopo una modifica)
     voiceId: null, buffer: null, original: null,
     history: [],        // stati precedenti, per annullare
     steps: [],          // { label, op, params, preset } — uno per ogni voce di history
@@ -5631,7 +6233,8 @@
   vedPlayBtn.innerHTML = PLAY_SVG;
 
   function shownBuffer() { return ved.ab === 'orig' && ved.original ? ved.original : ved.buffer; }
-  function isVedDirty() { return !!ved.buffer && ved.buffer !== ved.original; }
+  function isVedDirty() { return !!ved.buffer && ved.buffer !== (ved.savedBuffer || ved.original); }
+  function vedWhat() { return ved.kind === 'sfx' ? 'l\'effetto' : 'il vocale'; }
   function vedDurSec() { const b = shownBuffer(); return b ? b.duration : 0; }
   function viewLen() { return Math.max(1e-6, ved.view.end - ved.view.start); }
   const dbToGain = db => Math.pow(10, db / 20);
@@ -5699,6 +6302,11 @@
     vedStatus.classList.toggle('error', !!isError);
   }
   function updateVedExpiry() {
+    if (ved.kind === 'sfx') {
+      vedExpiry.innerHTML = `${CLOCK_SVG}<span>effetto · la modifica vale fino al ricaricamento della pagina</span>`;
+      vedExpiry.classList.remove('expiring');
+      return;
+    }
     const v = voices.find(x => x.id === ved.voiceId);
     if (!v) { vedExpiry.innerHTML = `${CLOCK_SVG}<span>eliminato</span>`; return; }
     const left = v.expiresAt - Date.now();
@@ -5734,8 +6342,9 @@
     if (!v || v.uploading) return;
     stopVoicePreview();
     if (v.playing) { v.audio.pause(); setVoicePlaying(v, false); }
-    Object.assign(ved, { voiceId: id, buffer: null, original: null, history: [], steps: [], ab: 'edit', noiseProfile: null, sel: null, cursor: 0, markers: [], view: { start: 0, end: 1 }, busy: false, cols: null, ocols: null, loud: null });
+    Object.assign(ved, { kind: 'voice', soundId: null, savedBuffer: null, voiceId: id, buffer: null, original: null, history: [], steps: [], ab: 'edit', noiseProfile: null, sel: null, cursor: 0, markers: [], view: { start: 0, end: 1 }, busy: false, cols: null, ocols: null, loud: null });
     vedName.value = v.name;
+    applyVedKindUI();
     setVedStatus('');
     renderMergeOptions();
     renderSoundSelects();
@@ -5777,13 +6386,161 @@
   async function closeVoiceEditor(skipConfirm) {
     if (ved.busy) return;
     if (!skipConfirm && isVedDirty()) {
-      const ok = await askConfirm({ title: 'Uscire senza salvare?', text: 'Le modifiche fatte a questo vocale andranno perse.', ok: 'Esci senza salvare', danger: true });
+      const ok = await askConfirm(ved.kind === 'sfx'
+        ? { title: 'Uscire senza applicare?', text: 'Le modifiche fatte a questo effetto andranno perse.', ok: 'Esci senza applicare', danger: true }
+        : { title: 'Uscire senza salvare?', text: 'Le modifiche fatte a questo vocale andranno perse.', ok: 'Esci senza salvare', danger: true });
       if (!ok) return;
     }
     stopVoicePreview();
     vedOverlay.classList.remove('visible');
     document.body.classList.remove('ved-open');
-    Object.assign(ved, { voiceId: null, buffer: null, original: null, history: [], steps: [], ab: 'edit', sel: null, markers: [], cols: null, ocols: null, loud: null });
+    Object.assign(ved, { kind: 'voice', soundId: null, savedBuffer: null, voiceId: null, buffer: null, original: null, history: [], steps: [], ab: 'edit', sel: null, markers: [], cols: null, ocols: null, loud: null });
+  }
+
+  /* ---------- EFFETTI: modifica valida solo per la sessione ----------
+     Si usa lo stesso editor dei vocali. "Usa questa versione" non carica
+     niente su Firebase: crea un WAV in memoria e lo mette al posto del file
+     originale nel player del pad (quindi vale anche per tastiera e regia).
+     Ricaricando la pagina tutto torna com'era. */
+  function applyVedKindUI() {
+    const sfx = ved.kind === 'sfx';
+    vedName.readOnly = sfx;
+    vedName.title = sfx ? 'Per rinominare l\'effetto usa la matita sul pad' : '';
+    vedSaveBtn.textContent = sfx ? 'Usa questa versione' : 'Salva';
+    vedSaveBtn.title = sfx ? 'Il pad suonerà la versione modificata fino al ricaricamento della pagina' : '';
+    vedFormat.hidden = sfx;
+    $('vedMultiBtn').disabled = !sfx;
+    vedOverlay.classList.toggle('ved-sfx', sfx);
+  }
+  function invalidateSfxCache(id) {
+    for (const k of [...sfxBufferCache.keys()]) if (k.startsWith(id + '@')) sfxBufferCache.delete(k);
+  }
+  async function fetchSfxOriginalBlob(s) {
+    const cur = s.baseSrc || (s.audio && s.audio.src) || '';
+    const url = cur.startsWith('blob:') ? cur : s.audioUrl;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('http ' + res.status);
+    return await res.blob();
+  }
+  async function openSfxEditor(id) {
+    const s = sounds.find(x => x.id === id);
+    if (!s || blockingOverlayOpen()) return;
+    stopVoicePreview();
+    if (s.playing) { s.audio.pause(); setPlaying(s, false); }
+    const se = s.sessionEdit;
+    Object.assign(ved, { kind: 'sfx', soundId: id, savedBuffer: null, voiceId: null, buffer: null, original: null, history: [], steps: [], ab: 'edit', noiseProfile: null, sel: null, cursor: 0, markers: [], view: { start: 0, end: 1 }, busy: false, cols: null, ocols: null, loud: null });
+    vedName.value = s.name;
+    applyVedKindUI();
+    setVedStatus('');
+    renderMergeOptions();
+    renderSoundSelects();
+    renderPresets();
+    vedPresetNameRow.hidden = true;
+    vedOverlay.classList.add('visible');
+    document.body.classList.add('ved-open');
+    updateVedExpiry();
+    resizeVedCanvas();
+    drawVed();
+    updateVedUI();
+    setVedLoading('Carico l\'audio…');
+    applyStoredSink();
+    try {
+      let orig = se ? se.original : null;
+      if (!orig) {
+        let blob;
+        try { blob = await fetchSfxOriginalBlob(s); }
+        catch (err) { throw new Error('Non riesco a scaricare l\'effetto da Firebase. Se succede sempre, va attivata la configurazione CORS dello Storage (la stessa che serve a "Scarica tutto").'); }
+        try { orig = await decodeBlob(blob); }
+        catch (err) { throw new Error('Il browser non riesce a leggere questo formato audio.'); }
+      }
+      if (ved.soundId !== id || ved.kind !== 'sfx') return;
+      ved.original = orig;
+      if (se) {
+        ved.buffer = se.buffer;
+        ved.savedBuffer = se.buffer;
+        ved.history = se.history.slice();
+        ved.steps = se.steps.slice();
+        setVedStatus('Riaperta la versione modificata: la cronologia è quella della sessione.');
+      } else {
+        ved.buffer = orig;
+      }
+      ved.view = { start: 0, end: ved.buffer.duration };
+      setVedLoading(null);
+      resizeVedCanvas();
+      drawVed();
+      updateVedUI();
+    } catch (err) {
+      console.error(err);
+      if (ved.soundId === id) setVedLoading(err.message || 'Audio non disponibile.', true);
+    }
+  }
+  function setSfxSrc(s, url) {
+    if (s.playing) { s.audio.pause(); setPlaying(s, false); }
+    s.audio.preload = 'auto';
+    s.audio.src = url;
+    try { s.audio.load(); } catch (e) {}
+  }
+  async function applySfxEdit() {
+    const s = sounds.find(x => x.id === ved.soundId);
+    if (!s) { toast('Questo effetto non esiste più.'); closeVoiceEditor(true); return; }
+    if (!ved.buffer || ved.busy) return;
+    stopVoicePreview();
+    if (ved.buffer === ved.original) {        // tornato all'originale dalla cronologia
+      if (s.sessionEdit) resetSfxEdit(s.id, true);
+      closeVoiceEditor(true);
+      return;
+    }
+    if (ved.buffer === ved.savedBuffer) { closeVoiceEditor(true); return; }
+    ved.busy = true; updateVedUI();
+    setVedStatus('Preparo la versione modificata…');
+    await nextFrame();
+    try {
+      commitSfxSession(s, { buffer: ved.buffer, original: ved.original, history: ved.history.slice(), steps: ved.steps.slice() });
+      ved.busy = false;
+      closeVoiceEditor(true);
+      toast(`"${s.name}" modificato: suona così finché non ricarichi la pagina.`);
+    } catch (err) {
+      console.error(err);
+      ved.busy = false;
+      setVedStatus('Non sono riuscito a preparare la versione modificata.', true);
+      updateVedUI();
+    }
+  }
+  // mette in uso una versione modificata (dall'editor o dalla multitraccia), solo per la sessione
+  function commitSfxSession(s, data) {
+    const url = URL.createObjectURL(encodeWav(data.buffer));
+    if (!s.sessionEdit) s.baseSrc = s.audio.src;
+    else URL.revokeObjectURL(s.sessionEdit.url);
+    s.sessionEdit = { ...data, url };
+    setSfxSrc(s, url);
+    invalidateSfxCache(s.id);
+    renderGrid();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaGrid();
+  }
+  // dall'editor dell'effetto alla multitraccia dello Studio (con l'effetto sulla traccia 1)
+  async function openSfxInMultitrack() {
+    if (ved.kind !== 'sfx' || !ved.buffer || ved.busy) return;
+    const s = sounds.find(x => x.id === ved.soundId);
+    if (!s) return;
+    stopVoicePreview();
+    const base = { buffer: ved.buffer, original: ved.original, history: ved.history.slice(), steps: ved.steps.slice() };
+    closeVoiceEditor(true);
+    stEnterFxSession(s, base);
+  }
+  $('vedMultiBtn').addEventListener('click', openSfxInMultitrack);
+  function resetSfxEdit(id, silent) {
+    const s = sounds.find(x => x.id === id);
+    if (!s || !s.sessionEdit) return;
+    const url = s.sessionEdit.url;
+    s.sessionEdit = null;
+    setSfxSrc(s, s.baseSrc || s.audioUrl);
+    s.audio.preload = 'metadata';
+    s.baseSrc = null;
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    invalidateSfxCache(s.id);
+    renderGrid();
+    if (regiaOverlay.classList.contains('visible')) renderRegiaGrid();
+    toast(`"${s.name}" è tornato all'originale.`);
   }
   vedCloseBtn.addEventListener('click', () => closeVoiceEditor());
 
@@ -6098,8 +6855,8 @@
 
     vedAbEdit.classList.toggle('active', ved.ab === 'edit');
     vedAbOrig.classList.toggle('active', ved.ab === 'orig');
-    vedAbOrig.disabled = !loaded || (!isVedDirty() && ved.ab === 'edit');
-    vedAbOrig.title = isVedDirty() ? 'Ascolta il vocale com\'era all\'apertura (O)' : 'Nessuna modifica ancora: non c\'è niente da confrontare';
+    vedAbOrig.disabled = !loaded || (ved.buffer === ved.original && ved.ab === 'edit');
+    vedAbOrig.title = ved.buffer !== ved.original ? `Ascolta ${vedWhat()} originale (O)` : 'Nessuna modifica ancora: non c\'è niente da confrontare';
     vedWaveWrap.classList.toggle('orig', ved.ab === 'orig');
     vedLoopBtn.setAttribute('aria-pressed', String(ved.loop));
     vedSnapBtn.setAttribute('aria-pressed', String(ved.snap));
@@ -6118,7 +6875,7 @@
     vedScope.classList.toggle('sel', !!ved.sel);
     vedScopeText.innerHTML = ved.sel
       ? `Applica a: <b>selezione</b> (${formatSecs(ved.sel.end - ved.sel.start)})`
-      : 'Applica a: <b>tutto il vocale</b>';
+      : `Applica a: <b>tutto ${ved.kind === 'sfx' ? 'l\'effetto' : 'il vocale'}</b>`;
     vedOverlay.querySelectorAll('[data-scope]').forEach(b => {
       const pair = (b.getAttribute('data-scope') || 'Applica|Applica alla selezione').split('|');
       b.textContent = ved.sel ? pair[1] : pair[0];
@@ -7572,12 +8329,12 @@
       const { blob, ext } = await encodeForSave(part, f => setVedStatus(`Converto in MP3… ${Math.round(f * 100)}%`));
       const name = `${vedName.value.trim() || 'Vocale'} (tratto)`;
       const file = new File([blob], `${name}.${ext}`, { type: blob.type });
-      setVedStatus('Salvo negli SFX…');
+      setVedStatus('Salvo negli Effetti…');
       await addSound(file, cats);
-      setVedStatus(`Salvato negli SFX: ${name}`);
+      setVedStatus(`Salvato negli Effetti: ${name}`);
     } catch (err) {
       console.error(err);
-      setVedStatus('Salvataggio negli SFX non riuscito.', true);
+      setVedStatus('Salvataggio negli Effetti non riuscito.', true);
     }
     ved.busy = false; updateVedUI();
   }
@@ -7611,7 +8368,7 @@
   /* ---------- confronto con l'originale (A/B) ---------- */
   function setAb(mode) {
     if (!ved.buffer || ved.busy || mode === ved.ab) return;
-    if (mode === 'orig' && !isVedDirty()) return;
+    if (mode === 'orig' && ved.buffer === ved.original) return;
     const playing = !!ved.source;
     const pos = currentVedPos();
     stopVoicePreview();
@@ -7817,6 +8574,7 @@
   }
 
   async function saveVoiceEdit() {
+    if (ved.kind === 'sfx') { await applySfxEdit(); return; }
     const v = voices.find(x => x.id === ved.voiceId);
     if (!v) { toast('Questo vocale non esiste più.'); closeVoiceEditor(true); return; }
     if (!ved.buffer || ved.busy) return;
@@ -7897,6 +8655,7 @@
     else if (mod && k === 'x') { if (ved.sel) { e.preventDefault(); if (vedCopy()) vedApply('cut'); } }
     else if (mod && k === 'v') { if (vedClipboard) { e.preventDefault(); vedApply('paste'); } }
     else if (!mod && k === 'o') { e.preventDefault(); toggleAb(); }
+    else if (!mod && k === 'b' && ved.sel) { e.preventDefault(); vedApply('beep'); }
     else if (!mod && k === 'l') { e.preventDefault(); toggleVedLoop(); }
     else if (!mod && k === 'm') { e.preventDefault(); addMarker(currentVedPos()); }
     else if (!mod && (e.key === '+' || e.key === '=')) { e.preventDefault(); zoomIn(); }
@@ -8055,6 +8814,2320 @@
     const y = target.getBoundingClientRect().top + window.scrollY - 16;
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   });
+
+  /* ================================================================
+     STUDIO — editor audio stile Adobe Audition
+     ----------------------------------------------------------------
+     Due viste, come in Audition:
+     - "Forma d'onda": un file alla volta, modifiche con cronologia
+       (annulla / ripeti), selezione, appunti, effetti.
+     - "Multitraccia": tracce con clip non distruttive (sposta,
+       accorcia, dissolvenze, guadagno), volume / pan / muto / solo,
+       registrazione dal microfono, mixdown.
+     Tutto vive in memoria per la sessione: Firebase si tocca solo con
+     "Salva negli Effetti". Le funzioni DSP sono quelle dell'editor
+     vocale (stessi algoritmi, stesse funzioni).
+     ================================================================ */
+  var ST_READY = false;   // "var": leggibile (undefined) anche prima che questa sezione giri
+  const ST_PEAK = 128;    // campioni per secchiello nelle anteprime dell'onda
+  const ST_RULER_H = 22;
+  const ST_LANE_H = 96;
+  const ST_COLORS = ['#ff5c8a', '#3ee6c4', '#ffd23d', '#8f7bff', '#4ab3ff', '#ff9a3d', '#7ee35a', '#ff6bd6'];
+  const ST_STEPS = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300, 600];
+  const ST_MIN_PPS = 2, ST_MAX_PPS = 4000;
+
+  const st = {
+    view: 'wave',
+    files: [], activeId: null, seq: 1, recCount: 1,
+    tracks: [], clips: [], selClip: null, selTrack: null,
+    mt: { states: [], pos: -1 },
+    pps: 60, cursor: 0, loopRegion: null,
+    loop: false, snap: true, masterDb: 0,
+    play: null, rec: null, busy: false, raf: null, drag: null, bus: null, ab: 'edit',
+    meter: { l: 0, r: 0, pl: 0, pr: 0, hold: 0, until: 0 }, fx: null,
+    exportFmt: 'wav', exportRange: 'all', exporting: false,
+    waveDirty: true, ovDirty: true
+  };
+
+  const stTab = $('tabStudio');
+  const stWaveView = $('stWaveView'), stMultiView = $('stMultiView');
+  const stWaveWrap = $('stWaveWrap'), stWaveBase = $('stWaveBase'), stWaveOver = $('stWaveOver'), stWaveEmpty = $('stWaveEmpty');
+  const stOverview = $('stOverview'), stSelBar = $('stSelBar'), stSelInfo = $('stSelInfo'), stWaveTitle = $('stWaveTitle');
+  const stPlayBtn = $('stPlay'), stRecBtn = $('stRec'), stLoopBtn = $('stLoop');
+  const stClock = $('stClock'), stClockSub = $('stClockSub'), stClockWrap = $('stClockWrap'), stMeter = $('stMeter');
+  const stUndoBtn = $('stUndo'), stRedoBtn = $('stRedo');
+  const stFileList = $('stFileList'), stFileCount = $('stFileCount'), stFileInput = $('stFileInput'), stFilesBox = $('stFilesBox');
+  const stFromSfx = $('stFromSfx'), stFromVoice = $('stFromVoice');
+  const stFxBox = $('stFxBox'), stFxList = $('stFxList'), stScope = $('stScope'), stHistory = $('stHistory'), stStatus = $('stStatus');
+  const stMtScroll = $('stMtScroll'), stMtInner = $('stMtInner'), stMtRuler = $('stMtRuler'), stMtRows = $('stMtRows');
+  const stMtCursor = $('stMtCursor'), stMtPlayhead = $('stMtPlayhead'), stMtLoopShade = $('stMtLoopShade'), stMtInfo = $('stMtInfo');
+  const stSnapBtn = $('stSnap'), stClipInsp = $('stClipInsp'), stInspName = $('stInspName');
+  const stInspGain = $('stInspGain'), stInspFin = $('stInspFin'), stInspFout = $('stInspFout');
+  const stMasterVol = $('stMasterVol'), stMasterVal = $('stMasterVal');
+  const stExportOverlay = $('stExportOverlay'), stExportText = $('stExportText'), stExportName = $('stExportName');
+  const stExportBar = $('stExportBar'), stExportPartBtn = $('stExportPartBtn');
+  stPlayBtn.innerHTML = PLAY_SVG;
+
+  /* ---------- utilità ---------- */
+  function stFmt(t) {
+    t = Math.max(0, t || 0);
+    const m = Math.floor(t / 60), s = t - m * 60;
+    return `${m}:${s.toFixed(3).padStart(6, '0')}`;
+  }
+  function stFmtDb(db) { const r = Math.round(db * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${Math.abs(r).toFixed(1).replace('.', ',')} dB`; }
+  function stSetStatus(msg, err) { stStatus.textContent = msg || ''; stStatus.classList.toggle('error', !!err); }
+  function stFile() { return st.files.find(f => f.id === st.activeId) || null; }
+  function stFileById(id) { return st.files.find(f => f.id === id) || null; }
+  function stTrackById(id) { return st.tracks.find(t => t.id === id) || null; }
+  function stClipById(id) { return st.clips.find(c => c.id === id) || null; }
+  function stNewId(p) { return p + (st.seq++); }
+  function stDpr() { return Math.min(2, window.devicePixelRatio || 1); }
+  function stRulerStep(pps, minPx = 80) { for (const s of ST_STEPS) if (s * pps >= minPx) return s; return 600; }
+  function stRulerLabel(t, step) {
+    const m = Math.floor(t / 60 + 1e-9), s = Math.max(0, t - m * 60);
+    const dec = step < 0.01 ? 3 : step < 0.1 ? 2 : step < 1 ? 1 : 0;
+    return `${m}:${s.toFixed(dec).padStart(dec ? 3 + dec : 2, '0')}`;
+  }
+  function stIsVisible() { return ST_READY && !stTab.hidden; }
+
+  /* ---------- anteprime dell'onda (min / max per secchiello) ---------- */
+  function stComputePeaks(buf) {
+    const n = Math.ceil(buf.length / ST_PEAK), nch = buf.numberOfChannels;
+    const chans = [];
+    const mmn = new Float32Array(n), mmx = new Float32Array(n);
+    for (let c = 0; c < nch; c++) {
+      const d = buf.getChannelData(c), mn = new Float32Array(n), mx = new Float32Array(n);
+      for (let b = 0; b < n; b++) {
+        let lo = 0, hi = 0;
+        const s = b * ST_PEAK, e = Math.min(d.length, s + ST_PEAK);
+        for (let i = s; i < e; i++) { const v = d[i]; if (v < lo) lo = v; else if (v > hi) hi = v; }
+        mn[b] = lo; mx[b] = hi;
+        if (lo < mmn[b]) mmn[b] = lo;
+        if (hi > mmx[b]) mmx[b] = hi;
+      }
+      chans.push({ mn, mx });
+    }
+    return { chans, mono: { mn: mmn, mx: mmx }, n };
+  }
+  function stRangeMinMax(P, s0, s1) {
+    let b0 = Math.max(0, Math.floor(s0 / ST_PEAK)), b1 = Math.min(P.mn.length, Math.ceil(s1 / ST_PEAK));
+    if (b1 <= b0) b1 = Math.min(P.mn.length, b0 + 1);
+    let lo = 0, hi = 0;
+    for (let b = b0; b < b1; b++) { if (P.mn[b] < lo) lo = P.mn[b]; if (P.mx[b] > hi) hi = P.mx[b]; }
+    return [lo, hi];
+  }
+
+  /* ================================================================
+     FILE
+     ================================================================ */
+  function stUniqueName(name) {
+    const base = (name || 'Audio').trim() || 'Audio';
+    if (!st.files.some(f => f.name === base)) return base;
+    let i = 2;
+    while (st.files.some(f => f.name === `${base} ${i}`)) i++;
+    return `${base} ${i}`;
+  }
+  function stAddFile(buf, name, src) {
+    const f = {
+      id: stNewId('f'), name: stUniqueName(name), src: src || 'import',
+      color: ST_COLORS[st.files.length % ST_COLORS.length],
+      buffer: buf, peaks: stComputePeaks(buf),
+      states: [{ label: 'Originale', buffer: buf, sel: null, cursor: 0 }], pos: 0,
+      sel: null, cursor: 0, view: { start: 0, end: buf.duration }
+    };
+    st.files.push(f);
+    if (!st.activeId) st.activeId = f.id;
+    stRenderFiles();
+    return f;
+  }
+  function stOpenFile(id, sel) {
+    const f = stFileById(id);
+    if (!f) return;
+    if (st.play && st.play.kind === 'wave') stStopPlay();
+    st.activeId = id;
+    st.ab = 'edit';
+    if (sel) { f.sel = sel; f.cursor = sel.start; }
+    stSetView('wave');
+    stRenderFiles();
+    st.waveDirty = st.ovDirty = true;
+    stResizeWave();
+    stUpdateUI();
+  }
+  async function stCloseFile(id) {
+    const f = stFileById(id);
+    if (!f) return;
+    const used = st.clips.filter(c => c.fileId === id).length;
+    if (used || f.pos > 0) {
+      const ok = await askConfirm({
+        title: `Chiudere "${f.name}"?`,
+        text: used ? `${used === 1 ? 'La clip che lo usa verrà tolta' : `Le ${used} clip che lo usano verranno tolte`} dalla multitraccia.` : 'Le modifiche non esportate andranno perse.',
+        ok: 'Chiudi file', danger: true
+      });
+      if (!ok) return;
+    }
+    if (st.play) stStopPlay();
+    st.files = st.files.filter(x => x.id !== id);
+    if (used) {
+      st.clips = st.clips.filter(c => c.fileId !== id);
+      if (st.selClip && !stClipById(st.selClip)) st.selClip = null;
+      stMtCommit(`Chiuso ${f.name}`);
+    }
+    if (st.activeId === id) st.activeId = st.files.length ? st.files[st.files.length - 1].id : null;
+    st.waveDirty = st.ovDirty = true;
+    stRenderFiles(); stRenderMt(); stDrawWave(); stUpdateUI();
+  }
+  function stFileChanged(f) {
+    st.waveDirty = st.ovDirty = true;
+    stRenderFiles();
+    if (st.clips.some(c => c.fileId === f.id)) stRenderMt();
+  }
+
+  async function stImportFiles(list, place) {
+    const files = Array.from(list || []).filter(isAudioFile);
+    if (!files.length) { stSetStatus('Nessun file audio riconosciuto.', true); return []; }
+    const added = [];
+    for (const file of files) {
+      stSetStatus(`Apro ${file.name}…`);
+      try {
+        const buf = await decodeBlob(file);
+        added.push(stAddFile(buf, niceName(file.name), 'import'));
+      } catch (err) {
+        console.error(err);
+        toast(`"${file.name}": formato non leggibile dal browser.`);
+      }
+    }
+    if (added.length) {
+      if (place) place(added);
+      else stOpenFile(added[added.length - 1].id);
+      stSetStatus(added.length === 1 ? `Aperto ${added[0].name}` : `Aperti ${added.length} file`);
+    } else stSetStatus('');
+    return added;
+  }
+  async function stSfxBuffer(s) {
+    if (s.sessionEdit) return s.sessionEdit.buffer;
+    const cur = s.baseSrc || (s.audio && s.audio.src) || '';
+    const url = cur.startsWith('blob:') ? cur : s.audioUrl;
+    let blob;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error('http ' + r.status);
+      blob = await r.blob();
+    } catch (e) {
+      throw new Error('Non riesco a scaricare l\'effetto da Firebase: probabilmente manca la configurazione CORS dello Storage.');
+    }
+    return await decodeBlob(blob);
+  }
+  function stRenderSources() {
+    stFromSfx.innerHTML = soundOptionsHTML('Apri un effetto della libreria…', '');
+    const vs = voices.filter(v => !v.uploading);
+    stFromVoice.innerHTML = vs.length
+      ? `<option value="">Apri un vocale…</option>` + vs.map(v => `<option value="${v.id}">${escapeHtml(v.name)} (${formatTime(v.duration)})</option>`).join('')
+      : `<option value="">Nessun vocale</option>`;
+    stFromVoice.disabled = !vs.length;
+  }
+  stFromSfx.addEventListener('focus', () => { if (!stFromSfx.value) stRenderSources(); });
+  stFromVoice.addEventListener('focus', () => { if (!stFromVoice.value) stRenderSources(); });
+  stFromSfx.addEventListener('change', async () => {
+    const s = sounds.find(x => x.id === stFromSfx.value);
+    stFromSfx.value = '';
+    if (!s) return;
+    stSetStatus(`Apro ${s.name}…`);
+    try {
+      const buf = await stSfxBuffer(s);
+      const f = stAddFile(buf, s.sessionEdit ? `${s.name} (modificato)` : s.name, 'sfx');
+      stOpenFile(f.id);
+      stSetStatus(`Aperto ${f.name}: le modifiche qui non toccano la libreria finché non salvi.`);
+    } catch (err) { console.error(err); stSetStatus(err.message || 'Non riesco ad aprire l\'effetto.', true); }
+  });
+  stFromVoice.addEventListener('change', async () => {
+    const v = voices.find(x => x.id === stFromVoice.value);
+    stFromVoice.value = '';
+    if (!v) return;
+    stSetStatus(`Apro ${v.name}…`);
+    try {
+      const buf = await decodeBlob(await getVoiceBlob(v));
+      const f = stAddFile(buf, v.name, 'voice');
+      stOpenFile(f.id);
+      stSetStatus(`Aperto ${f.name}`);
+    } catch (err) { console.error(err); stSetStatus('Non riesco ad aprire il vocale (CORS dello Storage o formato non leggibile).', true); }
+  });
+  $('stImportBtn').addEventListener('click', () => { stFileInput.value = ''; stFileInput.click(); });
+  stFileInput.addEventListener('change', () => { stImportFiles(stFileInput.files); stFileInput.value = ''; });
+  ['dragenter', 'dragover'].forEach(ev => stFilesBox.addEventListener(ev, e => {
+    if (!e.dataTransfer || !Array.from(e.dataTransfer.types || []).includes('Files')) return;
+    e.preventDefault(); stFilesBox.classList.add('drag-over');
+  }));
+  ['dragleave', 'drop'].forEach(ev => stFilesBox.addEventListener(ev, () => stFilesBox.classList.remove('drag-over')));
+  stFilesBox.addEventListener('drop', e => {
+    if (!e.dataTransfer || !e.dataTransfer.files || !e.dataTransfer.files.length) return;
+    e.preventDefault();
+    stImportFiles(e.dataTransfer.files);
+  });
+
+  function stRenderFiles() {
+    stFileCount.textContent = String(st.files.length);
+    if (!st.files.length) {
+      stFileList.innerHTML = '<li class="st-file-empty">Nessun file aperto</li>';
+      return;
+    }
+    stFileList.innerHTML = st.files.map(f => {
+      const b = f.buffer;
+      const used = st.clips.filter(c => c.fileId === f.id).length;
+      const meta = `${stFmt(b.duration)} · ${b.numberOfChannels > 1 ? 'stereo' : 'mono'} · ${Math.round(b.sampleRate / 100) / 10} kHz${used ? ` · ${used} clip` : ''}${f.pos > 0 ? ' · modificato' : ''}`;
+      return `
+        <li class="st-file${f.id === st.activeId ? ' active' : ''}" data-file="${f.id}" draggable="true" title="Clic: apri nella forma d'onda · trascina su una traccia della multitraccia">
+          <span class="st-file-dot" style="background:${f.color}"></span>
+          <div class="st-file-main">
+            <span class="st-file-name" data-fname="${f.id}" title="Doppio clic per rinominare">${escapeHtml(f.name)}</span>
+            <span class="st-file-meta">${meta}</span>
+          </div>
+          <button type="button" class="st-file-btn" data-fadd="${f.id}" title="Aggiungi alla multitraccia, al cursore" aria-label="Aggiungi alla multitraccia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+          <button type="button" class="st-file-btn danger" data-fclose="${f.id}" title="Chiudi il file" aria-label="Chiudi il file">${CLOSE_SVG}</button>
+        </li>`;
+    }).join('');
+  }
+  stFileList.addEventListener('click', e => {
+    const add = e.target.closest('[data-fadd]');
+    if (add) { stFileToMulti(add.getAttribute('data-fadd')); return; }
+    const cl = e.target.closest('[data-fclose]');
+    if (cl) { stCloseFile(cl.getAttribute('data-fclose')); return; }
+    if (e.target.closest('input')) return;
+    const li = e.target.closest('[data-file]');
+    if (li) stOpenFile(li.getAttribute('data-file'));
+  });
+  stFileList.addEventListener('dblclick', e => {
+    const nameEl = e.target.closest('[data-fname]');
+    if (!nameEl) return;
+    const f = stFileById(nameEl.getAttribute('data-fname'));
+    if (!f) return;
+    const inp = document.createElement('input');
+    inp.value = f.name; inp.maxLength = 80;
+    nameEl.textContent = '';
+    nameEl.appendChild(inp);
+    inp.focus(); inp.select();
+    const done = (save) => {
+      if (save) { const v = inp.value.trim(); if (v) f.name = v; }
+      stRenderFiles(); stRenderMt(); stUpdateUI();
+    };
+    inp.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); done(true); } else if (ev.key === 'Escape') { ev.preventDefault(); done(false); } });
+    inp.addEventListener('blur', () => done(true));
+  });
+  stFileList.addEventListener('dragstart', e => {
+    const li = e.target.closest('[data-file]');
+    if (!li || !e.dataTransfer) return;
+    e.dataTransfer.setData('text/plain', 'stfile:' + li.getAttribute('data-file'));
+    e.dataTransfer.effectAllowed = 'copy';
+  });
+
+  /* ================================================================
+     FORMA D'ONDA
+     ================================================================ */
+  function stResizeWave() {
+    if (!stIsVisible() || stWaveView.hidden) return;
+    const r = stWaveWrap.getBoundingClientRect();
+    const dpr = stDpr();
+    const W = Math.max(1, Math.round(r.width * dpr)), H = Math.max(1, Math.round(r.height * dpr));
+    [stWaveBase, stWaveOver].forEach(c => { if (c.width !== W || c.height !== H) { c.width = W; c.height = H; } });
+    const or = stOverview.getBoundingClientRect();
+    const ow = Math.max(1, Math.round(or.width * dpr)), oh = Math.max(1, Math.round(or.height * dpr));
+    if (stOverview.width !== ow || stOverview.height !== oh) { stOverview.width = ow; stOverview.height = oh; }
+    st.waveDirty = st.ovDirty = true;
+    stDrawWave();
+  }
+  function stWaveW() { return stWaveBase.width / stDpr(); }
+  // A/B come nell'editor vocale: "Originale" fa vedere e ascoltare il file com'era all'apertura
+  function stShown(f) { return st.ab === 'orig' && f.states[0] ? f.states[0].buffer : f.buffer; }
+  function stShownPeaks(f) {
+    const b = stShown(f);
+    if (b === f.buffer) return f.peaks;
+    if (!f._origPeaks || f._origPeaks.buf !== b) f._origPeaks = { buf: b, peaks: stComputePeaks(b) };
+    return f._origPeaks.peaks;
+  }
+  function stSetAb(mode) {
+    const f = stFile();
+    if (!f || st.busy || mode === st.ab) return;
+    if (mode === 'orig' && f.states[0].buffer === f.buffer) return;
+    const playing = st.play && st.play.kind === 'wave' ? stPlayPos() : null;
+    if (st.play) stStopPlay(true);
+    st.ab = mode;
+    const dur = stShown(f).duration;
+    f.view = { start: 0, end: dur };
+    f.cursor = clamp(playing != null ? playing : f.cursor, 0, dur);
+    if (f.sel) { f.sel = { start: clamp(f.sel.start, 0, dur), end: clamp(f.sel.end, 0, dur) }; if (f.sel.end - f.sel.start < 1e-4) f.sel = null; }
+    st.waveDirty = st.ovDirty = true;
+    stSetStatus(mode === 'orig' ? 'Stai ascoltando l\'originale: torna su Modificato per lavorare.' : '');
+    if (playing != null) stWavePlay(f.cursor);
+    stDrawWave(); stUpdateUI();
+  }
+  $('stAbEdit').addEventListener('click', () => stSetAb('edit'));
+  $('stAbOrig').addEventListener('click', () => stSetAb('orig'));
+  function stViewLen(f) { return Math.max(1e-6, f.view.end - f.view.start); }
+  function stXAt(f, t) { return (t - f.view.start) / stViewLen(f) * stWaveW(); }
+  function stTAt(f, x) { return clamp(f.view.start + x / stWaveW() * stViewLen(f), 0, stShown(f).duration); }
+  function stClampView(f) {
+    const dur = stShown(f).duration;
+    const minLen = Math.min(dur, Math.max(64 / f.buffer.sampleRate, 0.002));
+    let len = clamp(stViewLen(f), minLen, dur);
+    let s = clamp(f.view.start, 0, Math.max(0, dur - len));
+    f.view = { start: s, end: s + len };
+  }
+  function stWaveZoom(factor, anchor) {
+    const f = stFile();
+    if (!f) return;
+    const vl = stViewLen(f);
+    const a = anchor == null ? (st.play && st.play.kind === 'wave' ? stPlayPos() : (f.sel ? (f.sel.start + f.sel.end) / 2 : f.cursor)) : anchor;
+    const nl = vl * factor;
+    const rel = vl > 0 ? (a - f.view.start) / vl : 0.5;
+    f.view = { start: a - rel * nl, end: a - rel * nl + nl };
+    stClampView(f);
+    st.waveDirty = st.ovDirty = true;
+    stDrawWave();
+  }
+  function stWaveFit() {
+    const f = stFile();
+    if (!f) return;
+    f.view = { start: 0, end: f.buffer.duration };
+    st.waveDirty = st.ovDirty = true;
+    stDrawWave();
+  }
+
+  function stDrawWaveBase(f) {
+    const c = stWaveBase, g = c.getContext('2d');
+    const Wd = c.width, Hd = c.height, dpr = stDpr();
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, Wd, Hd);
+    if (!f) return;
+    const buf = stShown(f), sr = buf.sampleRate, nch = buf.numberOfChannels;
+    const PK = stShownPeaks(f);
+    const { start, end } = f.view;
+    const vl = end - start;
+    const rh = ST_RULER_H * dpr;
+    // righello
+    g.fillStyle = '#0c0b10'; g.fillRect(0, 0, Wd, rh);
+    g.fillStyle = 'rgba(255,255,255,0.08)'; g.fillRect(0, rh - 1, Wd, 1);
+    const pps = (Wd / dpr) / vl;
+    const step = stRulerStep(pps, 90);
+    const minor = step / 5;
+    g.font = `${10 * dpr}px "JetBrains Mono", monospace`;
+    g.textBaseline = 'top';
+    const i0 = Math.floor(start / minor), i1 = Math.ceil(end / minor);
+    for (let i = i0; i <= i1; i++) {
+      const t = i * minor;
+      const x = Math.round((t - start) / vl * Wd);
+      const major = Math.abs(t / step - Math.round(t / step)) < 1e-6;
+      g.fillStyle = major ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.14)';
+      g.fillRect(x, major ? 0 : rh - 6 * dpr, 1, major ? rh : 6 * dpr);
+      if (major) { g.fillStyle = 'rgba(242,238,244,0.7)'; g.fillText(stRulerLabel(t, step), x + 4 * dpr, 4 * dpr); }
+    }
+    // corsie dei canali
+    const laneH = (Hd - rh) / nch;
+    const spp = (vl * sr) / Wd;   // campioni per pixel del dispositivo
+    for (let ch = 0; ch < nch; ch++) {
+      const y0 = rh + ch * laneH, mid = y0 + laneH / 2, amp = laneH / 2 - 5 * dpr;
+      if (ch) { g.fillStyle = 'rgba(255,255,255,0.1)'; g.fillRect(0, Math.round(y0), Wd, 1); }
+      // griglia: -6 dB e centro
+      g.fillStyle = 'rgba(255,255,255,0.045)';
+      g.fillRect(0, Math.round(mid - amp * 0.5), Wd, 1);
+      g.fillRect(0, Math.round(mid + amp * 0.5), Wd, 1);
+      g.fillStyle = 'rgba(255,255,255,0.12)';
+      g.fillRect(0, Math.round(mid), Wd, 1);
+      const grad = g.createLinearGradient(0, mid - amp, 0, mid + amp);
+      grad.addColorStop(0, '#ff8fb0'); grad.addColorStop(0.5, '#ff1e60'); grad.addColorStop(1, '#ff8fb0');
+      const d = buf.getChannelData(ch);
+      if (spp < 1) {
+        // zoom molto spinto: linea che unisce i campioni
+        const s0 = Math.max(0, Math.floor(start * sr) - 1), s1 = Math.min(d.length - 1, Math.ceil(end * sr) + 1);
+        g.strokeStyle = '#ff5c8a'; g.lineWidth = Math.max(1, dpr);
+        g.beginPath();
+        for (let i = s0; i <= s1; i++) {
+          const x = (i / sr - start) / vl * Wd, y = mid - clamp(d[i], -1, 1) * amp;
+          if (i === s0) g.moveTo(x, y); else g.lineTo(x, y);
+        }
+        g.stroke();
+        if (spp < 0.15) {
+          g.fillStyle = '#ffd1df';
+          for (let i = s0; i <= s1; i++) { const x = (i / sr - start) / vl * Wd, y = mid - clamp(d[i], -1, 1) * amp; g.fillRect(x - dpr, y - dpr, 2 * dpr, 2 * dpr); }
+        }
+      } else {
+        g.fillStyle = grad;
+        const P = PK.chans[ch];
+        for (let x = 0; x < Wd; x++) {
+          const a = (start * sr) + x * spp, b = a + spp;
+          let lo, hi;
+          if (spp >= ST_PEAK * 2) [lo, hi] = stRangeMinMax(P, a, b);
+          else {
+            lo = 1; hi = -1;
+            const i0s = Math.max(0, Math.floor(a)), i1s = Math.min(d.length, Math.max(i0s + 1, Math.ceil(b)));
+            for (let i = i0s; i < i1s; i++) { const v = d[i]; if (v < lo) lo = v; if (v > hi) hi = v; }
+            if (lo > hi) { lo = hi = 0; }
+          }
+          const y1 = mid - clamp(hi, -1, 1) * amp, y2 = mid - clamp(lo, -1, 1) * amp;
+          g.fillRect(x, y1, 1, Math.max(1, y2 - y1));
+        }
+      }
+      if (nch > 1) {
+        g.fillStyle = 'rgba(242,238,244,0.45)';
+        g.font = `600 ${10 * dpr}px Inter, sans-serif`;
+        g.fillText(ch === 0 ? 'L' : ch === 1 ? 'R' : String(ch + 1), 6 * dpr, y0 + 5 * dpr);
+      }
+    }
+  }
+  function stDrawWaveOver(f) {
+    const c = stWaveOver, g = c.getContext('2d');
+    const Wd = c.width, Hd = c.height, dpr = stDpr();
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, Wd, Hd);
+    if (!f) return;
+    const toX = t => (t - f.view.start) / stViewLen(f) * Wd;
+    const rh = ST_RULER_H * dpr;
+    if (f.sel) {
+      const a = Math.max(0, toX(f.sel.start)), b = Math.min(Wd, toX(f.sel.end));
+      if (b > 0 && a < Wd) {
+        g.fillStyle = 'rgba(255,255,255,0.13)'; g.fillRect(a, rh, Math.max(1, b - a), Hd - rh);
+        g.fillStyle = 'rgba(255,92,138,0.55)'; g.fillRect(a, 0, Math.max(1, b - a), rh);
+        g.fillStyle = 'rgba(255,255,255,0.55)'; g.fillRect(Math.round(a), rh, 1, Hd - rh); g.fillRect(Math.round(b) - 1, rh, 1, Hd - rh);
+      }
+    }
+    const cx = toX(f.cursor);
+    if (cx >= 0 && cx <= Wd) {
+      g.fillStyle = '#ffd23d'; g.fillRect(Math.round(cx), 0, Math.max(1, Math.round(dpr)), Hd);
+      g.beginPath(); g.moveTo(cx - 5 * dpr, 0); g.lineTo(cx + 5 * dpr, 0); g.lineTo(cx, 8 * dpr); g.closePath(); g.fill();
+    }
+    if (st.play && st.play.kind === 'wave' && st.play.fileId === f.id) {
+      const px = toX(stPlayPos());
+      if (px >= 0 && px <= Wd) {
+        g.fillStyle = '#ffffff'; g.fillRect(Math.round(px), 0, Math.max(1, Math.round(1.5 * dpr)), Hd);
+      }
+    }
+  }
+  function stDrawOverview(f) {
+    const c = stOverview, g = c.getContext('2d');
+    const Wd = c.width, Hd = c.height;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, Wd, Hd);
+    if (!f) return;
+    const SB = stShown(f);
+    const P = stShownPeaks(f).mono, n = P.mn.length, mid = Hd / 2, amp = Hd / 2 - 2;
+    if (st.ovDirty || !f._ovCols || f._ovCols.w !== Wd || f._ovCols.buf !== SB) {
+      const cols = new Float32Array(Wd * 2);
+      for (let x = 0; x < Wd; x++) {
+        const b0 = Math.floor(x * n / Wd), b1 = Math.max(b0 + 1, Math.floor((x + 1) * n / Wd));
+        let lo = 0, hi = 0;
+        for (let b = b0; b < b1 && b < n; b++) { if (P.mn[b] < lo) lo = P.mn[b]; if (P.mx[b] > hi) hi = P.mx[b]; }
+        cols[x * 2] = lo; cols[x * 2 + 1] = hi;
+      }
+      f._ovCols = { w: Wd, buf: SB, cols };
+      st.ovDirty = false;
+    }
+    const cols = f._ovCols.cols;
+    g.fillStyle = 'rgba(255,92,138,0.55)';
+    for (let x = 0; x < Wd; x++) {
+      const y1 = mid - cols[x * 2 + 1] * amp, y2 = mid - cols[x * 2] * amp;
+      g.fillRect(x, y1, 1, Math.max(1, y2 - y1));
+    }
+    const dur = SB.duration;
+    const a = f.view.start / dur * Wd, b = f.view.end / dur * Wd;
+    g.fillStyle = 'rgba(255,255,255,0.10)'; g.fillRect(a, 0, Math.max(2, b - a), Hd);
+    g.strokeStyle = 'rgba(255,255,255,0.6)'; g.lineWidth = 1; g.strokeRect(a + 0.5, 0.5, Math.max(2, b - a) - 1, Hd - 1);
+    const pos = st.play && st.play.kind === 'wave' && st.play.fileId === f.id ? stPlayPos() : f.cursor;
+    g.fillStyle = st.play ? '#fff' : '#ffd23d';
+    g.fillRect(Math.round(pos / dur * Wd), 0, 1, Hd);
+  }
+  function stDrawWave() {
+    if (!stIsVisible() || stWaveView.hidden) return;
+    const f = stFile();
+    stWaveEmpty.hidden = !!f;
+    if (st.waveDirty) { stDrawWaveBase(f); st.waveDirty = false; }
+    stDrawWaveOver(f);
+    stDrawOverview(f);
+  }
+
+  /* selezione con mouse / dito */
+  let stWaveDrag = null;
+  stWaveOver.addEventListener('pointerdown', e => {
+    const f = stFile();
+    if (!f || st.busy || e.button !== 0) return;
+    e.preventDefault();
+    stWaveOver.setPointerCapture(e.pointerId);
+    const r = stWaveOver.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const t = stTAt(f, x);
+    if (y < ST_RULER_H) { stWaveDrag = { mode: 'seek' }; stWaveSeek(t); return; }
+    if (f.sel) {
+      const xa = stXAt(f, f.sel.start), xb = stXAt(f, f.sel.end);
+      if (Math.abs(x - xa) < 7) { stWaveDrag = { mode: 'edge', fixed: f.sel.end }; return; }
+      if (Math.abs(x - xb) < 7) { stWaveDrag = { mode: 'edge', fixed: f.sel.start }; return; }
+    }
+    if (e.shiftKey) {
+      const anchor = f.sel ? (Math.abs(t - f.sel.start) < Math.abs(t - f.sel.end) ? f.sel.end : f.sel.start) : f.cursor;
+      stWaveDrag = { mode: 'sel', anchor, x0: x, moved: true };
+      f.sel = { start: Math.min(anchor, t), end: Math.max(anchor, t) };
+      stDrawWave(); stUpdateUI();
+      return;
+    }
+    stWaveDrag = { mode: 'sel', anchor: t, x0: x, moved: false };
+  });
+  stWaveOver.addEventListener('pointermove', e => {
+    const f = stFile();
+    const r = stWaveOver.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    if (!stWaveDrag) {
+      if (!f) return;
+      let cur = y < ST_RULER_H ? 'pointer' : 'text';
+      if (f.sel && y >= ST_RULER_H && (Math.abs(x - stXAt(f, f.sel.start)) < 7 || Math.abs(x - stXAt(f, f.sel.end)) < 7)) cur = 'ew-resize';
+      stWaveOver.style.cursor = cur;
+      return;
+    }
+    if (!f) return;
+    // scorrimento automatico vicino ai bordi
+    const W = r.width;
+    if (stWaveDrag.mode !== 'seek' && (x < 0 || x > W)) {
+      const vl = stViewLen(f), shift = (x < 0 ? x : x - W) / W * vl * 0.5;
+      f.view = { start: f.view.start + shift, end: f.view.end + shift };
+      stClampView(f);
+      st.waveDirty = true;
+    }
+    const t = stTAt(f, clamp(x, 0, W));
+    if (stWaveDrag.mode === 'seek') { stWaveSeek(t); return; }
+    if (stWaveDrag.mode === 'edge') { f.sel = { start: Math.min(stWaveDrag.fixed, t), end: Math.max(stWaveDrag.fixed, t) }; }
+    else {
+      if (!stWaveDrag.moved && Math.abs(x - stWaveDrag.x0) < 3) return;
+      stWaveDrag.moved = true;
+      f.sel = { start: Math.min(stWaveDrag.anchor, t), end: Math.max(stWaveDrag.anchor, t) };
+    }
+    stDrawWave(); stUpdateUI();
+  });
+  function stWaveUp(e) {
+    const f = stFile();
+    const d = stWaveDrag;
+    stWaveDrag = null;
+    if (!d || !f) return;
+    if (d.mode === 'sel' && !d.moved) {
+      f.sel = null;
+      f.cursor = d.anchor;
+      if (st.play && st.play.kind === 'wave') stWavePlay(f.cursor);
+    } else if (f.sel) {
+      if (f.sel.end - f.sel.start < 0.0015) f.sel = null;
+      else { f.cursor = f.sel.start; if (st.play && st.play.kind === 'wave') stWavePlay(); }
+    }
+    stDrawWave(); stUpdateUI();
+  }
+  stWaveOver.addEventListener('pointerup', stWaveUp);
+  stWaveOver.addEventListener('pointercancel', stWaveUp);
+  stWaveOver.addEventListener('dblclick', () => { stWaveSelectAll(); });
+  stWaveOver.addEventListener('wheel', e => {
+    const f = stFile();
+    if (!f) return;
+    e.preventDefault();
+    const r = stWaveOver.getBoundingClientRect();
+    if (e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      const delta = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY);
+      const sh = delta / r.width * stViewLen(f);
+      f.view = { start: f.view.start + sh, end: f.view.end + sh };
+      stClampView(f);
+      st.waveDirty = st.ovDirty = true;
+      stDrawWave();
+    } else {
+      stWaveZoom(Math.exp(e.deltaY * 0.0018), stTAt(f, e.clientX - r.left));
+    }
+    stUpdateUI();
+  }, { passive: false });
+  function stWaveSeek(t) {
+    const f = stFile();
+    if (!f) return;
+    f.cursor = clamp(t, 0, stShown(f).duration);
+    if (st.play && st.play.kind === 'wave') stWavePlay(f.cursor);
+    stDrawWave(); stUpdateUI();
+  }
+  // panoramica: trascina per spostare la parte visibile
+  let stOvDrag = null;
+  stOverview.addEventListener('pointerdown', e => {
+    const f = stFile();
+    if (!f) return;
+    stOverview.setPointerCapture(e.pointerId);
+    stOvDrag = true;
+    stOvMove(e);
+  });
+  function stOvMove(e) {
+    const f = stFile();
+    if (!stOvDrag || !f) return;
+    const r = stOverview.getBoundingClientRect();
+    const t = clamp((e.clientX - r.left) / r.width, 0, 1) * stShown(f).duration;
+    const vl = stViewLen(f);
+    f.view = { start: t - vl / 2, end: t + vl / 2 };
+    stClampView(f);
+    st.waveDirty = true;
+    stDrawWave();
+  }
+  stOverview.addEventListener('pointermove', stOvMove);
+  stOverview.addEventListener('pointerup', () => { stOvDrag = null; });
+  stOverview.addEventListener('pointercancel', () => { stOvDrag = null; });
+
+  /* ---------- modifiche sul file (con cronologia) ---------- */
+  async function stRunOnFile(label, runner, opts = {}) {
+    const f = stFile();
+    if (!f || st.busy || st.ab === 'orig') return false;
+    if (st.play) stStopPlay();
+    const before = f.buffer;
+    const ctx = {
+      sel: f.sel ? secToSamples(before, f.sel) : null,
+      selSec: f.sel ? { ...f.sel } : null,
+      cursor: f.cursor, noiseProfile: null,
+      onProgress: p => stSetStatus(`${label}… ${Math.round(p * 100)}%`)
+    };
+    st.busy = true; stUpdateUI();
+    stSetStatus(label + '…');
+    await nextFrame();
+    let ok = false;
+    try {
+      const res = await runner(before, ctx);
+      if (res && res.buffer) { stCommitFile(f, res, opts.step || label, before); ok = true; }
+      stSetStatus(res ? (res.msg || label) : '');
+    } catch (err) {
+      console.error('Studio: operazione non riuscita', err);
+      stSetStatus(err && err.message && !/^[A-Z][a-z]+Error/.test(String(err)) ? err.message : 'Operazione non riuscita.', true);
+    }
+    st.busy = false;
+    st.waveDirty = st.ovDirty = true;
+    stDrawWave(); stUpdateUI();
+    return ok;
+  }
+  function stCommitFile(f, res, label, before) {
+    const nb = res.buffer, newDur = nb.duration, oldDur = before.duration;
+    const wasFit = stViewLen(f) >= oldDur - 1e-6;
+    f.buffer = nb;
+    f.peaks = stComputePeaks(nb);
+    f.sel = res.sel !== undefined ? res.sel : (Math.abs(newDur - oldDur) < 1e-6 ? f.sel : null);
+    if (f.sel) { f.sel = { start: clamp(f.sel.start, 0, newDur), end: clamp(f.sel.end, 0, newDur) }; if (f.sel.end - f.sel.start < 1e-4) f.sel = null; }
+    let cur = typeof res.cursor === 'number' ? res.cursor : (res.map ? res.map(f.cursor) : f.cursor);
+    f.cursor = clamp(cur == null ? 0 : cur, 0, newDur);
+    if (wasFit) f.view = { start: 0, end: newDur };
+    stClampView(f);
+    f.states = f.states.slice(0, f.pos + 1);
+    f.states.push({ label, buffer: nb, sel: f.sel, cursor: f.cursor });
+    if (f.states.length > 60) f.states.splice(1, 1);
+    f.pos = f.states.length - 1;
+    stFileChanged(f);
+  }
+  function stFileGoto(f, k) {
+    if (!f || st.busy || st.ab === 'orig' || k < 0 || k >= f.states.length || k === f.pos) return;
+    if (st.play) stStopPlay();
+    const oldDur = f.buffer.duration;
+    const wasFit = stViewLen(f) >= oldDur - 1e-6;
+    const s = f.states[k];
+    f.pos = k;
+    f.buffer = s.buffer;
+    f.peaks = stComputePeaks(s.buffer);
+    f.sel = s.sel; f.cursor = s.cursor;
+    if (wasFit) f.view = { start: 0, end: s.buffer.duration };
+    stClampView(f);
+    stFileChanged(f);
+    stDrawWave(); stUpdateUI();
+  }
+
+  function stWaveSelectAll() {
+    const f = stFile();
+    if (!f) return;
+    f.sel = { start: 0, end: stShown(f).duration };
+    f.cursor = 0;
+    stDrawWave(); stUpdateUI();
+  }
+  function stWaveCopy() {
+    const f = stFile();
+    if (!f || !f.sel) return false;
+    const [s0, s1] = secToSamples(f.buffer, f.sel);
+    if (s1 - s0 < 2) return false;
+    vedClipboard = microFades(sliceBuf(f.buffer, s0, s1), 3);
+    stSetStatus(`Copiati ${stFmt((s1 - s0) / f.buffer.sampleRate)}: puoi incollarli anche nell'editor dei vocali.`);
+    stUpdateUI();
+    return true;
+  }
+  function stWaveDelete(label) {
+    return stRunOnFile(label || 'Elimina', (b, ctx) => {
+      const [s0, s1] = ctx.sel;
+      if (s1 - s0 >= b.length - 2) return { msg: 'Non puoi eliminare tutto il file: usa Silenzio, oppure chiudi il file.' };
+      const { buffer, map } = removeRanges(b, [[s0, s1]]);
+      return { buffer, map, sel: null, cursor: s0 / b.sampleRate, msg: `Eliminati ${stFmt((s1 - s0) / b.sampleRate)}` };
+    });
+  }
+  async function stWaveOp(op) {
+    const f = stFile();
+    if (!f) return;
+    if (op === 'selall') return stWaveSelectAll();
+    if (op === 'selnone') { f.sel = null; stDrawWave(); stUpdateUI(); return; }
+    if (op === 'playsel') { if (st.play) stStopPlay(); stWavePlay(); return; }
+    if (op === 'copy') return stWaveCopy();
+    if (op === 'cut') { if (stWaveCopy()) await stWaveDelete('Taglia'); return; }
+    if (op === 'delete') { if (f.sel) await stWaveDelete(); return; }
+    if (op === 'crop') { if (f.sel) await stRunOnFile('Ritaglia', (b, ctx) => opKeep(b, {}, ctx)); return; }
+    if (op === 'silence') { if (f.sel) await stRunOnFile('Silenzio', (b, ctx) => opMute(b, {}, ctx)); return; }
+    if (op === 'beep') { if (f.sel) await stRunOnFile('Bip', (b, ctx) => opBeep(b, {}, ctx)); return; }
+    if (op === 'selfadein' || op === 'selfadeout') {
+      const up = op === 'selfadein';
+      if (f.sel) await stRunOnFile(up ? 'Dissolvenza in entrata' : 'Dissolvenza in uscita', (b, ctx) => opSelFade(b, {}, ctx, up));
+      return;
+    }
+    if (op === 'selsfx') { await stSaveSelectionToLibrary(); return; }
+    if (op === 'paste') { if (vedClipboard) await stRunOnFile('Incolla', (b, ctx) => opPaste(b, {}, ctx)); return; }
+    if (op === 'mixpaste') { if (vedClipboard) await stRunOnFile('Incolla sopra', stMixPaste); return; }
+    if (op === 'tonew') {
+      if (!f.sel) return;
+      const [s0, s1] = secToSamples(f.buffer, f.sel);
+      const nf = stAddFile(microFades(sliceBuf(f.buffer, s0, s1), 3), `${f.name} (parte)`, 'copy');
+      stOpenFile(nf.id);
+      stSetStatus(`Creato "${nf.name}"`);
+    }
+  }
+  async function stSaveSelectionToLibrary() {
+    const f = stFile();
+    if (!f || !f.sel || st.busy) return;
+    if (st.play) stStopPlay();
+    const [s0, s1] = secToSamples(f.buffer, f.sel);
+    const part = microFades(sliceBuf(f.buffer, s0, s1));
+    const cats = await pickCategories(1, { title: 'In che categoria vuoi mettere questo tratto?', okLabel: 'Salva' });
+    if (cats === null) return;
+    st.busy = true; stUpdateUI();
+    try {
+      stSetStatus('Preparo il file…');
+      const { blob, ext } = await encodeForSave(part, p => stSetStatus(`Converto in MP3… ${Math.round(p * 100)}%`));
+      const name = `${f.name} (tratto)`;
+      stSetStatus('Salvo negli Effetti…');
+      await addSound(new File([blob], `${name}.${ext}`, { type: blob.type }), cats);
+      stSetStatus(`Salvato negli Effetti: ${name}`);
+    } catch (err) {
+      console.error(err);
+      stSetStatus('Salvataggio negli Effetti non riuscito.', true);
+    }
+    st.busy = false; stUpdateUI();
+  }
+  async function stMixPaste(buf, ctx) {
+    let clip = vedClipboard;
+    if (clip.sampleRate !== buf.sampleRate) clip = await resampleBuf(clip, buf.sampleRate);
+    const sr = buf.sampleRate;
+    const at = ctx.sel ? ctx.sel[0] : Math.round(clamp(ctx.cursor, 0, buf.duration) * sr);
+    const nch = Math.max(buf.numberOfChannels, clip.numberOfChannels);
+    const out = newBuffer(nch, Math.max(buf.length, at + clip.length), sr);
+    for (let c = 0; c < nch; c++) out.getChannelData(c).set(chanOf(buf, c));
+    mixInto(out, clip, at, 1);
+    protectClip(out);
+    return { buffer: out, sel: { start: at / sr, end: (at + clip.length) / sr }, cursor: at / sr, msg: `Sommati ${stFmt(clip.duration)} all'audio` };
+  }
+  stSelBar.querySelectorAll('[data-stop]').forEach(b => b.addEventListener('click', () => stWaveOp(b.getAttribute('data-stop'))));
+
+  /* ---------- effetti ---------- */
+  function stInsertAt(buf, ins, atSec, label) {
+    const sr = buf.sampleRate, at = Math.round(clamp(atSec, 0, buf.duration) * sr);
+    const nch = Math.max(buf.numberOfChannels, ins.numberOfChannels);
+    const out = newBuffer(nch, buf.length + ins.length, sr);
+    for (let c = 0; c < nch; c++) {
+      const d = out.getChannelData(c), s = chanOf(buf, c);
+      d.set(s.subarray(0, at), 0);
+      d.set(chanOf(ins, c), at);
+      d.set(s.subarray(at), at + ins.length);
+    }
+    const a = at / sr, dl = ins.length / sr;
+    return { buffer: out, sel: { start: a, end: a + dl }, cursor: a, map: t => (t < a ? t : t + dl), msg: label };
+  }
+  async function stReverb(buf, p) {
+    const sr = buf.sampleRate, nch = buf.numberOfChannels;
+    const irLen = Math.max(1, Math.round(sr * p.size));
+    const Off = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const off = new Off(nch, buf.length + irLen, sr);
+    const ir = off.createBuffer(2, irLen, sr);
+    const pre = Math.round(sr * 0.012);
+    for (let c = 0; c < 2; c++) {
+      const d = ir.getChannelData(c);
+      for (let i = 0; i < irLen; i++) {
+        const env = Math.pow(1 - i / irLen, 2.4);
+        const att = i < pre ? i / pre : 1;
+        d[i] = (Math.random() * 2 - 1) * env * att;
+      }
+    }
+    const conv = off.createConvolver(); conv.normalize = true; conv.buffer = ir;
+    const src = off.createBufferSource(); src.buffer = buf;
+    const dry = off.createGain(); dry.gain.value = 1 - p.mix * 0.4;
+    const wet = off.createGain(); wet.gain.value = p.mix * 1.2;
+    const hp = biquad(off, 'highpass', 180), lp = biquad(off, 'lowpass', 6500 - p.damp * 4500);
+    src.connect(dry); dry.connect(off.destination);
+    src.connect(hp); hp.connect(conv); conv.connect(lp); lp.connect(wet); wet.connect(off.destination);
+    src.start(0);
+    const out = await off.startRendering();
+    return { buffer: microFades(limitPeaks(out, -0.3)), msg: `Riverbero ${String(p.size).replace('.', ',')} s, mix ${Math.round(p.mix * 100)}%` };
+  }
+  async function stVarispeed(buf, p) {
+    const r = p.rate;
+    if (Math.abs(r - 1) < 0.001) return { msg: 'Velocità invariata' };
+    const Off = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const off = new Off(buf.numberOfChannels, Math.max(1, Math.round(buf.length / r)), buf.sampleRate);
+    const src = off.createBufferSource(); src.buffer = buf; src.playbackRate.value = r;
+    src.connect(off.destination); src.start(0);
+    const out = await off.startRendering();
+    return { buffer: microFades(out), msg: `Velocità e tono ${String(r).replace('.', ',')}×` };
+  }
+  function stMapChannels(buf, fn) {
+    const out = cloneBuf(buf);
+    for (let c = 0; c < out.numberOfChannels; c++) fn(out.getChannelData(c), c);
+    return out;
+  }
+  const STFX = [
+    { group: 'Ampiezza', items: [
+      { id: 'gain', name: 'Amplifica', desc: 'Alza o abbassa il volume.', params: [{ k: 'db', l: 'Guadagno', u: 'dB', min: -40, max: 40, step: 0.5, v: -3 }], run: (b, p) => opGain(b, p) },
+      { id: 'norm', name: 'Normalizza', desc: 'Porta il picco più alto a 0 dB (o al valore scelto).', params: [{ k: 'peak', l: 'Picco', u: 'dB', min: -24, max: 0, step: 0.1, v: 0 }], run: (b, p) => {
+        const pk = peakOf(b);
+        if (pk < 1e-5) return { msg: 'Il file è muto' };
+        const g = dbToGain(p.peak) / pk;
+        return { buffer: scaleBuf(cloneBuf(b), g), msg: `Normalizzato a ${stFmtDb(p.peak)} (${stFmtDb(gainToDb(g))})` };
+      } },
+      { id: 'lufs', name: 'Loudness', desc: 'Stesso volume percepito: −16 LUFS per web e radio, −23 per la TV.', params: [{ k: 'target', l: 'Obiettivo', u: 'LUFS', min: -40, max: -5, step: 0.5, v: -16 }], run: (b, p) => opLufs(b, p) },
+      { id: 'fin', name: 'Dissolvenza in entrata', desc: 'Con una selezione la dissolvenza copre tutta la selezione.', whole: true, params: [{ k: 'secs', l: 'Durata', u: 's', min: 0.01, max: 60, step: 0.05, v: 0.3 }], run: (b, p, ctx) => ctx.sel ? opSelFade(b, p, ctx, true) : opFade(b, p, true) },
+      { id: 'fout', name: 'Dissolvenza in uscita', desc: 'Con una selezione la dissolvenza copre tutta la selezione.', whole: true, params: [{ k: 'secs', l: 'Durata', u: 's', min: 0.01, max: 60, step: 0.05, v: 0.3 }], run: (b, p, ctx) => ctx.sel ? opSelFade(b, p, ctx, false) : opFade(b, p, false) },
+      { id: 'limit', name: 'Limitatore', desc: 'Tiene i picchi sotto la soglia senza abbassare il resto.', params: [{ k: 'ceil', l: 'Soglia', u: 'dB', min: -24, max: 0, step: 0.1, v: -1 }], run: (b, p) => ({ buffer: limitPeaks(cloneBuf(b), p.ceil), msg: `Limitatore a ${stFmtDb(p.ceil)}` }) },
+      { id: 'invert', name: 'Inverti polarità', desc: 'Capovolge l\'onda (utile per problemi di fase).', params: [], run: b => ({ buffer: stMapChannels(b, d => { for (let i = 0; i < d.length; i++) d[i] = -d[i]; }), msg: 'Polarità invertita' }) }
+    ] },
+    { group: 'Tempo e intonazione', items: [
+      { id: 'reverse', name: 'Al contrario', desc: 'Riproduce il tratto dalla fine all\'inizio.', params: [], run: b => ({ buffer: stMapChannels(b, d => d.reverse()), msg: 'Invertito' }) },
+      { id: 'speed', name: 'Cambia tempo', desc: 'Più veloce o più lento senza cambiare il tono.', params: [{ k: 'speed', l: 'Velocità', u: '×', min: 0.5, max: 2, step: 0.05, v: 1.1 }], run: (b, p, ctx) => opSpeed(b, p, ctx) },
+      { id: 'pitch', name: 'Cambia intonazione', desc: 'Più acuto o più grave senza cambiare la durata.', params: [{ k: 'semitones', l: 'Semitoni', u: 'semitoni', min: -12, max: 12, step: 0.5, v: -4 }], run: (b, p, ctx) => opPitch(b, p, ctx) },
+      { id: 'vari', name: 'Velocità e tono (nastro)', desc: 'Come accelerare un nastro: cambiano insieme durata e tono.', params: [{ k: 'rate', l: 'Velocità', u: '×', min: 0.25, max: 4, step: 0.05, v: 1.25 }], run: (b, p) => stVarispeed(b, p) },
+      { id: 'trim', name: 'Rifila silenzi', desc: 'Taglia il silenzio all\'inizio e alla fine del file.', whole: true, params: [], run: b => opTrimSilence(b) }
+    ] },
+    { group: 'Filtri ed equalizzatore', items: [
+      { id: 'eq3', name: 'EQ a 3 bande', desc: 'Bassi (200 Hz), medi (1,2 kHz), alti (5 kHz).', params: [{ k: 'low', l: 'Bassi', u: 'dB', min: -24, max: 24, step: 0.5, v: 0 }, { k: 'mid', l: 'Medi', u: 'dB', min: -24, max: 24, step: 0.5, v: 0 }, { k: 'high', l: 'Alti', u: 'dB', min: -24, max: 24, step: 0.5, v: 0 }],
+        run: async (b, p) => {
+          if (!p.low && !p.mid && !p.high) return { msg: 'Tutte le bande a 0 dB: niente da cambiare' };
+          const out = protectClip(await renderWithFilters(b, c => [biquad(c, 'lowshelf', 200, 0.707, p.low), biquad(c, 'peaking', 1200, 0.8, p.mid), biquad(c, 'highshelf', 5000, 0.707, p.high)]));
+          return { buffer: out, msg: `EQ ${stFmtDb(p.low)} / ${stFmtDb(p.mid)} / ${stFmtDb(p.high)}` };
+        } },
+      { id: 'hp', name: 'Passa-alto', desc: 'Toglie i bassi sotto la frequenza (rimbombo, vento).', params: [{ k: 'freq', l: 'Frequenza', u: 'Hz', min: 20, max: 5000, step: 10, v: 100 }], run: async (b, p) => ({ buffer: await renderWithFilters(b, c => [biquad(c, 'highpass', p.freq), biquad(c, 'highpass', p.freq)]), msg: `Passa-alto ${p.freq} Hz` }) },
+      { id: 'lp', name: 'Passa-basso', desc: 'Toglie gli acuti sopra la frequenza (effetto ovattato).', params: [{ k: 'freq', l: 'Frequenza', u: 'Hz', min: 200, max: 20000, step: 50, v: 6000 }], run: async (b, p) => ({ buffer: await renderWithFilters(b, c => [biquad(c, 'lowpass', p.freq), biquad(c, 'lowpass', p.freq)]), msg: `Passa-basso ${p.freq} Hz` }) },
+      { id: 'eqp', name: 'Preset di timbro', desc: 'Gli stessi preset dell\'editor vocale.', params: [{ k: 'preset', l: 'Preset', type: 'select', v: 'clear', options: [['clear', 'Presenza'], ['boom', 'Taglio bassi'], ['phone', 'Telefono'], ['vintage', 'Radio d\'epoca'], ['megaphone', 'Megafono']] }], run: (b, p) => opEq(b, p.preset) }
+    ] },
+    { group: 'Dinamica e spazio', items: [
+      { id: 'comp', name: 'Compressore', desc: 'Riduce la differenza tra parti forti e deboli.', params: [{ k: 'amt', l: 'Quantità', u: '%', min: 5, max: 100, step: 5, v: 50 }], run: (b, p) => opCompress(b, { amt: p.amt / 100 }) },
+      { id: 'reverb', name: 'Riverbero', desc: 'Ambiente: da stanza piccola (0,5 s) a chiesa (4 s).', mode: 'overlay', params: [{ k: 'size', l: 'Durata', u: 's', min: 0.2, max: 8, step: 0.1, v: 1.8 }, { k: 'mix', l: 'Mix', u: '%', min: 5, max: 100, step: 5, v: 30 }, { k: 'damp', l: 'Scuro', u: '%', min: 0, max: 100, step: 10, v: 40 }], run: (b, p) => stReverb(b, { size: p.size, mix: p.mix / 100, damp: p.damp / 100 }) },
+      { id: 'echo', name: 'Eco', desc: 'Ripete il suono nel tempo.', mode: 'overlay', params: [{ k: 'delay', l: 'Ritardo', u: 's', min: 0.02, max: 2, step: 0.01, v: 0.25 }, { k: 'feedback', l: 'Ritorni', u: '%', min: 0, max: 85, step: 5, v: 35 }, { k: 'mix', l: 'Mix', u: '%', min: 5, max: 100, step: 5, v: 35 }], run: (b, p) => opEcho(b, { delay: p.delay, feedback: p.feedback / 100, mix: p.mix / 100 }) }
+    ] },
+    { group: 'Restauro', items: [
+      { id: 'denoise', name: 'Riduzione rumore', desc: 'Toglie fruscio e rumore di fondo costante.', params: [{ k: 'amt', l: 'Riduzione', u: '%', min: 10, max: 100, step: 5, v: 50 }], run: (b, p, ctx) => opDenoise(b, { amt: p.amt / 100, useProfile: false }, ctx) },
+      { id: 'hum', name: 'Rimozione ronzio', desc: '50 Hz in Europa, 60 negli USA.', params: [{ k: 'freq', l: 'Frequenza', u: 'Hz', min: 20, max: 400, step: 1, v: 50 }], run: (b, p) => opHum(b, p) },
+      { id: 'declick', name: 'Rimozione click', desc: 'Ripara click e schiocchi.', params: [{ k: 'sens', l: 'Sensibilità', u: '%', min: 10, max: 100, step: 5, v: 50 }], run: (b, p) => opDeclick(b, { sens: p.sens / 100 }) },
+      { id: 'deess', name: 'De-esser', desc: 'Attenua le "s" troppo forti.', params: [], run: b => opDeess(b) }
+    ] },
+    { group: 'Canali', items: [
+      { id: 'mono', name: 'Converti in mono', desc: 'Somma sinistro e destro.', whole: true, needs: 'stereo', params: [], run: b => opChannels(b, 'mix') },
+      { id: 'stereo', name: 'Converti in stereo', desc: 'Copia il canale su sinistro e destro.', whole: true, needs: 'mono', params: [], run: b => {
+        const out = newBuffer(2, b.length, b.sampleRate);
+        out.getChannelData(0).set(b.getChannelData(0)); out.getChannelData(1).set(b.getChannelData(0));
+        return { buffer: out, msg: 'Convertito in stereo' };
+      } },
+      { id: 'swap', name: 'Scambia L e R', desc: 'Inverte i due canali.', needs: 'stereo', params: [], run: b => {
+        const out = cloneBuf(b);
+        out.getChannelData(0).set(b.getChannelData(1)); out.getChannelData(1).set(b.getChannelData(0));
+        return { buffer: out, msg: 'Canali scambiati' };
+      } }
+    ] },
+    { group: 'Genera', items: [
+      { id: 'gsil', name: 'Inserisci silenzio', desc: 'Al cursore (o all\'inizio della selezione).', whole: true, params: [{ k: 'secs', l: 'Durata', u: 's', min: 0.01, max: 600, step: 0.1, v: 1 }], run: (b, p, ctx) => {
+        const ins = newBuffer(b.numberOfChannels, Math.round(p.secs * b.sampleRate), b.sampleRate);
+        return stInsertAt(b, ins, ctx.selSec ? ctx.selSec.start : ctx.cursor, `Inseriti ${String(p.secs).replace('.', ',')} s di silenzio`);
+      } },
+      { id: 'gtone', name: 'Genera tono', desc: 'Onda sinusoidale al cursore: utile per bip e test.', whole: true, params: [{ k: 'freq', l: 'Freq.', u: 'Hz', min: 20, max: 20000, step: 1, v: 1000 }, { k: 'secs', l: 'Durata', u: 's', min: 0.02, max: 60, step: 0.1, v: 1 }, { k: 'db', l: 'Livello', u: 'dB', min: -60, max: 0, step: 1, v: -12 }], run: (b, p, ctx) => {
+        const sr = b.sampleRate, n = Math.round(p.secs * sr), amp = dbToGain(p.db);
+        const ins = newBuffer(b.numberOfChannels, n, sr);
+        for (let c = 0; c < ins.numberOfChannels; c++) { const d = ins.getChannelData(c); for (let i = 0; i < n; i++) d[i] = amp * Math.sin(2 * Math.PI * p.freq * i / sr); }
+        microFades(ins, 5);
+        return stInsertAt(b, ins, ctx.selSec ? ctx.selSec.start : ctx.cursor, `Tono ${p.freq} Hz, ${String(p.secs).replace('.', ',')} s`);
+      } }
+    ] }
+  ];
+  const STFX_BY_ID = {};
+  STFX.forEach(g => g.items.forEach(fx => { STFX_BY_ID[fx.id] = fx; }));
+  function stRenderFx() {
+    stFxList.innerHTML = STFX.map((g, gi) => `
+      <details class="st-fx-group"${gi === 0 ? ' open' : ''}>
+        <summary>${escapeHtml(g.group)}</summary>
+        ${g.items.map(fx => `
+          <div class="st-fx">
+            <div class="st-fx-top"><b>${escapeHtml(fx.name)}</b><button type="button" class="ved-btn" data-stfx="${fx.id}" data-stneeds="${fx.needs || 'file'}">Applica</button></div>
+            <p>${escapeHtml(fx.desc)}</p>
+            ${fx.params.length ? `<div class="st-fx-params">${fx.params.map(pr => pr.type === 'select'
+              ? `<label class="ved-field"><span>${escapeHtml(pr.l)}</span><select class="ved-select" id="stfx-${fx.id}-${pr.k}">${pr.options.map(([v, l]) => `<option value="${v}"${v === pr.v ? ' selected' : ''}>${escapeHtml(l)}</option>`).join('')}</select></label>`
+              : `<label class="ved-field"><span>${escapeHtml(pr.l)}</span><input type="text" inputmode="decimal" class="ved-num" id="stfx-${fx.id}-${pr.k}" value="${fmtNum(pr.v)}" data-min="${pr.min}" data-max="${pr.max}" data-step="${pr.step}" aria-label="${escapeHtml(fx.name + ': ' + pr.l)}"><em>${escapeHtml(pr.u)}</em></label>`).join('')}</div>` : ''}
+          </div>`).join('')}
+      </details>`).join('');
+  }
+  function stReadFxParams(fx) {
+    const p = {};
+    for (const pr of fx.params) {
+      const el = $(`stfx-${fx.id}-${pr.k}`);
+      if (pr.type === 'select') { p[pr.k] = el.value; continue; }
+      const v = Number(String(el.value).trim().replace(',', '.').replace('−', '-'));
+      if (String(el.value).trim() === '' || !isFinite(v) || v < pr.min || v > pr.max) {
+        el.classList.add('invalid'); el.focus();
+        throw new Error(`${fx.name} · ${pr.l}: scrivi un numero tra ${String(pr.min).replace('.', ',')} e ${String(pr.max).replace('.', ',')}.`);
+      }
+      el.classList.remove('invalid');
+      p[pr.k] = v;
+    }
+    return p;
+  }
+  stFxList.addEventListener('click', async e => {
+    const b = e.target.closest('[data-stfx]');
+    if (!b) return;
+    const fx = STFX_BY_ID[b.getAttribute('data-stfx')];
+    const f = stFile();
+    if (!fx || !f) return;
+    let p;
+    try { p = stReadFxParams(fx); } catch (err) { stSetStatus(err.message, true); return; }
+    const scoped = !!f.sel && !fx.whole;
+    const label = fx.name + (scoped ? ' (sel.)' : '');
+    await stRunOnFile(label, (buf, ctx) => scoped
+      ? withScope(buf, ctx, part => fx.run(part, p, { ...ctx, sel: null, selSec: null, cursor: 0 }), fx.mode)
+      : fx.run(buf, p, ctx));
+  });
+  // campi numerici: stessa logica dell'editor vocale (virgola o punto, frecce = un passo, rosso se fuori limite)
+  function stWireNum(root) {
+    root.addEventListener('input', e => { if (e.target.classList.contains('ved-num') && !e.target.classList.contains('ved-text')) e.target.classList.toggle('invalid', !readNum(e.target).ok); });
+    root.addEventListener('focusout', e => { const el = e.target; if (!el.classList || !el.classList.contains('ved-num') || el.classList.contains('ved-text')) return; const r = readNum(el); if (r.ok) el.value = fmtNum(r.value); });
+    root.addEventListener('keydown', e => {
+      const el = e.target;
+      if (!el.classList || !el.classList.contains('ved-num') || el.classList.contains('ved-text')) return;
+      if (e.key === 'Enter') { e.preventDefault(); el.blur(); return; }
+      if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+      e.preventDefault();
+      const r = readNum(el);
+      const step = parseFloat(el.dataset.step) || 1;
+      let v = (isFinite(r.value) ? r.value : 0) + (e.key === 'ArrowUp' ? step : -step);
+      if (isFinite(r.min)) v = Math.max(r.min, v);
+      if (isFinite(r.max)) v = Math.min(r.max, v);
+      el.value = fmtNum(Math.round(v * 1000) / 1000);
+      el.classList.remove('invalid');
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  }
+  stWireNum(stFxList);
+
+  /* ================================================================
+     MULTITRACCIA
+     ================================================================ */
+  function stHeadW() {
+    const v = parseFloat(getComputedStyle(stTab).getPropertyValue('--st-head-w'));
+    return isFinite(v) && v > 0 ? v : 214;
+  }
+  function stClipLen(c) {
+    const f = stFileById(c.fileId);
+    if (!f) return 0;
+    return Math.max(0, Math.min(c.len, f.buffer.duration - c.offset));
+  }
+  function stProjectEnd() {
+    let e = 0;
+    st.clips.forEach(c => { if (stFileById(c.fileId)) e = Math.max(e, c.start + stClipLen(c)); });
+    return e;
+  }
+  function stAddTrack(silent) {
+    const n = st.tracks.length;
+    const tr = { id: stNewId('t'), name: `Traccia ${n + 1}`, color: ST_COLORS[n % ST_COLORS.length], vol: 0, pan: 0, mute: false, solo: false, arm: false };
+    st.tracks.push(tr);
+    if (!silent) { stMtCommit('Nuova traccia'); stRenderMt(); }
+    return tr;
+  }
+  function stAddClip(f, trackId, start) {
+    const c = { id: stNewId('c'), fileId: f.id, track: trackId, start: Math.max(0, start), offset: 0, len: f.buffer.duration, fin: 0, fout: 0, gain: 0 };
+    st.clips.push(c);
+    st.selClip = c.id;
+    st.selTrack = trackId;
+    return c;
+  }
+  function stFreeTrack(start, len) {
+    if (st.selTrack && stTrackById(st.selTrack)) {
+      const busy = st.clips.some(c => c.track === st.selTrack && c.start < start + len && c.start + stClipLen(c) > start);
+      if (!busy) return st.selTrack;
+    }
+    for (const tr of st.tracks) {
+      if (!st.clips.some(c => c.track === tr.id && c.start < start + len && c.start + stClipLen(c) > start)) return tr.id;
+    }
+    return stAddTrack(true).id;
+  }
+  function stFileToMulti(id) {
+    const f = stFileById(id || st.activeId);
+    if (!f) return;
+    const start = st.cursor;
+    const tid = stFreeTrack(start, f.buffer.duration);
+    const first = !st.clips.length;
+    stAddClip(f, tid, start);
+    stMtCommit(`Clip ${f.name}`);
+    stSetView('multi');
+    if (first) stMtFit();
+    stSetStatus(`"${f.name}" aggiunto a ${stTrackById(tid).name} da ${stFmt(start)}.`);
+  }
+  $('stToMultiBtn').addEventListener('click', () => stFileToMulti(st.activeId));
+
+  /* cronologia della multitraccia: istantanee leggere (i buffer restano nei file) */
+  function stMtSnapshot() { return JSON.stringify({ tracks: st.tracks, clips: st.clips }); }
+  function stMtCommit(label) {
+    const mt = st.mt;
+    mt.states = mt.states.slice(0, mt.pos + 1);
+    mt.states.push({ label, json: stMtSnapshot() });
+    if (mt.states.length > 80) mt.states.splice(1, 1);
+    mt.pos = mt.states.length - 1;
+    stRenderFiles();
+    stUpdateUI();
+  }
+  function stMtGoto(k) {
+    const mt = st.mt;
+    if (k < 0 || k >= mt.states.length || k === mt.pos || st.drag) return;
+    const wasPlaying = st.play && st.play.kind === 'multi' ? stPlayPos() : null;
+    if (st.play) stStopPlay();
+    mt.pos = k;
+    const d = JSON.parse(mt.states[k].json);
+    st.tracks = d.tracks; st.clips = d.clips;
+    if (st.selClip && !stClipById(st.selClip)) st.selClip = null;
+    stRenderFiles(); stRenderMt(); stUpdateUI();
+    if (wasPlaying != null) stMtPlay(wasPlaying);
+  }
+
+  function stTrackAudible(tr, anySolo) { return !tr.mute && (!anySolo || tr.solo); }
+  function stApplyTrackParams() {
+    const p = st.play;
+    if (!p || p.kind !== 'multi') return;
+    const anySolo = st.tracks.some(t => t.solo);
+    const now = p.ctx.currentTime;
+    st.tracks.forEach(tr => {
+      const n = p.tn.get(tr.id);
+      if (!n) return;
+      n.g.gain.setTargetAtTime(stTrackAudible(tr, anySolo) ? dbToGain(tr.vol) : 0, now, 0.015);
+      if (n.pan) n.pan.pan.setTargetAtTime(tr.pan / 100, now, 0.015);
+    });
+  }
+
+  function stClipInner(c, w) {
+    const len = stClipLen(c) || 0.001;
+    const fi = Math.min(c.fin, len) / len * w, fo = Math.min(c.fout, len) / len * w;
+    const f = stFileById(c.fileId);
+    const gainTxt = c.gain ? ` ${stFmtDb(c.gain)}` : '';
+    return `
+      <span class="st-clip-name">${escapeHtml(f ? f.name : '?')}<small>${gainTxt}</small></span>
+      <canvas></canvas>
+      <svg class="fades" viewBox="0 0 ${Math.max(1, w)} 100" preserveAspectRatio="none">
+        ${fi > 0.5 ? `<polygon points="0,0 ${fi},0 0,100" fill="rgba(0,0,0,0.5)"></polygon><line x1="0" y1="100" x2="${fi}" y2="0" stroke="#fff" stroke-width="1.2" vector-effect="non-scaling-stroke"></line>` : ''}
+        ${fo > 0.5 ? `<polygon points="${w - fo},0 ${w},0 ${w},100" fill="rgba(0,0,0,0.5)"></polygon><line x1="${w - fo}" y1="0" x2="${w}" y2="100" stroke="#fff" stroke-width="1.2" vector-effect="non-scaling-stroke"></line>` : ''}
+      </svg>
+      <i class="h l" data-h="l" title="Trascina per accorciare l'inizio"></i>
+      <i class="h r" data-h="r" title="Trascina per accorciare la fine"></i>
+      <i class="f" data-f="in" style="left:${Math.max(6, Math.min(w - 6, fi))}px" title="Dissolvenza in entrata"></i>
+      <i class="f" data-f="out" style="left:${Math.max(6, Math.min(w - 6, w - fo))}px" title="Dissolvenza in uscita"></i>`;
+  }
+  function stDrawClipCanvas(el, c) {
+    const cv = el.querySelector('canvas');
+    const f = stFileById(c.fileId);
+    if (!cv || !f) return;
+    const dpr = stDpr();
+    const wCss = Math.max(1, stClipLen(c) * st.pps), hCss = ST_LANE_H - 8 - 17 - 2;
+    const W = Math.max(1, Math.min(4096, Math.round(wCss * dpr))), H = Math.max(1, Math.round(hCss * dpr));
+    if (cv.width !== W) cv.width = W;
+    if (cv.height !== H) cv.height = H;
+    const g = cv.getContext('2d');
+    g.clearRect(0, 0, W, H);
+    const tr = stTrackById(c.track);
+    g.fillStyle = tr ? tr.color : '#ff5c8a';
+    g.globalAlpha = 0.9;
+    const P = f.peaks.mono, sr = f.buffer.sampleRate, len = stClipLen(c);
+    const s0 = c.offset * sr, spp = (len * sr) / W;
+    const mid = H / 2, amp = H / 2 - dpr, gain = dbToGain(c.gain || 0);
+    for (let x = 0; x < W; x++) {
+      const a = s0 + x * spp;
+      const [lo, hi] = stRangeMinMax(P, a, a + Math.max(spp, 1));
+      const y1 = mid - clamp(hi * gain, -1, 1) * amp, y2 = mid - clamp(lo * gain, -1, 1) * amp;
+      g.fillRect(x, y1, 1, Math.max(1, y2 - y1));
+    }
+  }
+  function stUpdateClipEl(el, c) {
+    const w = Math.max(4, stClipLen(c) * st.pps);
+    el.style.left = (c.start * st.pps) + 'px';
+    el.style.width = w + 'px';
+    el.innerHTML = stClipInner(c, w);
+    stDrawClipCanvas(el, c);
+  }
+
+  function stRenderMt() {
+    if (!ST_READY) return;
+    const HW = stHeadW();
+    const vis = Math.max(200, stMtScroll.clientWidth - HW);
+    const tl = Math.max(stProjectEnd() + 30, vis / st.pps, 20);
+    const W = Math.ceil(tl * st.pps);
+    st.mtTl = tl;
+    stMtInner.style.width = (HW + W) + 'px';
+    stMtRuler.style.width = W + 'px';
+    // righello
+    const step = stRulerStep(st.pps);
+    const minor = String(step).includes('2') ? step / 4 : step / 5;
+    let html = '';
+    const nMaj = Math.floor(tl / step);
+    for (let i = 0; i <= nMaj; i++) html += `<div class="tk" style="left:${(i * step * st.pps).toFixed(1)}px"><span>${stRulerLabel(i * step, step)}</span></div>`;
+    const nMin = Math.floor(tl / minor);
+    if (nMin < 4000) for (let i = 0; i <= nMin; i++) { if (Math.abs((i * minor) / step - Math.round((i * minor) / step)) > 1e-6) html += `<div class="mk" style="left:${(i * minor * st.pps).toFixed(1)}px"></div>`; }
+    if (st.loopRegion) html += `<div class="loopband${st.loop ? '' : ' off'}" style="left:${st.loopRegion.start * st.pps}px;width:${Math.max(2, (st.loopRegion.end - st.loopRegion.start) * st.pps)}px"></div>`;
+    html += `<div class="rhead" id="stMtRHead"></div>`;
+    stMtRuler.innerHTML = html;
+    // tracce
+    if (!st.tracks.length) {
+      stMtRows.innerHTML = '<div class="st-mt-empty">Nessuna traccia: premi "+ Traccia".</div>';
+    } else {
+      stMtRows.innerHTML = st.tracks.map(tr => {
+        const clips = st.clips.filter(c => c.track === tr.id && stFileById(c.fileId));
+        return `
+        <div class="st-mt-row${tr.arm ? ' armed' : ''}${st.selTrack === tr.id ? ' selected-track' : ''}" data-row="${tr.id}" style="--tc:${tr.color}">
+          <div class="st-mt-head">
+            <div class="st-th-top">
+              <input class="st-th-name" value="${escapeHtml(tr.name)}" data-tname="${tr.id}" maxlength="40" aria-label="Nome della traccia">
+              <button type="button" class="st-th-btn m${tr.mute ? ' on' : ''}" data-tm="${tr.id}" title="Muto" aria-pressed="${tr.mute}">M</button>
+              <button type="button" class="st-th-btn s${tr.solo ? ' on' : ''}" data-ts="${tr.id}" title="Solo" aria-pressed="${tr.solo}">S</button>
+              <button type="button" class="st-th-btn r${tr.arm ? ' on' : ''}" data-tr="${tr.id}" title="Arma per la registrazione" aria-pressed="${tr.arm}">R</button>
+              <button type="button" class="st-th-btn x" data-tx="${tr.id}" title="Elimina la traccia" aria-label="Elimina la traccia">×</button>
+            </div>
+            <div class="st-th-row"><i>Vol</i><input type="range" min="-48" max="6" step="0.5" value="${tr.vol}" data-tvol="${tr.id}" aria-label="Volume di ${escapeHtml(tr.name)}" title="Doppio clic: 0 dB"><em data-tvolv="${tr.id}">${stFmtDb(tr.vol)}</em></div>
+            <div class="st-th-row"><i>Pan</i><input type="range" min="-100" max="100" step="1" value="${tr.pan}" data-tpan="${tr.id}" aria-label="Pan di ${escapeHtml(tr.name)}" title="Doppio clic: centro"><em data-tpanv="${tr.id}">${stPanLabel(tr.pan)}</em></div>
+            <div class="st-th-meter"><span data-tmeter="${tr.id}"></span></div>
+          </div>
+          <div class="st-mt-lane" data-lane="${tr.id}" style="width:${W}px;--grid:${(step * st.pps).toFixed(2)}px">
+            ${clips.map(c => { const w = Math.max(4, stClipLen(c) * st.pps); return `<div class="st-clip${st.selClip === c.id ? ' sel' : ''}" data-clip="${c.id}" style="left:${c.start * st.pps}px;width:${w}px">${stClipInner(c, w)}</div>`; }).join('')}
+          </div>
+        </div>`;
+      }).join('');
+      stMtRows.querySelectorAll('.st-clip').forEach(el => { const c = stClipById(el.getAttribute('data-clip')); if (c) stDrawClipCanvas(el, c); });
+    }
+    stMtInfo.textContent = `${st.tracks.length} ${st.tracks.length === 1 ? 'traccia' : 'tracce'} · ${st.clips.length} clip`;
+    stPositionMtLines();
+    stUpdateInspector();
+  }
+  function stPanLabel(p) { p = Math.round(p); return p === 0 ? 'C' : p < 0 ? `L${-p}` : `R${p}`; }
+  function stPositionMtLines(playPos) {
+    const HW = stHeadW();
+    stMtCursor.style.left = (HW + st.cursor * st.pps) + 'px';
+    const rh = $('stMtRHead');
+    if (rh) rh.style.left = (st.cursor * st.pps) + 'px';
+    const playing = st.play && st.play.kind === 'multi';
+    stMtPlayhead.hidden = !playing;
+    if (playing) {
+      const pos = playPos != null ? playPos : stPlayPos();
+      stMtPlayhead.style.left = (HW + pos * st.pps) + 'px';
+    }
+    if (st.loopRegion) {
+      stMtLoopShade.hidden = !st.loop;
+      stMtLoopShade.style.left = (HW + st.loopRegion.start * st.pps) + 'px';
+      stMtLoopShade.style.width = Math.max(2, (st.loopRegion.end - st.loopRegion.start) * st.pps) + 'px';
+    } else stMtLoopShade.hidden = true;
+  }
+  function stLaneTime(clientX) {
+    const r = stMtRuler.getBoundingClientRect();
+    return Math.max(0, (clientX - r.left) / st.pps);
+  }
+  function stMtSeek(t) {
+    st.cursor = Math.max(0, t);
+    if (st.play && st.play.kind === 'multi' && !st.rec) stMtPlay(st.cursor, { keepOrigin: true });
+    stPositionMtLines();
+    stUpdateUI();
+  }
+
+  /* intestazioni delle tracce (delega) */
+  stMtRows.addEventListener('click', e => {
+    const b = e.target.closest('[data-tm],[data-ts],[data-tr],[data-tx]');
+    if (!b) return;
+    const id = b.getAttribute('data-tm') || b.getAttribute('data-ts') || b.getAttribute('data-tr') || b.getAttribute('data-tx');
+    const tr = stTrackById(id);
+    if (!tr) return;
+    if (b.hasAttribute('data-tm')) tr.mute = !tr.mute;
+    else if (b.hasAttribute('data-ts')) tr.solo = !tr.solo;
+    else if (b.hasAttribute('data-tr')) { const on = !tr.arm; st.tracks.forEach(t => { t.arm = false; }); tr.arm = on; }
+    else if (b.hasAttribute('data-tx')) { stDeleteTrack(tr.id); return; }
+    stApplyTrackParams();
+    stRenderMt();
+  });
+  async function stDeleteTrack(id) {
+    const tr = stTrackById(id);
+    if (!tr) return;
+    const n = st.clips.filter(c => c.track === id).length;
+    if (n) {
+      const ok = await askConfirm({ title: `Eliminare "${tr.name}"?`, text: `${n === 1 ? 'La clip sulla traccia verrà tolta' : `Le ${n} clip sulla traccia verranno tolte`}. I file restano nel pannello File.`, ok: 'Elimina traccia', danger: true });
+      if (!ok) return;
+    }
+    if (st.play) stStopPlay();
+    st.tracks = st.tracks.filter(t => t.id !== id);
+    st.clips = st.clips.filter(c => c.track !== id);
+    if (st.selClip && !stClipById(st.selClip)) st.selClip = null;
+    if (st.selTrack === id) st.selTrack = null;
+    stMtCommit(`Eliminata ${tr.name}`);
+    stRenderMt();
+  }
+  stMtRows.addEventListener('input', e => {
+    const v = e.target.getAttribute('data-tvol'), p = e.target.getAttribute('data-tpan');
+    if (v) { const tr = stTrackById(v); if (!tr) return; tr.vol = parseFloat(e.target.value); const l = stMtRows.querySelector(`[data-tvolv="${v}"]`); if (l) l.textContent = stFmtDb(tr.vol); stApplyTrackParams(); }
+    if (p) { const tr = stTrackById(p); if (!tr) return; tr.pan = parseFloat(e.target.value); const l = stMtRows.querySelector(`[data-tpanv="${p}"]`); if (l) l.textContent = stPanLabel(tr.pan); stApplyTrackParams(); }
+  });
+  stMtRows.addEventListener('dblclick', e => {
+    const v = e.target.getAttribute && (e.target.getAttribute('data-tvol') || e.target.getAttribute('data-tpan'));
+    if (v) {
+      e.target.value = 0;
+      e.target.dispatchEvent(new Event('input', { bubbles: true }));
+      return;
+    }
+    const clipEl = e.target.closest('.st-clip');
+    if (clipEl) {
+      const c = stClipById(clipEl.getAttribute('data-clip'));
+      if (c) stOpenFile(c.fileId, { start: c.offset, end: c.offset + stClipLen(c) });
+    }
+  });
+  stMtRows.addEventListener('change', e => {
+    const id = e.target.getAttribute('data-tname');
+    if (!id) return;
+    const tr = stTrackById(id);
+    if (!tr) return;
+    tr.name = e.target.value.trim() || tr.name;
+    stMtCommit('Rinomina traccia');
+  });
+  stMtRows.addEventListener('keydown', e => { if (e.target.matches('.st-th-name') && e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
+
+  /* clip: sposta, accorcia, dissolvenze */
+  stMtRows.addEventListener('pointerdown', e => {
+    if (e.button !== 0 || st.busy) return;
+    const lane = e.target.closest('.st-mt-lane');
+    if (!lane) return;
+    const clipEl = e.target.closest('.st-clip');
+    if (!clipEl) {
+      st.selClip = null;
+      st.selTrack = lane.getAttribute('data-lane');
+      stMtRows.querySelectorAll('.st-clip.sel').forEach(x => x.classList.remove('sel'));
+      stMtRows.querySelectorAll('.st-mt-row').forEach(r => r.classList.toggle('selected-track', r.getAttribute('data-row') === st.selTrack));
+      stMtSeek(stLaneTime(e.clientX));
+      stUpdateInspector();
+      return;
+    }
+    e.preventDefault();
+    const c = stClipById(clipEl.getAttribute('data-clip'));
+    if (!c) return;
+    st.selClip = c.id; st.selTrack = c.track;
+    stMtRows.querySelectorAll('.st-clip.sel').forEach(x => x.classList.remove('sel'));
+    clipEl.classList.add('sel');
+    const h = e.target.getAttribute('data-h'), fd = e.target.getAttribute('data-f');
+    const mode = h ? 'trim-' + h : fd ? 'fade-' + fd : 'move';
+    st.drag = { mode, id: c.id, x0: e.clientX, y0: e.clientY, orig: { ...c }, el: clipEl, moved: false };
+    try { clipEl.setPointerCapture(e.pointerId); } catch (err) {}
+    stUpdateInspector();
+    stUpdateUI();
+  });
+  function stSnapTargets(exceptId) {
+    const pts = [0, st.cursor];
+    st.clips.forEach(c => { if (c.id !== exceptId && stFileById(c.fileId)) pts.push(c.start, c.start + stClipLen(c)); });
+    if (st.loopRegion) pts.push(st.loopRegion.start, st.loopRegion.end);
+    return pts;
+  }
+  function stSnapPoint(t, exceptId) {
+    const th = 9 / st.pps;
+    let best = t, bd = th;
+    for (const p of stSnapTargets(exceptId)) { const d = Math.abs(p - t); if (d < bd) { best = p; bd = d; } }
+    return best;
+  }
+  window.addEventListener('pointermove', e => {
+    const d = st.drag;
+    if (!d) return;
+    const dx = e.clientX - d.x0;
+    if (!d.moved && Math.abs(dx) < 3 && Math.abs(e.clientY - d.y0) < 3) return;
+    if (!d.moved) { d.moved = true; d.el.classList.add('dragging'); }
+    const c = stClipById(d.id);
+    const f = c && stFileById(c.fileId);
+    if (!c || !f) return;
+    const o = d.orig, dt = dx / st.pps, fdur = f.buffer.duration, olen = Math.min(o.len, fdur - o.offset);
+    if (d.mode === 'move') {
+      let ns = Math.max(0, o.start + dt);
+      if (st.snap && !e.altKey) {
+        const a = stSnapPoint(ns, c.id), b = stSnapPoint(ns + olen, c.id) - olen;
+        const da = Math.abs(a - ns), db = Math.abs(b - ns);
+        if (a !== ns && (b === ns || da <= db)) ns = a; else if (b !== ns) ns = Math.max(0, b);
+      }
+      c.start = ns;
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      const lane = under && under.closest ? under.closest('.st-mt-lane') : null;
+      if (lane && lane.getAttribute('data-lane') !== c.track) {
+        c.track = lane.getAttribute('data-lane');
+        st.selTrack = c.track;
+        lane.appendChild(d.el);
+      }
+    } else if (d.mode === 'trim-l') {
+      let ns = clamp(o.start + dt, Math.max(0, o.start - o.offset), o.start + olen - 0.01);
+      if (st.snap && !e.altKey) { const s = stSnapPoint(ns, c.id); if (s >= Math.max(0, o.start - o.offset) && s <= o.start + olen - 0.01) ns = s; }
+      const delta = ns - o.start;
+      c.start = ns; c.offset = o.offset + delta; c.len = olen - delta;
+      c.fin = Math.min(o.fin, c.len); c.fout = Math.min(o.fout, c.len - c.fin);
+    } else if (d.mode === 'trim-r') {
+      let ne = clamp(o.start + olen + dt, o.start + 0.01, o.start + (fdur - o.offset));
+      if (st.snap && !e.altKey) { const s = stSnapPoint(ne, c.id); if (s >= o.start + 0.01 && s <= o.start + (fdur - o.offset)) ne = s; }
+      c.len = ne - o.start;
+      c.fout = Math.min(o.fout, c.len); c.fin = Math.min(o.fin, c.len - c.fout);
+    } else if (d.mode === 'fade-in') {
+      c.fin = clamp(o.fin + dt, 0, olen - c.fout);
+    } else if (d.mode === 'fade-out') {
+      c.fout = clamp(o.fout - dt, 0, olen - c.fin);
+    }
+    stUpdateClipEl(d.el, c);
+    stUpdateInspector();
+    if (d.mode === 'move' || d.mode.startsWith('trim')) stSetStatus(`${stFileById(c.fileId).name}: ${stFmt(c.start)} → ${stFmt(c.start + stClipLen(c))}`);
+    else stSetStatus(`Dissolvenze: entrata ${stFmt(c.fin)} · uscita ${stFmt(c.fout)}`);
+  });
+  function stEndClipDrag() {
+    const d = st.drag;
+    if (!d) return;
+    st.drag = null;
+    d.el.classList.remove('dragging');
+    const c = stClipById(d.id);
+    if (!d.moved || !c) { stRenderMt(); return; }
+    const o = d.orig;
+    const changed = ['start', 'offset', 'len', 'fin', 'fout', 'track'].some(k => o[k] !== c[k]);
+    if (changed) {
+      stMtCommit(d.mode === 'move' ? 'Sposta clip' : d.mode.startsWith('trim') ? 'Accorcia clip' : 'Dissolvenza clip');
+      if (st.play && st.play.kind === 'multi' && !st.rec) stMtPlay(stPlayPos(), { keepOrigin: true });
+    }
+    stRenderMt();
+  }
+  window.addEventListener('pointerup', stEndClipDrag);
+  window.addEventListener('pointercancel', stEndClipDrag);
+
+  /* trascinare un file (dal pannello o dal computer) su una traccia */
+  stMtRows.addEventListener('dragover', e => {
+    const lane = e.target.closest('.st-mt-lane');
+    if (!lane) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    stMtRows.querySelectorAll('.st-mt-lane.drop').forEach(l => { if (l !== lane) l.classList.remove('drop'); });
+    lane.classList.add('drop');
+  });
+  stMtRows.addEventListener('dragleave', e => { const lane = e.target.closest('.st-mt-lane'); if (lane && !lane.contains(e.relatedTarget)) lane.classList.remove('drop'); });
+  stMtRows.addEventListener('drop', e => {
+    const lane = e.target.closest('.st-mt-lane');
+    stMtRows.querySelectorAll('.st-mt-lane.drop').forEach(l => l.classList.remove('drop'));
+    if (!lane) return;
+    e.preventDefault();
+    let t = stLaneTime(e.clientX);
+    if (st.snap) t = stSnapPoint(t, null);
+    const trackId = lane.getAttribute('data-lane');
+    const txt = e.dataTransfer.getData('text/plain') || '';
+    if (txt.startsWith('stfile:')) {
+      const f = stFileById(txt.slice(7));
+      if (!f) return;
+      stAddClip(f, trackId, t);
+      stMtCommit(`Clip ${f.name}`);
+      stRenderMt(); stUpdateUI();
+      return;
+    }
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      stImportFiles(e.dataTransfer.files, added => {
+        let at = t;
+        added.forEach(f => { stAddClip(f, trackId, at); at += f.buffer.duration; });
+        stMtCommit(added.length === 1 ? `Clip ${added[0].name}` : `${added.length} clip`);
+        stRenderMt(); stUpdateUI();
+      });
+    }
+  });
+
+  /* righello: clic = cursore, trascina = regione ciclica */
+  let stRulerDrag = null;
+  stMtRuler.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    stMtRuler.setPointerCapture(e.pointerId);
+    stRulerDrag = { t0: stLaneTime(e.clientX), x0: e.clientX, moved: false };
+  });
+  stMtRuler.addEventListener('pointermove', e => {
+    if (!stRulerDrag) return;
+    if (!stRulerDrag.moved && Math.abs(e.clientX - stRulerDrag.x0) < 4) return;
+    stRulerDrag.moved = true;
+    let t = stLaneTime(e.clientX);
+    if (st.snap) t = stSnapPoint(t, null);
+    const a = Math.min(stRulerDrag.t0, t), b = Math.max(stRulerDrag.t0, t);
+    st.loopRegion = { start: a, end: b };
+    st.loop = true;
+    stRenderMt(); stUpdateUI();
+  });
+  stMtRuler.addEventListener('pointerup', e => {
+    const d = stRulerDrag;
+    stRulerDrag = null;
+    if (!d) return;
+    if (!d.moved) { let t = stLaneTime(e.clientX); if (st.snap) t = stSnapPoint(t, null); stMtSeek(t); }
+    else if (st.loopRegion && st.loopRegion.end - st.loopRegion.start < 0.05) { st.loopRegion = null; stRenderMt(); stUpdateUI(); }
+    else stSetStatus(`Regione ciclica ${stFmt(st.loopRegion.start)} – ${stFmt(st.loopRegion.end)}. Tasto L per attivarla o disattivarla.`);
+  });
+  stMtRuler.addEventListener('dblclick', () => { st.loopRegion = null; stRenderMt(); stUpdateUI(); });
+
+  /* zoom della multitraccia */
+  function stMtZoom(factor, anchorT, anchorX) {
+    const old = st.pps;
+    const np = clamp(old * factor, ST_MIN_PPS, ST_MAX_PPS);
+    if (np === old) return;
+    const t = anchorT != null ? anchorT : (st.play && st.play.kind === 'multi' ? stPlayPos() : st.cursor);
+    const x = anchorX != null ? anchorX : (t * old - stMtScroll.scrollLeft);
+    st.pps = np;
+    stRenderMt();
+    stMtScroll.scrollLeft = Math.max(0, t * np - x);
+  }
+  function stMtFit() {
+    const vis = Math.max(200, stMtScroll.clientWidth - stHeadW() - 30);
+    const end = Math.max(stProjectEnd(), 5);
+    st.pps = clamp(vis / end, ST_MIN_PPS, ST_MAX_PPS);
+    stRenderMt();
+    stMtScroll.scrollLeft = 0;
+  }
+  stMtScroll.addEventListener('wheel', e => {
+    if (!(e.ctrlKey || e.metaKey || e.altKey)) return;
+    e.preventDefault();
+    const r = stMtRuler.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const t = Math.max(0, x / st.pps);
+    stMtZoom(Math.exp(-e.deltaY * 0.0022), t, e.clientX - stMtScroll.getBoundingClientRect().left - stHeadW());
+  }, { passive: false });
+
+  /* operazioni sulle clip */
+  function stSplit() {
+    const t = st.cursor;
+    let targets = st.clips.filter(c => stFileById(c.fileId) && t > c.start + 0.005 && t < c.start + stClipLen(c) - 0.005);
+    if (st.selClip) { const s = targets.find(c => c.id === st.selClip); if (s) targets = [s]; }
+    if (!targets.length) { stSetStatus('Metti il cursore giallo sopra una clip per dividerla.', true); return; }
+    targets.forEach(c => {
+      const len = stClipLen(c), cut = t - c.start;
+      const b = { ...c, id: stNewId('c'), start: t, offset: c.offset + cut, len: len - cut, fin: 0, fout: Math.min(c.fout, len - cut) };
+      c.len = cut; c.fout = 0; c.fin = Math.min(c.fin, cut);
+      st.clips.push(b);
+      if (st.selClip === c.id) st.selClip = b.id;
+    });
+    stMtCommit(targets.length === 1 ? 'Dividi clip' : `Dividi ${targets.length} clip`);
+    if (st.play && st.play.kind === 'multi') stMtPlay(stPlayPos(), { keepOrigin: true });
+    stRenderMt();
+  }
+  function stDupClip() {
+    const c = stClipById(st.selClip);
+    if (!c) return;
+    const n = { ...c, id: stNewId('c'), start: c.start + stClipLen(c) };
+    st.clips.push(n);
+    st.selClip = n.id;
+    stMtCommit('Duplica clip');
+    stRenderMt();
+  }
+  function stDelClip() {
+    const c = stClipById(st.selClip);
+    if (!c) return;
+    st.clips = st.clips.filter(x => x.id !== c.id);
+    st.selClip = null;
+    stMtCommit('Elimina clip');
+    if (st.play && st.play.kind === 'multi') stMtPlay(stPlayPos(), { keepOrigin: true });
+    stRenderMt();
+  }
+  $('stAddTrack').addEventListener('click', () => stAddTrack());
+  $('stSplit').addEventListener('click', stSplit);
+  $('stDupClip').addEventListener('click', stDupClip);
+  $('stDelClip').addEventListener('click', stDelClip);
+  stSnapBtn.addEventListener('click', () => { st.snap = !st.snap; stUpdateUI(); });
+
+  function stUpdateInspector() {
+    const c = stClipById(st.selClip);
+    stClipInsp.hidden = !c;
+    if (!c) return;
+    const f = stFileById(c.fileId);
+    stInspName.textContent = f ? f.name : '';
+    const len = stClipLen(c);
+    if (document.activeElement !== stInspGain) stInspGain.value = fmtNum(c.gain || 0);
+    if (document.activeElement !== stInspFin) stInspFin.value = fmtNum(Math.round(c.fin * 100) / 100);
+    if (document.activeElement !== stInspFout) stInspFout.value = fmtNum(Math.round(c.fout * 100) / 100);
+    stInspFin.dataset.max = String(Math.round(len * 100) / 100);
+    stInspFout.dataset.max = String(Math.round(len * 100) / 100);
+  }
+  function stInspApply() {
+    const c = stClipById(st.selClip);
+    if (!c) return;
+    const len = stClipLen(c);
+    const num = el => { const v = parseFloat(String(el.value).replace(',', '.').replace('−', '-')); return isFinite(v) ? v : 0; };
+    const g = clamp(num(stInspGain), -48, 24), fi = clamp(num(stInspFin), 0, len), fo = clamp(num(stInspFout), 0, len - fi);
+    if (g === c.gain && fi === c.fin && fo === c.fout) return;
+    c.gain = g; c.fin = fi; c.fout = fo;
+    stMtCommit('Modifica clip');
+    if (st.play && st.play.kind === 'multi') stMtPlay(stPlayPos(), { keepOrigin: true });
+    stRenderMt();
+  }
+  [stInspGain, stInspFin, stInspFout].forEach(el => el.addEventListener('change', stInspApply));
+  stWireNum(stClipInsp);
+  $('stInspOpen').addEventListener('click', () => {
+    const c = stClipById(st.selClip);
+    if (c) stOpenFile(c.fileId, { start: c.offset, end: c.offset + stClipLen(c) });
+  });
+  stMasterVol.addEventListener('input', () => {
+    st.masterDb = parseFloat(stMasterVol.value);
+    stMasterVal.textContent = stFmtDb(st.masterDb);
+    if (st.bus) st.bus.input.gain.setTargetAtTime(dbToGain(st.masterDb), st.bus.ctx.currentTime, 0.02);
+  });
+  stMasterVol.addEventListener('dblclick', () => { stMasterVol.value = 0; stMasterVol.dispatchEvent(new Event('input')); });
+
+  /* ================================================================
+     ASCOLTO
+     ================================================================ */
+  function stBus() {
+    const ctx = getAudioCtx();
+    if (st.bus && st.bus.ctx === ctx) return st.bus;
+    const input = ctx.createGain();
+    input.channelCount = 2; input.channelCountMode = 'explicit'; input.channelInterpretation = 'speakers';
+    input.gain.value = dbToGain(st.masterDb);
+    const split = ctx.createChannelSplitter(2);
+    const aL = ctx.createAnalyser(), aR = ctx.createAnalyser();
+    aL.fftSize = aR.fftSize = 1024;
+    input.connect(ctx.destination);
+    input.connect(split);
+    split.connect(aL, 0); split.connect(aR, 1);
+    st.bus = { ctx, input, aL, aR, buf: new Float32Array(1024) };
+    return st.bus;
+  }
+  function stPlayPos() {
+    const p = st.play;
+    if (!p) return 0;
+    const el = Math.max(0, p.ctx.currentTime - p.t0);
+    if (p.kind === 'wave') return p.loop ? p.a + (el % Math.max(1e-3, p.b - p.a)) : Math.min(p.b, p.a + el);
+    return p.from + el;
+  }
+  function stWavePlay(fromT) {
+    const f = stFile();
+    if (!f) return;
+    if (st.play) stStopPlay(true);
+    const bus = stBus(), ctx = bus.ctx;
+    const PB = stShown(f);
+    const dur = PB.duration;
+    let a, b, loop = false;
+    if (fromT == null && f.sel) { a = Math.min(f.sel.start, dur); b = Math.min(f.sel.end, dur); loop = st.loop; }
+    else { a = fromT != null ? fromT : f.cursor; b = dur; if (a >= dur - 0.005) a = 0; }
+    if (b - a < 0.002) return;
+    const src = ctx.createBufferSource();
+    src.buffer = PB;
+    src.connect(bus.input);
+    const t0 = ctx.currentTime + 0.03;
+    if (loop) { src.loop = true; src.loopStart = a; src.loopEnd = b; src.start(t0, a); }
+    else src.start(t0, a, b - a);
+    const play = { kind: 'wave', fileId: f.id, ctx, src, t0, a, b, loop };
+    src.onended = () => { if (st.play === play) stStopPlay(); };
+    st.play = play;
+    stStartRaf();
+    stUpdateUI();
+  }
+  function stBuildMix(ctx, dest, from, t0, until, withMeters) {
+    const anySolo = st.tracks.some(t => t.solo);
+    const tn = new Map(), sources = [];
+    st.tracks.forEach(tr => {
+      const g = ctx.createGain();
+      g.gain.value = stTrackAudible(tr, anySolo) ? dbToGain(tr.vol) : 0;
+      let last = g, pan = null;
+      if (ctx.createStereoPanner) { pan = ctx.createStereoPanner(); pan.pan.value = tr.pan / 100; g.connect(pan); last = pan; }
+      let an = null;
+      if (withMeters) { an = ctx.createAnalyser(); an.fftSize = 512; last.connect(an); }
+      last.connect(dest);
+      tn.set(tr.id, { g, pan, an });
+    });
+    st.clips.forEach(c => {
+      const tr = tn.get(c.track), f = stFileById(c.fileId);
+      if (!tr || !f) return;
+      const len = stClipLen(c);
+      if (len <= 0.001) return;
+      const cs = c.start, ce = cs + len;
+      const stopAt = until != null ? Math.min(ce, until) : ce;
+      if (stopAt <= from + 0.0005) return;
+      const startTl = Math.max(cs, from);
+      const when = t0 + (startTl - from);
+      const u0 = startTl - cs;
+      const src = ctx.createBufferSource();
+      src.buffer = f.buffer;
+      const cg = ctx.createGain();
+      stScheduleClipGain(cg.gain, c, len, u0, when);
+      src.connect(cg); cg.connect(tr.g);
+      src.start(when, c.offset + u0, stopAt - startTl);
+      sources.push(src);
+    });
+    return { tn, sources };
+  }
+  function stClipEnv(c, len, u) {
+    let g = dbToGain(c.gain || 0);
+    const fin = Math.min(c.fin, len), fout = Math.min(c.fout, len - fin);
+    if (fin > 0 && u < fin) g *= u / fin;
+    if (fout > 0 && u > len - fout) g *= Math.max(0, (len - u) / fout);
+    return g;
+  }
+  function stScheduleClipGain(param, c, len, u0, when) {
+    const G = dbToGain(c.gain || 0);
+    const fin = Math.min(c.fin, len), fout = Math.min(c.fout, len - fin);
+    const at = u => when + (u - u0);
+    param.setValueAtTime(stClipEnv(c, len, u0), when);
+    if (fin > 0 && u0 < fin) param.linearRampToValueAtTime(G, at(fin));
+    if (fout > 0) {
+      const fs = len - fout;
+      if (u0 < fs) param.setValueAtTime(G, at(fs));
+      param.linearRampToValueAtTime(0, at(len));
+    }
+  }
+  function stMtPlay(from, opts = {}) {
+    const origin = opts.keepOrigin && st.play && st.play.kind === 'multi' ? st.play.origin : st.cursor;
+    if (st.play) stStopPlay(true);
+    if (!st.clips.some(c => stFileById(c.fileId)) && !opts.force) { stSetStatus('La multitraccia è vuota: trascina un file su una traccia.'); stUpdateUI(); return; }
+    const bus = stBus(), ctx = bus.ctx;
+    const end = stProjectEnd();
+    const lr = st.loop && st.loopRegion && st.loopRegion.end - st.loopRegion.start > 0.05 && !opts.force ? st.loopRegion : null;
+    if (from == null) from = st.cursor;
+    if (lr && (from < lr.start - 1e-6 || from >= lr.end)) from = lr.start;
+    if (!lr && !opts.force && from >= end - 0.01) from = 0;
+    const t0 = ctx.currentTime + 0.06;
+    const nodes = stBuildMix(ctx, bus.input, from, t0, lr ? lr.end : null, true);
+    st.play = { kind: 'multi', ctx, t0, from, origin, lr, end, noEnd: !!opts.force, ...nodes };
+    stStartRaf();
+    stUpdateUI();
+  }
+  function stStopPlay(silent, pause) {
+    const p = st.play;
+    if (!p) return;
+    const pos = stPlayPos();
+    st.play = null;
+    const kill = s => { try { s.onended = null; s.stop(); } catch (e) {} try { s.disconnect(); } catch (e) {} };
+    if (p.kind === 'wave') kill(p.src);
+    else {
+      p.sources.forEach(kill);
+      p.tn.forEach(n => { try { n.g.disconnect(); } catch (e) {} try { n.pan && n.pan.disconnect(); } catch (e) {} });
+      stMtRows.querySelectorAll('[data-tmeter]').forEach(s => { s.style.width = '0'; });
+    }
+    if (pause) {
+      if (p.kind === 'wave') { const f = stFileById(p.fileId); if (f) { f.cursor = pos; f.sel = null; } }
+      else st.cursor = pos;
+    }
+    st.meter.until = performance.now() + 900;
+    if (!silent) {
+      stStartRaf();
+      stDrawWave(); stPositionMtLines(); stUpdateUI();
+    }
+  }
+  function stTogglePlay() {
+    if (st.rec) { stStopRec(); return; }
+    if (st.play) { stStopPlay(); return; }
+    if (st.view === 'wave') stWavePlay(); else stMtPlay();
+  }
+  stPlayBtn.addEventListener('click', () => { unlockAudio(); stTogglePlay(); });
+  $('stPause').addEventListener('click', () => { if (st.play) stStopPlay(false, true); });
+  function stGoStart() {
+    if (st.view === 'wave') { const f = stFile(); if (!f) return; f.sel = null; f.cursor = 0; f.view = { start: 0, end: stViewLen(f) }; stClampView(f); st.waveDirty = true; if (st.play) stWavePlay(0); stDrawWave(); }
+    else { stMtSeek(0); stMtScroll.scrollLeft = 0; }
+    stUpdateUI();
+  }
+  function stGoEnd() {
+    if (st.view === 'wave') { const f = stFile(); if (!f) return; if (st.play) stStopPlay(); f.sel = null; f.cursor = f.buffer.duration; const vl = stViewLen(f); f.view = { start: f.buffer.duration - vl, end: f.buffer.duration }; stClampView(f); st.waveDirty = true; stDrawWave(); }
+    else { if (st.play) stStopPlay(); stMtSeek(stProjectEnd()); stMtScroll.scrollLeft = Math.max(0, st.cursor * st.pps - stMtScroll.clientWidth / 2); }
+    stUpdateUI();
+  }
+  $('stHome').addEventListener('click', stGoStart);
+  $('stEnd').addEventListener('click', stGoEnd);
+  function stToggleLoop() {
+    st.loop = !st.loop;
+    if (st.play) {
+      if (st.play.kind === 'wave') { const f = stFile(); if (f && f.sel) stWavePlay(); }
+      else stMtPlay(stPlayPos(), { keepOrigin: true });
+    }
+    stRenderMt(); stUpdateUI();
+  }
+  stLoopBtn.addEventListener('click', stToggleLoop);
+
+  /* misuratori e animazione */
+  function stStartRaf() { if (!st.raf) st.raf = requestAnimationFrame(stTick); }
+  function stPeak(an, buf) {
+    if (!an) return 0;
+    const b = buf.length === an.fftSize ? buf : new Float32Array(an.fftSize);
+    an.getFloatTimeDomainData(b);
+    let m = 0;
+    for (let i = 0; i < b.length; i++) { const a = Math.abs(b[i]); if (a > m) m = a; }
+    return m;
+  }
+  const stDbPct = v => { const db = gainToDb(v); return clamp((db + 60) / 60, 0, 1); };
+  function stTick() {
+    st.raf = null;
+    const p = st.play;
+    if (p) {
+      let pos = stPlayPos();
+      if (p.kind === 'multi') {
+        if (p.lr && pos >= p.lr.end - 0.002) { stMtPlay(p.lr.start, { keepOrigin: true }); pos = p.lr.start; }
+        else if (!p.lr && !p.noEnd && pos >= p.end + 0.05) { stStopPlay(); return; }
+        else {
+          stPositionMtLines(pos);
+          const x = pos * st.pps, vis = stMtScroll.clientWidth - stHeadW();
+          if (x > stMtScroll.scrollLeft + vis - 30 || x < stMtScroll.scrollLeft) stMtScroll.scrollLeft = Math.max(0, x - 40);
+          const tmp = new Float32Array(512);
+          p.tn.forEach((n, id) => {
+            const el = stMtRows.querySelector(`[data-tmeter="${id}"]`);
+            if (el) el.style.width = (stDbPct(stPeak(n.an, tmp)) * 100).toFixed(1) + '%';
+          });
+        }
+      } else {
+        const f = stFileById(p.fileId);
+        if (f && st.activeId === f.id) {
+          const vl = stViewLen(f);
+          if (!stWaveDrag && (pos > f.view.end || pos < f.view.start) && vl < f.buffer.duration - 1e-6) {
+            f.view = { start: pos - vl * 0.05, end: pos - vl * 0.05 + vl };
+            stClampView(f);
+            st.waveDirty = true;
+          }
+          stDrawWave();
+        }
+      }
+      stClock.textContent = stFmt(pos);
+    }
+    stDrawMeter();
+    if (st.play || st.rec || performance.now() < st.meter.until) st.raf = requestAnimationFrame(stTick);
+  }
+  function stDrawMeter() {
+    const c = stMeter, dpr = stDpr();
+    const r = c.getBoundingClientRect();
+    const W = Math.max(1, Math.round(r.width * dpr)), H = Math.max(1, Math.round(r.height * dpr));
+    if (c.width !== W) c.width = W;
+    if (c.height !== H) c.height = H;
+    const g = c.getContext('2d');
+    let l = 0, rr = 0;
+    if (st.rec && st.rec.an) { l = rr = stPeak(st.rec.an, st.rec.buf); }
+    else if (st.play && st.bus) { l = stPeak(st.bus.aL, st.bus.buf); rr = stPeak(st.bus.aR, st.bus.buf); }
+    const m = st.meter, now = performance.now();
+    m.l = Math.max(l, m.l * 0.86); m.r = Math.max(rr, m.r * 0.86);
+    if (m.l > m.pl || now - m.hold > 1200) { m.pl = Math.max(m.l, m.pl * 0.97); }
+    if (m.r > m.pr || now - m.hold > 1200) { m.pr = Math.max(m.r, m.pr * 0.97); }
+    if (l > 0.98 || rr > 0.98) m.hold = now;
+    g.clearRect(0, 0, W, H);
+    const pad = 4 * dpr, bh = (H - pad * 3) / 2;
+    const grad = g.createLinearGradient(pad, 0, W - pad, 0);
+    grad.addColorStop(0, '#3ee6c4'); grad.addColorStop(0.7, '#3ee6c4'); grad.addColorStop(0.86, '#ffd23d'); grad.addColorStop(1, '#ff4d5e');
+    [[m.l, m.pl], [m.r, m.pr]].forEach(([v, pk], i) => {
+      const y = pad + i * (bh + pad), w = W - pad * 2;
+      g.fillStyle = 'rgba(255,255,255,0.06)'; g.fillRect(pad, y, w, bh);
+      g.fillStyle = grad; g.fillRect(pad, y, w * stDbPct(v), bh);
+      const px = pad + w * stDbPct(pk);
+      g.fillStyle = pk > 0.98 ? '#ff4d5e' : 'rgba(255,255,255,0.8)'; g.fillRect(px - dpr, y, 2 * dpr, bh);
+    });
+    g.fillStyle = 'rgba(255,255,255,0.18)';
+    [-48, -36, -24, -12, -6, -3].forEach(db => { const x = pad + (W - pad * 2) * ((db + 60) / 60); g.fillRect(Math.round(x), pad, 1, H - pad * 2); });
+  }
+
+  /* ================================================================
+     REGISTRAZIONE
+     ================================================================ */
+  async function stToggleRec(forceNewFile) {
+    if (st.rec) { stStopRec(); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) { stSetStatus('Questo browser non permette di registrare dal microfono.', true); return; }
+    unlockAudio();
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } }); }
+    catch (err) { console.error(err); stSetStatus('Microfono non disponibile: controlla i permessi del browser.', true); return; }
+    if (st.play) stStopPlay(true);
+    const ctx = getAudioCtx();
+    const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'].find(m => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
+    let mr;
+    try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); }
+    catch (err) { stream.getTracks().forEach(t => t.stop()); stSetStatus('Il browser non riesce a registrare.', true); return; }
+    const srcNode = ctx.createMediaStreamSource(stream);
+    const an = ctx.createAnalyser(); an.fftSize = 1024;
+    srcNode.connect(an);
+    let target = null;
+    if (!forceNewFile && st.view === 'multi') {
+      let tr = st.tracks.find(t => t.arm);
+      if (!tr) {
+        tr = stTrackById(st.selTrack) || st.tracks[0] || stAddTrack(true);
+        st.tracks.forEach(t => { t.arm = false; });
+        tr.arm = true;
+      }
+      target = { track: tr.id, start: st.cursor };
+    }
+    const rec = { stream, mr, chunks: [], srcNode, an, buf: new Float32Array(1024), target, t0: performance.now(), recPerf: null, playPerf: null };
+    mr.ondataavailable = e => { if (e.data && e.data.size) rec.chunks.push(e.data); };
+    mr.onstart = () => { rec.recPerf = performance.now(); };
+    mr.onstop = () => stFinishRec(rec);
+    st.rec = rec;
+    mr.start(250);
+    if (target) {
+      stRenderMt();
+      if (st.clips.some(c => stFileById(c.fileId))) { stMtPlay(target.start, { force: true }); rec.playPerf = performance.now() + 60; }
+      stSetStatus(`Registro su "${stTrackById(target.track).name}" da ${stFmt(target.start)}… premi di nuovo ● o Spazio per fermare.`);
+    } else stSetStatus('Registro un nuovo file… premi di nuovo ● o Spazio per fermare.');
+    stStartRaf();
+    stUpdateUI();
+  }
+  function stStopRec() {
+    const r = st.rec;
+    if (!r) return;
+    st.rec = null;
+    try { r.mr.stop(); } catch (e) {}
+    r.stream.getTracks().forEach(t => t.stop());
+    try { r.srcNode.disconnect(); } catch (e) {}
+    if (st.play) stStopPlay(true);
+    st.meter.until = performance.now() + 900;
+    stStartRaf();
+    stSetStatus('Preparo la registrazione…');
+    stUpdateUI();
+  }
+  async function stFinishRec(r) {
+    const blob = new Blob(r.chunks, { type: (r.mr && r.mr.mimeType) || 'audio/webm' });
+    if (!blob.size) { stSetStatus('Registrazione vuota.', true); return; }
+    let buf;
+    try { buf = await decodeBlob(blob); }
+    catch (err) { console.error(err); stSetStatus('Non riesco a leggere la registrazione.', true); return; }
+    const name = `Registrazione ${st.recCount++}`;
+    if (r.target && stTrackById(r.target.track)) {
+      const ctx = getAudioCtx();
+      if (r.playPerf && r.recPerf) {
+        const lead = (r.playPerf - r.recPerf) / 1000 + (ctx.outputLatency || ctx.baseLatency || 0);
+        if (lead > 0.001 && lead < buf.duration - 0.05) buf = sliceBuf(buf, Math.round(lead * buf.sampleRate), buf.length);
+      }
+      const f = stAddFile(buf, name, 'rec');
+      stAddClip(f, r.target.track, r.target.start);
+      stMtCommit('Registrazione');
+      stRenderMt();
+    } else {
+      const f = stAddFile(buf, name, 'rec');
+      stOpenFile(f.id);
+    }
+    stSetStatus(`${name}: ${stFmt(buf.duration)}`);
+    stUpdateUI();
+  }
+  stRecBtn.addEventListener('click', () => stToggleRec(false));
+  $('stRecNewBtn').addEventListener('click', () => { if (st.rec) stStopRec(); else stToggleRec(true); });
+
+  /* ================================================================
+     ESPORTAZIONE
+     ================================================================ */
+  function stOpenExport() {
+    if (st.busy) return;
+    const isWave = st.view === 'wave';
+    const f = stFile();
+    if (isWave && !f) { stSetStatus('Apri un file da esportare.', true); return; }
+    if (!isWave && !st.clips.some(c => stFileById(c.fileId))) { stSetStatus('La multitraccia è vuota: niente da esportare.', true); return; }
+    if (st.play) stStopPlay();
+    $('stExportTitle').textContent = isWave ? 'Esporta il file' : 'Esporta il mix';
+    stExportText.textContent = isWave
+      ? `"${f.name}" · ${stFmt(f.buffer.duration)} · ${f.buffer.numberOfChannels > 1 ? 'stereo' : 'mono'}`
+      : `Mixdown stereo di ${st.tracks.length} ${st.tracks.length === 1 ? 'traccia' : 'tracce'} (${st.clips.length} clip) · ${stFmt(stProjectEnd())}. Volume, pan, muto, solo e dissolvenze sono inclusi.`;
+    stExportPartBtn.textContent = isWave ? 'Selezione' : 'Regione ciclica';
+    stExportPartBtn.disabled = isWave ? !f.sel : !st.loopRegion;
+    st.exportRange = !stExportPartBtn.disabled && (isWave ? !!f.sel : st.loop) ? 'part' : 'all';
+    stExportName.value = isWave ? f.name : 'Mix Studio';
+    $('stExportToWave').hidden = isWave;
+    stExportBar.style.width = '0';
+    stSyncExportSeg();
+    stExportOverlay.classList.add('visible');
+    setTimeout(() => stExportName.focus(), 60);
+  }
+  function stSyncExportSeg() {
+    stExportOverlay.querySelectorAll('[data-stfmt]').forEach(b => b.classList.toggle('active', b.getAttribute('data-stfmt') === st.exportFmt));
+    stExportOverlay.querySelectorAll('[data-strange]').forEach(b => b.classList.toggle('active', b.getAttribute('data-strange') === st.exportRange));
+    stExportOverlay.querySelectorAll('.confirm-btn').forEach(b => { b.disabled = st.exporting && b.id !== 'stExportCancel'; });
+  }
+  stExportOverlay.querySelectorAll('[data-stfmt]').forEach(b => b.addEventListener('click', () => { st.exportFmt = b.getAttribute('data-stfmt'); stSyncExportSeg(); }));
+  stExportOverlay.querySelectorAll('[data-strange]').forEach(b => b.addEventListener('click', () => { if (!b.disabled) { st.exportRange = b.getAttribute('data-strange'); stSyncExportSeg(); } }));
+  function stCloseExport() { if (st.exporting) return; stExportOverlay.classList.remove('visible'); }
+  $('stExportCancel').addEventListener('click', stCloseExport);
+  stExportOverlay.addEventListener('click', e => { if (e.target === stExportOverlay) stCloseExport(); });
+  $('stExportBtn').addEventListener('click', stOpenExport);
+  async function stExportBuffer() {
+    if (st.view === 'wave') {
+      const f = stFile();
+      if (st.exportRange === 'part' && f.sel) { const [s0, s1] = secToSamples(f.buffer, f.sel); return sliceBuf(f.buffer, s0, s1); }
+      return f.buffer;
+    }
+    const range = st.exportRange === 'part' && st.loopRegion ? st.loopRegion : { start: 0, end: stProjectEnd() };
+    if (range.end - range.start < 0.01) throw new Error('Non c\'è niente da esportare.');
+    return await stRenderRange(range.start, range.end);
+  }
+  async function stRenderRange(a, b) {
+    const sr = getAudioCtx().sampleRate;
+    const Off = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    const off = new Off(2, Math.max(1, Math.ceil((b - a) * sr)), sr);
+    const master = off.createGain();
+    master.gain.value = dbToGain(st.masterDb);
+    master.connect(off.destination);
+    stBuildMix(off, master, a, 0, b, false);
+    return await off.startRendering();
+  }
+
+  /* ================================================================
+     MULTITRACCIA PER IL SINGOLO EFFETTO
+     Dal pulsante "Multitraccia" dell'editor dell'effetto: la sessione
+     multitraccia in corso viene messa da parte, l'effetto va sulla
+     traccia 1 e il mix finale diventa la versione del pad (solo per
+     la sessione, come "Usa questa versione"). Poi tutto torna com'era.
+     ================================================================ */
+  const stFxBar = $('stFxBar'), stFxAddSfx = $('stFxAddSfx');
+  function stEnterFxSession(s, base) {
+    if (st.fx) {
+      toast(`Stai già modificando "${st.fx.name}" in multitraccia: finisci quello prima.`);
+      setTab('studio'); stSetView('multi');
+      return;
+    }
+    if (st.rec) stStopRec();
+    if (st.play) stStopPlay(true);
+    st.fx = {
+      soundId: s.id, name: s.name, base, files: [],
+      stash: { tracks: st.tracks, clips: st.clips, mt: st.mt, cursor: st.cursor, loopRegion: st.loopRegion, loop: st.loop, selClip: st.selClip, selTrack: st.selTrack, pps: st.pps }
+    };
+    st.tracks = []; st.clips = [];
+    for (let i = 0; i < 3; i++) stAddTrack(true);
+    st.tracks[0].name = s.name.slice(0, 40);
+    const f = stAddFile(base.buffer, `${s.name} (effetto)`, 'sfx');
+    st.fx.files.push(f.id);
+    stAddClip(f, st.tracks[0].id, 0);
+    st.selTrack = st.tracks[1].id;
+    st.cursor = 0; st.loopRegion = null; st.loop = false;
+    st.mt = { states: [{ label: 'Effetto di partenza', json: stMtSnapshot() }], pos: 0 };
+    $('stFxName').textContent = s.name;
+    stFxAddSfx.innerHTML = soundOptionsHTML('Aggiungi un effetto su una traccia…', '');
+    setTab('studio');
+    stSetView('multi');
+    stMtFit();
+    stUpdateUI();
+    stSetStatus(`"${s.name}" è sulla traccia 1. Trascina altri suoni sulle tracce oppure scegli un effetto dal menu verde.`);
+  }
+  function stExitFx() {
+    const fx = st.fx;
+    if (!fx) return;
+    if (st.rec) stStopRec();
+    if (st.play) stStopPlay(true);
+    const k = fx.stash;
+    st.tracks = k.tracks; st.clips = k.clips; st.mt = k.mt; st.cursor = k.cursor;
+    st.loopRegion = k.loopRegion; st.loop = k.loop; st.selClip = k.selClip; st.selTrack = k.selTrack; st.pps = k.pps;
+    // via i file creati solo per questa modifica (se la sessione ripristinata non li usa)
+    st.files = st.files.filter(f => !fx.files.includes(f.id) || st.clips.some(c => c.fileId === f.id));
+    if (!stFileById(st.activeId)) st.activeId = st.files.length ? st.files[st.files.length - 1].id : null;
+    st.fx = null;
+    st.waveDirty = st.ovDirty = true;
+    stRenderFiles(); stRenderMt(); stUpdateUI();
+  }
+  stFxAddSfx.addEventListener('focus', () => { if (!stFxAddSfx.value) stFxAddSfx.innerHTML = soundOptionsHTML('Aggiungi un effetto su una traccia…', ''); });
+  stFxAddSfx.addEventListener('change', async () => {
+    const snd = sounds.find(x => x.id === stFxAddSfx.value);
+    stFxAddSfx.value = '';
+    if (!snd || !st.fx) return;
+    stSetStatus(`Carico ${snd.name}…`);
+    try {
+      const buf = await stSfxBuffer(snd);
+      if (!st.fx) return;
+      const f = stAddFile(buf, snd.name, 'sfx');
+      st.fx.files.push(f.id);
+      const tid = stFreeTrack(st.cursor, buf.duration);
+      stAddClip(f, tid, st.cursor);
+      stMtCommit(`Aggiunto ${snd.name}`);
+      stRenderMt();
+      stSetStatus(`"${snd.name}" su ${stTrackById(tid).name} da ${stFmt(st.cursor)}: trascinalo dove vuoi.`);
+    } catch (err) { console.error(err); stSetStatus(err.message || 'Non riesco a caricare l\'effetto.', true); }
+  });
+  $('stFxCancel').addEventListener('click', async () => {
+    if (!st.fx || st.busy) return;
+    if (st.mt.pos > 0) {
+      const ok = await askConfirm({ title: 'Lasciare la multitraccia?', text: `Il mix fatto per "${st.fx.name}" andrà perso. L'effetto resta com'era.`, ok: 'Lascia', danger: true });
+      if (!ok) return;
+    }
+    stExitFx();
+    setTab('sfx');
+  });
+  $('stFxApply').addEventListener('click', async () => {
+    const fx = st.fx;
+    if (!fx || st.busy) return;
+    const s = sounds.find(x => x.id === fx.soundId);
+    if (!s) { toast('Questo effetto non esiste più nella libreria.'); stExitFx(); return; }
+    const end = stProjectEnd();
+    if (end < 0.01) { stSetStatus('La multitraccia è vuota: non c\'è niente da usare.', true); return; }
+    if (st.rec) stStopRec();
+    if (st.play) stStopPlay(true);
+    st.busy = true; stUpdateUI();
+    stSetStatus('Mixo le tracce…');
+    try {
+      const mix = await stRenderRange(0, end);
+      const b = fx.base;
+      const before = { buffer: b.buffer, sel: null, cursor: 0, markers: [], view: { start: 0, end: b.buffer.duration } };
+      const n = st.clips.filter(c => stFileById(c.fileId)).length;
+      commitSfxSession(s, {
+        buffer: mix, original: b.original,
+        history: b.history.concat([before]),
+        steps: b.steps.concat([{ label: `Mix multitraccia (${n} ${n === 1 ? 'clip' : 'clip'})`, op: 'multi', params: {}, preset: false }])
+      });
+      st.busy = false;
+      stExitFx();
+      setTab('sfx');
+      toast(`"${s.name}" ora suona con il mix della multitraccia, finché non ricarichi la pagina.`);
+    } catch (err) {
+      console.error(err);
+      st.busy = false;
+      stSetStatus('Mix non riuscito.', true);
+      stUpdateUI();
+    }
+  });
+  async function stExportGo(dest) {
+    if (st.exporting) return;
+    const name = (stExportName.value || '').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g, '_') || 'Studio';
+    st.exporting = true; stSyncExportSeg();
+    stExportBar.style.width = '8%';
+    try {
+      let buf = await stExportBuffer();
+      stExportBar.style.width = '35%';
+      if (dest === 'wave') {
+        st.exporting = false;
+        stExportOverlay.classList.remove('visible');
+        const nf = stAddFile(buf, name, 'mix');
+        stOpenFile(nf.id);
+        stSetStatus(`Mix aperto come "${nf.name}".`);
+        return;
+      }
+      let cats = null;
+      if (dest === 'lib') {
+        cats = await pickCategories(1, { title: 'In che categoria vuoi metterlo?', okLabel: 'Salva' });
+        if (cats === null) { st.exporting = false; stSyncExportSeg(); stExportBar.style.width = '0'; return; }
+      }
+      let blob, ext = 'wav';
+      if (st.exportFmt === 'mp3') {
+        try { blob = await encodeMp3(buf, p => { stExportBar.style.width = (35 + p * 60).toFixed(0) + '%'; }); ext = 'mp3'; }
+        catch (err) { console.error(err); toast('Non riesco a creare l\'MP3 (controlla la connessione): uso il WAV.'); }
+      }
+      if (!blob) blob = encodeWav(buf);
+      stExportBar.style.width = '100%';
+      if (dest === 'dl') {
+        triggerDownload(blob, `${name}.${ext}`);
+        stSetStatus(`Scaricato "${name}.${ext}" (${(blob.size / 1048576).toFixed(1).replace('.', ',')} MB).`);
+      } else {
+        stSetStatus('Salvo negli Effetti…');
+        await addSound(new File([blob], `${name}.${ext}`, { type: blob.type }), cats);
+        toast(`"${name}" salvato negli Effetti.`);
+        stSetStatus(`"${name}" salvato negli Effetti.`);
+      }
+      st.exporting = false;
+      stExportOverlay.classList.remove('visible');
+    } catch (err) {
+      console.error('Esportazione non riuscita:', err);
+      st.exporting = false;
+      stSyncExportSeg();
+      stExportBar.style.width = '0';
+      stExportText.textContent = err && err.message ? err.message : 'Esportazione non riuscita.';
+    }
+  }
+  $('stExportDl').addEventListener('click', () => stExportGo('dl'));
+  $('stExportToLib').addEventListener('click', () => stExportGo('lib'));
+  $('stExportToWave').addEventListener('click', () => stExportGo('wave'));
+  stExportName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); stExportGo('dl'); } });
+
+  /* ================================================================
+     VISTA, INTERFACCIA, TASTIERA
+     ================================================================ */
+  function stSetView(v) {
+    if (st.view !== v && st.play) stStopPlay();
+    st.view = v;
+    stTab.querySelectorAll('[data-stview]').forEach(b => {
+      const on = b.getAttribute('data-stview') === v;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    stWaveView.hidden = v !== 'wave';
+    stMultiView.hidden = v !== 'multi';
+    stFxBox.hidden = v !== 'wave';
+    if (v === 'wave') { st.waveDirty = st.ovDirty = true; stResizeWave(); }
+    else stRenderMt();
+    stUpdateUI();
+  }
+  stTab.querySelectorAll('[data-stview]').forEach(b => b.addEventListener('click', () => stSetView(b.getAttribute('data-stview'))));
+
+  function stUndo() {
+    if (st.view === 'wave') { const f = stFile(); if (f) stFileGoto(f, f.pos - 1); }
+    else stMtGoto(st.mt.pos - 1);
+  }
+  function stRedo() {
+    if (st.view === 'wave') { const f = stFile(); if (f) stFileGoto(f, f.pos + 1); }
+    else stMtGoto(st.mt.pos + 1);
+  }
+  stUndoBtn.addEventListener('click', stUndo);
+  stRedoBtn.addEventListener('click', stRedo);
+  $('stZoomIn').addEventListener('click', () => st.view === 'wave' ? stWaveZoom(0.5) : stMtZoom(1.6));
+  $('stZoomOut').addEventListener('click', () => st.view === 'wave' ? stWaveZoom(2) : stMtZoom(1 / 1.6));
+  $('stZoomFit').addEventListener('click', () => st.view === 'wave' ? stWaveFit() : stMtFit());
+
+  function stRenderHistory() {
+    let items, pos, go;
+    if (st.view === 'wave') {
+      const f = stFile();
+      if (!f) { stHistory.innerHTML = '<li class="st-fx-off">Nessun file aperto.</li>'; stHistory.dataset.html = ''; return; }
+      items = f.states; pos = f.pos; go = k => stFileGoto(f, k);
+    } else { items = st.mt.states; pos = st.mt.pos; go = stMtGoto; }
+    const html = items.map((s, i) => `<li class="${i === pos ? 'current' : i > pos ? 'future' : ''}"><button type="button" data-sth="${i}"><span class="n">${i}</span>${escapeHtml(s.label)}</button></li>`).join('');
+    if (stHistory.dataset.html !== html) {
+      stHistory.dataset.html = html;
+      stHistory.innerHTML = html;
+      stHistory.querySelectorAll('[data-sth]').forEach(b => b.addEventListener('click', () => go(parseInt(b.getAttribute('data-sth'), 10))));
+      const cur = stHistory.querySelector('.current');
+      if (cur) stHistory.scrollTop = Math.max(0, cur.offsetTop - stHistory.clientHeight + cur.offsetHeight + 4);
+    }
+  }
+
+  function stUpdateUI() {
+    if (!ST_READY) return;
+    stFxBar.hidden = !st.fx;
+    $('stFxApply').disabled = st.busy;
+    const f = stFile();
+    const isWave = st.view === 'wave';
+    const canEdit = !!f && !st.busy && st.ab === 'edit';
+    const need = {
+      view: !!f && !st.busy,
+      selview: !!f && !st.busy && !!f.sel,
+      abable: !!f && !st.busy && (st.ab === 'orig' || f.states[0].buffer !== f.buffer),
+      file: canEdit, sel: canEdit && !!f.sel, clip: canEdit && !!vedClipboard,
+      stereo: canEdit && f.buffer.numberOfChannels > 1, mono: canEdit && f.buffer.numberOfChannels === 1,
+      clipsel: !!stClipById(st.selClip) && !st.busy
+    };
+    stTab.querySelectorAll('[data-stneeds]').forEach(b => { b.disabled = !need[b.getAttribute('data-stneeds')]; });
+    stPlayBtn.innerHTML = st.play || st.rec ? STOP_SVG : PLAY_SVG;
+    stPlayBtn.title = st.rec ? 'Ferma la registrazione (Spazio)' : st.play ? 'Ferma (Spazio)' : 'Riproduci (Spazio)';
+    stPlayBtn.disabled = st.busy || (isWave ? !f : false);
+    $('stPause').disabled = !st.play;
+    stRecBtn.classList.toggle('on', !!st.rec);
+    stRecBtn.title = st.rec ? 'Ferma la registrazione' : isWave ? 'Registra un nuovo file dal microfono' : 'Registra sulla traccia armata (R), dal cursore';
+    $('stRecNewBtn').classList.toggle('primary-soft', !!st.rec);
+    stLoopBtn.setAttribute('aria-pressed', String(st.loop));
+    stSnapBtn.setAttribute('aria-pressed', String(st.snap));
+    stClockWrap.classList.toggle('rec', !!st.rec);
+    $('stAbEdit').classList.toggle('active', st.ab === 'edit');
+    $('stAbOrig').classList.toggle('active', st.ab === 'orig');
+    stWaveWrap.classList.toggle('orig', st.ab === 'orig' && !!f);
+    stFxList.classList.toggle('st-locked', st.ab === 'orig');
+    if (f) {
+      const lb = stShown(f);
+      if (!f._loud || f._loud.buf !== lb) f._loud = { buf: lb, ...measureLoudness(lb) };
+      $('stLoud').innerHTML = `<b>${formatLufs(f._loud.lufs)}</b> LUFS <i class="${f._loud.peakDb > -1 ? 'hot' : ''}">picco ${formatDb(f._loud.peakDb)}</i>`;
+    } else $('stLoud').textContent = '';
+    if (isWave) {
+      stUndoBtn.disabled = !f || st.busy || st.ab === 'orig' || f.pos <= 0;
+      stRedoBtn.disabled = !f || st.busy || st.ab === 'orig' || f.pos >= f.states.length - 1;
+    } else {
+      stUndoBtn.disabled = st.mt.pos <= 0;
+      stRedoBtn.disabled = st.mt.pos >= st.mt.states.length - 1;
+    }
+    if (!st.play) stClock.textContent = stFmt(isWave ? (f ? f.cursor : 0) : st.cursor);
+    if (st.rec) stClockSub.textContent = '● REC';
+    else if (isWave) stClockSub.textContent = f ? `${Math.round(f.buffer.sampleRate / 100) / 10} kHz · ${f.buffer.numberOfChannels > 1 ? 'stereo' : 'mono'} · ${stFmt(f.buffer.duration)}` : '—';
+    else stClockSub.textContent = `${st.tracks.length} tracce · fine ${stFmt(stProjectEnd())}`;
+    // forma d'onda
+    if (f) {
+      stWaveTitle.innerHTML = `${escapeHtml(f.name)}<small>${stFmt(f.buffer.duration)} · ${f.buffer.numberOfChannels > 1 ? 'stereo' : 'mono'} · ${f.buffer.sampleRate} Hz</small>`;
+      stSelInfo.innerHTML = f.sel
+        ? `Selezione <b>${stFmt(f.sel.start)}</b> – <b>${stFmt(f.sel.end)}</b> (${stFmt(f.sel.end - f.sel.start)})`
+        : `Cursore <b>${stFmt(f.cursor)}</b> · trascina sull'onda per selezionare`;
+      stScope.innerHTML = f.sel ? 'su: <b>selezione</b>' : 'su: <b>tutto il file</b>';
+    } else {
+      stWaveTitle.textContent = 'Nessun file aperto';
+      stSelInfo.textContent = '—';
+      stScope.textContent = 'apri un file';
+    }
+    stRenderHistory();
+  }
+
+  /* tastiera: attiva solo con la scheda Studio aperta; ha la precedenza sui tasti degli effetti */
+  document.addEventListener('keydown', e => {
+    if (!stIsVisible()) return;
+    if (document.body.classList.contains('login-locked') || blockingOverlayOpen()) return;
+    if (stExportOverlay.classList.contains('visible')) {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); stCloseExport(); }
+      return;
+    }
+    if (kbOverlay.classList.contains('visible') || regiaOverlay.classList.contains('visible') || hotkeyOverlay.classList.contains('visible')) return;
+    if (isTypingTarget(e.target)) return;
+    const mod = e.ctrlKey || e.metaKey, k = (e.key || '').toLowerCase();
+    const isWave = st.view === 'wave', f = stFile();
+    let handled = true;
+    if (e.code === 'Space' && !mod) { if (!e.repeat) { unlockAudio(); stTogglePlay(); } }
+    else if (mod && k === 'z') { if (e.shiftKey) stRedo(); else stUndo(); }
+    else if (mod && k === 'y') stRedo();
+    else if (mod && k === 'a' && isWave && f) stWaveSelectAll();
+    else if (mod && k === 'c' && isWave && f && f.sel) stWaveCopy();
+    else if (mod && k === 'x' && isWave && f && f.sel) stWaveOp('cut');
+    else if (mod && k === 'v' && isWave && f && vedClipboard) stWaveOp('paste');
+    else if (mod && k === 'd' && !isWave && st.selClip) stDupClip();
+    else if (!mod && (e.key === 'Delete' || e.key === 'Backspace')) {
+      if (isWave && f && f.sel) stWaveOp('delete');
+      else if (!isWave && st.selClip) stDelClip();
+      else handled = false;
+    }
+    else if (!mod && e.key === 'Home') stGoStart();
+    else if (!mod && e.key === 'End') stGoEnd();
+    else if (!mod && !e.altKey && k === 'l') stToggleLoop();
+    else if (!mod && !e.altKey && k === 's' && !isWave) stSplit();
+    else if (!mod && !e.altKey && k === 'b' && isWave && f && f.sel) stWaveOp('beep');
+    else if (!mod && !e.altKey && k === 'o' && isWave && f) stSetAb(st.ab === 'edit' ? 'orig' : 'edit');
+    else if (!mod && (e.key === '+' || e.key === '=')) { if (isWave) stWaveZoom(0.5); else stMtZoom(1.6); }
+    else if (!mod && (e.key === '-' || e.key === '_')) { if (isWave) stWaveZoom(2); else stMtZoom(1 / 1.6); }
+    else if (!mod && e.key === '0') { if (isWave) stWaveFit(); else stMtFit(); }
+    else if (e.key === 'Escape') {
+      if (isWave && f && f.sel) { f.sel = null; stDrawWave(); stUpdateUI(); }
+      else if (!isWave && st.selClip) { st.selClip = null; stRenderMt(); stUpdateUI(); }
+      else handled = false;
+    }
+    else handled = false;
+    if (handled) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+
+  /* uscita di ascolto: la stessa scelta dell'editor vocale (stesso motore audio) */
+  const stSink = $('stSink'), stSinkRow = $('stSinkRow');
+  async function stSyncSink() {
+    if (!sinkSupported) { stSinkRow.hidden = true; return; }
+    await applyStoredSink();
+    stSink.innerHTML = vedSink.innerHTML;
+    stSink.value = vedSink.value;
+  }
+  stSink.addEventListener('change', async () => {
+    if (stSink.value === '__perm') {
+      try { const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); stream.getTracks().forEach(t => t.stop()); }
+      catch (err) { toast('Senza il permesso del microfono il browser non mostra i nomi delle uscite.'); }
+      await renderSinkOptions();
+      stSink.innerHTML = vedSink.innerHTML;
+      stSink.value = readSink();
+      return;
+    }
+    if (st.play) stStopPlay();
+    const want = stSink.value;
+    await setPreviewSink(want);
+    vedSink.value = readSink();
+    stSink.value = readSink();
+    if (want && readSink() !== want) stSetStatus('Non riesco a usare quell\'uscita audio.', true);
+    else stSetStatus(want ? 'Lo Studio e l\'editor dei vocali ora escono sull\'uscita scelta.' : 'Lo Studio e l\'editor dei vocali escono sull\'uscita principale.');
+  });
+
+  /* entrata e uscita dalla scheda */
+  function stOnShow() {
+    if (!ST_READY) return;
+    stSyncSink();
+    stRenderSources();
+    stRenderFiles();
+    requestAnimationFrame(() => {
+      if (st.view === 'wave') { st.waveDirty = st.ovDirty = true; stResizeWave(); }
+      else stRenderMt();
+      stUpdateUI();
+    });
+  }
+  function stOnHide() {
+    if (!ST_READY) return;
+    if (st.rec) stStopRec();
+    if (st.play) stStopPlay();
+  }
+  window.addEventListener('resize', () => {
+    if (!stIsVisible()) return;
+    if (st.view === 'wave') stResizeWave(); else stRenderMt();
+  });
+  if (window.ResizeObserver) new ResizeObserver(() => { if (stIsVisible() && st.view === 'wave') stResizeWave(); }).observe(stWaveWrap);
+  window.addEventListener('beforeunload', e => {
+    if (!st.files.length && !st.clips.length) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  // stato iniziale: 4 tracce vuote, come una sessione nuova di Audition
+  for (let i = 0; i < 4; i++) stAddTrack(true);
+  st.selTrack = st.tracks[0].id;
+  st.mt.states = [{ label: 'Sessione nuova', json: stMtSnapshot() }];
+  st.mt.pos = 0;
+  stRenderFx();
+  stRenderFiles();
+  ST_READY = true;
+  stSetView('wave');
+  stDrawMeter();
 </script>
 
 <script>
