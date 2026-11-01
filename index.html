@@ -1608,6 +1608,19 @@
     transition: border-color .15s ease, background .15s ease;
   }
   .login-field input:focus{ outline:none; border-color: var(--border-strong); background: rgba(255,255,255,0.05); }
+  /* avviso Bloc Maiusc dentro il campo password */
+  .login-pass-wrap{ position: relative; }
+  .login-pass-wrap.caps input{ padding-right: 128px; border-color: rgba(255,179,71,0.55); }
+  .caps-badge{
+    position:absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    display:none; align-items:center; gap: 5px; pointer-events:none;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 600; letter-spacing: .04em; line-height: 1;
+    color: #ffb347; background: rgba(255,179,71,0.12); border: 1px solid rgba(255,179,71,0.45);
+    border-radius: 7px; padding: 5px 7px;
+  }
+  .caps-badge svg{ width: 12px; height: 12px; flex-shrink: 0; }
+  .login-pass-wrap.caps .caps-badge{ display:inline-flex; animation: caps-in .18s ease; }
+  @keyframes caps-in{ from{ opacity:0; transform: translateY(-50%) scale(.9); } to{ opacity:1; transform: translateY(-50%) scale(1); } }
   .login-error{
     display:none; color: var(--orange-bright); font-family: var(--mono); font-size: 12px;
     text-align:center; margin-bottom: 14px;
@@ -1933,7 +1946,10 @@
       </div>
       <div class="login-field">
         <label for="loginPass">Password</label>
-        <input type="password" id="loginPass" name="password" autocomplete="current-password" required>
+        <div class="login-pass-wrap" id="loginPassWrap">
+          <input type="password" id="loginPass" name="password" autocomplete="current-password" required aria-describedby="capsBadge">
+          <span class="caps-badge" id="capsBadge" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l7 8h-4v5H9v-5H5z"></path><line x1="9" y1="20.5" x2="15" y2="20.5"></line></svg><span id="capsText"></span></span>
+        </div>
       </div>
       <div class="login-error" id="loginError">Credenziali non valide.</div>
       <button type="submit" class="login-submit">Accedi</button>
@@ -11178,6 +11194,27 @@
 
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) logoutBtn.addEventListener('click', lock);
+
+    // Avviso Bloc Maiusc: lo stato si legge da ogni tasto premuto o rilasciato (anche il tasto stesso)
+    const passWrap = document.getElementById('loginPassWrap');
+    const capsText = document.getElementById('capsText');
+    let capsOn = false;
+    function showCaps() {
+      const on = capsOn && !overlay.classList.contains('hidden');
+      passWrap.classList.toggle('caps', on);
+      capsText.textContent = on ? 'BLOC MAIUSC' : '';
+    }
+    function readCaps(e) {
+      if (!e || typeof e.getModifierState !== 'function') return;
+      capsOn = e.getModifierState('CapsLock');
+      showCaps();
+    }
+    ['keydown', 'keyup'].forEach(ev => document.addEventListener(ev, e => {
+      if (overlay.classList.contains('hidden')) return;
+      readCaps(e);
+    }, true));
+    passInput.addEventListener('mousedown', readCaps);
+    passInput.addEventListener('focus', showCaps);
   })();
 </script>
 </body>
