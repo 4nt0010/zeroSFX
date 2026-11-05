@@ -2773,7 +2773,8 @@
    - "roformer": Mel-Band RoFormer (pesi di Kimberley Jensen, export ONNX di audiojs), il migliore;
                  serve la scheda video (WebGPU).
    - "mdx":      MDX-Net Kim_Vocal_2 di Ultimate Vocal Remover, più leggero; va anche sul processore. */
-let cfg = null, ort = null, ortKind = '', initP = {}, sessions = {};
+let cfg = null, initP = {}, sessions = {};
+const ortMods = {};   // motori di calcolo caricati, per versione e tipo
 const cancelled = new Set();
 const post = (m, t) => self.postMessage(m, t || []);
 class SepError extends Error { constructor(msg, code) { super(msg); this.code = code; } }
@@ -2965,21 +2966,24 @@ async function gpuOk() {
     return !info.isFallbackAdapter && info.architecture !== 'swiftshader';
   } catch (e) { return false; }
 }
-async function loadOrt(gpu) {
+// Ogni modello può usare la sua versione di onnxruntime: MDX-Net va più veloce con la 1.22 (soprattutto su Safari),
+// Mel-Band RoFormer è stato verificato dal suo autore con la 1.30.
+async function loadOrt(gpu, base) {
   const kind = gpu ? 'webgpu' : 'wasm';
-  if (ort && (ortKind === kind || ortKind === 'webgpu')) return ort;   // il pacchetto WebGPU sa fare anche il processore
-  const m = await import(cfg.ortBase + (gpu ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs'));
-  m.env.wasm.wasmPaths = cfg.ortBase;
+  if (ortMods[base + 'webgpu']) return ortMods[base + 'webgpu'];   // il pacchetto WebGPU sa fare anche il processore
+  if (ortMods[base + kind]) return ortMods[base + kind];
+  const m = await import(base + (gpu ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs'));
+  m.env.wasm.wasmPaths = base;
   m.env.wasm.numThreads = self.crossOriginIsolated ? Math.max(1, Math.min(8, (self.navigator && navigator.hardwareConcurrency) || 4)) : 1;
-  ort = m; ortKind = kind;
+  ortMods[base + kind] = m;
   return m;
 }
-async function makeSession(bytes, provider, m) {
+async function makeSession(bytes, provider, m, ort) {
   const opts = { executionProviders: [provider] };
   if (m.kind === 'roformer') { opts.enableCpuMemArena = false; opts.enableMemPattern = false; }
   else opts.graphOptimizationLevel = 'all';
   const s = await ort.InferenceSession.create(bytes, opts);
-  return { s, provider, inName: s.inputNames[0], outName: s.outputNames[0] };
+  return { s, provider, ort, inName: s.inputNames[0], outName: s.outputNames[0] };
 }
 async function releaseOthers(key) {
   for (const k of Object.keys(sessions)) {
@@ -2996,16 +3000,17 @@ async function init(id, m) {
     if (m.gpuOnly && !gpu) throw new SepError('Questo modello ha bisogno della scheda video (WebGPU).', 'nogpu');
     let bytes = await getModel(id, m);
     post({ type: 'status', id, stage: 'prepare', model: m.key });
-    await loadOrt(gpu);
+    const base = m.ortBase || cfg.ortBase;
+    const ort = await loadOrt(gpu, base);
     let sess = null;
     if (gpu) {
-      try { sess = await makeSession(bytes, 'webgpu', m); bytes = null; }
+      try { sess = await makeSession(bytes, 'webgpu', m, ort); bytes = null; }
       catch (e) {
         console.warn('WebGPU non disponibile per il modello:', e);
         if (m.gpuOnly) throw new SepError('La scheda video non riesce a far girare questo modello.', 'gpufail');
       }
     }
-    if (!sess) { if (!bytes) bytes = await getModel(id, m); sess = await makeSession(bytes, 'wasm', m); }
+    if (!sess) { if (!bytes) bytes = await getModel(id, m); sess = await makeSession(bytes, 'wasm', m, ort); }
     bytes = null;
     sessions[m.key] = sess;
     post({ type: 'engine', id, ep: sess.provider, model: m.key });
@@ -3014,7 +3019,7 @@ async function init(id, m) {
   try { return await initP[m.key]; } catch (e) { delete initP[m.key]; throw e; }
 }
 async function runOnce(sess, m, data) {
-  const feeds = {}; feeds[sess.inName] = new ort.Tensor('float32', data, [1, 4, m.dimF, m.dimT]);
+  const feeds = {}; feeds[sess.inName] = new sess.ort.Tensor('float32', data, [1, 4, m.dimF, m.dimT]);
   const res = await sess.s.run(feeds);
   const t = res[sess.outName];
   const out = new Float32Array(t.data);
@@ -3032,8 +3037,8 @@ async function infer(id, m, data) {
     delete sessions[m.key]; delete initP[m.key];
     if (m.gpuOnly) throw new SepError('La scheda video si è fermata durante la separazione.', 'gpufail');
     post({ type: 'status', id, stage: 'fallback', model: m.key });
-    await loadOrt(false);
-    const s2 = await makeSession(await getModel(id, m), 'wasm', m);
+    const ort = await loadOrt(false, m.ortBase || cfg.ortBase);
+    const s2 = await makeSession(await getModel(id, m), 'wasm', m, ort);
     sessions[m.key] = s2;
     post({ type: 'engine', id, ep: 'wasm', model: m.key });
     return await runOnce(s2, m, data);
@@ -7420,6 +7425,7 @@ self.onmessage = async (e) => {
       },
       mdx: {
         key: 'mdx', kind: 'mdx', name: 'MDX-Net Kim Vocal 2', mb: 67, gpuOnly: false,
+        ortBase: 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/',
         urls: [
           'https://huggingface.co/fudan-generative-ai/hallo/resolve/main/audio_separator/Kim_Vocal_2.onnx',
           'https://huggingface.co/huangjackson/Kim_Vocal_2/resolve/main/Kim_Vocal_2.onnx',
@@ -7436,7 +7442,7 @@ self.onmessage = async (e) => {
     max: { label: 'Massima', mdx: { overlap: 0.5, denoise: true }, roformer: { step: 0.5 } }
   };
   const VSEP_Q_KEY = 'zerosfx-vsep-quality2', VSEP_M_KEY = 'zerosfx-vsep-model';
-  const VSEP_TRY_KEY = 'zerosfx-vsep-rof-running', VSEP_CRASH_KEY = 'zerosfx-vsep-rof-crash', VSEP_GPU_CRASH_KEY = 'zerosfx-vsep-gpu-crash';
+  const VSEP_TRY_KEY = 'zerosfx-vsep-rof-running', VSEP_CRASH_KEY = 'zerosfx-vsep-rof-crash', VSEP_GPU_CRASH_KEY = 'zerosfx-vsep-gpu-crash2';
   // nessun segno di vita dal calcolo per tanto tempo = bloccato (RoFormer la prima volta compila a lungo sulla scheda video)
   const VSEP_STALL_MS = { mdx: 150000, roformer: 300000 };
   const vsep = { worker: null, seq: 0, jobs: new Map(), ep: '', epModel: '', queue: Promise.resolve(), cache: new WeakMap(), running: 0, gpu: false, gpuChecked: false, rofBroken: false, rofCrashed: false, lowMem: false, gpuCrashed: false };
@@ -7462,9 +7468,10 @@ self.onmessage = async (e) => {
       }
     }
     vsep.rofCrashed = !!localStorage.getItem(VSEP_CRASH_KEY);
-    // se la scheda video ha bloccato la pagina anche con il modello piccolo, per una settimana si usa il processore
+    localStorage.removeItem('zerosfx-vsep-gpu-crash');   // chiave della versione precedente (troppo severa)
+    // se la scheda video ha fatto chiudere la pagina anche con il modello piccolo, per un giorno si usa il processore
     const gc = +localStorage.getItem(VSEP_GPU_CRASH_KEY) || 0;
-    if (gc && Date.now() - gc < 7 * 864e5) { vsep.gpuCrashed = true; VSEP_CFG.forceCpu = true; }
+    if (gc && Date.now() - gc < 864e5) { vsep.gpuCrashed = true; VSEP_CFG.forceCpu = true; }
     else if (gc) localStorage.removeItem(VSEP_GPU_CRASH_KEY);
   } catch (e) { /* niente */ }
   // chiusura o ricarica normale della pagina: non è un crash
@@ -7480,9 +7487,12 @@ self.onmessage = async (e) => {
     vsepRenderModels(); vsepRefreshInfo();
   })();
 
-  function vsepQuality() {
+  function vsepOnCpu() { return VSEP_CFG.forceCpu || (vsep.gpuChecked && !vsep.gpu) || (vsep.epModel === 'mdx' && vsep.ep === 'wasm'); }
+  // Massima sulla scheda video; con MDX-Net sul processore (Safari senza WebGPU) si parte da Veloce,
+  // che è 4 volte più rapida: la Massima resta a un clic.
+  function vsepQuality(model) {
     try { const q = localStorage.getItem(VSEP_Q_KEY); if (VSEP_QUALITY[q]) return q; } catch (e) { /* niente */ }
-    return 'max';
+    return (model || vsepModel()) === 'mdx' && vsepOnCpu() ? 'fast' : 'max';
   }
   function vsepModel() {
     let m = '';
@@ -7559,9 +7569,9 @@ self.onmessage = async (e) => {
       if (vsep.ep === 'webgpu') { txt = `${m.name} sulla scheda video (WebGPU): pronto, il modello è già nel browser.`; cls = 'on'; }
       else { txt = `${m.name} sul processore: funziona, ma è lento. Chrome o Edge aggiornati usano la scheda video e vanno molto più veloci.`; cls = 'slow'; }
     } else if (m.key === 'roformer') txt = `La prima volta scarica il modello (${m.mb} MB) e il motore di calcolo, poi restano salvati nel browser. Serve la scheda video e almeno 8 GB di RAM: se non ce la fa, si passa da soli a MDX-Net.`;
-    else txt = `La prima volta scarica il modello (${m.mb} MB) e il motore di calcolo, poi restano salvati nel browser.${vsep.gpuChecked && !vsep.gpu ? ' Senza scheda video (WebGPU) il calcolo va sul processore ed è più lento.' : ''}`;
+    else txt = `La prima volta scarica il modello (${m.mb} MB) e il motore di calcolo, poi restano salvati nel browser.${vsepOnCpu() ? ' Senza scheda video il calcolo va sul processore: in qualità Veloce ci vuole circa un minuto a canzone, Alta e Massima ci mettono 2 e 4 volte tanto.' : ''}`;
     if (m.key === 'mdx' && vsep.rofCrashed && vsep.gpu) { txt = 'L\'ultima volta Mel-Band RoFormer ha fatto chiudere la pagina (memoria del computer o scheda video non bastano), quindi uso MDX-Net. Se vuoi riprovarlo sceglilo qui sopra, meglio con poche altre schede aperte. ' + txt; cls = 'warn'; }
-    else if (m.key === 'mdx' && vsep.gpuCrashed) { txt = 'L\'ultima volta la scheda video ha bloccato la pagina: per sicurezza calcolo sul processore (più lento, ma non si blocca). ' + txt; cls = 'warn'; }
+    else if (m.key === 'mdx' && vsep.gpuCrashed) { txt = 'La scheda video si è bloccata: per oggi calcolo sul processore (più lento, ma non si blocca). ' + txt; cls = 'warn'; }
     else if (m.key === 'mdx' && vsep.ios) txt = 'Su iPhone e iPad uso MDX-Net: il modello grande non ci sta nella memoria. ' + txt;
     else if (m.key === 'mdx' && vsep.safari) txt = 'Su Safari uso MDX-Net: Mel-Band RoFormer manda Safari in blocco. Per il modello migliore apri l\'app con Chrome o Edge. ' + txt;
     else if (m.key === 'mdx' && vsep.lowMem && vsep.gpu) txt = 'Mel-Band RoFormer vuole almeno 8 GB di RAM e questo computer ne ha meno: uso MDX-Net. ' + txt;
@@ -7654,7 +7664,7 @@ self.onmessage = async (e) => {
   async function vsepRun(buf, onStatus, model) {
     const sr = buf.sampleRate;
     const b44 = sr === 44100 ? buf : await resampleBuf(buf, 44100);
-    const q = VSEP_QUALITY[vsepQuality()];
+    const q = VSEP_QUALITY[vsepQuality(model)];
     if (onStatus) onStatus(vsep.ep ? 'Separo voce e base…' : 'Avvio il motore di separazione…');
     let res;
     const watched = model === 'roformer' || (model === 'mdx' && vsep.gpu && !VSEP_CFG.forceCpu);
@@ -7664,9 +7674,8 @@ self.onmessage = async (e) => {
     } catch (err) {
       if (watched) { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) { /* niente */ } }
       if (model === 'mdx' && err.code === 'stall' && !VSEP_CFG.forceCpu) {
-        // la scheda video si è piantata anche con il modello piccolo: si riprova sul processore
+        // la scheda video si è piantata anche con il modello piccolo: per questa sessione si va sul processore
         vsep.gpuCrashed = true; vsep.gpu = false; VSEP_CFG.forceCpu = true;
-        try { localStorage.setItem(VSEP_GPU_CRASH_KEY, String(Date.now())); } catch (e) { /* niente */ }
         vsepRenderModels(); vsepRefreshInfo();
         toast('La scheda video si è bloccata: riprovo sul processore (più lento).');
         if (onStatus) onStatus('Riprovo sul processore…');
@@ -9529,6 +9538,12 @@ self.onmessage = async (e) => {
           <button type="button" class="ved-btn" data-vsepsplit="files" data-needs="buf" title="Crea nello Studio due file: la voce e la base">Due file nello Studio</button>
           <button type="button" class="ved-btn" data-vsepsplit="multi" data-needs="buf" title="Voce e base su due tracce della multitraccia: i fader diventano un mixer dal vivo">Voce e base in multitraccia</button>
         </div>
+        <div class="ved-tool-controls">
+          <button type="button" class="ved-btn primary-soft" data-vsepdl="both" data-needs="buf" title="Un unico file zip con dentro la voce e la base, nel formato scelto in alto (MP3 o WAV)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Scarica voce e base</button>
+          <button type="button" class="ved-btn" data-vsepdl="voc" data-needs="buf">Scarica solo la voce</button>
+          <button type="button" class="ved-btn" data-vsepdl="inst" data-needs="buf">Scarica solo la base</button>
+        </div>
       </div>`;
     if (kind === 'stats') return `<div class="ved-tool">
         <div><h5>Statistiche</h5><p>Della selezione, se c'è, altrimenti di tutto l'audio. Si aggiornano da sole.</p></div><div></div>
@@ -9757,6 +9772,47 @@ self.onmessage = async (e) => {
     const label = which === 'voc' ? 'voce' : 'base';
     await edSaveBufferToLib(microFades(cloneBuf(which === 'voc' ? r.stems.voc : r.stems.inst)), `${d.name} (${label})`, `In che categoria vuoi mettere la ${label}?`);
   }
+  // scarica le tracce separate: voce, base, o tutte e due in uno zip
+  async function edVsepDownload(which) {
+    const d = ed.doc;
+    if (!edCanEdit()) return;
+    edStopPlay(true);
+    ed.busy = true; edUpdateUI();
+    try {
+      const r = await edVsepRegionStems(d);
+      const base = String(d.name || 'audio').replace(/[\\/:*?"<>|]+/g, '-').trim() || 'audio';
+      const parts = (which === 'both' ? ['voc', 'inst'] : [which]).map(k => ({ k, label: k === 'voc' ? 'voce' : 'base', buf: microFades(cloneBuf(k === 'voc' ? r.stems.voc : r.stems.inst)) }));
+      const files = [];
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        edStatus(`Preparo la ${p.label}…`);
+        const enc = await encodeForSave(p.buf, f => edStatus(`Preparo la ${p.label}… ${Math.round(f * 100)}%`));
+        files.push({ name: `${base} (${p.label}).${enc.ext}`, blob: enc.blob });
+      }
+      if (files.length === 1) { triggerDownload(files[0].blob, files[0].name); edStatus(`Scaricata la ${parts[0].label}: ${files[0].name}`); }
+      else {
+        let zipped = false;
+        try {
+          const JSZip = await loadJSZip();
+          const zip = new JSZip();
+          files.forEach(f => zip.file(f.name, f.blob));
+          edStatus('Creo lo zip…');
+          const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' });
+          triggerDownload(blob, `${base} (voce e base).zip`);
+          zipped = true;
+          edStatus(`Scaricato "${base} (voce e base).zip" con le due tracce dentro.`);
+        } catch (err) { console.warn('Zip non disponibile, scarico i file uno per uno:', err); }
+        if (!zipped) {
+          // senza zip: due download di fila (il browser potrebbe chiedere il permesso per il secondo)
+          triggerDownload(files[0].blob, files[0].name);
+          await new Promise(res => setTimeout(res, 700));
+          triggerDownload(files[1].blob, files[1].name);
+          edStatus('Scaricate voce e base come due file separati.');
+        }
+      }
+    } catch (err) { edStatus(err.message || 'Download non riuscito.', true); }
+    finally { ed.busy = false; edUpdateUI(); }
+  }
   async function edVsepSplit(toMulti) {
     const d = ed.doc;
     if (!edCanEdit()) return;
@@ -9805,6 +9861,7 @@ self.onmessage = async (e) => {
     if (t.hasAttribute('data-vsepset')) { $('ed-vsep-bal').value = t.getAttribute('data-vsepset'); edVsepSync(); return; }
     if (t.hasAttribute('data-vsepsave')) { edVsepSave(t.getAttribute('data-vsepsave')); return; }
     if (t.hasAttribute('data-vsepsplit')) { edVsepSplit(t.getAttribute('data-vsepsplit') === 'multi'); return; }
+    if (t.hasAttribute('data-vsepdl')) { edVsepDownload(t.getAttribute('data-vsepdl')); return; }
     switch (t.id) {
       case 'ed-vsep-preview': unlockAudio(); edVsepPreviewToggle(); break;
       case 'ed-profile-grab': {
