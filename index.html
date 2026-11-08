@@ -1204,6 +1204,93 @@
   .main-tab:hover{ color: var(--text); }
   .main-tab.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); box-shadow: inset 0 0 0 1px var(--border-strong); }
   @media (max-width: 360px){ .main-tabs{ max-width: 100%; } .main-tab{ padding-left: 11px; padding-right: 11px; gap: 6px; } }
+
+  /* ---------- VOCAL REMOVER (scheda) ---------- */
+  .main-tabs{ max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .main-tabs::-webkit-scrollbar{ display:none; }
+  .main-tab{ flex-shrink: 0; white-space: nowrap; }
+  @media (max-width: 560px){ .main-tabs{ flex-wrap: wrap; justify-content: center; border-radius: 22px; overflow: visible; } .main-tab{ padding-left: 12px; padding-right: 12px; gap: 6px; font-size: 12.5px; } }
+  .tab-dot{ width: 7px; height: 7px; border-radius: 50%; background: var(--orange-bright); box-shadow: 0 0 8px var(--orange-bright); animation: vrPulse 1.2s ease-in-out infinite; }
+  @keyframes vrPulse{ 50%{ opacity: .35; } }
+  .vr-lib-btn{ margin-top: 16px; }
+  .vr-file .ved-btn svg{ width: 13px; height: 13px; }
+  .vrpick-card{ max-width: 520px; text-align: left; padding: 22px 20px; display:flex; flex-direction: column; max-height: calc(100vh - 40px); }
+  .vrpick-card h4{ text-align: center; margin-bottom: 14px; }
+  .vrpick-tools{ display:flex; gap: 8px; margin-bottom: 12px; }
+  .vrpick-tools .vrpick-search{ flex: 1; min-width: 0; width: auto; max-width: none; margin: 0; padding: 9px 14px; font-size: 13px; }
+  .vrpick-tools .ved-select{ max-width: 44%; }
+  .vrpick-list{ overflow-y: auto; min-height: 120px; max-height: 50vh; margin-bottom: 16px; display:grid; gap: 4px; align-content: start; }
+  .vrpick-item{ display:flex; align-items:center; gap: 10px; width: 100%; text-align: left; padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: rgba(255,255,255,0.03); color: var(--text); font-family: var(--body); font-size: 13.5px; cursor: pointer; }
+  .vrpick-item:hover, .vrpick-item:focus-visible{ border-color: var(--border-strong); background: rgba(255,30,96,0.1); outline: none; }
+  .vrpick-item .vrpick-name{ flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vrpick-item .vrpick-dots{ display:flex; gap: 4px; flex-shrink: 0; }
+  .vrpick-item .vrpick-mod{ font-family: var(--mono); font-size: 10px; color: var(--orange-bright); flex-shrink: 0; }
+  .vrpick-empty{ text-align:center; color: var(--text-dim); font-size: 13px; padding: 30px 10px; }
+  @media (max-width: 560px){ .vrpick-tools{ flex-direction: column; } .vrpick-tools .ved-select{ max-width: 100%; width: 100%; } }
+  .vr-wrap{ max-width: 760px; margin-left: auto; margin-right: auto; }
+  #tabVsep [hidden]{ display:none !important; }
+  .vr-card > *{ min-width: 0; }
+  .vr-settings .ved-field{ min-width: 0; max-width: 100%; }
+  .dropzone.vr-disabled{ opacity:.5; pointer-events:none; }
+  .vr-wrap .voices-head{ margin-bottom: 16px; }
+  .vr-card{
+    border: 1px solid var(--border); border-radius: 22px; padding: 18px;
+    background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
+    display: grid; gap: 14px;
+  }
+  .vr-file{ display:flex; align-items:center; gap: 12px; min-width: 0; }
+  .vr-file-ic{ width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; display:flex; align-items:center; justify-content:center; background: rgba(255,30,96,0.12); border: 1px solid var(--border-strong); color: var(--orange-bright); }
+  .vr-file-ic svg{ width: 20px; height: 20px; }
+  .vr-file-txt{ display:grid; gap: 3px; min-width: 0; flex: 1; }
+  .vr-file-txt strong{ font-size: 14.5px; overflow:hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vr-file-txt span{ font-family: var(--mono); font-size: 11.5px; color: var(--text-dim); }
+  .vr-settings{ display:flex; flex-wrap: wrap; gap: 10px 16px; }
+  .vr-settings .ved-select{ max-width: 100%; }
+  .vr-settings label:first-child .ved-select{ max-width: 340px; }
+  .vr-run{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; }
+  .vr-run .ved-btn.primary{ padding: 11px 22px; font-size: 13.5px; }
+  .vr-run .ved-btn.primary svg{ width: 16px; height: 16px; }
+  .vr-progress{ display:grid; gap: 7px; font-size: 12px; color: var(--text-dim); }
+  .vr-bar{ height: 6px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; }
+  .vr-bar i{ display:block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--orange), var(--orange-bright)); transition: width .3s ease; }
+  .vr-bar.indet i{ width: 30% !important; animation: vrIndet 1.3s ease-in-out infinite; }
+  @keyframes vrIndet{ from{ transform: translateX(-100%); } to{ transform: translateX(340%); } }
+  .vr-progress.error{ color: #ff8a7a; }
+  .vr-result{ display:grid; gap: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .vr-player{ display:flex; align-items:center; gap: 14px; }
+  .vr-play{ width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; flex-shrink: 0; display:flex; align-items:center; justify-content:center; color:#fff; background: linear-gradient(135deg, var(--orange-bright), var(--orange)); box-shadow: 0 8px 24px -8px rgba(255,30,96,0.6); }
+  .vr-play svg{ width: 18px; height: 18px; }
+  .vr-play:hover{ filter: brightness(1.1); }
+  .vr-seek{ flex: 1; min-width: 0; display:grid; gap: 4px; }
+  .vr-seek input, .vr-mix input{ width: 100%; accent-color: var(--orange-bright); }
+  .vr-times{ display:flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .vr-mix{ display:flex; align-items:center; gap: 10px; font-size: 12px; color: var(--text-dim); }
+  .vr-mix input{ flex: 1; min-width: 0; }
+  .vr-mix-lbl{ font-weight: 700; color: var(--text-muted); }
+  .vr-mix-val{ min-width: 84px; text-align: right; font-family: var(--mono); font-size: 11.5px; color: var(--orange-bright); }
+  .vr-presets, .vr-more{ display:flex; flex-wrap: wrap; gap: 8px; }
+  .vr-stems{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .vr-stem{ border: 1px solid var(--border); border-radius: 16px; padding: 12px; display:grid; gap: 10px; background: rgba(255,255,255,0.02); }
+  .vr-stem-h{ display:flex; align-items: baseline; gap: 8px; }
+  .vr-stem-h b{ font-size: 14px; }
+  .vr-stem-h span{ font-size: 11.5px; color: var(--text-dim); }
+  .vr-stem-a{ display:flex; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 560px){
+    .vr-card{ padding: 14px; border-radius: 18px; }
+    .vr-settings{ display:grid; grid-template-columns: 1fr 1fr; }
+    .vr-settings .ved-field{ display:grid; gap: 5px; }
+    .vr-settings .ved-field:first-child{ grid-column: 1 / -1; }
+    .vr-settings .ved-select, .vr-settings label:first-child .ved-select{ width: 100%; max-width: 100%; }
+    .vr-file{ flex-wrap: wrap; }
+    .vr-file-txt{ flex-basis: calc(100% - 54px); }
+    .vr-file .ved-btn{ flex: 1 1 0; justify-content: center; padding-left: 8px; padding-right: 8px; border-color: var(--border); }
+    .vr-stems{ grid-template-columns: 1fr; }
+    .vr-mix-val{ min-width: 0; }
+    .vr-mix{ flex-wrap: wrap; }
+    .vr-mix input{ order: 3; flex-basis: 100%; }
+    .vr-run .ved-btn.primary{ width: 100%; justify-content: center; }
+    .vr-more .ved-btn, .vr-presets .ved-btn{ flex: 1 1 auto; justify-content: center; }
+  }
   .tab-badge{
     font-family: var(--mono); font-size: 10.5px; min-width: 18px; height: 18px; padding: 0 5px; border-radius:999px;
     background: var(--orange); color:#180614; display:inline-flex; align-items:center; justify-content:center;
@@ -2095,6 +2182,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
         Studio
       </button>
+      <button type="button" class="main-tab" data-tab="vsep" role="tab" aria-selected="false" title="Separa voce e base di una canzone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="11" rx="3"></rect><path d="M1 10a5 5 0 0 0 10 0"></path><line x1="6" y1="15" x2="6" y2="19"></line><path d="M15 17V7l7-2v10"></path><circle cx="13.5" cy="17" r="2"></circle><circle cx="20.5" cy="15" r="2"></circle></svg>
+        Vocal Remover <span class="tab-dot" id="vrTabDot" hidden></span>
+      </button>
     </div>
   </div>
   <div class="glow-strip"></div>
@@ -2214,6 +2305,103 @@
       </div>
       <label class="vc-auto"><span>Preset all'import</span><select class="ved-select" id="voiceAutoPreset" aria-label="Preset da applicare in automatico ai nuovi vocali"></select></label>
       <div class="voice-grid" id="voiceGrid"></div>
+    </section>
+  </div>
+
+  <!-- ================================================================
+       VOCAL REMOVER — accesso rapido alla separazione voce / base
+       (la stessa funzione resta nell'editor di Vocali, Effetti e Studio)
+       ================================================================ -->
+  <div class="tab-panel" id="tabVsep" role="tabpanel" aria-label="Vocal Remover" hidden>
+    <div class="dropzone" id="vrDropzone" tabindex="0" role="button" aria-label="Scegli una canzone da separare">
+      <div class="dz-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="11" rx="3"></rect><path d="M1 10a5 5 0 0 0 10 0"></path><line x1="6" y1="15" x2="6" y2="19"></line><path d="M15 17V7l7-2v10"></path><circle cx="13.5" cy="17" r="2"></circle><circle cx="20.5" cy="15" r="2"></circle></svg></div>
+      <h3>Trascina qui una canzone</h3>
+      <p>oppure clicca per sfogliare — MP3, WAV, M4A, FLAC, OGG, anche video MP4</p>
+      <button type="button" class="ved-btn primary-soft vr-lib-btn" data-vrlib><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>Scegli dagli Effetti</button>
+    </div>
+    <input type="file" id="vrFileInput" accept="audio/*,video/mp4,video/webm,.opus,.ogg,.oga,.m4a,.aac,.mp3,.wav,.webm,.flac,.mp4" hidden>
+
+    <section class="library vr-wrap">
+      <div class="voices-head">
+        <div class="library-head-left">
+          <h2>Vocal Remover</h2>
+          <span class="library-count" id="vrCount">Nessun file</span>
+        </div>
+      </div>
+
+      <div class="vr-card" id="vrCard" hidden>
+        <div class="vr-file">
+          <div class="vr-file-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="11" rx="3"></rect><path d="M1 10a5 5 0 0 0 10 0"></path><line x1="6" y1="15" x2="6" y2="19"></line><path d="M15 17V7l7-2v10"></path><circle cx="13.5" cy="17" r="2"></circle><circle cx="20.5" cy="15" r="2"></circle></svg></div>
+          <div class="vr-file-txt"><strong id="vrName">—</strong><span id="vrMeta"></span></div>
+          <button type="button" class="ved-btn ved-ghost" data-vrlib title="Scegli un effetto dalla libreria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>Dagli Effetti</button>
+          <button type="button" class="ved-btn ved-ghost" id="vrChange" title="Scegli un file dal computer">Dal computer</button>
+        </div>
+
+        <div class="vr-settings">
+          <label class="ved-field"><span>Modello</span><select class="ved-select" data-vsepmodel aria-label="Modello di separazione"></select></label>
+          <label class="ved-field"><span>Qualità</span><select class="ved-select" data-vsepq aria-label="Qualità della separazione"></select></label>
+          <label class="ved-field"><span>Formato</span><select class="ved-select" id="vrFormat" aria-label="Formato dei file scaricati e salvati"><option value="mp3">MP3</option><option value="wav">WAV</option></select></label>
+        </div>
+        <p class="vsep-info" data-vsepinfo></p>
+
+        <div class="vr-run">
+          <button type="button" class="ved-btn primary" id="vrRun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="11" rx="3"></rect><path d="M1 10a5 5 0 0 0 10 0"></path><line x1="6" y1="15" x2="6" y2="19"></line><path d="M15 17V7l7-2v10"></path><circle cx="13.5" cy="17" r="2"></circle><circle cx="20.5" cy="15" r="2"></circle></svg>Separa voce e base</button>
+          <button type="button" class="ved-btn ved-ghost" data-vsepcancel hidden>Interrompi</button>
+        </div>
+        <div class="vr-progress" id="vrProgress" hidden>
+          <div class="vr-bar"><i id="vrBarFill"></i></div>
+          <span id="vrStatus"></span>
+        </div>
+
+        <div class="vr-result" id="vrResult" hidden>
+          <div class="vr-player">
+            <button type="button" class="vr-play" id="vrPlay" aria-label="Ascolta">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="7,4 20,12 7,20"></polygon></svg>
+            </button>
+            <div class="vr-seek">
+              <input type="range" id="vrSeek" min="0" max="1000" step="1" value="0" aria-label="Posizione">
+              <div class="vr-times"><span id="vrPos">0:00</span><span id="vrDur">0:00</span></div>
+            </div>
+          </div>
+          <div class="vr-mix">
+            <span class="vr-mix-lbl">Base</span>
+            <input type="range" id="vrBal" min="-100" max="100" step="1" value="-100" aria-label="Voce e base">
+            <span class="vr-mix-lbl">Voce</span>
+            <span class="vr-mix-val" id="vrBalVal">solo base</span>
+          </div>
+          <div class="vr-presets">
+            <button type="button" class="ved-btn" data-vrbal="-100">Solo base</button>
+            <button type="button" class="ved-btn" data-vrbal="0">Originale</button>
+            <button type="button" class="ved-btn" data-vrbal="100">Solo voce</button>
+          </div>
+
+          <div class="vr-stems">
+            <div class="vr-stem">
+              <div class="vr-stem-h"><b>Voce</b><span>a cappella</span></div>
+              <div class="vr-stem-a">
+                <button type="button" class="ved-btn" data-vrdl="voc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Scarica</button>
+                <button type="button" class="ved-btn" data-vrsave="voc">Salva negli Effetti</button>
+              </div>
+            </div>
+            <div class="vr-stem">
+              <div class="vr-stem-h"><b>Base</b><span>strumentale</span></div>
+              <div class="vr-stem-a">
+                <button type="button" class="ved-btn" data-vrdl="inst"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Scarica</button>
+                <button type="button" class="ved-btn" data-vrsave="inst">Salva negli Effetti</button>
+              </div>
+            </div>
+          </div>
+          <div class="vr-more">
+            <button type="button" class="ved-btn primary-soft" data-vrdl="both"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Scarica voce e base (zip)</button>
+            <button type="button" class="ved-btn" data-vrdl="mix" title="Scarica il mix con il cursore Voce/Base com'è adesso">Scarica il mix attuale</button>
+            <button type="button" class="ved-btn" data-vrstudio="files" title="Crea nello Studio due file: la voce e la base">Due file nello Studio</button>
+            <button type="button" class="ved-btn" data-vrstudio="multi" title="Voce e base su due tracce della multitraccia">Voce e base in multitraccia</button>
+            <button type="button" class="ved-btn ved-ghost" data-vrstudio="open" title="Apri la canzone nell'editor dello Studio, per separare o modificare solo un tratto">Apri nell'editor</button>
+          </div>
+        </div>
+
+        <div class="vsep-store"><span data-vsepstore>Modelli salvati nel browser: controllo…</span><button type="button" class="ved-btn ved-ghost" data-vsepclear hidden>Elimina i modelli</button></div>
+      </div>
     </section>
   </div>
 </div>
@@ -2715,6 +2903,20 @@
     <div class="confirm-actions">
       <button type="button" class="confirm-btn cancel" id="catPickCancelBtn">Annulla</button>
       <button type="button" class="confirm-btn hk-done" id="catPickOkBtn">Carica</button>
+    </div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="vrPickOverlay">
+  <div class="confirm-card vrpick-card" role="dialog" aria-modal="true" aria-labelledby="vrPickTitle">
+    <h4 id="vrPickTitle">Scegli dagli Effetti</h4>
+    <div class="vrpick-tools">
+      <input type="search" class="search-input vrpick-search" id="vrPickSearch" placeholder="Cerca per nome…" aria-label="Cerca un effetto" autocomplete="off">
+      <select class="ved-select" id="vrPickCat" aria-label="Filtra per categoria"></select>
+    </div>
+    <div class="vrpick-list" id="vrPickList" role="listbox" aria-label="Effetti"></div>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-btn cancel" id="vrPickCancel">Annulla</button>
     </div>
   </div>
 </div>
@@ -5697,7 +5899,8 @@ self.onmessage = async (e) => {
   function blockingOverlayOpen() {
     return edOverlay.classList.contains('visible')
       || catPickOverlay.classList.contains('visible')
-      || askOverlay.classList.contains('visible');
+      || askOverlay.classList.contains('visible')
+      || document.getElementById('vrPickOverlay').classList.contains('visible');
   }
 
   /* ================================================================
@@ -5714,6 +5917,11 @@ self.onmessage = async (e) => {
     tabSfx.hidden = tab !== 'sfx';
     tabVoices.hidden = tab !== 'voices';
     studioPanel.hidden = tab !== 'studio';
+    const vrPanel = document.getElementById('tabVsep');
+    const wasVr = !vrPanel.hidden;
+    vrPanel.hidden = tab !== 'vsep';
+    if (tab === 'vsep') { if (typeof vrOnShow === 'function') vrOnShow(); }
+    else if (wasVr && typeof vrStop === 'function') vrStop();
     document.body.classList.toggle('studio-open', tab === 'studio');
     if (tab === 'studio') stOnShow();
     else if (wasStudio) stOnHide();
@@ -7768,6 +7976,360 @@ self.onmessage = async (e) => {
     const mod = VSEP_CFG.models[stems.model] || VSEP_CFG.models.mdx;
     return { buffer: out, sel: ctx.selSec, msg: `${what} con ${mod.name}${vsep.ep === 'wasm' ? ' (processore)' : ''}` };
   }
+
+  /* ================================================================
+     SCHEDA VOCAL REMOVER
+     ----------------------------------------------------------------
+     Accesso rapido alla separazione voce / base: scegli una canzone,
+     separa, ascolta col cursore Voce/Base, scarica o manda allo Studio.
+     Usa lo stesso motore dell'editor (vsepStems), quindi una separazione
+     fatta qui viene riusata se apri la canzone nell'editor dello Studio.
+     ================================================================ */
+  const vr = { file: null, buf: null, name: '', stems: null, busy: false, play: null, pos: 0, seeking: false, raf: 0, tok: 0 };
+  const vrEl = id => document.getElementById(id);
+  const VR_PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="7,4 20,12 7,20"></polygon></svg>';
+  const VR_PAUSE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>';
+  function vrFmt(t) { t = Math.max(0, t || 0); const m = Math.floor(t / 60), s = Math.floor(t % 60); return `${m}:${String(s).padStart(2, '0')}`; }
+  function vrSafeName() { return String(vr.name || 'canzone').replace(/[\\/:*?"<>|]+/g, '-').trim() || 'canzone'; }
+  function vrOnShow() {
+    vsepRenderModels(); vsepRefreshInfo();
+  }
+  function vrSetBusy(on) {
+    vr.busy = on;
+    vrEl('vrTabDot').hidden = !on;
+    vrEl('vrRun').disabled = on || !vr.buf;
+    vrEl('vrChange').disabled = on;
+    vrEl('vrDropzone').classList.toggle('vr-disabled', on);
+    document.querySelectorAll('#tabVsep [data-vrlib], #tabVsep [data-vrdl], #tabVsep [data-vrsave], #tabVsep [data-vrstudio], #tabVsep [data-vsepmodel], #tabVsep [data-vsepq]').forEach(b => { b.disabled = on; });
+  }
+  function vrSetStatus(txt, err) {
+    const box = vrEl('vrProgress'), bar = box.querySelector('.vr-bar');
+    box.hidden = !txt;
+    box.classList.toggle('error', !!err);
+    vrEl('vrStatus').textContent = txt || '';
+    const m = /(\d+)%/.exec(txt || '');
+    if (m && !err) { bar.classList.remove('indet'); vrEl('vrBarFill').style.width = m[1] + '%'; }
+    else if (err) { bar.classList.remove('indet'); vrEl('vrBarFill').style.width = '0'; }
+    else bar.classList.toggle('indet', vr.busy);
+  }
+
+  /* ---------- caricamento: dal computer o dalla libreria degli Effetti ---------- */
+  async function vrLoad(name, getBuf) {
+    if (vr.busy) return;
+    vrStop();
+    const tok = ++vr.tok;
+    vr.file = null; vr.buf = null; vr.stems = null;
+    vr.name = name;
+    vrEl('vrCard').hidden = false;
+    vrEl('vrResult').hidden = true;
+    vrEl('vrName').textContent = vr.name;
+    vrEl('vrMeta').textContent = 'Leggo l\'audio…';
+    vrEl('vrCount').textContent = '1 file';
+    vrSetStatus('');
+    vrSetBusy(true);
+    try {
+      const buf = await getBuf();
+      if (tok !== vr.tok) return;
+      vr.buf = buf;
+      vrEl('vrMeta').textContent = `${vrFmt(buf.duration)} · ${buf.numberOfChannels > 1 ? 'stereo' : 'mono'} · ${Math.round(buf.sampleRate / 100) / 10} kHz`;
+    } catch (err) {
+      console.error(err);
+      if (tok !== vr.tok) return;
+      vrEl('vrMeta').textContent = err.message || 'Il browser non riesce a leggere questo formato.';
+    }
+    vrSetBusy(false);
+    vrOnShow();
+  }
+  function vrLoadFile(file) {
+    if (!file || vr.busy) return;
+    if (!isAudioFile(file) && !/^video\//.test(file.type || '') && !/\.(mp4|webm)$/i.test(file.name || '')) { toast('Questo file non sembra audio.'); return; }
+    vrLoad((file.name || 'canzone').replace(/\.[a-z0-9]+$/i, ''), () => decodeBlob(file));
+  }
+  function vrLoadSfx(id) {
+    const s = sounds.find(x => x.id === id);
+    if (!s || vr.busy) return;
+    if (s.playing) { s.audio.pause(); setPlaying(s, false); }
+    vrLoad(s.name, async () => {
+      // versione modificata in questa sessione: si usa quella
+      if (s.sessionEdit && s.sessionEdit.buffer) return s.sessionEdit.buffer;
+      let blob;
+      try { blob = await fetchSfxOriginalBlob(s); }
+      catch (err) { throw new Error('Non riesco a scaricare l\'effetto da Firebase. Se succede sempre, va attivata la configurazione CORS dello Storage (la stessa che serve a "Scarica tutto").'); }
+      try { return await decodeBlob(blob); }
+      catch (err) { throw new Error('Il browser non riesce a leggere il formato di questo effetto.'); }
+    });
+  }
+
+  /* ---------- finestra "Scegli dagli Effetti" ---------- */
+  const vrPick = vrEl('vrPickOverlay'), vrPickList = vrEl('vrPickList'), vrPickSearch = vrEl('vrPickSearch'), vrPickCat = vrEl('vrPickCat');
+  function vrPickRender() {
+    const q = vrPickSearch.value.trim().toLowerCase(), cat = vrPickCat.value;
+    let list = sounds.slice();
+    if (cat === '__none') list = list.filter(s => !(s.categories || []).length);
+    else if (cat) list = list.filter(s => (s.categories || []).includes(cat));
+    if (q) list = list.filter(s => (s.name || '').toLowerCase().includes(q));
+    list.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'it', { sensitivity: 'base' }));
+    if (!sounds.length) { vrPickList.innerHTML = '<div class="vrpick-empty">La libreria degli Effetti è vuota.</div>'; return; }
+    if (!list.length) { vrPickList.innerHTML = '<div class="vrpick-empty">Nessun effetto trovato.</div>'; return; }
+    vrPickList.innerHTML = list.map(s => `<button type="button" class="vrpick-item" role="option" data-vrpick="${s.id}">
+        <span class="vrpick-dots">${(s.categories || []).map(cid => { const c = getCategoryById(cid); return c ? `<span class="cat-dot" style="background:${c.color};color:${c.color}" title="${escapeHtml(c.name)}"></span>` : ''; }).join('')}</span>
+        <span class="vrpick-name">${escapeHtml(s.name || 'effetto')}</span>
+        ${s.sessionEdit ? '<span class="vrpick-mod">MOD</span>' : ''}
+      </button>`).join('');
+  }
+  function vrPickOpen() {
+    if (vr.busy || blockingOverlayOpen()) return;
+    const cats = allCategories();
+    const prev = vrPickCat.value;
+    vrPickCat.innerHTML = '<option value="">Tutte le categorie</option>'
+      + cats.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('')
+      + '<option value="__none">Senza categoria</option>';
+    vrPickCat.value = [...vrPickCat.options].some(o => o.value === prev) ? prev : '';
+    vrPickSearch.value = '';
+    vrPickRender();
+    vrPick.classList.add('visible');
+    setTimeout(() => vrPickSearch.focus(), 30);
+  }
+  function vrPickClose() { vrPick.classList.remove('visible'); }
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('[data-vrlib]');
+    if (!b || b.disabled) return;
+    e.stopPropagation();
+    vrPickOpen();
+  }, true);
+  vrPickSearch.addEventListener('input', vrPickRender);
+  vrPickCat.addEventListener('change', vrPickRender);
+  vrPickList.addEventListener('click', e => {
+    const b = e.target.closest('[data-vrpick]');
+    if (!b) return;
+    vrPickClose();
+    vrLoadSfx(b.getAttribute('data-vrpick'));
+  });
+  vrEl('vrPickCancel').addEventListener('click', vrPickClose);
+  vrPick.addEventListener('click', e => { if (e.target === vrPick) vrPickClose(); });
+  document.addEventListener('keydown', e => {
+    if (!vrPick.classList.contains('visible')) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); vrPickClose(); }
+    else if (e.key === 'Enter' && e.target === vrPickSearch) {
+      const first = vrPickList.querySelector('[data-vrpick]');
+      if (first) { e.preventDefault(); first.click(); }
+    }
+  }, true);
+  const vrDrop = vrEl('vrDropzone'), vrInput = vrEl('vrFileInput');
+  vrDrop.addEventListener('click', () => { if (!vr.busy) vrInput.click(); });
+  vrDrop.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !vr.busy) { e.preventDefault(); vrInput.click(); } });
+  vrInput.addEventListener('change', e => { const f = e.target.files && e.target.files[0]; vrInput.value = ''; vrLoadFile(f); });
+  ['dragenter', 'dragover'].forEach(evt => vrDrop.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); vrDrop.classList.add('drag-over'); }));
+  ['dragleave', 'drop'].forEach(evt => vrDrop.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); vrDrop.classList.remove('drag-over'); }));
+  vrDrop.addEventListener('drop', e => { const f = e.dataTransfer.files && e.dataTransfer.files[0]; if (f) vrLoadFile(f); });
+  vrEl('vrChange').addEventListener('click', () => { if (!vr.busy) vrInput.click(); });
+
+  /* ---------- separazione ---------- */
+  async function vrSeparate() {
+    if (!vr.buf || vr.busy) return;
+    if (vr.buf.duration < 0.25) { vrSetStatus('Il file è troppo corto: serve almeno un quarto di secondo.', true); return; }
+    vrStop();
+    const tok = vr.tok, buf = vr.buf;
+    vrSetBusy(true);
+    vrSetStatus('Preparo la separazione…');
+    try {
+      const stems = await vsepStems(buf, 0, buf.length, t => { if (tok === vr.tok) vrSetStatus(t); });
+      if (tok !== vr.tok) return;
+      vr.stems = stems; vr.pos = 0;
+      const mod = VSEP_CFG.models[stems.model] || VSEP_CFG.models.mdx;
+      vrSetStatus('');
+      vrEl('vrResult').hidden = false;
+      vrEl('vrDur').textContent = vrFmt(buf.duration);
+      vrUpdatePos();
+      toast(`Voce e base separate con ${mod.name}${vsep.ep === 'wasm' ? ' (processore)' : ''}.`);
+      vrEl('vrStatus').textContent = '';
+    } catch (err) {
+      console.error(err);
+      if (tok !== vr.tok) return;
+      vrSetStatus(err && err.code === 'cancel' || /interrott/i.test(err && err.message || '') ? 'Separazione interrotta.' : (err.message || 'Separazione non riuscita.'), true);
+    } finally {
+      if (tok === vr.tok) vrSetBusy(false);
+    }
+  }
+  vrEl('vrRun').addEventListener('click', vrSeparate);
+
+  /* ---------- ascolto con il cursore Voce/Base ---------- */
+  function vrBal() { return parseInt(vrEl('vrBal').value, 10) || 0; }
+  function vrSyncBal() {
+    vrEl('vrBalVal').textContent = vsepBalText(vrBal());
+    const p = vr.play;
+    if (p) { const { gv, gi } = vsepGains(vrBal()); p.gv.gain.setTargetAtTime(gv, p.ctx.currentTime, 0.03); p.gi.gain.setTargetAtTime(gi, p.ctx.currentTime, 0.03); }
+  }
+  function vrCurPos() { const p = vr.play; return p ? Math.min(vr.buf.duration, p.from + (p.ctx.currentTime - p.t0)) : vr.pos; }
+  function vrUpdatePos() {
+    if (!vr.buf) return;
+    const t = vrCurPos();
+    vrEl('vrPos').textContent = vrFmt(t);
+    if (!vr.seeking) vrEl('vrSeek').value = String(Math.round(t / vr.buf.duration * 1000));
+  }
+  function vrTick() {
+    if (!vr.play) return;
+    vrUpdatePos();
+    vr.raf = requestAnimationFrame(vrTick);
+  }
+  function vrStart(from) {
+    if (!vr.stems) return;
+    vrStop(true);
+    if (typeof st !== 'undefined' && st.play) stStopPlay();
+    if (typeof ed !== 'undefined' && ed.play) edStopPlay(true);
+    const ctx = getAudioCtx(), dur = vr.buf.duration;
+    from = clamp(from == null ? vr.pos : from, 0, dur);
+    if (from >= dur - 0.05) from = 0;
+    const out = ctx.createGain(); out.gain.value = masterVolume; out.connect(ctx.destination);
+    const { gv, gi } = vsepGains(vrBal());
+    const mk = (b, g) => { const s = ctx.createBufferSource(), n = ctx.createGain(); s.buffer = b; n.gain.value = g; s.connect(n); n.connect(out); return { s, n }; };
+    const a = mk(vr.stems.voc, gv), b = mk(vr.stems.inst, gi);
+    const t0 = ctx.currentTime + 0.04;
+    a.s.start(t0, from); b.s.start(t0, from);
+    const p = { ctx, out, srcs: [a.s, b.s], gv: a.n, gi: b.n, t0, from };
+    a.s.onended = () => { if (vr.play !== p) return; vr.pos = 0; vrStop(true); vrUpdatePos(); };
+    vr.play = p;
+    vrEl('vrPlay').innerHTML = VR_PAUSE_SVG; vrEl('vrPlay').setAttribute('aria-label', 'Pausa');
+    vr.raf = requestAnimationFrame(vrTick);
+  }
+  function vrStop(keepPos) {
+    const p = vr.play;
+    if (p) {
+      if (!keepPos) vr.pos = vrCurPos();
+      vr.play = null;
+      p.srcs.forEach(s => { s.onended = null; try { s.stop(); } catch (e) { /* già ferma */ } });
+      try { p.out.disconnect(); } catch (e) { /* niente */ }
+    }
+    cancelAnimationFrame(vr.raf);
+    const btn = vrEl('vrPlay');
+    if (btn) { btn.innerHTML = VR_PLAY_SVG; btn.setAttribute('aria-label', 'Ascolta'); }
+  }
+  vrEl('vrPlay').addEventListener('click', () => {
+    unlockAudio();
+    if (vr.play) { vrStop(); vrUpdatePos(); } else vrStart();
+  });
+  const vrSeek = vrEl('vrSeek');
+  vrSeek.addEventListener('input', () => {
+    vr.seeking = true;
+    const t = (+vrSeek.value / 1000) * (vr.buf ? vr.buf.duration : 0);
+    vrEl('vrPos').textContent = vrFmt(t);
+  });
+  vrSeek.addEventListener('change', () => {
+    vr.seeking = false;
+    if (!vr.buf) return;
+    const t = (+vrSeek.value / 1000) * vr.buf.duration;
+    vr.pos = t;
+    if (vr.play) vrStart(t); else vrUpdatePos();
+  });
+  vrEl('vrBal').addEventListener('input', vrSyncBal);
+  document.querySelectorAll('[data-vrbal]').forEach(b => b.addEventListener('click', () => { vrEl('vrBal').value = b.getAttribute('data-vrbal'); vrSyncBal(); }));
+  vrSyncBal();
+
+  /* ---------- scaricare, salvare, Studio ---------- */
+  async function vrEncode(buf, label) {
+    if (vrEl('vrFormat').value === 'mp3') {
+      try { return { blob: await encodeMp3(buf, f => vrSetStatus(`Preparo la ${label}… ${Math.round(f * 100)}%`)), ext: 'mp3' }; }
+      catch (err) { console.error('Encoder MP3 non disponibile:', err); toast('Non riesco a creare l\'MP3 (controlla la connessione): uso il WAV.'); }
+    }
+    return { blob: encodeWav(buf), ext: 'wav' };
+  }
+  function vrMix() {
+    const { gv, gi } = vsepGains(vrBal());
+    const v = vr.stems.voc, i = vr.stems.inst, out = newBuffer(v.numberOfChannels, v.length, v.sampleRate);
+    for (let c = 0; c < out.numberOfChannels; c++) {
+      const d = out.getChannelData(c), a = v.getChannelData(c), b = i.getChannelData(c);
+      for (let k = 0; k < d.length; k++) d[k] = a[k] * gv + b[k] * gi;
+    }
+    return out;
+  }
+  function vrPart(k) {
+    if (k === 'mix') return { label: 'mix', file: vsepBalText(vrBal()), buf: microFades(vrMix()) };
+    return { label: k === 'voc' ? 'voce' : 'base', file: k === 'voc' ? 'voce' : 'base', buf: microFades(cloneBuf(k === 'voc' ? vr.stems.voc : vr.stems.inst)) };
+  }
+  async function vrDownload(which) {
+    if (!vr.stems || vr.busy) return;
+    vrSetBusy(true);
+    try {
+      const base = vrSafeName();
+      const parts = (which === 'both' ? ['voc', 'inst'] : [which]).map(vrPart);
+      const files = [];
+      for (const p of parts) {
+        vrSetStatus(`Preparo la ${p.label}…`);
+        const enc = await vrEncode(p.buf, p.label);
+        files.push({ name: `${base} (${p.file}).${enc.ext}`, blob: enc.blob });
+      }
+      if (files.length === 1) { triggerDownload(files[0].blob, files[0].name); toast(`Scaricato: ${files[0].name}`); }
+      else {
+        let zipped = false;
+        try {
+          const JSZip = await loadJSZip();
+          const zip = new JSZip();
+          files.forEach(f => zip.file(f.name, f.blob));
+          vrSetStatus('Creo lo zip…');
+          triggerDownload(await zip.generateAsync({ type: 'blob', compression: 'STORE' }), `${base} (voce e base).zip`);
+          zipped = true;
+          toast(`Scaricato "${base} (voce e base).zip".`);
+        } catch (err) { console.warn('Zip non disponibile, scarico i file uno per uno:', err); }
+        if (!zipped) {
+          triggerDownload(files[0].blob, files[0].name);
+          await new Promise(r => setTimeout(r, 700));
+          triggerDownload(files[1].blob, files[1].name);
+        }
+      }
+      vrSetStatus('');
+    } catch (err) { console.error(err); vrSetStatus(err.message || 'Download non riuscito.', true); }
+    finally { vrSetBusy(false); }
+  }
+  async function vrSave(which) {
+    if (!vr.stems || vr.busy) return;
+    const p = vrPart(which);
+    const cats = await pickCategories(1, { title: `In che categoria vuoi mettere la ${p.label}?`, okLabel: 'Salva' });
+    if (cats === null) return;
+    vrSetBusy(true);
+    try {
+      vrSetStatus('Preparo il file…');
+      const { blob, ext } = await vrEncode(p.buf, p.label);
+      vrSetStatus('Salvo negli Effetti…');
+      const name = `${vr.name} (${p.file})`;
+      await addSound(new File([blob], `${name}.${ext}`, { type: blob.type }), cats);
+      vrSetStatus('');
+      toast(`Salvato negli Effetti: ${name}`);
+    } catch (err) { console.error(err); vrSetStatus('Salvataggio negli Effetti non riuscito.', true); }
+    finally { vrSetBusy(false); }
+  }
+  function vrToStudio(mode) {
+    if (!vr.buf || vr.busy) return;
+    vrStop();
+    if (mode === 'open') {
+      const f = stAddFile(vr.buf, vr.name, 'import');
+      stOpenFile(f.id);
+      return;
+    }
+    if (!vr.stems) return;
+    const fv = stAddFile(vr.stems.voc, `${vr.name} (voce)`, 'stem');
+    const fi = stAddFile(vr.stems.inst, `${vr.name} (base)`, 'stem');
+    if (mode === 'multi') {
+      const start = st.cursor, len = vr.stems.voc.duration;
+      const tv = stFreeTrack(start, len); stAddClip(fv, tv, start);
+      const ti = stFreeTrack(start, len); stAddClip(fi, ti, start);
+      const rename = (id, name) => { const tr = stTrackById(id); if (tr && /^Traccia \d+$/.test(tr.name)) tr.name = name; };
+      rename(tv, 'Voce'); rename(ti, 'Base');
+      st.selClip = null;
+      stMtCommit('Voce e base in multitraccia');
+      stRenderMt();
+      setTab('studio'); stSetView('multi');
+      toast('Voce e base su due tracce: i fader Vol sono il tuo mixer.');
+    } else {
+      stRenderFiles();
+      toast(`Creati nello Studio "${fv.name}" e "${fi.name}".`);
+    }
+  }
+  document.getElementById('tabVsep').addEventListener('click', e => {
+    const dl = e.target.closest('[data-vrdl]'), sv = e.target.closest('[data-vrsave]'), so = e.target.closest('[data-vrstudio]');
+    if (dl && !dl.disabled) vrDownload(dl.getAttribute('data-vrdl'));
+    else if (sv && !sv.disabled) vrSave(sv.getAttribute('data-vrsave'));
+    else if (so && !so.disabled) vrToStudio(so.getAttribute('data-vrstudio'));
+  });
 
   /* ================================================================
      EDITOR AUDIO UNICO
