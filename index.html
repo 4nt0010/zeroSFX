@@ -3362,6 +3362,8 @@ self.onmessage = async (e) => {
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+  import { initializeAuth, inMemoryPersistence, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
   // I tuoi dati ufficiali
   const firebaseConfig = {
@@ -3376,6 +3378,89 @@ self.onmessage = async (e) => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const storage = getStorage(app);
+
+  /* ---------------- Accesso con Firebase Auth ----------------
+     La password non sta più nel file: la verifica Firebase sul server.
+     Sessione solo in memoria, quindi il login si chiede a ogni apertura (come prima). */
+  const auth = initializeAuth(app, { persistence: inMemoryPersistence });
+  const functions = getFunctions(app, 'europe-west1');
+  const LOGIN_DOMAIN = 'zerosfx.app';   // "nome.cognome" diventa nome.cognome@zerosfx.app
+
+  const loginOverlay = document.getElementById('loginOverlay');
+  const loginForm = document.getElementById('loginForm');
+  const loginUser = document.getElementById('loginUser');
+  const loginPass = document.getElementById('loginPass');
+  const loginError = document.getElementById('loginError');
+  const loginSubmit = loginForm.querySelector('button[type="submit"]');
+
+  function showLoginError(msg) {
+    loginError.textContent = msg;
+    loginError.classList.add('visible');
+  }
+  function unlockUI() {
+    loginError.classList.remove('visible');
+    loginOverlay.classList.add('hidden');
+    document.body.classList.remove('login-locked');
+  }
+  function lockUI() {
+    loginUser.value = '';
+    loginPass.value = '';
+    loginError.classList.remove('visible');
+    loginOverlay.classList.remove('hidden');
+    document.body.classList.add('login-locked');
+    setTimeout(() => loginUser.focus(), 50);
+  }
+
+  // Registra l'accesso: la Cloud Function aggiunge IP e posizione lato server.
+  async function logAccess() {
+    try {
+      let deviceToken = null;
+      try {
+        deviceToken = localStorage.getItem('zsfxDevice');
+        if (!deviceToken) { deviceToken = crypto.randomUUID(); localStorage.setItem('zsfxDevice', deviceToken); }
+      } catch (e) { /* storage non disponibile: si registra senza token */ }
+      await httpsCallable(functions, 'logAccess')({
+        deviceToken,
+        ua: navigator.userAgent,
+        lang: navigator.language,
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        screen: `${screen.width}x${screen.height}`,
+        platform: navigator.platform || ''
+      });
+    } catch (err) { console.warn('Registrazione accesso non riuscita:', err); }
+  }
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const u = (loginUser.value || '').trim().toLowerCase();
+    const p = loginPass.value || '';
+    const email = u.includes('@') ? u : `${u}@${LOGIN_DOMAIN}`;
+    loginSubmit.disabled = true;
+    try {
+      await signInWithEmailAndPassword(auth, email, p);
+    } catch (err) {
+      showLoginError(err && err.code === 'auth/too-many-requests'
+        ? 'Troppi tentativi. Riprova tra qualche minuto.'
+        : 'Credenziali non valide.');
+      loginPass.value = '';
+      loginPass.focus();
+    } finally {
+      loginSubmit.disabled = false;
+    }
+  });
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) logoutBtn.addEventListener('click', () => signOut(auth));
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) { unlockUI(); logAccess(); }
+    else { lockUI(); }
+  });
+
+  // Il resto della pagina legge Firestore e Storage: parte solo dopo un accesso valido.
+  await new Promise((resolve) => {
+    const stop = onAuthStateChanged(auth, (user) => { if (user) { stop(); resolve(); } });
+  });
 
   /* ---------------- Switch logo/scritta in basso alla pagina ---------------- */
   const logoImg = document.getElementById('logoImg');
@@ -12469,52 +12554,13 @@ self.onmessage = async (e) => {
 
 <script>
   (function() {
-    const VALID_USER = "angelo.ancona";
-    const VALID_PASS = "Angelo.prod2025";
-
+    // Login e logout ora sono gestiti da Firebase Auth nel modulo principale.
     const overlay = document.getElementById('loginOverlay');
-    const form = document.getElementById('loginForm');
     const userInput = document.getElementById('loginUser');
     const passInput = document.getElementById('loginPass');
-    const errorEl = document.getElementById('loginError');
 
-    function unlock() {
-      overlay.classList.add('hidden');
-      document.body.classList.remove('login-locked');
-    }
-
-    function lock() {
-      if (userInput) userInput.value = '';
-      if (passInput) passInput.value = '';
-      if (errorEl) errorEl.classList.remove('visible');
-      overlay.classList.remove('hidden');
-      document.body.classList.add('login-locked');
-      setTimeout(() => userInput && userInput.focus(), 50);
-    }
-
-    // L'accesso non viene più salvato: il login viene richiesto ad ogni apertura della pagina.
     document.body.classList.add('login-locked');
     setTimeout(() => userInput && userInput.focus(), 50);
-
-    if (form) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const u = (userInput.value || '').trim();
-        const p = passInput.value || '';
-        if (u === VALID_USER && p === VALID_PASS) {
-          errorEl.classList.remove('visible');
-          unlock();
-        } else {
-          errorEl.textContent = 'Credenziali non valide.';
-          errorEl.classList.add('visible');
-          passInput.value = '';
-          passInput.focus();
-        }
-      });
-    }
-
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) logoutBtn.addEventListener('click', lock);
 
     // Avviso Bloc Maiusc: lo stato si legge da ogni tasto premuto o rilasciato (anche il tasto stesso)
     const passWrap = document.getElementById('loginPassWrap');

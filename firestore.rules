@@ -1,0 +1,13 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Dati dell'app: solo chi ha fatto il login
+    match /categories/{d} { allow read, write: if request.auth != null; }
+    match /sounds/{d}     { allow read, write: if request.auth != null; }
+    match /voices/{d}     { allow read, write: if request.auth != null; }
+    match /settings/{d}   { allow read, write: if request.auth != null; }
+    // Registro accessi: nessun browser può leggerlo o scriverlo. Lo scrive solo la Cloud Function.
+    match /accessi/{d}    { allow read, write: if false; }
+    // Tutto il resto è chiuso (regola implicita di Firestore).
+  }
+}
