@@ -50,8 +50,15 @@
 
     .wrap{ max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
   header{ display: flex; align-items: center; gap: 16px; padding: 26px 0 18px; }
-  header h1{ font-family: var(--display); font-size: 24px; }
-  header h1 span{ color: var(--accent-bright); }
+  .brand{ display: flex; align-items: center; gap: 12px; font-family: var(--display); font-size: 24px; }
+  .brand img{ height: 34px; width: auto; display: block; filter: drop-shadow(0 0 12px rgba(255,30,96,0.35)); }
+  .brand .brand-text{ display: none; }
+  .brand.no-logo img{ display: none; }
+  .brand.no-logo .brand-text{ display: inline; }
+  .brand .brand-text span{ color: var(--accent-bright); }
+  .brand small{ font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--text-dim); padding: 3px 8px; border: 1px solid var(--border); border-radius: 99px; }
+  .brand-login{ justify-content: center; }
+  .brand-login img{ height: 52px; }
   .who{ margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
   .btn{ padding: 8px 14px; border-radius: 10px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); cursor: pointer; font-size: 13px; }
   .btn:hover{ border-color: var(--border-strong); }
@@ -114,7 +121,7 @@
 
 <div class="login" id="login">
   <div class="login-card">
-    <h1>zeroSFX · Admin</h1>
+    <h1 class="brand brand-login"><img src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&amp;token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX" onerror="this.parentNode.classList.add('no-logo')"><span class="brand-text">zeroSFX</span></h1>
     <p>Area riservata</p>
     <form id="loginForm" autocomplete="off">
       <div class="field">
@@ -141,7 +148,7 @@
 
 <div class="wrap hidden" id="app">
   <header>
-    <h1>zero<span>SFX</span> · Admin</h1>
+    <h1 class="brand"><img src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&amp;token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX" onerror="this.parentNode.classList.add('no-logo')"><span class="brand-text">zero<span>SFX</span></span><small>Admin</small></h1>
     <span class="who" id="who"></span>
     <button class="btn" id="logoutBtn">Esci</button>
   </header>
