@@ -41,8 +41,7 @@
 
   .wrap{ max-width: 1000px; margin: 0 auto; padding: 0 28px; }
 
-  /* ---------- HEADER / WELCOME ---------- */
-  header{ padding: 60px 28px 20px; text-align: center; position: relative; }
+    header{ padding: 60px 28px 20px; text-align: center; position: relative; }
   .logo{
     display:inline-flex; align-items:center; justify-content:center;
     margin-bottom: 18px;
@@ -58,8 +57,7 @@
   header h1{ font-family: var(--display); font-weight: 700; font-size: clamp(26px, 4vw, 34px); }
   header p{ color: var(--text-muted); font-size: 14px; margin-top: 10px; }
 
-  /* ---------- SWITCH LOGO (in fondo alla pagina) ---------- */
-  .page-bottom{
+    .page-bottom{
     display:flex; justify-content:flex-start; padding: 30px 28px 34px;
   }
   .logo-switch{
@@ -78,8 +76,7 @@
     filter: blur(6px);
   }
 
-  /* ---------- DROPZONE ---------- */
-  .dropzone{
+    .dropzone{
     max-width: 760px; margin: -40px auto 0; position: relative; z-index: 5;
     border: 1px solid var(--border); border-radius: 30px;
     background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
@@ -103,8 +100,7 @@
   .dropzone p{ color: var(--text-dim); font-size: 13px; font-family: var(--mono); }
   #fileInput{ display:none; }
 
-  /* ---------- LIBRARY ---------- */
-  .library{ padding: 56px 0 90px; }
+    .library{ padding: 56px 0 90px; }
   .library-head{
     display:grid; grid-template-columns: 1fr auto 1fr;
     align-items:center; margin-bottom: 24px; gap: 12px;
@@ -252,8 +248,7 @@
 
   .cat-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; box-shadow: 0 0 5px currentColor; vertical-align:middle; flex-shrink:0; }
 
-  /* ---------- CATEGORY BUBBLE PANEL ---------- */
-  .cat-toggle-btn{
+    .cat-toggle-btn{
     position:absolute; right: 8px; top:50%; transform: translateY(-50%);
     width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border);
     background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer;
@@ -330,8 +325,7 @@
   .logout-btn svg{ display:block; flex-shrink:0; }
   .logout-btn:hover{ color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.1); transform: translateY(-1px); }
 
-  /* ---------- MODALITÀ REGIA ---------- */
-  .regia-overlay{
+    .regia-overlay{
     position: fixed; inset: 0; background: var(--bg); z-index: 200;
     background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
     background-size: 26px 26px;
@@ -441,8 +435,7 @@
     background: var(--orange-bright); cursor:pointer;
   }
 
-  /* ---------- MODE TOGGLE (Multi / Single) ---------- */
-  .mode-toggle{
+    .mode-toggle{
     display:inline-flex; align-items:center; gap:10px; margin-top: 18px;
     font-family: var(--mono); font-size: 12px; color: var(--text-dim);
   }
@@ -461,15 +454,11 @@
   }
   .mode-switch[aria-checked="true"]::after{ transform: translateX(22px); }
 
-  /* ---------- VOLUME FADERS (generale + per singolo suono) ---------- */
-  .mv-icon{ display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .mv-icon{ display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .mv-icon svg{ width:100%; height:100%; display:block; }
   .mv-value{ font-family: var(--mono); flex-shrink:0; }
 
-  /* pad-body: affianca la colonna principale (onda + controlli) al fader del
-     singolo suono, così nella vista grande il fader può essere più alto
-     "rubando" un po' di larghezza alla visualizzazione dell'onda sonora. */
-  .pad-body{ display:flex; align-items:stretch; gap: 12px; }
+    .pad-body{ display:flex; align-items:stretch; gap: 12px; }
   .pad-main{ flex:1; min-width:0; display:flex; flex-direction:column; }
 
   .pad-volume-row{
@@ -511,9 +500,7 @@
     cursor:pointer;
   }
 
-  /* Viste compatta e lista ("box piccoli"): il fader torna orizzontale,
-     niente più rotazione, si allunga fino in fondo e niente percentuale. */
-  #libraryGrid.view-compact .pad-body{ flex-direction: column; }
+    #libraryGrid.view-compact .pad-body{ flex-direction: column; }
   #libraryGrid.view-compact .pad-volume-row,
   #libraryGrid.view-list .pad-volume-row{
     flex-direction: row; align-items:center; justify-content:flex-start; gap:8px;
@@ -528,10 +515,7 @@
   #libraryGrid.view-compact .pv-slider,
   #libraryGrid.view-list .pv-slider{ transform: none; width: 100%; height: 24px; }
 
-  /* ---------- MASTER FADER (dock fisso, stile mixer) ----------
-     Fisso a schermo così resta a portata di mano mentre sistemi i suoni,
-     e resta visibile (z-index alto) anche sopra la modalità regia. */
-  .master-fader-dock{
+    .master-fader-dock{
     position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 260;
     display:flex; flex-direction:column; align-items:center; gap:10px;
     padding: 16px 15px 14px; border-radius: 20px;
@@ -649,8 +633,7 @@
     #libraryGrid.view-list .pad-volume-row{ display:none; }
   }
 
-  /* ---------- SEARCH BAR ---------- */
-  .search-row{
+    .search-row{
     position: relative; margin-bottom: 26px;
   }
   .search-row .search-icon{
@@ -689,8 +672,7 @@
   #searchInput{ padding-right: 132px; }
   #regiaClearBtn{ right: 10px; }
 
-  /* ---------- BOTTOM FLOATING PLAYER ---------- */
-  .bottom-player{
+    .bottom-player{
     position: fixed; left: 50%; bottom: 22px; z-index: 100;
     width: calc(100% - 40px); max-width: 720px;
     background: rgba(255,255,255,0.055);
@@ -747,8 +729,7 @@
     .bp-info{ min-width: 80px; max-width: 120px; }
   }
 
-  /* ---------- TORNA IN CIMA ---------- */
-  .top-btn{
+    .top-btn{
     position: fixed; right: 22px; bottom: 96px; z-index: 99;
     width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-strong);
     background: rgba(255,255,255,0.06); color: var(--text); cursor:pointer;
@@ -765,8 +746,7 @@
     .top-btn{ right: 14px; bottom: 86px; width: 42px; height: 42px; }
   }
 
-  /* ---------- CONFERMA ELIMINAZIONE ---------- */
-  .confirm-overlay{
+    .confirm-overlay{
     position: fixed; inset: 0; z-index: 200;
     background: rgba(0,0,0,0.55);
     -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
@@ -797,8 +777,7 @@
   .confirm-btn.delete{ background: linear-gradient(135deg, #ff5c6b, #b8202f); color: #fff; }
   #catDeleteConfirmOverlay{ z-index: 220; }
 
-  /* ---------- CATEGORY CHIPS (assegnazione multipla) ---------- */
-  .category-tags-row{ display:flex; flex-wrap:wrap; gap: 6px; margin-bottom: 10px; position: relative; }
+    .category-tags-row{ display:flex; flex-wrap:wrap; gap: 6px; margin-bottom: 10px; position: relative; }
   .category-chip{
     display:inline-flex; align-items:center; gap:5px; font-family: var(--mono); font-size: 10.5px;
     color: var(--cat-color, var(--amber)); border: 1px solid var(--cat-color, var(--border-strong)); border-radius: 999px;
@@ -838,8 +817,7 @@
   }
   .cat-assign-manage:hover{ color: var(--orange-bright); }
 
-  /* ---------- GESTIONE CATEGORIE (modale) ---------- */
-  .cat-manage-btn{
+    .cat-manage-btn{
     position:absolute; right: 46px; top:50%; transform: translateY(-50%);
     width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border);
     background: rgba(255,255,255,0.04); color: var(--text-dim); cursor:pointer;
@@ -924,8 +902,7 @@
   }
   .catmanage-add-btn:hover{ transform: scale(1.03); }
 
-  /* ---------- SCARICA TUTTO ---------- */
-  .regia-btn:disabled{ opacity: .45; cursor: default; transform: none; }
+    .regia-btn:disabled{ opacity: .45; cursor: default; transform: none; }
   .zip-progress{
     height: 4px; border-radius: 2px; background: rgba(255,255,255,0.07); overflow: hidden;
     margin: -8px 0 20px; display: none;
@@ -934,14 +911,12 @@
   .zip-progress span{ display:block; height:100%; width:0; background: var(--orange-bright); box-shadow: 0 0 8px rgba(255,30,96,0.7); transition: width .2s ease; }
   .confirm-btn:disabled{ opacity: .5; cursor: default; transform: none; }
 
-  /* ---------- TASTI RAPIDI: pulsante sul pad ---------- */
-  .icon-btn.hotkey-btn.assigned{
+    .icon-btn.hotkey-btn.assigned{
     width:auto; min-width: 26px; padding: 0 7px;
     font-family: var(--mono); font-size: 10.5px; font-weight:500; line-height:1; white-space:nowrap;
     color: var(--orange-bright); border-color: var(--border-strong); background: rgba(255,30,96,0.14);
   }
-  /* nella vista compatta, con il pulsante dei tasti in più, le icone vanno a capo invece di uscire dal box */
-  #libraryGrid.view-compact .pad-top{ flex-wrap: wrap; row-gap: 6px; }
+    #libraryGrid.view-compact .pad-top{ flex-wrap: wrap; row-gap: 6px; }
   #libraryGrid.view-compact .pad-icon-btns{ margin-left: auto; }
   #libraryGrid.view-compact .icon-btn.hotkey-btn.assigned{ width:auto; min-width:22px; padding: 0 5px; font-size: 9.5px; }
 
@@ -952,8 +927,7 @@
     box-shadow: inset 0 -2px 0 rgba(0,0,0,0.35);
   }
 
-  /* ---------- TASTI RAPIDI: modale di associazione ---------- */
-  #hotkeyOverlay{ z-index: 230; }
+    #hotkeyOverlay{ z-index: 230; }
   .hotkey-card{ max-width: 360px; }
   .hotkey-card:focus{ outline: none; }
   .hk-sound{ font-family: var(--display); font-weight:600; color: var(--text) !important; font-size: 14px !important; margin-bottom: 18px !important; }
@@ -979,8 +953,7 @@
   .confirm-btn.hk-done{ background: linear-gradient(135deg, var(--orange-bright), var(--orange)); color:#fff; }
   .confirm-btn[hidden]{ display:none; }
 
-  /* ---------- TASTI RAPIDI: vista tastiera ---------- */
-  .kb-overlay{
+    .kb-overlay{
     position: fixed; inset: 0; z-index: 200; background: var(--bg);
     background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
     background-size: 26px 26px;
@@ -1004,8 +977,7 @@
   .kb-control p b{ color: var(--text-muted); font-weight: 600; }
   .kb-mode-toggle{ margin-top: 2px; }
 
-  /* Over: il tasto sotto al mouse si ingrandisce dopo un attimo */
-  .kb-peek{
+    .kb-peek{
     position: fixed; z-index: 240; pointer-events: none;
     min-width: 170px; max-width: 280px; padding: 12px 14px;
     border-radius: 16px; border: 1px solid var(--orange-bright);
@@ -1055,8 +1027,7 @@
     width: 100%; overflow-wrap: normal; word-break: normal;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
-  /* sui tasti stretti il nome sta su una riga sola, troncato coi puntini (come nell'esempio di Premiere) */
-  .kb-key.narrow{ padding-left: calc(var(--u) * 0.08); padding-right: calc(var(--u) * 0.06); }
+    .kb-key.narrow{ padding-left: calc(var(--u) * 0.08); padding-right: calc(var(--u) * 0.06); }
   .kb-key.narrow .kb-key-cmd{ display:block; white-space:nowrap; text-overflow:ellipsis; font-size: calc(var(--u) * 0.17); letter-spacing: -0.01em; }
   .kb-key-label{ font-family: var(--mono); font-size: calc(var(--u) * 0.2); line-height: 1; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .kb-key-count{
@@ -1088,8 +1059,7 @@
   .kb-legend i.l-assigned{ background: linear-gradient(160deg, rgba(255,30,96,0.5), rgba(120,10,50,0.5)); border-color: var(--border-strong); }
   .kb-legend i.l-reserved{ opacity:.5; background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(255,255,255,0.12) 3px 4px); }
 
-  /* pannello di modifica del tasto selezionato */
-  .kb-editor{
+    .kb-editor{
     width: min(620px, 100%); border: 1px solid var(--border); border-radius: 22px;
     background: var(--card); padding: 18px;
   }
@@ -1142,8 +1112,7 @@
   .kb-ed-select:focus{ border-color: var(--orange-bright); }
   .kb-ed-select option{ background: #16131a; color: var(--text); }
 
-  /* vista telefono: tasti uno sotto l'altro, suoni a destra */
-  .kb-list{ display:none; flex-direction:column; gap: 6px; width: 100%; max-width: 620px; }
+    .kb-list{ display:none; flex-direction:column; gap: 6px; width: 100%; max-width: 620px; }
   .kb-filter{ display:none; gap: 4px; border: 1px solid var(--border); border-radius: 12px; padding: 3px; align-self:flex-start; }
   .kb-filter button{
     font-family: var(--body); font-size: 12.5px; font-weight:600; cursor:pointer;
@@ -1189,8 +1158,7 @@
     *{ animation: none !important; transition: none !important; }
   }
 
-  /* ---------- SCHEDE: Effetti / Vocali ---------- */
-  .main-tabs-row{ margin-top: 18px; }
+    .main-tabs-row{ margin-top: 18px; }
   .main-tabs{
     display:inline-flex; gap:4px; padding:4px; border:1px solid var(--border); border-radius:999px;
     background: rgba(255,255,255,0.03);
@@ -1205,8 +1173,7 @@
   .main-tab.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); box-shadow: inset 0 0 0 1px var(--border-strong); }
   @media (max-width: 360px){ .main-tabs{ max-width: 100%; } .main-tab{ padding-left: 11px; padding-right: 11px; gap: 6px; } }
 
-  /* ---------- VOCAL REMOVER (scheda) ---------- */
-  .main-tabs{ max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+    .main-tabs{ max-width: 100%; overflow-x: auto; scrollbar-width: none; }
   .main-tabs::-webkit-scrollbar{ display:none; }
   .main-tab{ flex-shrink: 0; white-space: nowrap; }
   @media (max-width: 560px){ .main-tabs{ flex-wrap: wrap; justify-content: center; border-radius: 22px; overflow: visible; } .main-tab{ padding-left: 12px; padding-right: 12px; gap: 6px; font-size: 12.5px; } }
@@ -1297,8 +1264,7 @@
   }
   .tab-badge[hidden], .tab-panel[hidden]{ display:none; }
 
-  /* ---------- VOCALI ---------- */
-  .voices-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom: 12px; }
+    .voices-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom: 12px; }
   .voices-note{
     display:flex; align-items:center; gap:8px; margin-bottom: 22px;
     font-family: var(--mono); font-size: 11.5px; color: var(--text-dim);
@@ -1343,11 +1309,7 @@
   .icon-btn:disabled{ opacity:.35; cursor:default; }
   .icon-btn:disabled:hover{ color: var(--text-muted); border-color: var(--border); background: rgba(255,255,255,0.02); }
 
-  /* ---------- EDITOR VOCALE ---------- */
-
   body.ved-open{ overflow:hidden; }
-
-  /* intestazione */
 
   .ved-name{
     flex: 1; min-width: 200px; font-family: var(--display); font-size: 22px; font-weight:700; color: var(--text);
@@ -1356,8 +1318,7 @@
   .ved-name:hover, .ved-name:focus{ border-bottom-color: var(--border-strong); }
   .ved-head-actions{ display:flex; align-items:center; gap: 8px; margin-left:auto; }
 
-  /* pulsanti e campi dell'editor */
-  .ved-btn{
+    .ved-btn{
     font-family: var(--body); font-size: 12.5px; font-weight:600; cursor:pointer; line-height:1;
     padding: 8px 14px; border-radius:999px; border:1px solid var(--border);
     background: rgba(255,255,255,0.03); color: var(--text-muted);
@@ -1387,8 +1348,7 @@
   .ved-seg button.active{ background: rgba(255,30,96,0.16); color: var(--orange-bright); }
   .ved-seg button:disabled{ opacity:.4; cursor:default; }
 
-  /* banco: ascolto + onda */
-  .ved-deck{
+    .ved-deck{
     border:1px solid var(--border-strong); border-radius: 24px; padding: 14px;
     background: linear-gradient(180deg, rgba(30,24,34,0.95), rgba(14,11,16,0.98));
     box-shadow: 0 24px 60px -30px rgba(255,30,96,0.25);
@@ -1420,10 +1380,7 @@
   .ved-mk button + button{ padding: 5px 9px 5px 4px; color: var(--text-dim); font-size: 12px; }
   .ved-mk button:hover{ color:#fff; }
 
-  /* barra della selezione, attaccata all'onda */
-
-  /* area strumenti */
-  .ved-work{ display:grid; grid-template-columns: 160px minmax(0,1fr) 230px; gap: 14px; align-items:start; }
+    .ved-work{ display:grid; grid-template-columns: 160px minmax(0,1fr) 230px; gap: 14px; align-items:start; }
   @media (max-width: 1080px){ .ved-work{ grid-template-columns: 150px minmax(0,1fr); } .ved-history{ grid-column: 1 / -1; } }
   @media (max-width: 720px){
     .ved-work{ grid-template-columns: minmax(0,1fr); }
@@ -1469,8 +1426,7 @@
   .ved-preset:hover:not(:disabled){ border-color: var(--border-strong); background: rgba(255,30,96,0.08); }
   .ved-preset:disabled{ opacity:.35; cursor:default; }
 
-  /* ---------- SEPARAZIONE VOCE / BASE ---------- */
-  .vsep-row{ gap: 10px; }
+    .vsep-row{ gap: 10px; }
   .vsep-end{ font-size: 11.5px; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
   .vsep-range{
     -webkit-appearance:none; appearance:none; flex: 1 1 200px; min-width: 140px; max-width: 380px; height: 22px;
@@ -1495,8 +1451,7 @@
   .vsep-store .ved-btn{ padding: 5px 10px; font-size: 11.5px; }
   [data-vsepcancel][hidden]{ display: none !important; }
 
-  /* cronologia */
-  .ved-history{ border:1px solid var(--border); border-radius: 20px; background: var(--card); padding: 14px; }
+    .ved-history{ border:1px solid var(--border); border-radius: 20px; background: var(--card); padding: 14px; }
   .ved-history h4{ font-family: var(--display); font-size: 14.5px; font-weight:700; margin-bottom: 8px; }
   .ved-history ol{ list-style:none; display:flex; flex-direction:column; gap: 2px; max-height: 360px; overflow-y:auto; }
   .ved-history ol li button{
@@ -1520,8 +1475,7 @@
   }
   @media (max-width: 820px){ .ved-keys{ display:none; } }
 
-  /* ---------- SCELTA CATEGORIA ALL'IMPORT ---------- */
-  #catPickOverlay{ z-index: 240; }
+    #catPickOverlay{ z-index: 240; }
   .catpick-card{ max-width: 420px; }
   .catpick-list{ display:flex; flex-wrap:wrap; justify-content:center; gap: 8px; margin-bottom: 16px; max-height: 40vh; overflow-y:auto; }
   .catpick-chip{
@@ -1536,8 +1490,7 @@
   .catpick-chip.active svg{ display:block; }
   .catpick-card .catmanage-add-row{ margin-bottom: 18px; }
 
-  /* ---------- CONFERMA GENERICA + AVVISI ---------- */
-  #askOverlay{ z-index: 290; }
+    #askOverlay{ z-index: 290; }
   .toast{
     position: fixed; left: 50%; bottom: 96px; z-index: 300;
     max-width: min(460px, calc(100% - 32px)); padding: 11px 18px; border-radius: 16px; text-align:center;
@@ -1548,8 +1501,7 @@
   }
   .toast.visible{ opacity:1; transform: translateX(-50%) translateY(0); }
 
-  /* ---------- LOGO DELLA CATEGORIA ---------- */
-  .cat-logo-section{
+    .cat-logo-section{
     display:flex; align-items:center; gap: 20px; margin: 0 0 24px; padding: 16px;
     border: 1px solid var(--border); border-left: 3px solid var(--cat-color, var(--orange)); border-radius: 22px;
     background: linear-gradient(180deg, rgba(28,24,32,0.85), rgba(16,13,18,0.9));
@@ -1588,8 +1540,7 @@
   .catmanage-logo img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
   .catmanage-logo svg{ width:14px; height:14px; }
 
-  /* campi numerici liberi (secondi, dB, Hz…) */
-  .ved-field{ display:inline-flex; align-items:center; gap: 7px; font-size: 12px; color: var(--text-dim); }
+    .ved-field{ display:inline-flex; align-items:center; gap: 7px; font-size: 12px; color: var(--text-dim); }
   .ved-field em{ font-style: normal; color: var(--text-muted); }
   .ved-num{
     width: 74px; font-family: var(--mono); font-size: 13px; color: var(--text); text-align: right;
@@ -1601,11 +1552,9 @@
   .ved-num.ved-text{ width: 100%; text-align:left; font-family: var(--body); }
   .ved-range{ width: 150px; max-width: 100%; accent-color: var(--orange-bright); }
 
-  /* interruttori nel banco */
-  .ved-btn.ved-toggle[aria-pressed="true"]{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.14); }
+    .ved-btn.ved-toggle[aria-pressed="true"]{ color: var(--orange-bright); border-color: var(--orange-bright); background: rgba(255,30,96,0.14); }
 
-  /* preset */
-  .ved-presetbox{ margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .ved-presetbox{ margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
   .ved-presetbox > p{ margin: 0 0 10px; font-size: 11.5px; color: var(--text-dim); line-height: 1.4; }
   .ved-preset-name{ display:flex; gap: 6px; margin-bottom: 8px; }
   .ved-preset-name[hidden]{ display:none; }
@@ -1621,23 +1570,19 @@
   .ved-preset-list .pdel:hover{ color:#ff6b6b; }
   .ved-preset-empty{ font-size: 11.5px; color: var(--text-dim); }
 
-  /* la scelta della categoria deve stare sopra l'editor */
-  #catPickOverlay{ z-index: 285; }
+    #catPickOverlay{ z-index: 285; }
 
-  /* preset automatico nella scheda Vocali */
-  .vc-auto{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; margin: -10px 0 22px; font-size: 12.5px; color: var(--text-dim); }
+    .vc-auto{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; margin: -10px 0 22px; font-size: 12.5px; color: var(--text-dim); }
   .vc-auto select{ max-width: 260px; }
 
-  /* riordino dei vocali */
-  .vc-top .pad-top-left{ display:flex; align-items:center; gap: 6px; }
+    .vc-top .pad-top-left{ display:flex; align-items:center; gap: 6px; }
   #voiceGrid.reorder-active .grip{ cursor: grab; touch-action: none; opacity: 1; pointer-events: auto; color: var(--orange-bright); }
   #voiceGrid.reorder-active .grip:active{ cursor: grabbing; }
   #voiceGrid.reorder-active .vc-card{ border-style: dashed; }
   .vc-card.dragging{ z-index: 40; transform: scale(1.02); opacity: .96; box-shadow: 0 18px 40px -12px rgba(0,0,0,0.7), 0 0 0 1px var(--orange-bright); }
   .voices-head .reorder-toggle-btn{ justify-self:auto; }
 
-  /* ---------- LOGIN OVERLAY ---------- */
-  body.login-locked{ overflow: hidden; }
+    body.login-locked{ overflow: hidden; }
   .login-overlay{
     position: fixed; inset: 0; z-index: 10000;
     display:flex; align-items:center; justify-content:center;
@@ -1669,8 +1614,7 @@
     transition: border-color .15s ease, background .15s ease;
   }
   .login-field input:focus{ outline:none; border-color: var(--border-strong); background: rgba(255,255,255,0.05); }
-  /* avviso Bloc Maiusc dentro il campo password */
-  .login-pass-wrap{ position: relative; }
+    .login-pass-wrap{ position: relative; }
   .login-pass-wrap.caps input{ padding-right: 128px; border-color: rgba(255,179,71,0.55); }
   .caps-badge{
     position:absolute; right: 8px; top: 50%; transform: translateY(-50%);
@@ -1697,8 +1641,7 @@
   .login-submit:hover{ transform: translateY(-1px); }
   .login-submit:active{ transform: scale(0.98); }
 
-  /* ---------- EFFETTI MODIFICATI NELLA SESSIONE ---------- */
-  .pad-top{ flex-wrap: wrap; row-gap: 6px; }
+    .pad-top{ flex-wrap: wrap; row-gap: 6px; }
   .pad-icon-btns{ margin-left: auto; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
   .icon-btn.edit-btn.active{ color: #3ee6c4; border-color: rgba(62,230,196,0.45); background: rgba(62,230,196,0.12); }
   .pad.edited{ border-color: rgba(62,230,196,0.35); }
@@ -1725,8 +1668,7 @@
   .st-fxbar .ved-select{ max-width: 260px; }
   .kb-clear-all:hover{ color: #ff6b6b !important; border-color: rgba(255,107,107,0.5) !important; background: rgba(255,107,107,0.1) !important; }
 
-  /* ---------- STUDIO ---------- */
-  .studio{ --st-teal: #3ee6c4; --st-line: rgba(255,255,255,0.07); --st-panel: #111015; --st-head-w: 214px; padding: 0 16px; }
+    .studio{ --st-teal: #3ee6c4; --st-line: rgba(255,255,255,0.07); --st-panel: #111015; --st-head-w: 214px; padding: 0 16px; }
   .st-shell{ max-width: 1560px; margin: 0 auto; display:flex; flex-direction:column; gap: 12px; }
   .st-shell button{ font-family: var(--body); }
   @media (min-width: 900px){ .st-shell{ padding-right: 52px; } }
@@ -1825,8 +1767,7 @@
   .st-empty span{ font-size: 12px; max-width: 380px; }
   .st-sep{ width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
 
-  /* multitraccia */
-  .st-mt-toolbar{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px 8px; margin-bottom: 10px; }
+    .st-mt-toolbar{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px 8px; margin-bottom: 10px; }
   .st-mt-toolbar .ved-btn{ padding: 6px 11px; font-size: 12px; }
   .st-clip-inspector{ display:flex; align-items:center; flex-wrap: wrap; gap: 6px 10px; padding: 4px 10px; border-radius: 12px; border:1px solid var(--st-line); background: rgba(255,255,255,0.025); }
   .st-clip-inspector .ved-num{ width: 64px; padding: 4px 7px; font-size: 12px; border-radius: 8px; }
@@ -1941,10 +1882,7 @@
     .st-th-name{ flex: 1 1 100%; }
   }
 
-  /* ================================================================
-     EDITOR AUDIO UNICO (vocali, effetti, Studio)
-     ================================================================ */
-  .ed-overlay{
+    .ed-overlay{
     position: fixed; inset: 0; z-index: 250; overflow-y: auto; padding: 20px 22px;
     background: var(--bg);
     background-image: radial-gradient(circle at 1px 1px, rgba(255,30,96,0.06) 1px, transparent 0);
@@ -2016,8 +1954,7 @@
   .ed-work .ved-history ol li.future button{ opacity: .45; }
   .ed-work .ved-panel{ max-height: none; }
 
-  /* EQ grafico */
-  .ed-geq{ grid-column: 1 / -1; display:flex; flex-direction:column; gap: 10px; }
+    .ed-geq{ grid-column: 1 / -1; display:flex; flex-direction:column; gap: 10px; }
   .ed-geq canvas{ width: 100%; height: 120px; display:block; border-radius: 10px; background: #060509; border: 1px solid rgba(255,255,255,0.05); }
   .ed-geq-bands{ display:grid; grid-template-columns: repeat(10, minmax(0,1fr)); gap: 4px; }
   .ed-geq-band{ display:flex; flex-direction:column; align-items:center; gap: 4px; }
@@ -2028,8 +1965,7 @@
   .ed-geq-band em{ font-style: normal; font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
   .ed-geq-band span{ font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
 
-  /* Analisi */
-  .ed-stats{ grid-column: 1 / -1; width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .ed-stats{ grid-column: 1 / -1; width: 100%; border-collapse: collapse; font-size: 12.5px; }
   .ed-stats th{ text-align:left; font-weight: 500; color: var(--text-dim); padding: 6px 8px 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); white-space: nowrap; }
   .ed-stats td{ font-family: var(--mono); font-size: 12px; color: var(--text); padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .ed-stats td.hot{ color: #ffb347; }
@@ -2042,12 +1978,10 @@
   }
   @media (max-width: 820px){ .ed-keys{ display:none; } }
 
-  /* Studio: in "Forma d'onda" la barra in alto mostra solo la scelta della vista */
-  .st-shell.is-wave .st-mt-only{ display:none !important; }
+    .st-shell.is-wave .st-mt-only{ display:none !important; }
   .st-shell.is-wave .st-main{ background: transparent; border: none; padding: 0; }
 
-  /* File come barra orizzontale (prima era una colonna a sinistra) */
-  .st-body{ display:flex; flex-direction:column; align-items: stretch; gap: 12px; }
+    .st-body{ display:flex; flex-direction:column; align-items: stretch; gap: 12px; }
   .st-filebar{ display:flex; align-items:center; gap: 8px 12px; flex-wrap: wrap; padding: 8px 12px; border-radius: 16px; }
   .st-filebar .st-fb-head{ margin: 0; gap: 6px; flex: 0 0 auto; }
   .st-filebar .st-fb-head h4{ margin: 0; }
@@ -2070,8 +2004,7 @@
   }
   .st-shell.seg-in-ed .st-topbar:not(.ed-bar){ display:none !important; }
 
-  /* barra principale dell'editor (stile Audition) */
-  .ed-bar[hidden], .ed-bar [hidden]{ display:none !important; }
+    .ed-bar[hidden], .ed-bar [hidden]{ display:none !important; }
   .ed-seg-slot{ display: contents; }
   .ed-bar .st-clock{ min-width: 150px; }
   .st-shell .st-topbar .st-meter{ flex: 1 1 110px; width: auto; max-width: 240px; min-width: 90px; }
@@ -2308,10 +2241,6 @@
     </section>
   </div>
 
-  <!-- ================================================================
-       VOCAL REMOVER — accesso rapido alla separazione voce / base
-       (la stessa funzione resta nell'editor di Vocali, Effetti e Studio)
-       ================================================================ -->
   <div class="tab-panel" id="tabVsep" role="tabpanel" aria-label="Vocal Remover" hidden>
     <div class="dropzone" id="vrDropzone" tabindex="0" role="button" aria-label="Scegli una canzone da separare">
       <div class="dz-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="11" rx="3"></rect><path d="M1 10a5 5 0 0 0 10 0"></path><line x1="6" y1="15" x2="6" y2="19"></line><path d="M15 17V7l7-2v10"></path><circle cx="13.5" cy="17" r="2"></circle><circle cx="20.5" cy="15" r="2"></circle></svg></div>
@@ -2406,10 +2335,6 @@
   </div>
 </div>
 
-<!-- ================================================================
-     STUDIO — editor stile Audition: forma d'onda + multitraccia
-     Tutto resta in memoria per la sessione.
-     ================================================================ -->
 <div class="tab-panel studio" id="tabStudio" role="tabpanel" aria-label="Studio" hidden>
   <div class="st-shell" id="stShell">
 
@@ -2485,11 +2410,9 @@
       </section>
 
       <main class="st-main">
-        <!-- FORMA D'ONDA: l'editor audio unico -->
         <div class="st-view" id="stWaveView">
           <div class="st-ed-host" id="stEdHost">
 <div class="ed" id="ed" aria-label="Editor audio">
-  <!-- barra principale, stile Audition: nello Studio sale sopra a tutto (larga quanto la pagina) -->
   <div class="st-topbar ed-bar" id="edBar">
     <span class="ed-seg-slot" id="edSegSlot"></span>
     <div class="st-transport" role="group" aria-label="Trasporto">
@@ -2522,7 +2445,6 @@
   </div>
 
   <section class="ved-deck ed-deck" aria-label="Forma d'onda e ascolto">
-    <!-- intestazione del pannello editor (come la scheda "Editor: nome file" di Audition) -->
     <header class="ed-head">
       <div class="ed-title">
         <span class="ed-kind" id="edKind">File</span>
@@ -2544,7 +2466,6 @@
       </div>
     </header>
 
-    <!-- strumenti di visualizzazione dell'editor -->
     <div class="ed-tools" role="toolbar" aria-label="Strumenti dell'editor">
       <div class="ved-seg" role="group" aria-label="Cosa ascoltare" title="Confronta con l'originale (O)">
         <button type="button" class="active" id="edAbEdit" data-needs="view">Modificato</button>
@@ -2671,7 +2592,6 @@
           </div>
         </div>
 
-        <!-- MULTITRACCIA -->
         <div class="st-view" id="stMultiView" hidden>
           <div class="st-mt-toolbar">
             <button type="button" class="ved-btn" id="stAddTrack">
@@ -2936,7 +2856,6 @@
 
 <div class="ed-overlay" id="edOverlay" role="dialog" aria-modal="true" aria-label="Editor audio"></div>
 
-  <!-- esportazione -->
   <div class="confirm-overlay" id="stExportOverlay">
     <div class="confirm-card st-export-card" role="dialog" aria-modal="true" aria-labelledby="stExportTitle">
       <h4 id="stExportTitle">Esporta</h4>
@@ -2968,20 +2887,13 @@
     </div>
   </div>
 
-<!-- Separazione voce / base: codice del Web Worker (viene avviato dalla pagina, non gira qui) -->
 <script type="text/plain" id="vsepWorkerSrc">
-/* zeroSFX — separazione voce / base in un Web Worker (la pagina non si blocca mai).
-   Due modelli:
-   - "roformer": Mel-Band RoFormer (pesi di Kimberley Jensen, export ONNX di audiojs), il migliore;
-                 serve la scheda video (WebGPU).
-   - "mdx":      MDX-Net Kim_Vocal_2 di Ultimate Vocal Remover, più leggero; va anche sul processore. */
 let cfg = null, initP = {}, sessions = {};
-const ortMods = {};   // motori di calcolo caricati, per versione e tipo
+const ortMods = {};
 const cancelled = new Set();
 const post = (m, t) => self.postMessage(m, t || []);
 class SepError extends Error { constructor(msg, code) { super(msg); this.code = code; } }
 
-/* ---------- FFT radix-2 (in place) ---------- */
 function makeFFT2(M) {
   const lv = Math.round(Math.log2(M));
   const rev = new Uint32Array(M);
@@ -3003,7 +2915,6 @@ function makeFFT2(M) {
     }
   };
 }
-/* DFT in avanti, in place, di lunghezza qualsiasi (radix-2 se potenza di 2, altrimenti Bluestein) */
 function makeDFT(N) {
   if ((N & (N - 1)) === 0) { const f = makeFFT2(N); return (xr, xi) => f(xr, xi, false); }
   let M = 1; while (M < 2 * N - 1) M <<= 1;
@@ -3025,8 +2936,6 @@ function makeDFT(N) {
   };
 }
 
-/* STFT centrata (riflessione ai bordi) e inversa, dei due canali insieme (L + iR in un'unica DFT).
-   Tensore [1, 4, F, T] = L reale, L immag., R reale, R immag. (come UVR e Music-Source-Separation-Training) */
 const dspCache = {};
 function getDSP(m) {
   const key = m.nfft + ':' + m.hop + ':' + m.dimF + ':' + m.dimT;
@@ -3035,7 +2944,7 @@ function getDSP(m) {
   const CHUNK = HOP * (T - 1), padLen = CHUNK + N, half = N / 2;
   const dft = makeDFT(N);
   const WIN = new Float64Array(N);
-  for (let n = 0; n < N; n++) WIN[n] = 0.5 - 0.5 * Math.cos(2 * Math.PI * n / N);   // Hann periodica, come torch
+  for (let n = 0; n < N; n++) WIN[n] = 0.5 - 0.5 * Math.cos(2 * Math.PI * n / N);
   const WSUM = new Float64Array(padLen);
   for (let t = 0; t < T; t++) for (let n = 0; n < N; n++) WSUM[t * HOP + n] += WIN[n] * WIN[n];
   const xr = new Float64Array(N), xi = new Float64Array(N);
@@ -3069,8 +2978,7 @@ function getDSP(m) {
       for (let k = 1; k < F; k++) {
         const idx = k * T + t;
         const Lr = spec[idx], Li = spec[o1 + idx], Rr = spec[o2 + idx], Ri = spec[o3 + idx];
-        if (k === half) { xr[k] = Lr; xi[k] = -Rr; continue; }     // Nyquist: solo parte reale
-        // S = L + iR (spettro completo, hermitiano per ciascun canale), già coniugato per l'inversa
+        if (k === half) { xr[k] = Lr; xi[k] = -Rr; continue; }
         xr[k] = Lr - Ri; xi[k] = -(Li + Rr);
         xr[N - k] = Lr + Ri; xi[N - k] = Li - Rr;
       }
@@ -3087,7 +2995,6 @@ function getDSP(m) {
   return (dspCache[key] = { stft, istft, CHUNK, SPEC: 4 * F * T });
 }
 
-/* ---------- modelli ---------- */
 async function sha256hex(bytes) {
   const h = await crypto.subtle.digest('SHA-256', bytes);
   return Array.from(new Uint8Array(h), b => b.toString(16).padStart(2, '0')).join('');
@@ -3098,7 +3005,6 @@ async function getModel(id, m) {
     cache = await caches.open(cfg.cacheName);
     const hit = await cache.match(m.urls[0]);
     if (hit) {
-      // controllo del file già salvato: se un crash l'avesse lasciato a metà, lo si butta e si riscarica
       const b = new Uint8Array(await hit.arrayBuffer());
       let ok = b.length > m.minBytes;
       if (ok && m.sha256 && b.length !== m.approxBytes) {
@@ -3118,8 +3024,6 @@ async function getModel(id, m) {
   }
   throw new SepError('Non riesco a scaricare il modello di separazione: controlla la connessione e riprova.', 'download');
 }
-// Con la cache il file scorre direttamente su disco (il browser lo scrive mentre arriva) e qui si contano solo
-// i byte; poi si rilegge una volta sola. Prima si tenevano in memoria tre copie da 464 MB: troppo per molti computer.
 async function fetchModel(url, id, m, cache) {
   const res = await fetch(url);
   if (!res.ok || !res.body) throw new Error('http ' + res.status);
@@ -3143,7 +3047,7 @@ async function fetchModel(url, id, m, cache) {
     const now = Date.now();
     if (now - last > 200) { last = now; post({ type: 'status', id, stage: 'download', model: m.key, p: Math.min(0.99, got / total), mb: got / 1048576, totalMb: total / 1048576 }); }
   }
-  const drop = async () => { if (cache) { try { await cache.delete(m.urls[0]); } catch (e) { /* niente */ } } };
+  const drop = async () => { if (cache) { try { await cache.delete(m.urls[0]); } catch (e) {  } } };
   if (got < m.minBytes) { if (cached) await cached; await drop(); throw new Error('file incompleto'); }
   if (cached) {
     const ok = await cached;
@@ -3168,11 +3072,9 @@ async function gpuOk() {
     return !info.isFallbackAdapter && info.architecture !== 'swiftshader';
   } catch (e) { return false; }
 }
-// Ogni modello può usare la sua versione di onnxruntime: MDX-Net va più veloce con la 1.22 (soprattutto su Safari),
-// Mel-Band RoFormer è stato verificato dal suo autore con la 1.30.
 async function loadOrt(gpu, base) {
   const kind = gpu ? 'webgpu' : 'wasm';
-  if (ortMods[base + 'webgpu']) return ortMods[base + 'webgpu'];   // il pacchetto WebGPU sa fare anche il processore
+  if (ortMods[base + 'webgpu']) return ortMods[base + 'webgpu'];
   if (ortMods[base + kind]) return ortMods[base + kind];
   const m = await import(base + (gpu ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs'));
   m.env.wasm.wasmPaths = base;
@@ -3190,14 +3092,14 @@ async function makeSession(bytes, provider, m, ort) {
 async function releaseOthers(key) {
   for (const k of Object.keys(sessions)) {
     if (k === key) continue;
-    try { await sessions[k].s.release(); } catch (e) { /* niente */ }
+    try { await sessions[k].s.release(); } catch (e) {  }
     delete sessions[k]; delete initP[k];
   }
 }
 async function init(id, m) {
   if (sessions[m.key]) return sessions[m.key];
   if (!initP[m.key]) initP[m.key] = (async () => {
-    await releaseOthers(m.key);   // un modello alla volta in memoria
+    await releaseOthers(m.key);
     const gpu = await gpuOk();
     if (m.gpuOnly && !gpu) throw new SepError('Questo modello ha bisogno della scheda video (WebGPU).', 'nogpu');
     let bytes = await getModel(id, m);
@@ -3235,7 +3137,7 @@ async function infer(id, m, data) {
   catch (e) {
     if (sess.provider !== 'webgpu') throw e;
     console.warn('WebGPU in errore:', e);
-    try { await sess.s.release(); } catch (er) { /* niente */ }
+    try { await sess.s.release(); } catch (er) {  }
     delete sessions[m.key]; delete initP[m.key];
     if (m.gpuOnly) throw new SepError('La scheda video si è fermata durante la separazione.', 'gpufail');
     post({ type: 'status', id, stage: 'fallback', model: m.key });
@@ -3251,7 +3153,6 @@ function progress(id, ci, n, t0, m) {
   post({ type: 'progress', id, p: (ci + 1) / n, i: ci + 1, n, ms: Date.now() - t0, ep: sessions[m.key] ? sessions[m.key].provider : '', model: m.key });
 }
 
-/* MDX-Net come Ultimate Vocal Remover: blocchi di 5,9 s, bordi di n_fft/2 scartati, sovrapposizione facoltativa */
 async function separateMDX(id, m, L, R, opts) {
   const D = getDSP(m), CHUNK = D.CHUNK, TRIM = m.nfft / 2, GEN = CHUNK - 2 * TRIM;
   const n = L.length;
@@ -3274,7 +3175,6 @@ async function separateMDX(id, m, L, R, opts) {
     D.stft(cL, cR, inp);
     const spec = await infer(id, m, inp);
     if (neg) {
-      // "denoise" di UVR: il modello applicato al segnale invertito annulla parte degli artefatti
       for (let i = 0; i < D.SPEC; i++) neg[i] = -inp[i];
       const sn = await infer(id, m, neg);
       for (let i = 0; i < D.SPEC; i++) spec[i] = (spec[i] - sn[i]) * 0.5;
@@ -3290,8 +3190,6 @@ async function separateMDX(id, m, L, R, opts) {
   return [vL, vR];
 }
 
-/* Mel-Band RoFormer come demix() di Music-Source-Separation-Training: segmenti di 8 s, passo regolabile,
-   dissolvenze lineari di 0,8 s, bordi riflessi */
 function reflectIndex(i, n) {
   if (n === 1) return 0;
   const period = 2 * (n - 1);
@@ -3360,12 +3258,11 @@ self.onmessage = async (e) => {
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, getDocs, updateDoc, serverTimestamp, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
   import { initializeAuth, inMemoryPersistence, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
-  // I tuoi dati ufficiali
   const firebaseConfig = {
     apiKey: "AIzaSyAsU6kgVyVBQC5VEzTv7P7orZlbRUD3q84",
     authDomain: "zerosfx-a74aa.firebaseapp.com",
@@ -3379,12 +3276,9 @@ self.onmessage = async (e) => {
   const db = getFirestore(app);
   const storage = getStorage(app);
 
-  /* ---------------- Accesso con Firebase Auth ----------------
-     La password non sta più nel file: la verifica Firebase sul server.
-     Sessione solo in memoria, quindi il login si chiede a ogni apertura (come prima). */
   const auth = initializeAuth(app, { persistence: inMemoryPersistence });
   const functions = getFunctions(app, 'europe-west1');
-  const LOGIN_DOMAIN = 'zerosfx.app';   // "nome.cognome" diventa nome.cognome@zerosfx.app
+  const LOGIN_DOMAIN = 'zerosfx.app';
 
   const loginOverlay = document.getElementById('loginOverlay');
   const loginForm = document.getElementById('loginForm');
@@ -3411,24 +3305,77 @@ self.onmessage = async (e) => {
     setTimeout(() => loginUser.focus(), 50);
   }
 
-  // Registra l'accesso: la Cloud Function aggiunge IP e posizione lato server.
-  async function logAccess() {
+  const BEAT_MS = 60 * 1000;
+  let sessionId = null;
+  let beatTimer = null;
+  let activeMark = null;
+  let beatChain = Promise.resolve();
+
+  function deviceInfo() {
+    let deviceToken = null;
     try {
-      let deviceToken = null;
-      try {
-        deviceToken = localStorage.getItem('zsfxDevice');
-        if (!deviceToken) { deviceToken = crypto.randomUUID(); localStorage.setItem('zsfxDevice', deviceToken); }
-      } catch (e) { /* storage non disponibile: si registra senza token */ }
-      await httpsCallable(functions, 'logAccess')({
-        deviceToken,
-        ua: navigator.userAgent,
-        lang: navigator.language,
-        tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        screen: `${screen.width}x${screen.height}`,
-        platform: navigator.platform || ''
-      });
-    } catch (err) { console.warn('Registrazione accesso non riuscita:', err); }
+      deviceToken = localStorage.getItem('zsfxDevice');
+      if (!deviceToken) { deviceToken = crypto.randomUUID(); localStorage.setItem('zsfxDevice', deviceToken); }
+    } catch (e) {  }
+    return {
+      deviceToken,
+      ua: navigator.userAgent,
+      lang: navigator.language,
+      tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      screen: `${screen.width}x${screen.height}`,
+      platform: navigator.platform || '',
+      touch: navigator.maxTouchPoints || 0
+    };
   }
+
+  async function startSession(continuaDa = null) {
+    try {
+      const res = await httpsCallable(functions, 'logAccess')({ ...deviceInfo(), continuaDa });
+      sessionId = (res.data && res.data.sessionId) || null;
+    } catch (err) {
+      sessionId = null;
+    }
+    activeMark = document.visibilityState === 'visible' ? Date.now() : null;
+    if (sessionId && !beatTimer) beatTimer = setInterval(() => beat(), BEAT_MS);
+  }
+
+  function takeActiveSec() {
+    if (activeMark === null) return 0;
+    const now = Date.now();
+    const sec = Math.min(90, Math.max(0, Math.round((now - activeMark) / 1000)));
+    activeMark = now;
+    return sec;
+  }
+
+  function beat(extra = {}) {
+    const sec = takeActiveSec();
+    beatChain = beatChain.then(async () => {
+      const id = sessionId;
+      if (!id) return;
+      try {
+        await updateDoc(doc(db, 'sessioni', id), { lastSeenAt: serverTimestamp(), attivaSec: increment(sec), ...extra });
+      } catch (err) {
+        if (err && err.code === 'permission-denied' && !extra.endReason && auth.currentUser && sessionId === id) {
+          sessionId = null;
+          await startSession(id);
+        }
+      }
+    });
+    return beatChain;
+  }
+
+  async function endSession() {
+    clearInterval(beatTimer); beatTimer = null;
+    await beat({ endedAt: serverTimestamp(), endReason: 'logout' });
+    sessionId = null; activeMark = null;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!sessionId) return;
+    if (document.visibilityState === 'hidden') { beat(); activeMark = null; }
+    else { activeMark = Date.now(); beat(); }
+  });
+  window.addEventListener('pagehide', () => { if (sessionId) beat(); });
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -3450,19 +3397,20 @@ self.onmessage = async (e) => {
   });
 
   const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) logoutBtn.addEventListener('click', () => signOut(auth));
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) { unlockUI(); logAccess(); }
-    else { lockUI(); }
+  if (logoutBtn) logoutBtn.addEventListener('click', async () => {
+    logoutBtn.disabled = true;
+    try { await endSession(); } finally { logoutBtn.disabled = false; signOut(auth); }
   });
 
-  // Il resto della pagina legge Firestore e Storage: parte solo dopo un accesso valido.
+  onAuthStateChanged(auth, (user) => {
+    if (user) { unlockUI(); startSession(); }
+    else { clearInterval(beatTimer); beatTimer = null; sessionId = null; lockUI(); }
+  });
+
   await new Promise((resolve) => {
     const stop = onAuthStateChanged(auth, (user) => { if (user) { stop(); resolve(); } });
   });
 
-  /* ---------------- Switch logo/scritta in basso alla pagina ---------------- */
   const logoImg = document.getElementById('logoImg');
   const logoText = document.getElementById('logoText');
   const logoSwitchBtn = document.getElementById('logoSwitchBtn');
@@ -3532,20 +3480,19 @@ self.onmessage = async (e) => {
   let sounds = [];      
   let idCounter = 0;
   let searchQuery = '';
-  let categoryFilter = null;   // null = tutte le categorie
-  let viewMode = 'grid';       // 'grid' | 'compact' | 'list'
-  let reorderMode = false;     // se falso, la maniglia è inerte e non intercetta lo scroll
+  let categoryFilter = null;
+  let viewMode = 'grid';
+  let reorderMode = false;
   let favoritesOnly = false;
-  let playerMode = 'multi'; // 'multi' oppure 'single'
-  let activeSoundId = null; // ultimo suono avviato, mostrato nella barra fissa in basso
-  let regiaCategoryFilter = 'all'; // 'all' | 'fav' | nome categoria, usato in modalità regia
+  let playerMode = 'multi';
+  let activeSoundId = null;
+  let regiaCategoryFilter = 'all';
   let regiaSearchQuery = '';
 
-  /* ---------------- Categorie (sistema dedicato, sincronizzato su Firebase) ---------------- */
   const CAT_PALETTE = ['#FF1E60','#FF8A3D','#FFD23D','#3DFFA0','#3DDBFF','#5C8CFF','#B23DFF','#FF3DBE','#8CFF3D','#FF6B6B'];
-  let categories = [];   // [{ id, name, color, order }]
+  let categories = [];
   let catIdCounter = 0;
-  let openAssignPopoverFor = null; // id del suono con il popover di assegnazione aperto
+  let openAssignPopoverFor = null;
 
   function nextPaletteColor() {
     return CAT_PALETTE[categories.length % CAT_PALETTE.length];
@@ -3673,7 +3620,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  /* ---------------- Icone SVG riusate nel rendering ---------------- */
   const RESTART_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
     <polyline points="1 4 1 10 7 10"></polyline>
     <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
@@ -3698,18 +3644,12 @@ self.onmessage = async (e) => {
   const CLOSE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="12" height="12"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>`;
   const VOLUME_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 9 3 15 8 15 13 20 13 4 8 9 3 9"></polygon><path d="M16 8a5 5 0 0 1 0 8"></path></svg>`;
 
-  /* ---------------- Volume generale (fader master) ----------------
-     Non viene mai salvato da nessuna parte: è solo una variabile in memoria,
-     quindi ad ogni refresh della pagina riparte sempre al 100%.
-     Con la "frizione" attiva il valore reale applicato all'audio insegue
-     con un piccolo smorzamento il valore impostato con lo slider, così i
-     micro-scatti del mouse non si sentono come scatti nel volume. */
-  let masterVolume = 1;        // valore realmente applicato all'audio (smorzato)
-  let masterVolumeTarget = 1;  // valore "grezzo" impostato con lo slider
+  let masterVolume = 1;
+  let masterVolumeTarget = 1;
   let frictionEnabled = true;
   let frictionRAF = null;
   let frictionLastTime = null;
-  const FRICTION_TIME_CONSTANT = 90; // ms — più alto = frizione più "pesante" e percepibile
+  const FRICTION_TIME_CONSTANT = 90;
   const masterVolumeSlider = document.getElementById('masterVolumeSlider');
   const masterVolumeValue = document.getElementById('masterVolumeValue');
   const masterFrictionBtn = document.getElementById('masterFrictionBtn');
@@ -3719,10 +3659,6 @@ self.onmessage = async (e) => {
     sound.audio.volume = Math.max(0, Math.min(1, own * masterVolume));
   }
 
-  // Aggiorna il numero e il riempimento del binario in base al valore REALMENTE
-  // applicato (masterVolume), non a quello grezzo dello slider: così, quando la
-  // frizione è attiva, si VEDE il valore inseguire con un piccolo ritardo il
-  // punto dove hai spostato il cursore, non solo sentirlo nell'audio.
   function renderMasterVisual() {
     const pct = Math.round(masterVolume * 100);
     masterVolumeValue.textContent = `${pct}%`;
@@ -3744,8 +3680,6 @@ self.onmessage = async (e) => {
         frictionRAF = null;
         return;
       }
-      // smorzamento esponenziale legato al tempo reale trascorso: la sensazione
-      // di "frizione" resta identica indipendentemente dal frame-rate dello schermo
       const alpha = 1 - Math.exp(-dt / FRICTION_TIME_CONSTANT);
       masterVolume += diff * alpha;
       sounds.forEach(applyVolume); applyVoicesVolume();
@@ -3771,7 +3705,6 @@ self.onmessage = async (e) => {
     frictionEnabled = !frictionEnabled;
     applyFrictionUI();
     if (!frictionEnabled) {
-      // niente più inseguimento residuo: applica e mostra subito il valore corrente
       if (frictionRAF) { cancelAnimationFrame(frictionRAF); frictionRAF = null; }
       masterVolume = masterVolumeTarget;
       sounds.forEach(applyVolume); applyVoicesVolume();
@@ -3788,7 +3721,6 @@ self.onmessage = async (e) => {
       : 'Frizione disattivata (risposta diretta e immediata)';
   }
 
-  /* ---------------- Frizione del fader master (persistenza) ---------------- */
   const FRICTION_SETTING_DOC = doc(db, "settings", "masterFader");
 
   async function loadFrictionSetting() {
@@ -3816,7 +3748,6 @@ self.onmessage = async (e) => {
 
   loadFrictionSetting();
 
-  /* ---------------- Dock del fader master: trascinabile, si contrae con un tasto dedicato ---------------- */
   const masterFaderDock = document.getElementById('masterFaderDock');
   const masterDragHandle = document.getElementById('masterDragHandle');
   const masterReopenBtn = document.getElementById('masterReopenBtn');
@@ -3870,7 +3801,6 @@ self.onmessage = async (e) => {
 
   masterDragHandle.addEventListener('pointerdown', onDockPointerDown);
   window.addEventListener('resize', () => {
-    // se la finestra si rimpicciolisce, tiene il dock dentro lo schermo
     const rect = masterFaderDock.getBoundingClientRect();
     if (rect.right > window.innerWidth || rect.bottom > window.innerHeight) {
       const newLeft = Math.max(4, Math.min(window.innerWidth - rect.width - 4, rect.left));
@@ -3895,11 +3825,9 @@ self.onmessage = async (e) => {
 
       for (const rec of records) {
         const audio = new Audio();
-        audio.preload = 'none'; // nessun download automatico: il file parte solo quando premi play
+        audio.preload = 'none';
         audio.src = rec.audioUrl;
 
-        // Migrazione dal vecchio campo singolo "category" (stringa) al nuovo
-        // sistema di categorie multiple sincronizzate su Firebase ("categories": [id,...])
         let soundCategories;
         if (Array.isArray(rec.categories)) {
           soundCategories = rec.categories;
@@ -3946,7 +3874,6 @@ self.onmessage = async (e) => {
 
   loadCategories().then(loadFromCloud);
 
-  /* ---------------- Modalità Multi / Single (persistenza) ---------------- */
   const PLAYER_MODE_DOC = doc(db, "settings", "player");
 
   async function loadPlayerMode() {
@@ -3974,7 +3901,6 @@ self.onmessage = async (e) => {
 
   loadPlayerMode();
 
-  /* ---------------- Upload ---------------- */
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
   fileInput.addEventListener('change', e => handleFiles(e.target.files));
@@ -3989,24 +3915,21 @@ self.onmessage = async (e) => {
     if (e.dataTransfer.files && e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
   });
 
-  // prima di caricare chiede in che categoria mettere i nuovi suoni (una scelta per tutto il gruppo)
   async function handleFiles(fileList) {
     const files = Array.from(fileList).filter(isAudioFile);
     fileInput.value = '';
     if (!files.length) return;
     const cats = await pickCategories(files.length);
-    if (cats === null) return;   // annullato: non carica nulla
+    if (cats === null) return;
     files.forEach(f => addSound(f, cats));
   }
 
-  /* ---------------- Modalità Multi / Single ---------------- */
   function applyModeUI() {
     const isSingle = playerMode === 'single';
     modeSwitch.setAttribute('aria-checked', String(isSingle));
     modeLabelMulti.classList.toggle('active', !isSingle);
     modeLabelSingle.classList.toggle('active', isSingle);
     stopAllBtn.style.display = isSingle ? 'none' : 'flex';
-    // stesso interruttore anche dentro la schermata Tastiera
     const kbSw = document.getElementById('kbModeSwitch');
     if (kbSw) {
       kbSw.setAttribute('aria-checked', String(isSingle));
@@ -4045,10 +3968,9 @@ self.onmessage = async (e) => {
     playerMode = playerMode === 'multi' ? 'single' : 'multi';
     applyModeUI();
     savePlayerMode();
-    if (typeof kbOverlay !== 'undefined' && kbOverlay.classList.contains('visible')) renderKeyboard(); // aggiorna le note "parte solo il primo"
+    if (typeof kbOverlay !== 'undefined' && kbOverlay.classList.contains('visible')) renderKeyboard();
 
     if (playerMode === 'single') {
-      // In modalità Single teniamo acceso al massimo un suono alla volta
       let keepId = null;
       sounds.forEach(s => { if (s.playing && keepId === null) keepId = s.id; });
       sounds.forEach(s => {
@@ -4061,7 +3983,6 @@ self.onmessage = async (e) => {
   }
   applyModeUI();
 
-  /* ---------------- Ricerca ---------------- */
   searchInput.addEventListener('input', () => {
     searchQuery = searchInput.value;
     searchClearBtn.classList.toggle('visible', searchQuery.length > 0);
@@ -4075,7 +3996,6 @@ self.onmessage = async (e) => {
     searchInput.focus();
   });
 
-  /* ---------------- Selettore vista (griglia / compatta / lista) ---------------- */
   viewButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       viewMode = btn.getAttribute('data-view');
@@ -4099,9 +4019,6 @@ self.onmessage = async (e) => {
     const storageRef = ref(storage, storagePath);
 
     try {
-      // Cache-Control: dice al browser di tenere il file per 30 giorni dopo averlo scaricato
-      // una prima volta, così i riascolti (anche dopo aver ricaricato la pagina) non
-      // consumano più dati — è il browser stesso a gestirlo, in modo nativo e affidabile.
       const snapshot = await uploadBytes(storageRef, file, {
         contentType: file.type || guessAudioType(file.name),
         cacheControl: 'public, max-age=2592000'
@@ -4109,8 +4026,8 @@ self.onmessage = async (e) => {
       const audioUrl = await getDownloadURL(snapshot.ref);
 
       const audio = new Audio();
-      audio.preload = 'metadata'; // il file è già locale (appena caricato): nessun consumo di banda
-      audio.src = URL.createObjectURL(file); // riusa subito il file locale, senza riscaricarlo da Firebase
+      audio.preload = 'metadata';
+      audio.src = URL.createObjectURL(file);
       const order = sounds.length;
       const sound = { id, name: niceName(file.name), audioUrl, storagePath, order, audio, duration: 0, categories: [...initialCategories], favorite: false, volume: 1, hotkey: null, loop: false, playing: false, scrubbing: false };
       
@@ -4144,8 +4061,6 @@ self.onmessage = async (e) => {
       if (totalEl) totalEl.textContent = formatTime(sound.audio.duration);
       if (seekEl) seekEl.max = sound.audio.duration || 0;
       if (sound.id === activeSoundId) updateBottomBar(sound);
-      // Se la durata non era ancora salvata su Firestore, la salviamo una volta sola:
-      // così alle prossime visite non serve più scaricare nulla per conoscerla.
       const realDuration = sound.audio.duration;
       if (!sound.sessionEdit && isFinite(realDuration) && realDuration > 0 && sound.duration !== realDuration) {
         sound.duration = realDuration;
@@ -4192,7 +4107,6 @@ self.onmessage = async (e) => {
     if (sound.hotkey) refreshKeyPlaying(sound.hotkey);
   }
 
-  // Vero play/pausa, usato dalla barra fissa in basso
   function togglePlay(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
@@ -4215,7 +4129,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  // Pulsante grande del pad: riparte SEMPRE da zero (mai resume), sia da fermo che da pausa
   function padMainClick(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
@@ -4240,11 +4153,6 @@ self.onmessage = async (e) => {
     activeSoundId = id;
   }
 
-  // Pulsante piccolo accanto al play: se sta suonando lo mette in pausa (senza
-  // riavvolgere); se è fermo lo fa ripartire da dove si trovava (resume), MAI
-  // da zero — a differenza del pulsante grande, che riparte sempre da capo.
-  // Resta sempre cliccabile (mai "spento"/disabled): è così che i due pulsanti
-  // si differenziano.
   function pauseSound(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
@@ -4267,7 +4175,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  /* ---------------- Barra di riproduzione fissa ---------------- */
   function updateBottomBar(sound) {
     if (!sound || sound.id !== activeSoundId) return;
     bottomPlayer.classList.add('visible');
@@ -4296,7 +4203,6 @@ self.onmessage = async (e) => {
     bpTime.textContent = `${formatTime(sound.audio.currentTime)} / ${formatTime(sound.audio.duration)}`;
   });
 
-  /* ---------------- Conferma eliminazione ---------------- */
   function openDeleteConfirm(id) {
     const sound = sounds.find(s => s.id === id);
     pendingDeleteId = id;
@@ -4374,7 +4280,7 @@ self.onmessage = async (e) => {
   function toggleLoop(id) {
     const sound = sounds.find(s => s.id === id);
     if (!sound) return;
-    sound.loop = !sound.loop; // solo in memoria: si resetta ad ogni refresh, per scelta
+    sound.loop = !sound.loop;
     const btn = grid.querySelector(`[data-loop="${id}"]`);
     if (btn) {
       btn.classList.toggle('active', sound.loop);
@@ -4382,8 +4288,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  /* ---------------- Scarica tutto (zip) ----------------
-     JSZip viene caricato solo quando serve, così la pagina non diventa più pesante. */
   const zipOpenBtn = document.getElementById('zipOpenBtn');
   const zipOverlay = document.getElementById('zipOverlay');
   const zipText = document.getElementById('zipText');
@@ -4424,7 +4328,7 @@ self.onmessage = async (e) => {
     zipOverlay.classList.add('visible');
   }
   function closeZipConfirm() {
-    if (zipBusy) zipAborted = true;   // "Annulla" durante la preparazione interrompe tutto
+    if (zipBusy) zipAborted = true;
     zipOverlay.classList.remove('visible');
   }
   zipOpenBtn.addEventListener('click', openZipConfirm);
@@ -4432,7 +4336,6 @@ self.onmessage = async (e) => {
   zipOverlay.addEventListener('click', e => { if (e.target === zipOverlay && !zipBusy) closeZipConfirm(); });
   zipConfirmBtn.addEventListener('click', downloadAllZip);
 
-  // nome file valido su Windows/Mac, senza doppioni dentro lo zip
   function zipFileName(sound, used) {
     const extMatch = sound.storagePath && sound.storagePath.match(/\.([a-zA-Z0-9]+)$/);
     const ext = extMatch ? extMatch[1].toLowerCase() : 'mp3';
@@ -4458,9 +4361,6 @@ self.onmessage = async (e) => {
     try {
       const JSZip = await loadJSZip();
 
-      // Prova sul primo file: se Firebase Storage non permette il download diretto
-      // (CORS non configurato) ci fermiamo subito con un messaggio chiaro,
-      // invece di generare un errore per ogni singolo suono.
       try {
         const probe = await fetch(list[0].audioUrl, { method: 'GET', cache: 'no-cache' });
         if (!probe.ok) throw Object.assign(new Error('http ' + probe.status), { http: true });
@@ -4472,7 +4372,6 @@ self.onmessage = async (e) => {
       const zip = new JSZip();
       const used = new Set();
       let done = 0;
-      // 4 download in parallelo: abbastanza veloce senza intasare la connessione
       const queue = list.map((s, idx) => ({ s, idx }));
       const names = list.map(s => zipFileName(s, used));
       async function worker() {
@@ -4496,7 +4395,6 @@ self.onmessage = async (e) => {
       if (failed.length === list.length) throw new Error('nessun file scaricato');
 
       zipText.textContent = 'Creo il file zip…';
-      // gli audio sono già compressi (mp3, m4a, ogg): "STORE" li impacchetta senza perdere tempo a ricomprimerli
       const blob = await zip.generateAsync({ type: 'blob', compression: 'STORE' }, meta => {
         zipProgressBar.style.width = `${90 + Math.round(meta.percent / 10)}%`;
       });
@@ -4540,7 +4438,7 @@ self.onmessage = async (e) => {
 
   async function downloadSound(id) {
     const sound = sounds.find(s => s.id === id);
-    if (sound && sound.sessionEdit) {   // modificato in questa sessione: scarica la versione che si sente
+    if (sound && sound.sessionEdit) {
       triggerDownload(encodeWav(sound.sessionEdit.buffer), `${sound.name} (modificato).wav`);
       return;
     }
@@ -4635,7 +4533,6 @@ self.onmessage = async (e) => {
     catToggleBtn.classList.toggle('active', open);
   });
 
-  /* ---------------- Modale gestione categorie ---------------- */
   function openCatManage() {
     renderCatManageModal();
     catManageOverlay.classList.add('visible');
@@ -4727,7 +4624,6 @@ self.onmessage = async (e) => {
   catManageAddBtn.addEventListener('click', commitNewCategory);
   catManageNewName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commitNewCategory(); } });
 
-  /* ---------------- Modalità regia ---------------- */
   function openRegia() {
     if (regiaCategoryFilter !== 'all' && regiaCategoryFilter !== 'fav' && !getCategoryById(regiaCategoryFilter)) regiaCategoryFilter = 'all';
     renderRegiaCatRow();
@@ -4822,10 +4718,6 @@ self.onmessage = async (e) => {
     return html;
   }
 
-  /* ---------------- Render ---------------- */
-  // Ricostruire la griglia svuota per un istante la pagina: Chrome allora
-  // riporta lo scroll in cima (es. cliccando "+ categoria" in fondo alla lista).
-  // Si blocca l'altezza durante il ridisegno e si ripristina la posizione.
   function renderGrid() {
     const scrollX = window.scrollX, scrollY = window.scrollY;
     const prevMinHeight = grid.style.minHeight;
@@ -4944,7 +4836,6 @@ self.onmessage = async (e) => {
     grid.querySelectorAll('[data-editreset]').forEach(btn => {
       btn.addEventListener('click', () => resetSfxEdit(btn.getAttribute('data-editreset')));
     });
-    // doppio clic su una parte "vuota" del pad: apre l'editor
     grid.querySelectorAll('.pad').forEach(pad => {
       pad.addEventListener('dblclick', (e) => {
         if (reorderMode) return;
@@ -5036,7 +4927,7 @@ self.onmessage = async (e) => {
     }
     grid.querySelectorAll('[data-index]').forEach(span => {
       const id = span.getAttribute('data-index');
-      if (filtersActive) { span.style.cursor = 'default'; return; } // niente riordino manuale a lista filtrata: la numerazione non coinciderebbe
+      if (filtersActive) { span.style.cursor = 'default'; return; }
       span.addEventListener('click', () => {
         const currentPos = sounds.findIndex(s => s.id === id) + 1;
         const input = document.createElement('input');
@@ -5089,7 +4980,6 @@ self.onmessage = async (e) => {
     return div.innerHTML;
   }
 
-  /* ---------------- Drag & Drop Reorder ---------------- */
   let dragState = null;
 
   function onGripPointerDown(e) {
@@ -5142,18 +5032,6 @@ self.onmessage = async (e) => {
     renderGrid();
   });
 
-  /* ================================================================
-     TASTI RAPIDI — associazione dei suoni ai tasti della tastiera
-     ----------------------------------------------------------------
-     Ogni suono può avere UN tasto (campo "hotkey" su Firestore, salvato
-     come KeyboardEvent.code, es. "KeyQ", "Space", "F5": identifica il
-     tasto fisico, quindi funziona con qualsiasi layout).
-     Uno stesso tasto può far partire PIÙ suoni insieme.
-     Tastierino numerico escluso per scelta.
-     ================================================================ */
-
-  // l = etichetta sul tasto · s = versione corta (pulsanti) · n = nome completo (liste/titoli)
-  // w = larghezza in unità-tasto · rs = righe occupate · gap = spazio vuoto
   const KB_ROWS = [
     { group: 'Tasti funzione', keys: [
       { c:'Escape', l:'Esc' }, { gap:1 },
@@ -5198,7 +5076,6 @@ self.onmessage = async (e) => {
       { c:'ControlRight', l:'Ctrl', s:'Ctrl dx', n:'Ctrl destro', w:1.25 }
     ]}
   ];
-  // blocco di navigazione a destra, allineato alle stesse righe
   const KB_NAV = [
     [ { c:'PrintScreen', l:'Stamp' }, { c:'ScrollLock', l:'Bloc Scorr', s:'BlocScorr' }, { c:'Pause', l:'Pausa' } ],
     [ { c:'Insert', l:'Ins' }, { c:'Home', l:'Home' }, { c:'PageUp', l:'Pag ↑', n:'Pagina su' } ],
@@ -5207,16 +5084,12 @@ self.onmessage = async (e) => {
     [ { gap:1 }, { c:'ArrowUp', l:'↑', n:'Freccia su' } ],
     [ { c:'ArrowLeft', l:'←', n:'Freccia sinistra' }, { c:'ArrowDown', l:'↓', n:'Freccia giù' }, { c:'ArrowRight', l:'→', n:'Freccia destra' } ]
   ];
-  // tasti che Windows o il browser si tengono per sé: visibili ma non associabili
-  // Esc è riservato: chiude finestre e schermo intero, non deve far partire suoni.
-  // Bloc Maiusc è riservato: cambia lo stato delle maiuscole del sistema.
-  // Spazio: riservato perché negli editor (vocali e Studio) fa partire e fermare l'ascolto
   const KB_RESERVED = new Set(['Escape', 'CapsLock', 'MetaLeft', 'MetaRight', 'PrintScreen', 'F11', 'F12', 'Space']);
   const KB_RESERVED_BY_APP = new Set(['Space']);
   function reservedWhy(code) { return KB_RESERVED_BY_APP.has(code) ? 'riservato agli editor (riproduci / ferma)' : 'riservato da Windows o dal browser'; }
   const KB_MODIFIERS = new Set(['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight']);
 
-  const KB_KEYS = [];          // ordine "di lettura": righe principali, poi navigazione
+  const KB_KEYS = [];
   const KEY_BY_CODE = {};
   KB_ROWS.forEach((row, ri) => {
     let x = 0;
@@ -5243,9 +5116,6 @@ self.onmessage = async (e) => {
   function keyName(code)  { const d = KEY_BY_CODE[code]; return d ? (d.name || d.label) : code; }
   function soundsOnKey(code) { return sounds.filter(s => s.hotkey === code); }
 
-  // Su Chrome/Edge leggiamo il layout reale della tastiera dell'utente,
-  // così i simboli (ò, à, ù, ', ì…) corrispondono a quelli stampati sui tasti.
-  // Sugli altri browser restano le etichette del layout italiano.
   (async function applyLayoutMap() {
     try {
       if (!navigator.keyboard || !navigator.keyboard.getLayoutMap) return;
@@ -5260,10 +5130,9 @@ self.onmessage = async (e) => {
         if (sounds.length) renderGrid();
         if (kbOverlay.classList.contains('visible')) renderKeyboard();
       }
-    } catch (err) { /* layout non disponibile: restano le etichette italiane */ }
+    } catch (err) {  }
   })();
 
-  /* ---------- salvataggio ---------- */
   async function setHotkey(soundId, code) {
     const sound = sounds.find(s => s.id === soundId);
     if (!sound) return;
@@ -5283,11 +5152,10 @@ self.onmessage = async (e) => {
     if (hotkeyOverlay.classList.contains('visible')) renderHotkeyModal();
   }
 
-  /* ---------- riproduzione da tastiera ---------- */
   function triggerHotkey(code) {
     const list = soundsOnKey(code);
     if (!list.length) return false;
-    if (playerMode === 'single') restartSound(list[0].id);   // in Single parte solo il primo
+    if (playerMode === 'single') restartSound(list[0].id);
     else list.forEach(s => restartSound(s.id));
     return true;
   }
@@ -5308,20 +5176,18 @@ self.onmessage = async (e) => {
 
   document.addEventListener('keydown', (e) => {
     if (document.body.classList.contains('login-locked')) return;
-    if (blockingOverlayOpen()) return;   // editor vocale o finestre di scelta aperte
+    if (blockingOverlayOpen()) return;
 
-    // modale di associazione aperta: il tasto premuto viene catturato, non suonato
     if (hotkeyCaptureFor) { handleHotkeyCapture(e); return; }
 
     if (isTypingTarget(e.target)) return;
     const code = e.code;
     const def = KEY_BY_CODE[code];
     if (!def || def.reserved) return;
-    // le combinazioni (Ctrl+C, Shift+A…) restano al sistema; i modificatori da soli invece sono associabili
     if (!KB_MODIFIERS.has(code) && (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey)) return;
 
     const hasSounds = soundsOnKey(code).length > 0;
-    if (hasSounds) e.preventDefault();   // niente scroll con Spazio, niente ricarica con F5, ecc.
+    if (hasSounds) e.preventDefault();
     if (code === 'ContextMenu' && hasSounds) lastContextMenuHotkey = Date.now();
 
     if (kbOverlay.classList.contains('visible')) {
@@ -5332,7 +5198,6 @@ self.onmessage = async (e) => {
     triggerHotkey(code);
   });
 
-  // Alt e F10 attivano il menu del browser al rilascio: lo blocchiamo solo se il tasto ha suoni
   document.addEventListener('keyup', (e) => {
     if (document.body.classList.contains('login-locked') || hotkeyCaptureFor || blockingOverlayOpen()) return;
     if (isTypingTarget(e.target)) return;
@@ -5342,7 +5207,6 @@ self.onmessage = async (e) => {
     if (Date.now() - lastContextMenuHotkey < 800) e.preventDefault();
   });
 
-  /* ---------- modale "Associa un tasto" (dal pulsante sul pad) ---------- */
   const hotkeyOverlay = document.getElementById('hotkeyOverlay');
   const hotkeyCard = document.getElementById('hotkeyCard');
   const hkSoundName = document.getElementById('hkSoundName');
@@ -5352,7 +5216,7 @@ self.onmessage = async (e) => {
   const hkRemoveBtn = document.getElementById('hkRemoveBtn');
   const hkDoneBtn = document.getElementById('hkDoneBtn');
   let hotkeyCaptureFor = null;
-  let hkMessage = null;   // messaggio temporaneo (errore o conferma)
+  let hkMessage = null;
 
   function keyOptionsHTML(selectedCode, placeholder) {
     let html = `<option value="">${placeholder}</option>`;
@@ -5416,8 +5280,7 @@ self.onmessage = async (e) => {
   }
 
   function handleHotkeyCapture(e) {
-    if (e.target === hkSelect) return;   // la lista usa la tastiera per conto suo
-    // sui pulsanti della modale Invio/Spazio/Tab funzionano normalmente (clic e navigazione)
+    if (e.target === hkSelect) return;
     if (e.target !== hotkeyCard && e.target.closest && e.target.closest('button') && ['Enter', 'Space', 'Tab', 'NumpadEnter'].includes(e.code)) return;
     e.preventDefault();
     e.stopPropagation();
@@ -5455,7 +5318,6 @@ self.onmessage = async (e) => {
   hkDoneBtn.addEventListener('click', closeHotkeyModal);
   hotkeyOverlay.addEventListener('click', e => { if (e.target === hotkeyOverlay) closeHotkeyModal(); });
 
-  /* ---------- vista "Tasti rapidi" ---------- */
   const kbOverlay = document.getElementById('kbOverlay');
   const kbOpenBtn = document.getElementById('kbOpenBtn');
   const kbCloseBtn = document.getElementById('kbCloseBtn');
@@ -5467,7 +5329,7 @@ self.onmessage = async (e) => {
   const kbSub = document.getElementById('kbSub');
   const kbMobileMQ = window.matchMedia('(max-width: 820px)');
   let kbSelected = null;
-  let kbListFilter = 'all';   // 'all' | 'assigned' (solo vista telefono)
+  let kbListFilter = 'all';
 
   function openKeyboard() {
     renderKeyboard();
@@ -5487,10 +5349,8 @@ self.onmessage = async (e) => {
     });
   });
 
-  /* ---------- Over: ingrandimento del tasto al passaggio del mouse ----------
-     La scelta (attivo/disattivo) si salva su Firebase in settings/keyboard. */
   const KEYBOARD_SETTING_DOC = doc(db, "settings", "keyboard");
-  const OVER_DELAY = 350;   // ms di mouse fermo sul tasto prima di ingrandirlo
+  const OVER_DELAY = 350;
   const kbOverSwitch = document.getElementById('kbOverSwitch');
   const kbPeek = document.getElementById('kbPeek');
   let overEnabled = true;
@@ -5521,7 +5381,7 @@ self.onmessage = async (e) => {
     overEnabled = !overEnabled;
     applyOverUI();
     hidePeek();
-    renderKeyboard();   // con Over spento tornano i tooltip normali del browser
+    renderKeyboard();
     try {
       await setDoc(KEYBOARD_SETTING_DOC, { over: overEnabled }, { merge: true });
     } catch (err) {
@@ -5551,7 +5411,6 @@ self.onmessage = async (e) => {
         ${list.length ? `<span class="kb-peek-count">${list.length === 1 ? '1 brano' : list.length + ' brani'}</span>` : ''}
       </div>${body}`;
 
-    // centrato sul tasto, sempre dentro lo schermo
     const r = keyEl.getBoundingClientRect();
     kbPeek.style.left = '0px'; kbPeek.style.top = '0px';
     kbPeek.style.minWidth = Math.max(170, r.width + 24) + 'px';
@@ -5565,7 +5424,6 @@ self.onmessage = async (e) => {
     kbPeek.classList.add('visible');
   }
 
-  // delega: funziona anche dopo che la tastiera viene ridisegnata
   kbBoard.addEventListener('pointerover', (e) => {
     if (!overEnabled || e.pointerType === 'touch') return;
     const keyEl = e.target.closest('[data-kbkey]');
@@ -5580,7 +5438,7 @@ self.onmessage = async (e) => {
     }, OVER_DELAY);
   });
   kbBoard.addEventListener('pointerleave', hidePeek);
-  kbBoard.addEventListener('pointerdown', hidePeek);   // al clic si chiude, così vedi il pannello sotto
+  kbBoard.addEventListener('pointerdown', hidePeek);
   kbStage.addEventListener('scroll', hidePeek, { passive: true });
 
   function renderKeyboard() {
@@ -5735,7 +5593,6 @@ self.onmessage = async (e) => {
     }));
   }
 
-  // "Pulisci tastiera": toglie tutte le associazioni in un colpo solo (dopo conferma)
   const kbClearAllBtn = document.getElementById('kbClearAllBtn');
   kbClearAllBtn.addEventListener('click', async () => {
     const list = sounds.filter(s => s.hotkey);
@@ -5775,7 +5632,6 @@ self.onmessage = async (e) => {
     setTimeout(() => el.classList.remove('pressed'), 140);
   }
 
-  // aggiorna solo l'alone "in riproduzione" sui tasti, senza ridisegnare tutto
   function refreshKeyPlaying(code) {
     if (!kbOverlay.classList.contains('visible')) return;
     const playing = soundsOnKey(code).some(s => s.playing);
@@ -5792,19 +5648,8 @@ self.onmessage = async (e) => {
     }
   }
 
-  /* ================================================================
-     VOCALI — messaggi vocali temporanei + editor audio
-     ----------------------------------------------------------------
-     I vocali vivono in una collezione separata ("voices") e in una
-     cartella separata dello Storage ("voices/"), quindi gli SFX non
-     vengono mai toccati. Ogni vocale ha una scadenza (expiresAt) a
-     2 ore dall'importazione: allo scadere viene cancellato sia da
-     Firestore sia dallo Storage. La pulizia la fa la pagina stessa:
-     ogni secondo mentre è aperta, e all'apertura per quelli scaduti
-     mentre era chiusa.
-     ================================================================ */
   const VOICE_TTL_MS = 2 * 60 * 60 * 1000;
-  const VOICE_WARN_MS = 10 * 60 * 1000;   // sotto i 10 minuti il timer diventa arancione
+  const VOICE_WARN_MS = 10 * 60 * 1000;
   const AUDIO_EXT_RE = /\.(opus|ogg|oga|m4a|mp4|aac|mp3|wav|webm|flac)$/i;
 
   const CLOCK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><polyline points="12 7 12 12 15 14"></polyline></svg>`;
@@ -5815,7 +5660,6 @@ self.onmessage = async (e) => {
   const STOP_SVG = `<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>`;
   const CHECK_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
 
-  /* ---------- utilità ---------- */
   function isAudioFile(f) {
     return !!f && ((f.type && f.type.startsWith('audio/')) || AUDIO_EXT_RE.test(f.name || ''));
   }
@@ -5865,7 +5709,6 @@ self.onmessage = async (e) => {
     setTimeout(() => URL.revokeObjectURL(url), 3000);
   }
 
-  /* ---------- avvisi brevi ---------- */
   const toastEl = document.getElementById('toast');
   let toastTimer = null;
   function toast(msg) {
@@ -5875,7 +5718,6 @@ self.onmessage = async (e) => {
     toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 4200);
   }
 
-  /* ---------- conferma generica (Promise) ---------- */
   const askOverlay = document.getElementById('askOverlay');
   const askTitle = document.getElementById('askTitle');
   const askText = document.getElementById('askText');
@@ -5903,9 +5745,6 @@ self.onmessage = async (e) => {
   askOkBtn.addEventListener('click', () => closeAsk(true));
   askOverlay.addEventListener('click', e => { if (e.target === askOverlay) closeAsk(false); });
 
-  /* ================================================================
-     SCELTA DELLA CATEGORIA quando si caricano nuovi SFX
-     ================================================================ */
   const catPickOverlay = document.getElementById('catPickOverlay');
   const catPickTitle = document.getElementById('catPickTitle');
   const catPickText = document.getElementById('catPickText');
@@ -5918,13 +5757,11 @@ self.onmessage = async (e) => {
   let catPickSelected = new Set();
   let catPickOkLabel = 'Carica';
 
-  // Restituisce gli id delle categorie scelte ([] = nessuna), oppure null se annullato.
   function pickCategories(count, { title, okLabel = 'Carica' } = {}) {
     if (catPickResolve) catPickResolve(null);
     return new Promise(resolve => {
       catPickResolve = resolve;
       catPickOkLabel = okLabel;
-      // se stai già filtrando una categoria, la proponiamo già selezionata
       catPickSelected = new Set(categoryFilter && getCategoryById(categoryFilter) ? [categoryFilter] : []);
       catPickTitle.textContent = title || (count === 1 ? 'In che categoria vuoi metterlo?' : 'In che categoria vuoi metterli?');
       catPickText.textContent = count === 1
@@ -5980,7 +5817,6 @@ self.onmessage = async (e) => {
   catPickOverlay.addEventListener('click', e => { if (e.target === catPickOverlay) closeCatPick(null); });
   catPickOkBtn.addEventListener('click', () => closeCatPick([...catPickSelected].filter(id => getCategoryById(id))));
 
-  // finché una di queste finestre è aperta i tasti rapidi non fanno partire suoni
   function blockingOverlayOpen() {
     return edOverlay.classList.contains('visible')
       || catPickOverlay.classList.contains('visible')
@@ -5988,9 +5824,6 @@ self.onmessage = async (e) => {
       || document.getElementById('vrPickOverlay').classList.contains('visible');
   }
 
-  /* ================================================================
-     SCHEDE Effetti / Vocali
-     ================================================================ */
   const tabButtons = document.querySelectorAll('[data-tab]');
   const tabSfx = document.getElementById('tabSfx');
   const tabVoices = document.getElementById('tabVoices');
@@ -6020,9 +5853,6 @@ self.onmessage = async (e) => {
   }
   tabButtons.forEach(b => b.addEventListener('click', () => setTab(b.getAttribute('data-tab'))));
 
-  /* ================================================================
-     VOCALI: stato, caricamento, scadenza
-     ================================================================ */
   const voiceDropzone = document.getElementById('voiceDropzone');
   const voiceFileInput = document.getElementById('voiceFileInput');
   const voiceGrid = document.getElementById('voiceGrid');
@@ -6047,7 +5877,6 @@ self.onmessage = async (e) => {
       if (p && typeof p.then === 'function') p.then(resolve, reject);
     });
   }
-  // forma d'onda in miniatura per la card: 48 valori 0..1 salvati su Firestore
   function computePeaks(buf, n = 48) {
     const len = buf.length;
     if (!len) return [];
@@ -6088,11 +5917,11 @@ self.onmessage = async (e) => {
       uploading: false, uploadError: false, pendingDelete: false
     };
     if (blob) {
-      audio.preload = 'metadata';            // file già in locale: nessun consumo di banda
+      audio.preload = 'metadata';
       v.objectUrl = URL.createObjectURL(blob);
       audio.src = v.objectUrl;
     } else {
-      audio.preload = 'none';                // si scarica solo quando premi play
+      audio.preload = 'none';
       audio.src = v.audioUrl;
     }
     wireVoiceAudio(v);
@@ -6100,12 +5929,11 @@ self.onmessage = async (e) => {
     return v;
   }
 
-  // ordine manuale (Riordina); i vocali nuovi entrano in cima
   function sortVoices() { voices.sort((a, b) => a.order - b.order); }
 
   async function deleteVoiceRemote(id, storagePath) {
     if (storagePath) {
-      try { await deleteObject(ref(storage, storagePath)); } catch (err) { /* già rimosso o mai caricato */ }
+      try { await deleteObject(ref(storage, storagePath)); } catch (err) {  }
     }
     try { await deleteDoc(doc(db, "voices", id)); } catch (err) { console.warn('Errore eliminando il vocale:', err); }
   }
@@ -6121,7 +5949,6 @@ self.onmessage = async (e) => {
         if (typeof rec.expiresAt !== 'number' || rec.expiresAt <= now) expired.push(rec);
         else voices.push(makeVoice(rec, null));
       });
-      // scaduti mentre la pagina era chiusa: via subito
       expired.forEach(rec => deleteVoiceRemote(rec.id, rec.storagePath));
       sortVoices();
       renderVoices();
@@ -6144,7 +5971,6 @@ self.onmessage = async (e) => {
     sortVoices();
     renderVoices();
 
-    // durata e forma d'onda reali; se è scelto un preset automatico, il vocale viene preparato qui
     let uploadBlob = blob, uploadType = type;
     try {
       let buf = await decodeBlob(blob);
@@ -6193,7 +6019,7 @@ self.onmessage = async (e) => {
       toast(`"${v.name}" non è stato caricato online: resta solo su questo dispositivo finché non ricarichi la pagina.`);
     }
     v.uploading = false;
-    if (v.pendingDelete) { await deleteVoiceRemote(v.id, v.storagePath); return; }   // eliminato mentre caricava
+    if (v.pendingDelete) { await deleteVoiceRemote(v.id, v.storagePath); return; }
     if (voices.includes(v)) renderVoices();
   }
 
@@ -6242,8 +6068,6 @@ self.onmessage = async (e) => {
     if (ok) deleteVoice(id);
   }
 
-  // ogni secondo: aggiorna i conti alla rovescia e cancella i vocali scaduti
-  // (non mentre stanno suonando o sono aperti nell'editor: aspettano la fine)
   function tickVoices() {
     const now = Date.now();
     voices.slice().forEach(v => {
@@ -6258,7 +6082,6 @@ self.onmessage = async (e) => {
   }
   setInterval(tickVoices, 1000);
 
-  /* ---------- riproduzione ---------- */
   function applyVoiceVolume(v) {
     v.audio.volume = clamp((typeof v.volume === 'number' ? v.volume : 1) * masterVolume, 0, 1);
   }
@@ -6315,7 +6138,6 @@ self.onmessage = async (e) => {
     });
   }
 
-  // in modalità Single un vocale ferma tutto il resto, SFX compresi
   function clearForVoice(id) {
     if (playerMode !== 'single') return;
     sounds.forEach(s => { if (s.playing) { s.audio.pause(); setPlaying(s, false); } });
@@ -6332,7 +6154,6 @@ self.onmessage = async (e) => {
     setVoicePlaying(v, true);
   }
 
-  // pulsante grande: riparte sempre da capo
   function restartVoice(id) {
     const v = voices.find(x => x.id === id);
     if (!v) return;
@@ -6340,7 +6161,6 @@ self.onmessage = async (e) => {
     v.audio.currentTime = 0;
     playVoiceAudio(v);
   }
-  // pulsante piccolo: pausa / riprendi da dove era
   function pauseVoice(id) {
     const v = voices.find(x => x.id === id);
     if (!v) return;
@@ -6357,7 +6177,7 @@ self.onmessage = async (e) => {
     const trimmed = (newName || '').trim();
     if (!trimmed || trimmed === v.name) return;
     v.name = trimmed;
-    if (!v.audioUrl) return;   // ancora in caricamento: il nome finisce nel documento appena viene creato
+    if (!v.audioUrl) return;
     try {
       await updateDoc(doc(db, "voices", id), { name: trimmed });
     } catch (err) {
@@ -6384,7 +6204,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  // copia il vocale tra gli SFX normali, così non scade più
   async function keepVoiceAsSfx(id) {
     const v = voices.find(x => x.id === id);
     if (!v) return;
@@ -6404,7 +6223,6 @@ self.onmessage = async (e) => {
     toast(`"${v.name}" è ora negli Effetti e non verrà cancellato.`);
   }
 
-  /* ---------- riordino ---------- */
   const voiceReorderBtn = document.getElementById('voiceReorderBtn');
   let voiceReorder = false;
   let voiceDrag = null;
@@ -6459,7 +6277,6 @@ self.onmessage = async (e) => {
     }
     renderVoices();
   }
-  // salva l'ordine solo dei vocali che hanno cambiato posto
   async function persistVoiceOrder() {
     const changed = [];
     voices.forEach((v, i) => { if (v.order !== i) { v.order = i; if (v.audioUrl && !v.uploading) changed.push(v); } });
@@ -6470,7 +6287,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  /* ---------- disegno delle card ---------- */
   function renderVoices() {
     const n = voices.length;
     voiceCount.textContent = n === 0 ? 'Nessun vocale' : n === 1 ? '1 vocale' : `${n} vocali`;
@@ -6610,15 +6426,11 @@ self.onmessage = async (e) => {
     });
   }
 
-  /* ---------- utilità condivise dagli editor ---------- */
   const $ = id => document.getElementById(id);
   const dbToGain = db => Math.pow(10, db / 20);
   const gainToDb = g => 20 * Math.log10(Math.max(g, 1e-9));
   const yieldUI = () => new Promise(r => setTimeout(r, 0));
 
-  /* ---------- campi numerici liberi ----------
-     Si scrive il valore che si vuole (con la virgola o il punto).
-     Le frecce su e giù lo cambiano di un passo. */
   function fmtNum(v) { return String(Math.round(v * 1000) / 1000).replace('.', ','); }
   function readNum(el) {
     const raw = String(el.value).trim().replace(',', '.').replace('−', '-');
@@ -6628,7 +6440,6 @@ self.onmessage = async (e) => {
     if (!isFinite(v)) return { ok: false, min, max };
     return { ok: v >= min && v <= max, value: v, min, max };
   }
-  // valore valido o errore con un messaggio che dice cosa correggere
   function num(id) {
     const el = $(id);
     const r = readNum(el);
@@ -6668,7 +6479,6 @@ self.onmessage = async (e) => {
     s.audio.src = url;
     try { s.audio.load(); } catch (e) {}
   }
-  // mette in uso una versione modificata (dall'editor o dalla multitraccia), solo per la sessione
   function commitSfxSession(s, data) {
     const url = URL.createObjectURL(encodeWav(data.buffer));
     if (!s.sessionEdit) s.baseSrc = s.audio.src;
@@ -6696,9 +6506,7 @@ self.onmessage = async (e) => {
   function formatSecs(s) { return `${(Math.round(s * 10) / 10).toFixed(1).replace('.', ',')} s`; }
   function formatDb(db) { const r = Math.round(db * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${String(Math.abs(r)).replace('.', ',')} dB`; }
   function formatLufs(l) { return isFinite(l) ? `${l < 0 ? '−' : ''}${Math.abs(l).toFixed(1).replace('.', ',')}` : '—'; }
-  /* ---------- misura del volume percepito (EBU R128 / ITU-R BS.1770) ---------- */
   function kWeightCoeffs(sr) {
-    // filtro "a mensola" sulle alte (+4 dB da 1,5 kHz) + passa-alto a 38 Hz, come nella norma
     const f0 = 1500, G = 4, Q = 1 / Math.SQRT2;
     const A = Math.pow(10, G / 40), w0 = 2 * Math.PI * f0 / sr, cs = Math.cos(w0), al = Math.sin(w0) / (2 * Q), sA = Math.sqrt(A);
     const shelf = {
@@ -6723,10 +6531,9 @@ self.onmessage = async (e) => {
   function measureLoudness(buf) {
     const sr = buf.sampleRate, len = buf.length;
     const [shelf, hp] = kWeightCoeffs(sr);
-    const seg = Math.max(1, Math.round(sr * 0.1));     // blocchi da 400 ms con passo di 100 ms
+    const seg = Math.max(1, Math.round(sr * 0.1));
     const nSeg = Math.floor(len / seg);
     if (nSeg < 4) {
-      // vocale cortissimo: un unico blocco
       let p = 0;
       for (let c = 0; c < buf.numberOfChannels; c++) { const y = runBiquad(runBiquad(buf.getChannelData(c), shelf), hp); let s = 0; for (let i = 0; i < len; i++) s += y[i] * y[i]; p += s / Math.max(1, len); }
       return { lufs: p > 0 ? -0.691 + 10 * Math.log10(p) : -Infinity, peakDb: gainToDb(peakOf(buf)) };
@@ -6745,7 +6552,6 @@ self.onmessage = async (e) => {
     const rel = abs.filter(p => L(p) > relThr);
     return { lufs: L(rel.reduce((a, b) => a + b, 0) / rel.length), peakDb: gainToDb(peakOf(buf)) };
   }
-  // il motore audio si sblocca al primo clic o tasto sulla pagina
   function unlockAudio() {
     try {
       const ctx = getAudioCtx();
@@ -6753,7 +6559,7 @@ self.onmessage = async (e) => {
         const b = ctx.createBuffer(1, 1, 22050), s0 = ctx.createBufferSource();
         s0.buffer = b; s0.connect(ctx.destination); s0.start(0);
       }
-    } catch (err) { /* nessun problema: riproverà al play */ }
+    } catch (err) {  }
   }
   ['pointerdown', 'keydown', 'touchend'].forEach(evt => document.addEventListener(evt, unlockAudio, { capture: true, passive: true }));
   const SINK_KEY = 'zerosfx-preview-sink';
@@ -6762,9 +6568,6 @@ self.onmessage = async (e) => {
   function readSink() { try { return localStorage.getItem(SINK_KEY) || ''; } catch (e) { return ''; } }
   function writeSink(id) { try { if (id) localStorage.setItem(SINK_KEY, id); else localStorage.removeItem(SINK_KEY); } catch (e) {} }
 
-  /* ================================================================
-     UTILITÀ SUI BUFFER
-     ================================================================ */
   function newBuffer(channels, length, sampleRate) {
     return getAudioCtx().createBuffer(Math.max(1, channels), Math.max(1, length), sampleRate);
   }
@@ -6816,7 +6619,6 @@ self.onmessage = async (e) => {
     if (p > 0.999) scaleBuf(buf, 0.999 / p);
     return buf;
   }
-  // limitatore con 5 ms di anticipo: tiene i picchi sotto la soglia senza abbassare tutto il resto
   function limitPeaks(buf, ceilingDb = -1) {
     const ceil = dbToGain(ceilingDb);
     if (peakOf(buf) <= ceil) return buf;
@@ -6828,7 +6630,6 @@ self.onmessage = async (e) => {
       for (let c = 0; c < nch; c++) { const a = Math.abs(buf.getChannelData(c)[i]); if (a > m) m = a; }
       req[i] = m > ceil ? ceil / m : 1;
     }
-    // minimo su una finestra che guarda avanti di L campioni (coda monotona)
     const win = new Float32Array(len);
     const dq = new Int32Array(len + L + 1);
     let h = 0, t = 0;
@@ -6875,7 +6676,6 @@ self.onmessage = async (e) => {
     };
     return { buffer: out, map };
   }
-  // attività vocale a finestre; la soglia segue il rumore di fondo del vocale
   function voiceActivity(buf, winSec = 0.02) {
     const sr = buf.sampleRate, len = buf.length;
     const win = Math.max(1, Math.round(sr * winSec));
@@ -6932,7 +6732,6 @@ self.onmessage = async (e) => {
     src.buffer = b; src.connect(off.destination); src.start(0);
     return await off.startRendering();
   }
-  // somma src dentro out a partire da offset (in campioni), con un guadagno
   function mixInto(out, src, offset, gain = 1) {
     for (let c = 0; c < out.numberOfChannels; c++) {
       const d = out.getChannelData(c), s = chanOf(src, c);
@@ -6941,7 +6740,6 @@ self.onmessage = async (e) => {
     }
   }
 
-  // effetti della libreria: decodificati una volta e tenuti in memoria
   const sfxBufferCache = new Map();
   async function loadSoundBuffer(soundId, sr) {
     const s = sounds.find(x => x.id === soundId);
@@ -6964,12 +6762,6 @@ self.onmessage = async (e) => {
   }
   function soundName(id) { const s = sounds.find(x => x.id === id); return s ? s.name : 'effetto'; }
 
-  /* Ambito: con una selezione l'operazione lavora solo sul tratto, che poi
-     viene rimesso al suo posto.
-     - stessa durata: dissolvenza incrociata di 10 ms con l'originale ai bordi;
-     - durata diversa (velocità, pause, jingle…): il resto del vocale si sposta
-       e i marcatori lo seguono;
-     - modo "overlay" (delay): la coda in più si somma all'audio che segue. */
   async function withScope(buf, ctx, fn, mode) {
     if (!ctx.sel) return await fn(buf);
     const [s0, s1] = ctx.sel;
@@ -6994,7 +6786,7 @@ self.onmessage = async (e) => {
           if (i < L) w = i / L; else if (n - i <= L) w = (n - i) / L;
           d[s0 + i] = o[s0 + i] * (1 - w) + p[i] * w;
         }
-        for (let i = n; i < m; i++) d[s0 + i] += p[i];   // coda del delay sopra l'audio che segue
+        for (let i = n; i < m; i++) d[s0 + i] += p[i];
       }
       return { ...res, buffer: limitPeaks(out, -0.1), sel: ctx.selSec, cursor: ctx.cursor, map: undefined, msg };
     }
@@ -7019,10 +6811,6 @@ self.onmessage = async (e) => {
     return { ...res, buffer: out, sel: { start: a, end: a + m / sr }, cursor: a, map, msg };
   }
 
-  /* ================================================================
-     OPERAZIONI   fn(buf, p = valori, ctx = { sel, selSec, cursor, onProgress })
-     ================================================================ */
-  /* ---------- sulla selezione ---------- */
   function opKeep(buf, p, ctx) {
     const [s0, s1] = ctx.sel;
     if (s1 - s0 < 2) return null;
@@ -7093,7 +6881,6 @@ self.onmessage = async (e) => {
     };
   }
 
-  /* ---------- pulizia ---------- */
   function makeFFT(N) {
     const levels = Math.round(Math.log2(N));
     const rev = new Uint32Array(N);
@@ -7126,10 +6913,6 @@ self.onmessage = async (e) => {
   const FFT_N = 2048;
   const fft2048 = makeFFT(FFT_N);
 
-  /* riduzione del rumore (sottrazione spettrale): si stima lo spettro del
-     rumore (dal tratto scelto o dai frammenti più silenziosi), poi a finestre
-     da 2048 campioni si abbassano le frequenze che non lo superano, con una
-     maschera smussata nel tempo e in frequenza per evitare l'effetto "acqua" */
   async function denoiseBuffer(buf, strength, profileBuf, onProgress) {
     const N = FFT_N, H = N / 4, half = N / 2, len = buf.length, nch = buf.numberOfChannels;
     const win = new Float64Array(N);
@@ -7174,7 +6957,7 @@ self.onmessage = async (e) => {
       }
       const noise = new Float64Array(half + 1);
       for (const s of noiseStarts) {
-        if (noiseData !== data) {   // profilo esterno: finestre lette dal campione catturato
+        if (noiseData !== data) {
           for (let i = 0; i < N; i++) { const idx = s + i; re[i] = idx < noiseLen ? noiseData[idx] * win[i] : 0; im[i] = 0; }
           fft2048(re, im);
         } else loadFrame(data, s);
@@ -7226,10 +7009,9 @@ self.onmessage = async (e) => {
     });
     return { buffer: out, msg: `Ronzio a ${fmtNum(f0)} Hz tolto` };
   }
-  // trova gli scatti (salti improvvisi rispetto al dintorno) e li ricostruisce
   function opDeclick(buf, p) {
     const sr = buf.sampleRate, len = buf.length;
-    const k = 14 - 10 * p.sens;              // sensibilità alta = soglia più bassa
+    const k = 14 - 10 * p.sens;
     const maxLen = Math.max(2, Math.round(sr * 0.002));
     const half = Math.round(sr * 0.005);
     const out = cloneBuf(buf);
@@ -7267,7 +7049,6 @@ self.onmessage = async (e) => {
     let reduced = 0;
     for (let c = 0; c < nch; c++) {
       const d = buf.getChannelData(c), o = out.getChannelData(c);
-      // filtro avanti e indietro: fase zero, così togliere le alte non le rinforza mai
       const h = highpassJS(highpassJS(d, sr, 5500).reverse(), sr, 5500).reverse();
       let eh = 0, ef = 0;
       for (let i = 0; i < d.length; i++) {
@@ -7294,7 +7075,6 @@ self.onmessage = async (e) => {
     return { buffer: out, msg: mode === 'left' ? 'Mixdown: solo sinistro' : mode === 'right' ? 'Mixdown: solo destro' : 'Mixdown mono' };
   }
 
-  /* ---------- voce ---------- */
   async function opCompress(buf, p) {
     const amt = p.amt;
     const sr = buf.sampleRate, len = buf.length, nch = buf.numberOfChannels;
@@ -7333,7 +7113,6 @@ self.onmessage = async (e) => {
     return { buffer: out, msg: pr.label };
   }
 
-  // WSOLA: cambia la durata senza cambiare il tono
   async function timeStretchBuffer(buf, speed, onProgress) {
     const sr = buf.sampleRate, len = buf.length, nch = buf.numberOfChannels;
     const N = Math.round(sr * 0.04) & ~1, Hs = N / 2, Ha = Hs * speed, tol = Math.round(sr * 0.012);
@@ -7381,7 +7160,6 @@ self.onmessage = async (e) => {
     for (let c = 0; c < nch; c++) res.getChannelData(c).set(out[c].subarray(0, outLen));
     return microFades(res);
   }
-  // tono: prima si allunga senza cambiare tono, poi si ricampiona alla durata originale
   async function opPitch(buf, p, ctx) {
     const st = p.semitones;
     if (Math.abs(st) < 0.01) return { msg: 'Tono invariato' };
@@ -7409,7 +7187,7 @@ self.onmessage = async (e) => {
     delay.delayTime.value = p.delay;
     const fbGain = off.createGain(); fbGain.gain.value = fb;
     const wet = off.createGain(); wet.gain.value = p.mix;
-    const tone = biquad(off, 'lowpass', 5000);   // ritorni leggermente più scuri, più naturali
+    const tone = biquad(off, 'lowpass', 5000);
     src.connect(off.destination);
     src.connect(delay);
     delay.connect(tone); tone.connect(fbGain); fbGain.connect(delay);
@@ -7419,7 +7197,6 @@ self.onmessage = async (e) => {
     return { buffer: microFades(out), msg: `Eco di ${fmtNum(p.delay)} s` };
   }
 
-  /* ---------- livelli ---------- */
   function opNormalize(buf) {
     const peak = peakOf(buf);
     if (peak < 1e-5) return { msg: 'Il vocale è muto: niente da normalizzare' };
@@ -7454,7 +7231,6 @@ self.onmessage = async (e) => {
     return { buffer: out, msg: `Dissolvenza in ${up ? 'entrata' : 'uscita'} di ${fmtNum(p.secs)} s` };
   }
 
-  /* ---------- tempo ---------- */
   function opTrimSilence(buf) {
     const sr = buf.sampleRate, len = buf.length;
     const { win, rms, thr, n } = voiceActivity(buf);
@@ -7509,8 +7285,6 @@ self.onmessage = async (e) => {
     return { buffer: out, sel: null, map: t => (t <= p.max ? t : null), msg: `Tagliato a ${fmtNum(p.max)} s con dissolvenza di ${fmtNum(p.fade)} s` };
   }
 
-  /* ---------- musica ---------- */
-  // base sotto la voce: la musica scende quando c'è voce (con 120 ms di anticipo) e risale nelle pause
   async function opBed(buf, p) {
     if (!p.soundId) return { msg: 'Scegli prima la base musicale' };
     const sr = buf.sampleRate;
@@ -7576,16 +7350,12 @@ self.onmessage = async (e) => {
     }
     return { blob: encodeWav(buf), ext: 'wav' };
   }
-  /* ================================================================
-     PRESET: le modifiche di un vocale salvate come ricetta
-     ================================================================ */
   const EDITOR_SETTING_DOC = doc(db, "settings", "editor");
-  let editorPresets = [];   // [{ id, name, steps: [{ op, params, label }] }]
+  let editorPresets = [];
   let autoPresetId = '';
   function savePresetSettings() {
     return setDoc(EDITOR_SETTING_DOC, { presets: editorPresets, autoPreset: autoPresetId }, { merge: true }).catch(err => console.error('Errore nel salvataggio dei preset:', err));
   }
-  // senza editor: usato per i vocali appena importati
   async function processWithPreset(buf, preset) {
     let cur = buf;
     const done = [];
@@ -7601,7 +7371,6 @@ self.onmessage = async (e) => {
   }
   function getAutoPreset() { return editorPresets.find(p => p.id === autoPresetId) || null; }
 
-  // selettore "Ai nuovi vocali applica" nella scheda Vocali
   const voiceAutoPreset = $('voiceAutoPreset');
   function renderAutoPresetSelect() {
     voiceAutoPreset.innerHTML = `<option value="">Nessun preset</option>` + editorPresets.map(pr => `<option value="${pr.id}"${pr.id === autoPresetId ? ' selected' : ''}>${escapeHtml(pr.name)}</option>`).join('');
@@ -7614,7 +7383,6 @@ self.onmessage = async (e) => {
     toast(autoPresetId ? `I nuovi vocali verranno preparati con "${getAutoPreset().name}".` : 'I nuovi vocali verranno importati così come sono.');
   });
 
-  /* ---------- salvataggio: MP3 (leggero) oppure WAV ---------- */
   (async function loadEditorSettings() {
     try {
       const snap = await getDoc(EDITOR_SETTING_DOC);
@@ -7690,18 +7458,6 @@ self.onmessage = async (e) => {
     return new Blob(parts, { type: 'audio/mpeg' });
   }
 
-  /* ================================================================
-     SEPARAZIONE VOCE / BASE (vocal remover e a cappella)
-     ----------------------------------------------------------------
-     Due reti neurali, tutte e due nel browser dentro un Web Worker:
-     - Mel-Band RoFormer (pesi di Kimberley Jensen, export ONNX di audiojs):
-       lo stato dell'arte per la voce (≈12 dB di SDR su MUSDB18, più di
-       iZotope RX Music Rebalance). 464 MB, serve la scheda video (WebGPU).
-     - MDX-Net Kim_Vocal_2 (Ultimate Vocal Remover): 67 MB, va anche sul
-       processore. È la riserva automatica quando la scheda video manca.
-     La base è l'originale meno la voce: sommate ridanno esattamente
-     l'audio di partenza, quindi il cursore a metà = originale identico.
-     ================================================================ */
   const VSEP_CFG = {
     ortBase: 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/',
     cacheName: 'zerosfx-models-v1',
@@ -7736,40 +7492,31 @@ self.onmessage = async (e) => {
   };
   const VSEP_Q_KEY = 'zerosfx-vsep-quality2', VSEP_M_KEY = 'zerosfx-vsep-model';
   const VSEP_TRY_KEY = 'zerosfx-vsep-rof-running', VSEP_CRASH_KEY = 'zerosfx-vsep-rof-crash', VSEP_GPU_CRASH_KEY = 'zerosfx-vsep-gpu-crash2';
-  // nessun segno di vita dal calcolo per tanto tempo = bloccato (RoFormer la prima volta compila a lungo sulla scheda video)
   const VSEP_STALL_MS = { mdx: 150000, roformer: 300000 };
   const vsep = { worker: null, seq: 0, jobs: new Map(), ep: '', epModel: '', queue: Promise.resolve(), cache: new WeakMap(), running: 0, gpu: false, gpuChecked: false, rofBroken: false, rofCrashed: false, lowMem: false, gpuCrashed: false };
-  // Safari: il modello grande lo manda in blocco (memoria per scheda più stretta e WebGPU meno maturo).
-  // Su iPhone e iPad la memoria non basta proprio.
   {
     const ua = navigator.userAgent || '';
     vsep.ios = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && (navigator.maxTouchPoints || 0) > 1);
     vsep.safari = vsep.ios || (/Safari\//.test(ua) && !/Chrome\/|Chromium\/|CriOS|FxiOS|Edg\/|OPR\/|Firefox\//.test(ua));
   }
-  // RAM del computer (Chrome/Edge la dicono, arrotondata): il modello grande ne vuole almeno 8 GB
   vsep.lowMem = !!navigator.deviceMemory && navigator.deviceMemory < 8;
-  // Se l'ultima volta la pagina si è chiusa da sola mentre RoFormer lavorava (memoria finita o scheda video
-  // bloccata), non lo si riavvia da solo: si torna a MDX-Net finché non lo scegli di nuovo tu.
   try {
     const tried = localStorage.getItem(VSEP_TRY_KEY);
     if (tried) {
       localStorage.removeItem(VSEP_TRY_KEY);
-      if (tried === 'mdx') localStorage.setItem(VSEP_GPU_CRASH_KEY, String(Date.now()));   // MDX sulla scheda video
+      if (tried === 'mdx') localStorage.setItem(VSEP_GPU_CRASH_KEY, String(Date.now()));
       else {
         localStorage.setItem(VSEP_CRASH_KEY, String(Date.now()));
         if (localStorage.getItem(VSEP_M_KEY) === 'roformer') localStorage.removeItem(VSEP_M_KEY);
       }
     }
     vsep.rofCrashed = !!localStorage.getItem(VSEP_CRASH_KEY);
-    localStorage.removeItem('zerosfx-vsep-gpu-crash');   // chiave della versione precedente (troppo severa)
-    // se la scheda video ha fatto chiudere la pagina anche con il modello piccolo, per un giorno si usa il processore
+    localStorage.removeItem('zerosfx-vsep-gpu-crash');
     const gc = +localStorage.getItem(VSEP_GPU_CRASH_KEY) || 0;
     if (gc && Date.now() - gc < 864e5) { vsep.gpuCrashed = true; VSEP_CFG.forceCpu = true; }
     else if (gc) localStorage.removeItem(VSEP_GPU_CRASH_KEY);
-  } catch (e) { /* niente */ }
-  // chiusura o ricarica normale della pagina: non è un crash
-  window.addEventListener('pagehide', () => { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) { /* niente */ } });
-  // la scheda video vera (non quella simulata sul processore) decide il modello predefinito
+  } catch (e) {  }
+  window.addEventListener('pagehide', () => { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) {  } });
   (async () => {
     try {
       const a = navigator.gpu ? await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' }) : null;
@@ -7781,15 +7528,13 @@ self.onmessage = async (e) => {
   })();
 
   function vsepOnCpu() { return VSEP_CFG.forceCpu || (vsep.gpuChecked && !vsep.gpu) || (vsep.epModel === 'mdx' && vsep.ep === 'wasm'); }
-  // Massima sulla scheda video; con MDX-Net sul processore (Safari senza WebGPU) si parte da Veloce,
-  // che è 4 volte più rapida: la Massima resta a un clic.
   function vsepQuality(model) {
-    try { const q = localStorage.getItem(VSEP_Q_KEY); if (VSEP_QUALITY[q]) return q; } catch (e) { /* niente */ }
+    try { const q = localStorage.getItem(VSEP_Q_KEY); if (VSEP_QUALITY[q]) return q; } catch (e) {  }
     return (model || vsepModel()) === 'mdx' && vsepOnCpu() ? 'fast' : 'max';
   }
   function vsepModel() {
     let m = '';
-    try { m = localStorage.getItem(VSEP_M_KEY) || ''; } catch (e) { /* niente */ }
+    try { m = localStorage.getItem(VSEP_M_KEY) || ''; } catch (e) {  }
     if (m === 'roformer' && (vsep.rofBroken || vsep.ios || (vsep.gpuChecked && !vsep.gpu))) return 'mdx';
     if (VSEP_CFG.models[m]) return m;
     return vsep.gpu && !vsep.rofBroken && !vsep.rofCrashed && !vsep.lowMem && !vsep.safari ? 'roformer' : 'mdx';
@@ -7813,16 +7558,15 @@ self.onmessage = async (e) => {
   }
   document.addEventListener('change', e => {
     if (!e.target.matches) return;
-    if (e.target.matches('[data-vsepq]')) { try { localStorage.setItem(VSEP_Q_KEY, e.target.value); } catch (er) { /* niente */ } vsepRenderQuality(); }
+    if (e.target.matches('[data-vsepq]')) { try { localStorage.setItem(VSEP_Q_KEY, e.target.value); } catch (er) {  } vsepRenderQuality(); }
     if (e.target.matches('[data-vsepmodel]')) {
       try {
         localStorage.setItem(VSEP_M_KEY, e.target.value);
         if (e.target.value === 'roformer') { localStorage.removeItem(VSEP_CRASH_KEY); vsep.rofCrashed = false; }
-      } catch (er) { /* niente */ }
+      } catch (er) {  }
       vsepRenderModels(); vsepRefreshInfo();
     }
   });
-  // spazio occupato dai modelli scaricati (sono nella memoria del browser per questo sito, non in una cartella)
   async function vsepRefreshStore() {
     const els = document.querySelectorAll('[data-vsepstore]');
     if (!els.length) return;
@@ -7851,7 +7595,7 @@ self.onmessage = async (e) => {
     const ok = await askConfirm({ title: 'Eliminare i modelli scaricati?', text: 'Liberi lo spazio sul computer. La prossima volta che separi voce e base verranno riscaricati.', ok: 'Elimina', danger: true });
     if (!ok) return;
     vsepKillWorker();
-    try { await caches.delete(VSEP_CFG.cacheName); } catch (er) { /* niente */ }
+    try { await caches.delete(VSEP_CFG.cacheName); } catch (er) {  }
     vsepRefreshInfo();
     toast('Modelli eliminati dal browser.');
   });
@@ -7918,7 +7662,7 @@ self.onmessage = async (e) => {
       const msg = 'Il motore di separazione non è partito: serve un browser aggiornato (Chrome, Edge, Safari 16+ o Firefox 114+) e la pagina aperta da internet, non come file.';
       vsep.jobs.forEach(j => j.reject(new Error(msg)));
       vsep.jobs.clear();
-      try { w.terminate(); } catch (er) { /* niente */ }
+      try { w.terminate(); } catch (er) {  }
       vsep.worker = null;
     };
     vsep.worker = w;
@@ -7930,7 +7674,7 @@ self.onmessage = async (e) => {
     return p;
   }
   function vsepKillWorker() {
-    if (vsep.worker) { try { vsep.worker.terminate(); } catch (e) { /* niente */ } }
+    if (vsep.worker) { try { vsep.worker.terminate(); } catch (e) {  } }
     vsep.worker = null; vsep.ep = ''; vsep.epModel = '';
   }
   function vsepJob(model, L, R, opts, onStatus) {
@@ -7953,7 +7697,6 @@ self.onmessage = async (e) => {
     }).finally(() => { clearInterval(timer); if (vsep.running === id) { vsep.running = 0; vsepSetRunning(false); } });
   }
 
-  // separa un AudioBuffer: restituisce { voc, inst } con stessa durata, frequenza e canali
   async function vsepRun(buf, onStatus, model) {
     const sr = buf.sampleRate;
     const b44 = sr === 44100 ? buf : await resampleBuf(buf, 44100);
@@ -7961,13 +7704,12 @@ self.onmessage = async (e) => {
     if (onStatus) onStatus(vsep.ep ? 'Separo voce e base…' : 'Avvio il motore di separazione…');
     let res;
     const watched = model === 'roformer' || (model === 'mdx' && vsep.gpu && !VSEP_CFG.forceCpu);
-    if (watched) { try { localStorage.setItem(VSEP_TRY_KEY, model); } catch (e) { /* niente */ } }
+    if (watched) { try { localStorage.setItem(VSEP_TRY_KEY, model); } catch (e) {  } }
     try {
       res = await vsepJob(model, new Float32Array(b44.getChannelData(0)), new Float32Array(chanOf(b44, 1)), q[model], onStatus);
     } catch (err) {
-      if (watched) { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) { /* niente */ } }
+      if (watched) { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) {  } }
       if (model === 'mdx' && err.code === 'stall' && !VSEP_CFG.forceCpu) {
-        // la scheda video si è piantata anche con il modello piccolo: per questa sessione si va sul processore
         vsep.gpuCrashed = true; vsep.gpu = false; VSEP_CFG.forceCpu = true;
         vsepRenderModels(); vsepRefreshInfo();
         toast('La scheda video si è bloccata: riprovo sul processore (più lento).');
@@ -7977,7 +7719,6 @@ self.onmessage = async (e) => {
       if (model === 'roformer' && err.code === 'stall') err.message = 'Mel-Band RoFormer si è bloccato.';
       else if (err.code === 'stall') err.message = 'Il calcolo si è bloccato: riprova, magari con la qualità Veloce o con meno schede aperte.';
       if (model === 'roformer' && (err.code === 'nogpu' || err.code === 'gpufail' || err.code === 'stall')) {
-        // la scheda video non regge il modello grande: si passa da soli a MDX-Net
         vsep.rofBroken = true;
         vsepRenderModels(); vsepRefreshInfo();
         toast(`${err.message} Uso MDX-Net, più leggero.`);
@@ -7986,7 +7727,7 @@ self.onmessage = async (e) => {
       }
       throw err;
     }
-    if (watched) { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) { /* niente */ } }
+    if (watched) { try { localStorage.removeItem(VSEP_TRY_KEY); } catch (e) {  } }
     vsepRefreshStore();
     let voc = newBuffer(2, res.L.length, 44100);
     voc.getChannelData(0).set(res.L);
@@ -8005,8 +7746,6 @@ self.onmessage = async (e) => {
     return { voc: V, inst: I, model: res.model };
   }
   function vsepSliceStems(st, s0, s1) { return { voc: sliceBuf(st.voc, s0, s1), inst: sliceBuf(st.inst, s0, s1), model: st.model }; }
-  // separazioni già fatte, per ogni versione dell'audio: si riusa quella dello stesso modello e qualità,
-  // o una già finita migliore (RoFormer > MDX, Massima > Alta > Veloce)
   const VSEP_RANK = ['mdx:fast', 'mdx:high', 'mdx:max', 'roformer:fast', 'roformer:high', 'roformer:max'];
   async function vsepStems(buf, s0, s1, onStatus) {
     s0 = Math.max(0, s0 || 0); s1 = Math.min(buf.length, s1 == null ? buf.length : s1);
@@ -8037,7 +7776,6 @@ self.onmessage = async (e) => {
     if (bal === 0) return 'originale';
     return bal < 0 ? `voce al ${100 + bal}%` : `base al ${100 - bal}%`;
   }
-  // operazione: usata dall'editor (vocali, effetti, Studio) e dai preset
   async function opVsep(buf, p, ctx) {
     const bal = clamp(Math.round(p.bal || 0), -100, 100);
     if (!bal) return { msg: 'Cursore al centro: l\'audio resta com\'è' };
@@ -8062,14 +7800,6 @@ self.onmessage = async (e) => {
     return { buffer: out, sel: ctx.selSec, msg: `${what} con ${mod.name}${vsep.ep === 'wasm' ? ' (processore)' : ''}` };
   }
 
-  /* ================================================================
-     SCHEDA VOCAL REMOVER
-     ----------------------------------------------------------------
-     Accesso rapido alla separazione voce / base: scegli una canzone,
-     separa, ascolta col cursore Voce/Base, scarica o manda allo Studio.
-     Usa lo stesso motore dell'editor (vsepStems), quindi una separazione
-     fatta qui viene riusata se apri la canzone nell'editor dello Studio.
-     ================================================================ */
   const vr = { file: null, buf: null, name: '', stems: null, busy: false, play: null, pos: 0, seeking: false, raf: 0, tok: 0 };
   const vrEl = id => document.getElementById(id);
   const VR_PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><polygon points="7,4 20,12 7,20"></polygon></svg>';
@@ -8098,7 +7828,6 @@ self.onmessage = async (e) => {
     else bar.classList.toggle('indet', vr.busy);
   }
 
-  /* ---------- caricamento: dal computer o dalla libreria degli Effetti ---------- */
   async function vrLoad(name, getBuf) {
     if (vr.busy) return;
     vrStop();
@@ -8135,7 +7864,6 @@ self.onmessage = async (e) => {
     if (!s || vr.busy) return;
     if (s.playing) { s.audio.pause(); setPlaying(s, false); }
     vrLoad(s.name, async () => {
-      // versione modificata in questa sessione: si usa quella
       if (s.sessionEdit && s.sessionEdit.buffer) return s.sessionEdit.buffer;
       let blob;
       try { blob = await fetchSfxOriginalBlob(s); }
@@ -8145,7 +7873,6 @@ self.onmessage = async (e) => {
     });
   }
 
-  /* ---------- finestra "Scegli dagli Effetti" ---------- */
   const vrPick = vrEl('vrPickOverlay'), vrPickList = vrEl('vrPickList'), vrPickSearch = vrEl('vrPickSearch'), vrPickCat = vrEl('vrPickCat');
   function vrPickRender() {
     const q = vrPickSearch.value.trim().toLowerCase(), cat = vrPickCat.value;
@@ -8209,7 +7936,6 @@ self.onmessage = async (e) => {
   vrDrop.addEventListener('drop', e => { const f = e.dataTransfer.files && e.dataTransfer.files[0]; if (f) vrLoadFile(f); });
   vrEl('vrChange').addEventListener('click', () => { if (!vr.busy) vrInput.click(); });
 
-  /* ---------- separazione ---------- */
   async function vrSeparate() {
     if (!vr.buf || vr.busy) return;
     if (vr.buf.duration < 0.25) { vrSetStatus('Il file è troppo corto: serve almeno un quarto di secondo.', true); return; }
@@ -8238,7 +7964,6 @@ self.onmessage = async (e) => {
   }
   vrEl('vrRun').addEventListener('click', vrSeparate);
 
-  /* ---------- ascolto con il cursore Voce/Base ---------- */
   function vrBal() { return parseInt(vrEl('vrBal').value, 10) || 0; }
   function vrSyncBal() {
     vrEl('vrBalVal').textContent = vsepBalText(vrBal());
@@ -8282,8 +8007,8 @@ self.onmessage = async (e) => {
     if (p) {
       if (!keepPos) vr.pos = vrCurPos();
       vr.play = null;
-      p.srcs.forEach(s => { s.onended = null; try { s.stop(); } catch (e) { /* già ferma */ } });
-      try { p.out.disconnect(); } catch (e) { /* niente */ }
+      p.srcs.forEach(s => { s.onended = null; try { s.stop(); } catch (e) {  } });
+      try { p.out.disconnect(); } catch (e) {  }
     }
     cancelAnimationFrame(vr.raf);
     const btn = vrEl('vrPlay');
@@ -8310,7 +8035,6 @@ self.onmessage = async (e) => {
   document.querySelectorAll('[data-vrbal]').forEach(b => b.addEventListener('click', () => { vrEl('vrBal').value = b.getAttribute('data-vrbal'); vrSyncBal(); }));
   vrSyncBal();
 
-  /* ---------- scaricare, salvare, Studio ---------- */
   async function vrEncode(buf, label) {
     if (vrEl('vrFormat').value === 'mp3') {
       try { return { blob: await encodeMp3(buf, f => vrSetStatus(`Preparo la ${label}… ${Math.round(f * 100)}%`)), ext: 'mp3' }; }
@@ -8416,18 +8140,6 @@ self.onmessage = async (e) => {
     else if (so && !so.disabled) vrToStudio(so.getAttribute('data-vrstudio'));
   });
 
-  /* ================================================================
-     EDITOR AUDIO UNICO
-     ----------------------------------------------------------------
-     Lo stesso editor serve i Vocali, gli Effetti della libreria e lo
-     Studio. Lavora su un "documento": l'audio, la sua cronologia
-     (annulla e ripeti), la selezione, il cursore e i marcatori.
-     - vocale: si apre a tutto schermo, "Salva" lo riscrive su Firebase;
-     - effetto: a tutto schermo, "Usa questa versione" vale fino al
-       ricaricamento della pagina (come prima);
-     - file dello Studio: dentro la scheda Studio, accanto ai file.
-     Tutto il calcolo avviene nel browser, su copie in memoria.
-     ================================================================ */
   const edEl = $('ed'), edOverlay = $('edOverlay');
   const edName = $('edName'), edKind = $('edKind'), edBadge = $('edBadge'), edStatusEl = $('edStatus');
   const edBar = $('edBar'), edSegSlot = $('edSegSlot'), edMeterCv = $('edMeter');
@@ -8447,10 +8159,9 @@ self.onmessage = async (e) => {
     idle: { key: '', bands: null, lv: null }, live: { bands: null, peaks: null, l: 0, r: 0, pl: 0, pr: 0, hold: 0 },
     statsKey: '', wheel: null
   };
-  let edClip = null;   // tratto copiato: resta tra un audio e l'altro
+  let edClip = null;
   let edSeq = 1;
 
-  /* ---------- documenti ---------- */
   function edMakeDoc(kind, buffer, name, extra = {}) {
     return {
       id: 'd' + (edSeq++), kind, name: name || 'Audio', buffer, peaks: stComputePeaks(buffer),
@@ -8496,15 +8207,12 @@ self.onmessage = async (e) => {
   }
   function edFmtTime(t) { return stFmt(t).replace('.', ','); }
 
-  /* ---------- dove si trova l'editor: a tutto schermo o nello Studio ---------- */
   function edMount(host) {
     const target = host === 'overlay' ? edOverlay : $('stEdHost');
     if (edEl.parentNode !== target) target.appendChild(edEl);
     ed.host = host;
     edPlaceBar();
   }
-  // la barra principale: nello Studio sta sopra a tutta la scheda (con la scelta Forma d'onda / Multitraccia),
-  // a tutto schermo sta in cima all'editor
   function edPlaceBar() {
     const shell = $('stShell'), stTop = shell.querySelector('.st-topbar:not(.ed-bar)'), seg = document.querySelector('.st-seg');
     const studio = ed.host === 'studio';
@@ -8518,7 +8226,6 @@ self.onmessage = async (e) => {
     $('edRec').hidden = !studio;
     requestAnimationFrame(() => edDrawBarMeter());
   }
-  // indicatore di livello della barra (come quello della multitraccia)
   function edDrawBarMeter(l, r, pl, pr) {
     const c = edMeterCv, dpr = edDpr();
     const rc = c.getBoundingClientRect();
@@ -8563,7 +8270,6 @@ self.onmessage = async (e) => {
     requestAnimationFrame(() => { edResize(); edUpdateUI(); });
     edUpdateUI();
   }
-  // apre il pannello a tutto schermo mentre l'audio si sta ancora caricando
   function edOverlayLoading(kind, name, msg) {
     edShowDoc(null, 'overlay');
     ed.loading = msg;
@@ -8643,7 +8349,6 @@ self.onmessage = async (e) => {
     edShowDoc(d, 'overlay');
     if (se) edStatus('Riaperta la versione modificata: la cronologia è quella della sessione.');
   }
-  // nomi usati dal resto della pagina
   function openVoiceEditor(id) { return edOpenVoice(id); }
   function openSfxEditor(id) { return edOpenSfx(id); }
   function edLoadingError(msg) {
@@ -8653,7 +8358,6 @@ self.onmessage = async (e) => {
     edLoading.classList.add('error');
   }
 
-  /* ---------- interfaccia che cambia col tipo di documento ---------- */
   function edApplyKindUI(forceKind) {
     const d = ed.doc, kind = forceKind || (d ? d.kind : (ed.pendingKind || 'file'));
     const overlay = ed.host === 'overlay';
@@ -8702,7 +8406,6 @@ self.onmessage = async (e) => {
     if (d.kind === 'file') { stRenderFiles(); stRenderMt(); }
   });
 
-  /* ---------- disegno: forma d'onda, spettrogramma, panoramica ---------- */
   function edDpr() { return Math.min(2, window.devicePixelRatio || 1); }
   function edResize() {
     if (!edEl.isConnected || !edEl.offsetParent) return;
@@ -8722,7 +8425,6 @@ self.onmessage = async (e) => {
   window.addEventListener('resize', () => { if (edEl.offsetParent) edResize(); });
   if (window.ResizeObserver) new ResizeObserver(() => { if (edEl.offsetParent) edResize(); }).observe(edWaveWrap);
 
-  // colori dello spettrogramma: nero → viola → rosa → arancio → crema
   const ED_SPEC_LUT = (() => {
     const stops = [[0, [6, 5, 10]], [0.22, [48, 10, 72]], [0.45, [150, 18, 98]], [0.65, [255, 30, 96]], [0.82, [255, 140, 70]], [1, [255, 244, 200]]];
     const lut = new Uint8Array(256 * 3);
@@ -8740,7 +8442,6 @@ self.onmessage = async (e) => {
     const chans = []; for (let c = 0; c < nch; c++) chans.push(buf.getChannelData(c));
     const cols = Math.max(1, Math.min(W, 1400));
     const fmin = 30, fmax = sr / 2;
-    // per ogni riga (frequenza in scala logaritmica) l'intervallo di bin da leggere
     const rb0 = new Int32Array(H), rb1 = new Int32Array(H);
     for (let y = 0; y < H; y++) {
       const fa = fmin * Math.pow(fmax / fmin, 1 - (y + 1) / H), fb = fmin * Math.pow(fmax / fmin, 1 - y / H);
@@ -8814,7 +8515,6 @@ self.onmessage = async (e) => {
       const skey = [buf.length, buf === d.buffer ? d.pos : 'o', d.id, start, end, Wd, H].join('|');
       if (ed.specKey !== skey || ed.specBuf !== buf) { ed.specImg = edSpecImage(buf, start, end, Wd, Math.max(1, H)); ed.specKey = skey; ed.specBuf = buf; }
       g.putImageData(ed.specImg, 0, rh);
-      // scala delle frequenze
       const sr = buf.sampleRate, fmin = 30, fmax = sr / 2;
       g.font = `${9.5 * dpr}px "JetBrains Mono", monospace`;
       g.textBaseline = 'middle';
@@ -8967,7 +8667,6 @@ self.onmessage = async (e) => {
     edDrawOverview();
   }
 
-  /* ---------- zoom ---------- */
   function edZoom(factor, anchor) {
     const d = ed.doc;
     if (!d) return;
@@ -9007,7 +8706,6 @@ self.onmessage = async (e) => {
     edDraw();
   }
 
-  /* ---------- selezione con mouse e dito ---------- */
   function edSnapTime(t) {
     const buf = edShown(ed.doc);
     const sr = buf.sampleRate, w = Math.max(1, Math.round(sr * 0.005)), range = Math.round(sr * 0.15);
@@ -9109,7 +8807,6 @@ self.onmessage = async (e) => {
     if (ed.play && !ed.play.stems) edStartPlay({ from: d.cursor });
     edDraw(); edUpdateUI();
   }
-  // rotella: zoom verso il puntatore · Shift o due dita in orizzontale: scorri
   edOver.addEventListener('wheel', e => {
     const d = ed.doc;
     if (!d) return;
@@ -9138,7 +8835,6 @@ self.onmessage = async (e) => {
     const step = clamp(pinch ? dy * 0.01 : dy * 0.0022, -0.5, 0.5);
     if (step) edZoom(Math.exp(step), edTAt(d, e.clientX - r.left));
   }, { passive: false });
-  // panoramica: trascina per spostare la parte visibile
   edOverview.addEventListener('pointerdown', e => {
     if (!ed.doc) return;
     edOverview.setPointerCapture(e.pointerId);
@@ -9160,7 +8856,6 @@ self.onmessage = async (e) => {
   edOverview.addEventListener('pointerup', () => { ed.ovDrag = null; });
   edOverview.addEventListener('pointercancel', () => { ed.ovDrag = null; });
 
-  /* ---------- campi della selezione (inizio, fine, durata) ---------- */
   function edTimeFieldCommit(which) {
     const d = ed.doc;
     if (!d) return;
@@ -9169,7 +8864,7 @@ self.onmessage = async (e) => {
     const v = edParseTime(el.value);
     if (!isFinite(v)) { el.classList.add('invalid'); return; }
     el.classList.remove('invalid');
-    if (!d.sel && which === 'start') {   // senza selezione l'inizio sposta solo il cursore
+    if (!d.sel && which === 'start') {
       d.cursor = clamp(v, 0, dur); edEnsureVisible(d.cursor);
       if (ed.play) edStopPlay(true);
       edDraw(); edUpdateUI(); return;
@@ -9190,7 +8885,6 @@ self.onmessage = async (e) => {
     el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } if (e.key === 'Escape') { e.preventDefault(); el.blur(); edUpdateUI(); } });
   });
 
-  /* ---------- marcatori ---------- */
   function edAddMarker(t) {
     const d = ed.doc;
     if (!d) return;
@@ -9228,7 +8922,6 @@ self.onmessage = async (e) => {
   });
   $('edMark').addEventListener('click', () => edAddMarker(edPos()));
 
-  /* ---------- ascolto ---------- */
   const ED_GEQ_F = [31, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
   function edPos() {
     const p = ed.play;
@@ -9237,7 +8930,6 @@ self.onmessage = async (e) => {
     if (p.loop) { const len = Math.max(0.01, p.le - p.ls), x = p.from + el; return x < p.le ? x : p.ls + ((x - p.le) % len); }
     return Math.min(p.to, p.from + el);
   }
-  /* o.from: punto di partenza · o.stems: { voc, inst, a, b } per l'anteprima di voce e base */
   function edStartPlay(o = {}) {
     const d = ed.doc;
     if (!d) return;
@@ -9260,7 +8952,6 @@ self.onmessage = async (e) => {
     const anL = ctx.createAnalyser(), anR = ctx.createAnalyser(), anS = ctx.createAnalyser();
     anL.fftSize = anR.fftSize = 2048; anS.fftSize = 8192; anS.smoothingTimeConstant = 0.55;
     out.connect(split); split.connect(anL, 0); split.connect(anR, 1); out.connect(anS);
-    // filtri dell'EQ grafico dal vivo
     let input = out, eq = null;
     if (ed.monitorEq) {
       eq = ED_GEQ_F.map((f, i) => { const b = ctx.createBiquadFilter(); b.type = 'peaking'; b.frequency.value = f; b.Q.value = 1.41; b.gain.value = ed.geq[i]; return b; });
@@ -9297,8 +8988,8 @@ self.onmessage = async (e) => {
     if (!p) return;
     const pos = edPos();
     ed.play = null;
-    p.srcs.forEach(s => { try { s.onended = null; s.stop(); } catch (e) { /* già fermo */ } });
-    try { p.out.disconnect(); } catch (e) { /* niente */ }
+    p.srcs.forEach(s => { try { s.onended = null; s.stop(); } catch (e) {  } });
+    try { p.out.disconnect(); } catch (e) {  }
     const d = ed.doc;
     if (d) {
       if (pause) { d.cursor = pos; d.sel = null; }
@@ -9358,13 +9049,10 @@ self.onmessage = async (e) => {
   $('edAbEdit').addEventListener('click', () => edSetAb('edit'));
   $('edAbOrig').addEventListener('click', () => edSetAb('orig'));
 
-  /* ---------- misuratori: analizzatore a bande e livelli ---------- */
-  // 31 bande di terzo d'ottava, da 20 Hz a 20 kHz
   const ED_BANDS = [20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000];
   const ED_BAND_LO = -90;
   function edBandLabel(f) { return f >= 1000 ? (f / 1000) + 'k' : String(f); }
   function edBandsFromPower(pow, N, sr) {
-    // pow[k] = potenza del bin k (spettro a una via); somma per banda
     const out = new Float32Array(ED_BANDS.length);
     ED_BANDS.forEach((fc, i) => {
       const k0 = Math.max(1, Math.floor(fc / Math.pow(2, 1 / 6) * N / sr)), k1 = Math.min(N / 2, Math.max(k0, Math.ceil(fc * Math.pow(2, 1 / 6) * N / sr)));
@@ -9469,7 +9157,6 @@ self.onmessage = async (e) => {
     }
     g.textAlign = 'left';
   }
-  // a riposo: spettro medio e livelli della selezione (o della parte visibile)
   function edDrawMeters() {
     const d = ed.doc;
     if (!edEl.offsetParent) return;
@@ -9517,7 +9204,6 @@ self.onmessage = async (e) => {
       edDrawLevels([{ level: L.l, peak: L.pl }, { level: L.r, peak: L.pr }], true);
       edDrawBarMeter(L.l, L.r, L.pl, L.pr);
       p.anS.getFloatFrequencyData(L.fb);
-      // dB dell'analizzatore (finestra di Blackman, /N) → potenza; +13,5 dB: un seno a fondo scala vale 0 dB
       for (let k = 0; k < L.fb.length; k++) L.pow[k] = Math.pow(10, (L.fb[k] + 13.5) / 10);
       const bands = edBandsFromPower(L.pow, p.anS.fftSize, p.ctx.sampleRate);
       if (!L.bands) { L.bands = new Float32Array(bands.length).fill(ED_BAND_LO); L.peaks = new Float32Array(bands.length).fill(ED_BAND_LO); L.ph = new Float64Array(bands.length); }
@@ -9532,7 +9218,6 @@ self.onmessage = async (e) => {
       return;
     }
     if (performance.now() < (L.until || 0)) {
-      // dopo lo stop, una breve discesa delle barre prima di tornare alla vista a riposo
       if (L.bands) { for (let i = 0; i < L.bands.length; i++) { L.bands[i] -= 2.5; L.peaks[i] -= 1.5; } edDrawBands(L.bands, L.peaks, true); }
       L.l *= 0.8; L.r *= 0.8;
       edDrawLevels([{ level: L.l, peak: L.pl }, { level: L.r, peak: L.pr }], true);
@@ -9542,7 +9227,6 @@ self.onmessage = async (e) => {
     if (L.bands) { L.bands = null; L.peaks = null; }
     ed.idle.key = '';
     edDrawMeters();
-    // dopo lo stop i livelli della barra scendono piano, come nella multitraccia
     if ((L.l || 0) > 0.001 || (L.r || 0) > 0.001 || (L.pl || 0) > 0.001 || (L.pr || 0) > 0.001) {
       L.l *= 0.86; L.r *= 0.86; L.pl *= 0.94; L.pr *= 0.94;
       edDrawBarMeter(L.l, L.r, L.pl, L.pr);
@@ -9550,14 +9234,6 @@ self.onmessage = async (e) => {
     } else if (!(typeof st === 'object' && st.rec)) edDrawBarMeter();
   }
 
-  /* ================================================================
-     OPERAZIONI DELL'EDITOR
-     scope: 'auto' = con una selezione lavora solo lì (il resto resta com'è)
-            'own'  = l'operazione gestisce da sé la selezione
-            'whole'= vale per tutto l'audio (cambia i canali)
-            'sel'  = serve una selezione
-     preset: si può salvare nel rack effetti
-     ================================================================ */
   function edGeqNodes(c, gains) { return ED_GEQ_F.map((f, i) => biquad(c, 'peaking', f, 1.41, gains[i] || 0)); }
   function opDcOffset(buf) {
     const out = cloneBuf(buf);
@@ -9572,7 +9248,6 @@ self.onmessage = async (e) => {
     if (moved < 1e-5) return { msg: 'Nessuno spostamento dallo zero da correggere' };
     return { buffer: out, msg: `DC offset rimosso (${(moved * 100).toFixed(2).replace('.', ',')}%)` };
   }
-  // noise gate: chiude il volume nelle pause (con 5 ms di anticipo, così non taglia gli attacchi)
   function opGate(buf, p) {
     const sr = buf.sampleRate, len = buf.length, nch = buf.numberOfChannels;
     const thr = dbToGain(p.thr), floorG = dbToGain(p.floor);
@@ -9611,7 +9286,6 @@ self.onmessage = async (e) => {
     const b = clamp(p.bal, -100, 100) / 100;
     const sr = buf.sampleRate;
     if (buf.numberOfChannels < 2) {
-      // da mono a stereo con pan a potenza costante
       const out = newBuffer(2, buf.length, sr), src = buf.getChannelData(0);
       const ang = (b + 1) * Math.PI / 4, gl = Math.cos(ang) * Math.SQRT2, gr = Math.sin(ang) * Math.SQRT2;
       const L = out.getChannelData(0), R = out.getChannelData(1);
@@ -9624,7 +9298,6 @@ self.onmessage = async (e) => {
     return { buffer: out, msg: `Bilanciamento ${b === 0 ? 'al centro' : b < 0 ? `${Math.round(-b * 100)}% a sinistra` : `${Math.round(b * 100)}% a destra`}` };
   }
   function scaleChannel(buf, c, g) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] *= g; }
-  // chorus: copie leggermente ritardate e modulate (destra e sinistra in controfase)
   function opChorus(buf, p) {
     const sr = buf.sampleRate, out = cloneBuf(buf), nch = out.numberOfChannels;
     const base = 0.018 * sr, depth = p.depth / 1000 * sr, w = 2 * Math.PI * p.rate / sr, mix = p.mix;
@@ -9710,7 +9383,6 @@ self.onmessage = async (e) => {
     return stInsertAt(buf, ins, ctx.selSec ? ctx.selSec.start : ctx.cursor, `Tono ${fmtNum(p.freq)} Hz, ${fmtNum(p.secs)} s`);
   }
   function opFadeOwn(buf, p, ctx, up) { return ctx.sel ? opSelFade(buf, p, ctx, up) : opFade(buf, p, up); }
-  // accoda un altro audio: un vocale, un effetto della libreria o un file dello Studio
   async function edSourceBuffer(src, sr) {
     const [t, id] = String(src || '').split(':');
     let b = null, name = '';
@@ -9807,7 +9479,6 @@ self.onmessage = async (e) => {
 
     vsep: { label: 'Separo voce e base', preset: true, scope: 'own', params: () => ({ bal: parseInt($('ed-vsep-bal').value, 10) || 0 }), step: p => `Voce e base: ${vsepBalText(p.bal)}`, fn: opVsep }
   };
-  // il vecchio nome "merge" (accoda vocale) resta valido per i preset salvati
   ED_OPS.merge = { label: 'Accodo', step: () => 'Accoda vocale', fn: (b, p) => opAppend(b, { src: 'v:' + p.voiceId, gap: p.gap }) };
 
   async function edApply(name, override, opts = {}) {
@@ -9910,7 +9581,6 @@ self.onmessage = async (e) => {
   }
   edHistoryEl.addEventListener('click', e => { const b = e.target.closest('[data-edstep]'); if (b) edGoto(+b.getAttribute('data-edstep')); });
 
-  /* ---------- selezione, appunti ---------- */
   function edSelectAll() { const d = ed.doc; if (!d) return; if (ed.play) edStopPlay(true); d.sel = { start: 0, end: edShown(d).duration }; d.cursor = 0; edDraw(); edUpdateUI(); }
   function edSelectNone() { const d = ed.doc; if (!d) return; if (ed.play) edStopPlay(true); d.sel = null; edDraw(); edUpdateUI(); }
   function edCopy() {
@@ -9981,7 +9651,6 @@ self.onmessage = async (e) => {
     else edApply(op);
   });
 
-  /* ---------- salvataggi e azioni del documento ---------- */
   async function edSaveVoice() {
     const d = ed.doc;
     const v = d && voices.find(x => x.id === d.voiceId);
@@ -10054,9 +9723,6 @@ self.onmessage = async (e) => {
     } else if (d.kind === 'file') stFileToMulti(d.id);
   });
 
-  /* ================================================================
-     STRUMENTI: schede e pannelli (generati da qui)
-     ================================================================ */
   const ED_ICON = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
   const ED_CATS = [
     { id: 'clean', label: 'Restauro', icon: ED_ICON('<path d="M3 12h3l3-8 4 16 3-8h5"></path>') },
@@ -10072,22 +9738,18 @@ self.onmessage = async (e) => {
   const n_ = (id, label, unit, min, max, step, v) => ({ t: 'num', id, label, unit, min, max, step, v });
   const r_ = (id, label, min, max, step, v, unit = '%') => ({ t: 'range', id, label, min, max, step, v, unit });
   const ED_TOOLS = [
-    // RESTAURO
     { cat: 'clean', title: 'Riduzione rumore', desc: 'Toglie fruscio e rumore di fondo costante. Per il massimo, cattura il profilo da un tratto di solo rumore.', op: 'denoise', rows: [[r_('ed-denoise-amt', 'Riduzione', 10, 100, 5, 50)]], custom: 'profile' },
     { cat: 'clean', title: 'Rimozione ronzio', desc: 'Elimina il ronzio della corrente elettrica: 50 Hz in Europa, 60 negli USA.', op: 'hum', rows: [[n_('ed-hum-freq', 'Frequenza', 'Hz', 20, 400, 1, 50)]] },
     { cat: 'clean', title: 'Rimozione click', desc: 'Ripara click e schiocchi.', op: 'declick', rows: [[r_('ed-declick-sens', 'Sensibilità', 10, 100, 5, 50)]] },
     { cat: 'clean', title: 'De-esser', desc: 'Attenua le "s" troppo forti.', op: 'deess' },
     { cat: 'clean', title: 'Rimuovi DC offset', desc: 'Riporta l\'onda al centro se è spostata (capita con alcune schede audio).', op: 'dcoff' },
-    // VOCE / BASE
     { cat: 'stems', custom: 'vsep' },
     { cat: 'stems', custom: 'vsepsave' },
-    // EQ
     { cat: 'eq', title: 'EQ grafico a 10 bande', desc: 'Alza o abbassa ogni banda (±12 dB). Con "Ascolta con l\'EQ" senti il risultato dal vivo mentre muovi i cursori.', op: 'geq', custom: 'geq' },
     { cat: 'eq', title: 'Timbro pronto', desc: 'Correzioni veloci del timbro.', btns: [['eq-clear', 'Presenza', 'voce più chiara e definita'], ['eq-boom', 'Taglio bassi', 'via rimbombo e vento'], ['eq-phone', 'Telefono', 'suono da cornetta']] },
     { cat: 'eq', title: 'EQ a 3 bande', desc: 'Bassi (200 Hz), medi (1,2 kHz), alti (5 kHz).', op: 'eq3', rows: [[n_('ed-eq3-low', 'Bassi', 'dB', -24, 24, 0.5, 0), n_('ed-eq3-mid', 'Medi', 'dB', -24, 24, 0.5, 0), n_('ed-eq3-high', 'Alti', 'dB', -24, 24, 0.5, 0)]] },
     { cat: 'eq', title: 'Passa-alto', desc: 'Toglie i bassi sotto la frequenza (rimbombo, vento, colpi sul microfono).', op: 'hp', rows: [[n_('ed-hp-freq', 'Frequenza', 'Hz', 20, 5000, 10, 100)]] },
     { cat: 'eq', title: 'Passa-basso', desc: 'Toglie gli acuti sopra la frequenza (effetto ovattato, fruscio acuto).', op: 'lp', rows: [[n_('ed-lp-freq', 'Frequenza', 'Hz', 200, 20000, 50, 6000)]] },
-    // DINAMICA
     { cat: 'dyn', title: 'Normalizzazione loudness', desc: 'Porta tutto allo stesso volume percepito: −16 LUFS per web e radio, −14 per Spotify e YouTube, −23 per la TV. Picco massimo −1 dB.', op: 'lufs', rows: [[n_('ed-lufs-target', 'Obiettivo', 'LUFS', -40, -5, 0.5, -16)]] },
     { cat: 'dyn', title: 'Normalizza', desc: 'Porta il picco più alto al valore scelto.', op: 'normdb', rows: [[n_('ed-norm-peak', 'Picco', 'dB', -24, 0, 0.1, -0.3)]] },
     { cat: 'dyn', title: 'Amplifica', desc: 'Alza o abbassa il volume.', op: 'gain', rows: [[n_('ed-gain-db', 'Guadagno', 'dB', -40, 40, 0.5, -3)]] },
@@ -10095,7 +9757,6 @@ self.onmessage = async (e) => {
     { cat: 'dyn', title: 'Limitatore', desc: 'Tiene i picchi sotto la soglia senza abbassare il resto.', op: 'limit', rows: [[n_('ed-limit-ceil', 'Soglia', 'dB', -24, 0, 0.1, -1)]] },
     { cat: 'dyn', title: 'Noise gate', desc: 'Abbassa il volume quando nessuno parla: via il fondo tra una frase e l\'altra.', op: 'gate', rows: [[n_('ed-gate-thr', 'Soglia', 'dB', -80, -10, 1, -45), n_('ed-gate-floor', 'Riduzione', 'dB', -80, 0, 1, -30), n_('ed-gate-hold', 'Tenuta', 'ms', 0, 1000, 10, 120)]] },
     { cat: 'dyn', title: 'Dissolvenze', desc: 'Entrata e uscita graduali. Con una selezione la dissolvenza copre tutta la selezione.', rows: [[n_('ed-fade-len', 'Durata', 's', 0.01, 60, 0.05, 0.3)]], btns: [['fadein', 'In entrata'], ['fadeout', 'In uscita']] },
-    // EFFETTI
     { cat: 'fx', title: 'Riverbero', desc: 'Ambiente: da stanza piccola (0,5 s) a chiesa (4 s).', op: 'reverb', rows: [[n_('ed-rev-size', 'Durata', 's', 0.2, 8, 0.1, 1.8)], [r_('ed-rev-mix', 'Mix', 5, 100, 5, 30), r_('ed-rev-damp', 'Scuro', 0, 100, 10, 40)]] },
     { cat: 'fx', title: 'Eco', desc: 'Ripete il suono nel tempo.', op: 'echo', rows: [[n_('ed-echo-delay', 'Ritardo', 's', 0.02, 2, 0.01, 0.25)], [r_('ed-echo-fb', 'Ritorni', 0, 85, 5, 35), r_('ed-echo-mix', 'Mix', 5, 100, 5, 35)]] },
     { cat: 'fx', title: 'Cambia intonazione', desc: 'Più acuto o più grave senza cambiare la durata. Da −4 a −6 la voce diventa irriconoscibile.', op: 'pitch', rows: [[n_('ed-pitch', 'Intonazione', 'semitoni', -12, 12, 0.5, -4)]] },
@@ -10104,25 +9765,21 @@ self.onmessage = async (e) => {
     { cat: 'fx', title: 'Lo-fi', desc: 'Suono "digitale vecchio": meno bit e meno campioni.', op: 'lofi', rows: [[n_('ed-lofi-bits', 'Bit', 'bit', 2, 16, 1, 8), n_('ed-lofi-rate', 'Frequenza', 'kHz', 1, 44, 1, 11)]] },
     { cat: 'fx', title: 'Voci pronte', desc: 'Suono da vecchia radio o da megafono.', btns: [['vintage', 'Radio d\'epoca', 'suono da vecchia radio'], ['megaphone', 'Megafono', 'suono da megafono']] },
     { cat: 'fx', title: 'Al contrario e polarità', desc: 'Riproduce dalla fine all\'inizio, oppure capovolge l\'onda (utile per problemi di fase).', btns: [['reverse', 'Al contrario'], ['invert', 'Inverti polarità']] },
-    // TEMPO
     { cat: 'time', title: 'Rifila silenzio', desc: 'Taglia il silenzio all\'inizio e alla fine.', op: 'trim' },
     { cat: 'time', title: 'Tronca silenzio', desc: 'Accorcia le pause troppo lunghe.', op: 'pauses', rows: [[n_('ed-pause-len', 'Soglia', 's', 0.1, 30, 0.05, 0.9), n_('ed-pause-keep', 'Nuova durata', 's', 0, 10, 0.05, 0.35)]] },
     { cat: 'time', title: 'Cambia tempo', desc: 'Più veloce o più lento senza cambiare il tono.', op: 'speed', rows: [[n_('ed-speed', 'Velocità', '×', 0.5, 2, 0.05, 1.1)]], preview: 'speed' },
     { cat: 'time', title: 'Velocità e tono (nastro)', desc: 'Come accelerare un nastro: cambiano insieme durata e tono.', op: 'vari', rows: [[n_('ed-vari', 'Velocità', '×', 0.25, 4, 0.05, 1.25)]] },
     { cat: 'time', title: 'Durata massima', desc: 'Taglia alla durata scelta e chiude con una dissolvenza.', op: 'maxdur', rows: [[n_('ed-maxdur', 'Durata', 's', 0.5, 3600, 0.5, 30), n_('ed-maxfade', 'Dissolvenza', 's', 0, 30, 0.1, 1)]] },
-    // CANALI
     { cat: 'chan', title: 'Mixdown', desc: 'Da stereo a mono, oppure un solo canale (utile se la voce si sente da un lato solo).', btns: [['mono', 'Mono'], ['left', 'Solo sinistro'], ['right', 'Solo destro']], needs: 'stereo' },
     { cat: 'chan', title: 'Converti in stereo', desc: 'Copia il canale mono su sinistro e destro.', op: 'stereo', needs: 'mono' },
     { cat: 'chan', title: 'Scambia L e R', desc: 'Inverte i due canali.', op: 'swap', needs: 'stereo' },
     { cat: 'chan', title: 'Ampiezza stereo', desc: '0% = mono, 100% = com\'è, 200% = molto largo.', op: 'width', rows: [[r_('ed-width', 'Ampiezza', 0, 200, 5, 140)]], needs: 'stereo' },
     { cat: 'chan', title: 'Bilanciamento', desc: 'Sposta il suono a sinistra o a destra. Un audio mono diventa stereo.', op: 'balance', rows: [[r_('ed-balance', 'Sinistra ↔ Destra', -100, 100, 5, 0, '')]] },
-    // MIX E GENERA
     { cat: 'mix', title: 'Base musicale con ducking', desc: 'Musica sotto la voce che si abbassa da sola quando si parla.', op: 'bed', rows: [[{ t: 'sel', id: 'ed-bed-sel', fill: 'sfx', ph: 'Effetto da usare come base…' }], [n_('ed-bed-db', 'Livello', 'dB', -60, 6, 0.5, -14), n_('ed-duck-db', 'Ducking', 'dB', 0, 60, 0.5, 12), n_('ed-bed-intro', 'Pre-roll', 's', 0, 60, 0.1, 1.5), n_('ed-bed-outro', 'Post-roll', 's', 0, 60, 0.1, 2)]] },
     { cat: 'mix', title: 'Jingle', desc: 'Aggiunge un effetto prima o dopo. Distanza negativa = sovrapposti.', op: 'jingle', rows: [[{ t: 'sel', id: 'ed-jingle-sel', fill: 'sfx', ph: 'Effetto da usare come jingle…' }], [{ t: 'seg', key: 'jinglePos', opts: [['head', 'In testa'], ['tail', 'In coda']] }, n_('ed-jingle-gap', 'Distanza', 's', -30, 30, 0.05, 0.2)]] },
     { cat: 'mix', title: 'Accoda', desc: 'Aggiunge alla fine (o dopo la selezione) un vocale, un effetto o un file dello Studio.', op: 'append', rows: [[{ t: 'sel', id: 'ed-append-sel', fill: 'any', ph: 'Cosa accodare…' }], [n_('ed-append-gap', 'Distanza', 's', 0, 30, 0.05, 0.6)]] },
     { cat: 'mix', title: 'Inserisci silenzio', desc: 'Al cursore, o all\'inizio della selezione.', op: 'gsil', rows: [[n_('ed-gsil', 'Durata', 's', 0.01, 600, 0.1, 1)]] },
     { cat: 'mix', title: 'Genera tono', desc: 'Un\'onda sinusoidale al cursore: bip personalizzati, test, segnali.', op: 'gtone', rows: [[n_('ed-gtone-freq', 'Freq.', 'Hz', 20, 20000, 1, 1000), n_('ed-gtone-secs', 'Durata', 's', 0.02, 60, 0.1, 1), n_('ed-gtone-db', 'Livello', 'dB', -60, 0, 1, -12)]] },
-    // ANALISI
     { cat: 'info', custom: 'stats' },
     { cat: 'info', custom: 'markers' }
   ];
@@ -10219,7 +9876,6 @@ self.onmessage = async (e) => {
     if (tab === 'info') edUpdateStats(true);
     if (tab === 'mix') edRefreshSelects();
   }
-  // menu che dipendono dalla libreria
   function edRefreshSelects() {
     edPanes.querySelectorAll('select[data-fill]').forEach(sel => {
       const ph = sel.getAttribute('data-ph'), cur = sel.value;
@@ -10236,7 +9892,6 @@ self.onmessage = async (e) => {
     });
   }
 
-  /* ---------- statistiche ---------- */
   function edComputeStats(buf, a, b) {
     const sr = buf.sampleRate, nch = buf.numberOfChannels;
     const s0 = Math.max(0, Math.floor(a * sr)), s1 = Math.min(buf.length, Math.ceil(b * sr)), n = Math.max(1, s1 - s0);
@@ -10328,7 +9983,6 @@ self.onmessage = async (e) => {
     edDraw(); edUpdateUI();
   }
 
-  /* ---------- EQ grafico ---------- */
   const ED_GEQ_PRESETS = {
     flat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     voice: [-6, -4, -2, -1, 0, 1, 3, 4, 2, 1],
@@ -10377,7 +10031,6 @@ self.onmessage = async (e) => {
     g.fillStyle = 'rgba(255,30,96,0.12)'; g.fill();
   }
 
-  /* ---------- voce e base: cursore, anteprima, parti separate ---------- */
   function edVsepGains() { return vsepGains(parseInt($('ed-vsep-bal').value, 10)); }
   function edVsepSync() {
     $('ed-vsep-val').textContent = vsepBalText(parseInt($('ed-vsep-bal').value, 10));
@@ -10419,7 +10072,6 @@ self.onmessage = async (e) => {
     const label = which === 'voc' ? 'voce' : 'base';
     await edSaveBufferToLib(microFades(cloneBuf(which === 'voc' ? r.stems.voc : r.stems.inst)), `${d.name} (${label})`, `In che categoria vuoi mettere la ${label}?`);
   }
-  // scarica le tracce separate: voce, base, o tutte e due in uno zip
   async function edVsepDownload(which) {
     const d = ed.doc;
     if (!edCanEdit()) return;
@@ -10450,7 +10102,6 @@ self.onmessage = async (e) => {
           edStatus(`Scaricato "${base} (voce e base).zip" con le due tracce dentro.`);
         } catch (err) { console.warn('Zip non disponibile, scarico i file uno per uno:', err); }
         if (!zipped) {
-          // senza zip: due download di fila (il browser potrebbe chiedere il permesso per il secondo)
           triggerDownload(files[0].blob, files[0].name);
           await new Promise(res => setTimeout(res, 700));
           triggerDownload(files[1].blob, files[1].name);
@@ -10494,7 +10145,6 @@ self.onmessage = async (e) => {
     ed.busy = false; edUpdateUI();
   }
 
-  /* ---------- eventi dei pannelli (un solo ascoltatore per tutti) ---------- */
   edPanes.addEventListener('click', e => {
     const t = e.target.closest('button');
     if (!t || t.disabled) return;
@@ -10550,7 +10200,6 @@ self.onmessage = async (e) => {
     if (e.target.id === 'ed-geq-preset' && e.target.value) { ed.geq = ED_GEQ_PRESETS[e.target.value].slice(); e.target.value = ''; edGeqSync(); }
   });
   edPanes.addEventListener('focusin', e => { if (e.target.matches('select[data-fill]')) edRefreshSelects(); });
-  // campi numerici: virgola o punto, frecce su e giù = un passo, rosso se fuori limite
   stWireNum(edPanes);
   edRail.addEventListener('click', e => { const b = e.target.closest('[data-edtab]'); if (b) edSetTab(b.getAttribute('data-edtab')); });
   function edUpdateSpeedPreview() {
@@ -10562,7 +10211,6 @@ self.onmessage = async (e) => {
     el.textContent = `${edFmtTime(dur)} → ${edFmtTime(dur / sp.value)}`;
   }
 
-  /* ---------- rack effetti (preset) ---------- */
   function edRenderPresets() {
     const list = $('edPresetList');
     list.innerHTML = editorPresets.length
@@ -10601,7 +10249,7 @@ self.onmessage = async (e) => {
       const pr = editorPresets.find(x => x.id === ap.getAttribute('data-papply'));
       const d = ed.doc;
       if (!pr || !edCanEdit()) return;
-      d.sel = null;   // i preset lavorano sempre su tutto l'audio
+      d.sel = null;
       let n = 0;
       for (const s of pr.steps) { if (await edApply(s.op, s.params, { whole: true })) n++; }
       edStatus(`Preset "${pr.name}": ${n === 1 ? '1 modifica applicata' : n + ' modifiche applicate'} su ${pr.steps.length}.`);
@@ -10617,7 +10265,6 @@ self.onmessage = async (e) => {
     }
   });
 
-  /* ---------- stato dell'interfaccia ---------- */
   function edUpdateUI() {
     const d = ed.doc;
     const loaded = !!d && !ed.busy;
@@ -10629,7 +10276,6 @@ self.onmessage = async (e) => {
       profile: canEdit && !!ed.noiseProfile
     };
     [edEl, edBar].forEach(root => root.querySelectorAll('[data-needs]').forEach(b => { b.disabled = !need[b.getAttribute('data-needs')]; }));
-    // pulsanti "Applica": dicono se agiscono sulla selezione
     edPanes.querySelectorAll('[data-scope]').forEach(b => {
       const op = ED_OPS[b.getAttribute('data-edop')];
       const sc = op && op.scope || 'auto';
@@ -10658,7 +10304,6 @@ self.onmessage = async (e) => {
     const factor = d && dur ? dur / edViewLen(d) : 1;
     $('edZoomLabel').textContent = `×${factor < 9.95 ? (Math.round(factor * 10) / 10).toString().replace('.', ',') : Math.round(factor)}`;
     if (d) { $('edZoomOut').disabled = factor <= 1.001; $('edZoomFit').disabled = factor <= 1.001; }
-    // campi della selezione (non mentre li stai scrivendo)
     const act = document.activeElement;
     if (act !== edSelStart) edSelStart.value = d ? edFmtTime(d.sel ? d.sel.start : d.cursor) : '';
     if (act !== edSelEnd) edSelEnd.value = d && d.sel ? edFmtTime(d.sel.end) : '';
@@ -10678,7 +10323,6 @@ self.onmessage = async (e) => {
     if (!ed.play) edStartRaf();
   }
 
-  /* ---------- tastiera ---------- */
   function edActive() {
     if (edOverlayOpen()) return true;
     return typeof st !== 'undefined' && stIsVisible() && st.view === 'wave' && !!ed.doc;
@@ -10733,7 +10377,6 @@ self.onmessage = async (e) => {
     if (handled) { e.preventDefault(); e.stopImmediatePropagation(); }
   }, true);
 
-  /* ---------- uscita di ascolto (cuffie): un'unica scelta per tutta l'app ---------- */
   async function renderSinkOptions() {
     const rows = document.querySelectorAll('[data-sinkrow]');
     if (!sinkSupported) { rows.forEach(r => { r.hidden = true; }); return; }
@@ -10790,7 +10433,6 @@ self.onmessage = async (e) => {
   });
   if (sinkSupported && navigator.mediaDevices.addEventListener) navigator.mediaDevices.addEventListener('devicechange', () => renderSinkOptions());
 
-  /* ---------- avvio ---------- */
   function edInit() {
     edRenderTools();
     edRenderPresets();
@@ -10806,22 +10448,13 @@ self.onmessage = async (e) => {
 
   renderVoices();
 
-  /* ---------------- Torna in cima ---------------- */
-  /* ================================================================
-     LOGO PERSONALIZZATO PER CATEGORIA
-     ----------------------------------------------------------------
-     Un PNG per categoria, salvato su Storage in "category-logos/".
-     Sul documento della categoria restano logoUrl e logoPath.
-     La sezione compare sotto il suggerimento del riordino quando
-     una categoria è selezionata.
-     ================================================================ */
   const catLogoSection = document.getElementById('catLogoSection');
   const catLogoInput = document.getElementById('catLogoInput');
   const LOGO_MAX_BYTES = 5 * 1024 * 1024;
   const IMAGE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`;
-  let catLogoTarget = null;   // categoria a cui va il PNG scelto
-  let catLogoBusy = null;     // categoria il cui logo sta caricando
-  let catLogoKey = '';        // evita di ridisegnare la sezione se non è cambiato nulla
+  let catLogoTarget = null;
+  let catLogoBusy = null;
+  let catLogoKey = '';
 
   function isPng(file) { return !!file && (file.type === 'image/png' || /\.png$/i.test(file.name || '')); }
 
@@ -10931,8 +10564,6 @@ self.onmessage = async (e) => {
     if (del) del.addEventListener('click', () => removeCategoryLogo(cat.id));
   }
 
-  /* Con una categoria (o i Preferiti) selezionata il pulsante riporta alla barra
-     delle categorie, così cambi filtro al volo; senza filtro torna in cima. */
   function categoryJumpTarget() {
     if (tabSfx.hidden || !(categoryFilter || favoritesOnly)) return null;
     return document.querySelector('#tabSfx .search-row');
@@ -10956,21 +10587,8 @@ self.onmessage = async (e) => {
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   });
 
-  /* ================================================================
-     STUDIO — editor audio stile Adobe Audition
-     ----------------------------------------------------------------
-     Due viste, come in Audition:
-     - "Forma d'onda": un file alla volta, modifiche con cronologia
-       (annulla / ripeti), selezione, appunti, effetti.
-     - "Multitraccia": tracce con clip non distruttive (sposta,
-       accorcia, dissolvenze, guadagno), volume / pan / muto / solo,
-       registrazione dal microfono, mixdown.
-     Tutto vive in memoria per la sessione: Firebase si tocca solo con
-     "Salva negli Effetti". Le funzioni DSP sono quelle dell'editor
-     vocale (stessi algoritmi, stesse funzioni).
-     ================================================================ */
-  var ST_READY = false;   // "var": leggibile (undefined) anche prima che questa sezione giri
-  const ST_PEAK = 128;    // campioni per secchiello nelle anteprime dell'onda
+  var ST_READY = false;
+  const ST_PEAK = 128;
   const ST_LANE_H = 96;
   const ST_COLORS = ['#ff5c8a', '#3ee6c4', '#ffd23d', '#8f7bff', '#4ab3ff', '#ff9a3d', '#7ee35a', '#ff6bd6'];
   const ST_STEPS = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60, 120, 300, 600];
@@ -11005,7 +10623,6 @@ self.onmessage = async (e) => {
   const stExportBar = $('stExportBar'), stExportPartBtn = $('stExportPartBtn');
   stPlayBtn.innerHTML = PLAY_SVG;
 
-  /* ---------- utilità ---------- */
   function stFmt(t) {
     t = Math.max(0, t || 0);
     const m = Math.floor(t / 60), s = t - m * 60;
@@ -11027,7 +10644,6 @@ self.onmessage = async (e) => {
   }
   function stIsVisible() { return ST_READY && !stTab.hidden; }
 
-  /* ---------- anteprime dell'onda (min / max per secchiello) ---------- */
   function stComputePeaks(buf) {
     const n = Math.ceil(buf.length / ST_PEAK), nch = buf.numberOfChannels;
     const chans = [];
@@ -11054,9 +10670,6 @@ self.onmessage = async (e) => {
     return [lo, hi];
   }
 
-  /* ================================================================
-     FILE
-     ================================================================ */
   function stUniqueName(name) {
     const base = (name || 'Audio').trim() || 'Audio';
     if (!st.files.some(f => f.name === base)) return base;
@@ -11064,7 +10677,6 @@ self.onmessage = async (e) => {
     while (st.files.some(f => f.name === `${base} ${i}`)) i++;
     return `${base} ${i}`;
   }
-  // i file dello Studio sono documenti dell'editor unico
   function stAddFile(buf, name, src) {
     const f = edMakeDoc('file', buf, stUniqueName(name), { src: src || 'import' });
     f.color = ST_COLORS[st.files.length % ST_COLORS.length];
@@ -11086,7 +10698,6 @@ self.onmessage = async (e) => {
     stRenderFiles();
     if (st.view !== 'wave') stSetView('wave'); else stShowEditor();
   }
-  // l'editor dello Studio mostra il file attivo (se non è aperto un vocale o un effetto a tutto schermo)
   function stShowEditor() {
     if (edOverlayOpen()) return;
     const f = stFile();
@@ -11273,7 +10884,6 @@ self.onmessage = async (e) => {
     return { buffer: out, sel: { start: at / sr, end: (at + clip.length) / sr }, cursor: at / sr, msg: `Sommati ${stFmt(clip.duration)} all'audio` };
   }
 
-  /* ---------- effetti ---------- */
   function stInsertAt(buf, ins, atSec, label) {
     const sr = buf.sampleRate, at = Math.round(clamp(atSec, 0, buf.duration) * sr);
     const nch = Math.max(buf.numberOfChannels, ins.numberOfChannels);
@@ -11328,7 +10938,6 @@ self.onmessage = async (e) => {
     for (let c = 0; c < out.numberOfChannels; c++) fn(out.getChannelData(c), c);
     return out;
   }
-  // campi numerici: stessa logica dell'editor vocale (virgola o punto, frecce = un passo, rosso se fuori limite)
   function stWireNum(root) {
     root.addEventListener('input', e => { if (e.target.classList.contains('ved-num') && !e.target.classList.contains('ved-text')) e.target.classList.toggle('invalid', !readNum(e.target).ok); });
     root.addEventListener('focusout', e => { const el = e.target; if (!el.classList || !el.classList.contains('ved-num') || el.classList.contains('ved-text')) return; const r = readNum(el); if (r.ok) el.value = fmtNum(r.value); });
@@ -11349,9 +10958,6 @@ self.onmessage = async (e) => {
     });
   }
 
-  /* ================================================================
-     MULTITRACCIA
-     ================================================================ */
   function stHeadW() {
     const v = parseFloat(getComputedStyle(stTab).getPropertyValue('--st-head-w'));
     return isFinite(v) && v > 0 ? v : 214;
@@ -11403,7 +11009,6 @@ self.onmessage = async (e) => {
     stSetStatus(`"${f.name}" aggiunto a ${stTrackById(tid).name} da ${stFmt(start)}.`);
   }
 
-  /* cronologia della multitraccia: istantanee leggere (i buffer restano nei file) */
   function stMtSnapshot() { return JSON.stringify({ tracks: st.tracks, clips: st.clips }); }
   function stMtCommit(label) {
     const mt = st.mt;
@@ -11499,7 +11104,6 @@ self.onmessage = async (e) => {
     st.mtTl = tl;
     stMtInner.style.width = (HW + W) + 'px';
     stMtRuler.style.width = W + 'px';
-    // righello
     const step = stRulerStep(st.pps);
     const minor = String(step).includes('2') ? step / 4 : step / 5;
     let html = '';
@@ -11510,7 +11114,6 @@ self.onmessage = async (e) => {
     if (st.loopRegion) html += `<div class="loopband${st.loop ? '' : ' off'}" style="left:${st.loopRegion.start * st.pps}px;width:${Math.max(2, (st.loopRegion.end - st.loopRegion.start) * st.pps)}px"></div>`;
     html += `<div class="rhead" id="stMtRHead"></div>`;
     stMtRuler.innerHTML = html;
-    // tracce
     if (!st.tracks.length) {
       stMtRows.innerHTML = '<div class="st-mt-empty">Nessuna traccia: premi "+ Traccia".</div>';
     } else {
@@ -11570,7 +11173,6 @@ self.onmessage = async (e) => {
     stUpdateUI();
   }
 
-  /* intestazioni delle tracce (delega) */
   stMtRows.addEventListener('click', e => {
     const b = e.target.closest('[data-tm],[data-ts],[data-tr],[data-tx]');
     if (!b) return;
@@ -11628,7 +11230,6 @@ self.onmessage = async (e) => {
   });
   stMtRows.addEventListener('keydown', e => { if (e.target.matches('.st-th-name') && e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
 
-  /* clip: sposta, accorcia, dissolvenze */
   stMtRows.addEventListener('pointerdown', e => {
     if (e.button !== 0 || st.busy) return;
     const lane = e.target.closest('.st-mt-lane');
@@ -11732,7 +11333,6 @@ self.onmessage = async (e) => {
   window.addEventListener('pointerup', stEndClipDrag);
   window.addEventListener('pointercancel', stEndClipDrag);
 
-  /* trascinare un file (dal pannello o dal computer) su una traccia */
   stMtRows.addEventListener('dragover', e => {
     const lane = e.target.closest('.st-mt-lane');
     if (!lane) return;
@@ -11769,7 +11369,6 @@ self.onmessage = async (e) => {
     }
   });
 
-  /* righello: clic = cursore, trascina = regione ciclica */
   let stRulerDrag = null;
   stMtRuler.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
@@ -11797,7 +11396,6 @@ self.onmessage = async (e) => {
   });
   stMtRuler.addEventListener('dblclick', () => { st.loopRegion = null; stRenderMt(); stUpdateUI(); });
 
-  /* zoom della multitraccia */
   function stMtZoom(factor, anchorT, anchorX) {
     const old = st.pps;
     const np = clamp(old * factor, ST_MIN_PPS, ST_MAX_PPS);
@@ -11824,7 +11422,6 @@ self.onmessage = async (e) => {
     stMtZoom(Math.exp(-e.deltaY * 0.0022), t, e.clientX - stMtScroll.getBoundingClientRect().left - stHeadW());
   }, { passive: false });
 
-  /* operazioni sulle clip */
   function stSplit() {
     const t = st.cursor;
     let targets = st.clips.filter(c => stFileById(c.fileId) && t > c.start + 0.005 && t < c.start + stClipLen(c) - 0.005);
@@ -11903,9 +11500,6 @@ self.onmessage = async (e) => {
   });
   stMasterVol.addEventListener('dblclick', () => { stMasterVol.value = 0; stMasterVol.dispatchEvent(new Event('input')); });
 
-  /* ================================================================
-     ASCOLTO
-     ================================================================ */
   function stBus() {
     const ctx = getAudioCtx();
     if (st.bus && st.bus.ctx === ctx) return st.bus;
@@ -12041,7 +11635,6 @@ self.onmessage = async (e) => {
   }
   stLoopBtn.addEventListener('click', stToggleLoop);
 
-  /* misuratori e animazione */
   function stStartRaf() { if (!st.raf) st.raf = requestAnimationFrame(stTick); }
   function stPeak(an, buf) {
     if (!an) return 0;
@@ -12074,7 +11667,6 @@ self.onmessage = async (e) => {
       stClock.textContent = stFmt(pos);
     }
     stDrawMeter();
-    // registrazione dalla vista Forma d'onda: orologio e livelli nella barra dell'editor
     if (ed.host === 'studio' && st.view === 'wave' && !ed.play && (st.rec || performance.now() < st.meter.until)) {
       if (st.rec) $('edPos').textContent = edFmtTime((performance.now() - st.rec.t0) / 1000);
       edDrawBarMeter(st.meter.l, st.meter.r, st.meter.pl, st.meter.pr);
@@ -12111,9 +11703,6 @@ self.onmessage = async (e) => {
     [-48, -36, -24, -12, -6, -3].forEach(db => { const x = pad + (W - pad * 2) * ((db + 60) / 60); g.fillRect(Math.round(x), pad, 1, H - pad * 2); });
   }
 
-  /* ================================================================
-     REGISTRAZIONE
-     ================================================================ */
   async function stToggleRec(forceNewFile) {
     if (st.rec) { stStopRec(); return; }
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) { stSetStatus('Questo browser non permette di registrare dal microfono.', true); return; }
@@ -12195,10 +11784,6 @@ self.onmessage = async (e) => {
   $('stRecNewBtn').addEventListener('click', () => { if (st.rec) stStopRec(); else stToggleRec(true); });
   $('edRec').addEventListener('click', () => { if (st.rec) stStopRec(); else { edStopPlay(true); stToggleRec(true); } });
 
-  /* ================================================================
-     ESPORTAZIONE
-     ================================================================ */
-  // esporta un documento dell'editor ({ doc }) oppure, senza argomenti, il mix della multitraccia
   function stOpenExport(src) {
     if (st.busy) return;
     const d = src && src.doc ? src.doc : null;
@@ -12253,13 +11838,6 @@ self.onmessage = async (e) => {
     return await off.startRendering();
   }
 
-  /* ================================================================
-     MULTITRACCIA PER IL SINGOLO EFFETTO
-     Dal pulsante "Multitraccia" dell'editor dell'effetto: la sessione
-     multitraccia in corso viene messa da parte, l'effetto va sulla
-     traccia 1 e il mix finale diventa la versione del pad (solo per
-     la sessione, come "Usa questa versione"). Poi tutto torna com'era.
-     ================================================================ */
   const stFxBar = $('stFxBar'), stFxAddSfx = $('stFxAddSfx');
   function stEnterFxSession(s, base) {
     if (st.fx) {
@@ -12298,7 +11876,6 @@ self.onmessage = async (e) => {
     const k = fx.stash;
     st.tracks = k.tracks; st.clips = k.clips; st.mt = k.mt; st.cursor = k.cursor;
     st.loopRegion = k.loopRegion; st.loop = k.loop; st.selClip = k.selClip; st.selTrack = k.selTrack; st.pps = k.pps;
-    // via i file creati solo per questa modifica (se la sessione ripristinata non li usa)
     st.files = st.files.filter(f => !fx.files.includes(f.id) || st.clips.some(c => c.fileId === f.id));
     if (!stFileById(st.activeId)) st.activeId = st.files.length ? st.files[st.files.length - 1].id : null;
     st.fx = null;
@@ -12413,9 +11990,6 @@ self.onmessage = async (e) => {
   $('stExportToWave').addEventListener('click', () => stExportGo('wave'));
   stExportName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); stExportGo('dl'); } });
 
-  /* ================================================================
-     VISTA, INTERFACCIA, TASTIERA
-     ================================================================ */
   function stSetView(v) {
     if (st.view !== v && st.play) stStopPlay();
     if (st.view !== v && v === 'multi' && ed.host === 'studio') edStopPlay(true);
@@ -12485,7 +12059,6 @@ self.onmessage = async (e) => {
     stRenderHistory();
   }
 
-  /* tastiera della multitraccia (la forma d'onda usa i tasti dell'editor) */
   document.addEventListener('keydown', e => {
     if (!stIsVisible()) return;
     if (document.body.classList.contains('login-locked') || blockingOverlayOpen()) return;
@@ -12515,7 +12088,6 @@ self.onmessage = async (e) => {
     if (handled) { e.preventDefault(); e.stopImmediatePropagation(); }
   }, true);
 
-  /* entrata e uscita dalla scheda */
   function stOnShow() {
     if (!ST_READY) return;
     applyStoredSink();
@@ -12540,7 +12112,6 @@ self.onmessage = async (e) => {
     e.returnValue = '';
   });
 
-  // stato iniziale: 4 tracce vuote, come una sessione nuova di Audition
   for (let i = 0; i < 4; i++) stAddTrack(true);
   st.selTrack = st.tracks[0].id;
   st.mt.states = [{ label: 'Sessione nuova', json: stMtSnapshot() }];
@@ -12554,7 +12125,6 @@ self.onmessage = async (e) => {
 
 <script>
   (function() {
-    // Login e logout ora sono gestiti da Firebase Auth nel modulo principale.
     const overlay = document.getElementById('loginOverlay');
     const userInput = document.getElementById('loginUser');
     const passInput = document.getElementById('loginPass');
@@ -12562,7 +12132,6 @@ self.onmessage = async (e) => {
     document.body.classList.add('login-locked');
     setTimeout(() => userInput && userInput.focus(), 50);
 
-    // Avviso Bloc Maiusc: lo stato si legge da ogni tasto premuto o rilasciato (anche il tasto stesso)
     const passWrap = document.getElementById('loginPassWrap');
     const capsText = document.getElementById('capsText');
     let capsOn = false;
