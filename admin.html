@@ -106,6 +106,7 @@
   .denied{ display: none; text-align: center; padding: 120px 20px; }
   .denied h2{ font-family: var(--display); font-size: 22px; margin-bottom: 8px; }
   .denied p{ color: var(--text-muted); margin-bottom: 18px; }
+  .loading{ text-align: center; padding: 140px 20px; color: var(--text-dim); font-family: var(--mono); font-size: 13px; }
   .hidden{ display: none !important; }
 </style>
 </head>
@@ -114,7 +115,7 @@
 <div class="login" id="login">
   <div class="login-card">
     <h1>zeroSFX · Admin</h1>
-    <p>Registro delle sessioni</p>
+    <p>Area riservata</p>
     <form id="loginForm" autocomplete="off">
       <div class="field">
         <label for="loginUser">Utente</label>
@@ -129,6 +130,8 @@
     </form>
   </div>
 </div>
+
+<div class="loading hidden" id="loading">Caricamento…</div>
 
 <div class="denied" id="denied">
   <h2>Accesso negato</h2>
@@ -225,16 +228,24 @@
   onAuthStateChanged(auth, (user) => {
     stopLive();
     if (!user) {
-      $('app').classList.add('hidden'); $('denied').style.display = 'none';
+      $('app').classList.add('hidden'); $('loading').classList.add('hidden'); $('denied').style.display = 'none';
       $('login').classList.remove('hidden'); document.body.classList.add('locked');
       $('loginPass').value = ''; setTimeout(() => $('loginUser').focus(), 50);
       return;
     }
     $('login').classList.add('hidden'); document.body.classList.remove('locked');
+    $('app').classList.add('hidden');
+    if ((user.email || '').toLowerCase() !== `admin@${LOGIN_DOMAIN}`) { showDenied(); return; }
     $('who').textContent = user.email;
-    $('app').classList.remove('hidden');
+    $('loading').classList.remove('hidden');
     startLive();
   });
+
+  function showDenied() {
+    stopLive();
+    $('app').classList.add('hidden'); $('loading').classList.add('hidden');
+    $('denied').style.display = 'block';
+  }
 
   let tab = 'sessioni';
   let sessioni = [];
@@ -263,10 +274,13 @@
       orderBy('startedAt', 'desc'), limit(MAX_SESSIONI));
     unsub = onSnapshot(q, (snap) => {
       sessioni = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      $('loading').classList.add('hidden');
+      $('app').classList.remove('hidden');
       fillSelects();
       render();
     }, (err) => {
-      if (err && err.code === 'permission-denied') { stopLive(); $('app').classList.add('hidden'); $('denied').style.display = 'block'; return; }
+      if (err && err.code === 'permission-denied') { showDenied(); return; }
+      $('loading').classList.add('hidden'); $('app').classList.remove('hidden');
       console.error(err); $('table').innerHTML = `<tr><td class="empty">Errore di lettura: ${esc(err.code || err.message)}</td></tr>`; });
     tick = setInterval(() => { if (tab !== 'storico') render(); }, 15000);
   }
