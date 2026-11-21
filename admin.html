@@ -40,6 +40,12 @@
   .login-card{ width: 100%; max-width: 360px; background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 32px 28px; }
   .login-card h1{ font-family: var(--display); font-size: 24px; text-align: center; }
   .login-card p{ color: var(--text-muted); font-size: 13px; text-align: center; margin: 6px 0 22px; }
+  .login-logo{ display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; margin: 0 auto 10px; text-align:center; line-height:0; }
+  .login-logo img{ display:block; height:56px; width:auto; max-width:78%; margin:0 auto; object-fit:contain; object-position:center; filter: drop-shadow(0 0 14px rgba(255,30,96,0.35)); transform: translateX(7.75px); }
+  .login-logo .login-logo-text{ display:none; font-family: var(--display); font-weight:700; font-size:24px; line-height:1.2; }
+  .login-logo.no-logo img{ display:none; }
+  .login-logo.no-logo .login-logo-text{ display:block; }
+  .login-logo .login-logo-tag{ display:inline-block; margin-top:12px; font-family: var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; line-height:1; color: var(--text-dim); padding:4px 10px; border:1px solid var(--border); border-radius:99px; }
   .field{ margin-bottom: 14px; }
   .field label{ display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
   .field input{ width: 100%; padding: 11px 13px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.03); }
@@ -51,7 +57,7 @@
     .wrap{ max-width: 1280px; margin: 0 auto; padding: 0 24px 60px; }
   header{ display: flex; align-items: center; gap: 16px; padding: 26px 0 18px; }
   .brand{ display: flex; align-items: center; gap: 12px; font-family: var(--display); font-size: 24px; }
-  .brand img{ height: 34px; width: auto; display: block; filter: drop-shadow(0 0 12px rgba(255,30,96,0.35)); }
+  .brand img{ height: 34px; width: auto; display: block; margin-right: -9.4px; filter: drop-shadow(0 0 12px rgba(255,30,96,0.35)); }
   .brand .brand-text{ display: none; }
   .brand.no-logo img{ display: none; }
   .brand.no-logo .brand-text{ display: inline; }
@@ -120,7 +126,7 @@
 
 <div class="login" id="login">
   <div class="login-card">
-    <h1>zeroSFX · Admin</h1>
+    <div class="login-logo"><img src="https://firebasestorage.googleapis.com/v0/b/zerosfx-a74aa.firebasestorage.app/o/Logo.svg?alt=media&amp;token=53b40bb9-adec-43e1-8b14-0aad12bb729b" alt="zeroSFX" draggable="false" onerror="this.parentNode.classList.add('no-logo')"><span class="login-logo-text">zeroSFX</span><span class="login-logo-tag">Admin</span></div>
     <p>Area riservata</p>
     <form id="loginForm" autocomplete="off">
       <div class="field">
@@ -202,6 +208,19 @@
     messagingSenderId: "1043982800334",
     appId: "1:1043982800334:web:11a9df6f2b23b0e3b0c79f"
   };
+  function loginErrMsg(err) {
+    const c = (err && err.code) || '';
+    try { console.warn('login:', c, err && err.message); } catch (e) {}
+    if (c === 'auth/too-many-requests') return 'Troppi tentativi. Riprova tra qualche minuto.';
+    if (['auth/invalid-credential', 'auth/wrong-password', 'auth/user-not-found', 'auth/invalid-email', 'auth/invalid-login-credentials', 'auth/missing-password'].includes(c)) return 'Credenziali non valide.';
+    if (c === 'auth/network-request-failed') return 'Nessuna connessione con Firebase. Controlla la rete e riprova.';
+    if (/^auth\/requests-from-referer/.test(c)) return 'Questo indirizzo non è autorizzato dalla chiave API di Firebase (restrizioni sui siti web). Codice: ' + c;
+    if (c === 'auth/unauthorized-domain') return 'Dominio non autorizzato in Firebase Authentication.';
+    if (c === 'auth/user-disabled') return 'Questo account è disattivato.';
+    if (c === 'auth/operation-not-allowed') return "L'accesso con email e password non è attivo in Firebase.";
+    if (/api-key|api_key/i.test(c)) return 'Chiave API di Firebase non valida o bloccata. Codice: ' + c;
+    return 'Accesso non riuscito' + (c ? ' (' + c + ')' : '') + '.';
+  }
   const LOGIN_DOMAIN = 'zerosfx.app';
   const LIVE_MS = 150 * 1000;
   const MAX_SESSIONI = 3000;
@@ -223,8 +242,7 @@
     try {
       await signInWithEmailAndPassword(auth, email, $('loginPass').value);
     } catch (err) {
-      $('loginError').textContent = err && err.code === 'auth/too-many-requests'
-        ? 'Troppi tentativi. Riprova tra qualche minuto.' : 'Credenziali non valide.';
+      $('loginError').textContent = loginErrMsg(err);
       $('loginPass').value = '';
     } finally { $('loginBtn').disabled = false; }
   });
